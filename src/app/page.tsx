@@ -17,6 +17,7 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 
+// FIX CSS NOT RENDERING, COMPONENTS SHOULD LOOK A LOT BETTER
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <CacheProvider>
