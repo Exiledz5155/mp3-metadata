@@ -2,12 +2,15 @@
 "use client";
 
 import { CacheProvider } from "@chakra-ui/next-js";
-import { ChakraProvider } from "@chakra-ui/react";
+import { Providers } from "../providers";
+
+// THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
+// DO NOT MODIFY OR DELETE - Danny
 
 export default function Download({ children }: { children: React.ReactNode }) {
   return (
     <CacheProvider>
-      <ChakraProvider>{children}</ChakraProvider>
+      <Providers>{children}</Providers>
     </CacheProvider>
   );
 }
