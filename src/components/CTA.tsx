@@ -45,8 +45,9 @@ export function CallToActionWithAnnotation() {
           </Text>
           <Box bg="green.400" w="100%" p={2} color="white" borderRadius={10}>
             <AspectRatio>
+              {/* ~A work of art~ */}
               <iframe
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=S90Z6ajlk2FOJwNK"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=S90Z6ajlk2FOJwNK&autoplay=1"
                 title="Not Rick"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
