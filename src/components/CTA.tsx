@@ -12,6 +12,7 @@ import {
   useColorModeValue,
   createIcon,
 } from "@chakra-ui/react";
+import { UploadBox } from "./uploadbox";
 
 export function CallToActionWithAnnotation() {
   return (
@@ -34,6 +35,7 @@ export function CallToActionWithAnnotation() {
               Metadata
             </Text>
           </Heading>
+          <UploadBox></UploadBox>
           <Text color={"gray.500"}>
             Upload your mp3 files and seamlessly edit the metadata.
           </Text>

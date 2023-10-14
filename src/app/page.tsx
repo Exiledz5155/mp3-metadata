@@ -17,6 +17,7 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
+import { UploadBox } from "../components/uploadbox";
 
 // FIX CSS NOT RENDERING, COMPONENTS SHOULD LOOK A LOT BETTER
 export default function Home({ children }: { children: React.ReactNode }) {
@@ -24,8 +25,20 @@ export default function Home({ children }: { children: React.ReactNode }) {
     <CacheProvider>
       <CallToActionWithAnnotation></CallToActionWithAnnotation>
 
-      {/* Placing the component stuff above worked for me, try doing it below */}
+      {/* Place stuff above providers */}
       <Providers>{children}</Providers>
     </CacheProvider>
   );
 }
+
+// Ideas to fill up whitespace
+/* 
+
+1. just make the splash page the upload page, scrap the splash idea
+
+2. add reviews or FAQ (accordian) below upload box
+
+3. video tutorial embedded YT vid showcasing webapp
+
+
+*/

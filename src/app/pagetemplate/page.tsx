@@ -10,6 +10,7 @@ import { Providers } from "../providers";
 export default function Download({ children }: { children: React.ReactNode }) {
   return (
     <CacheProvider>
+      {/* Place stuff above providers */}
       <Providers>{children}</Providers>
     </CacheProvider>
   );
