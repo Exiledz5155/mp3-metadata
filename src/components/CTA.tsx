@@ -11,13 +11,17 @@ import {
   Icon,
   useColorModeValue,
   createIcon,
+  AspectRatio,
 } from "@chakra-ui/react";
 import { UploadBox } from "./uploadbox";
 
+// Refactor this to a better name later
+// Modified from https://chakra-templates.dev/page-sections/hero
 export function CallToActionWithAnnotation() {
   return (
     <>
       <Container maxW={"3xl"}>
+        {/* Modify stack attributes to change spacing between elements */}
         <Stack
           as={Box}
           textAlign={"center"}
@@ -39,6 +43,16 @@ export function CallToActionWithAnnotation() {
           <Text color={"gray.500"}>
             Upload your mp3 files and seamlessly edit the metadata.
           </Text>
+          <Box bg="green.400" w="100%" p={2} color="white" borderRadius={10}>
+            <AspectRatio>
+              <iframe
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=S90Z6ajlk2FOJwNK"
+                title="Not Rick"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            </AspectRatio>
+          </Box>
         </Stack>
       </Container>
     </>
