@@ -19,7 +19,6 @@ import {
 } from "@chakra-ui/react";
 import { UploadBox } from "../components/uploadbox";
 
-// FIX CSS NOT RENDERING, COMPONENTS SHOULD LOOK A LOT BETTER
 export default function Home({ children }: { children: React.ReactNode }) {
   return (
     <CacheProvider>
@@ -40,5 +39,7 @@ export default function Home({ children }: { children: React.ReactNode }) {
 
 3. video tutorial embedded YT vid showcasing webapp
 
+Dark mode render flicker issue
+https://www.npmjs.com/package/next-themes
 
 */

@@ -70,6 +70,7 @@ export function UploadBox() {
   return (
     <div {...getRootProps({ style })}>
       <input {...getInputProps()} />
+      {/* TODO: FIX TEXT EXTENDING OUTSIDE UPLOAD BOX BORDER ON MOBILE */}
       <p>Drag and drop some files here, or click to select files</p>
     </div>
   );
