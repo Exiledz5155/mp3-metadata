@@ -1,7 +1,6 @@
 // app/providers.tsx
 "use client";
 
-import { CallToActionWithAnnotation } from "@/src/components/CTA";
 import { Providers } from "./providers";
 import { CacheProvider } from "@chakra-ui/next-js";
 import {
@@ -18,6 +17,7 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 import { UploadBox } from "../components/uploadbox";
+import { CallToActionWithAnnotation } from "../components/CTA";
 
 export default function Home({ children }: { children: React.ReactNode }) {
   return (
