@@ -1,4 +1,4 @@
-// File: /Users/nickhinds/Documents/Programming/MP3 Metadata/mp3-metadata/src/app/upload/page.tsx
+// File: /Users/dannybui/Desktop/Code/MP3Metadata/mp3-metadata/src/app/upload/page.tsx
 import * as entry from '../../../../src/app/upload/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
