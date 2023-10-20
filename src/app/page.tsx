@@ -16,7 +16,7 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
-import { UploadBox } from "../components/uploadbox";
+import { UploadBox } from "../components/UploadBox";
 import { CallToActionWithAnnotation } from "../components/CTA";
 
 export default function Home({ children }: { children: React.ReactNode }) {

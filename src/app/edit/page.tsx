@@ -16,8 +16,15 @@ import {
   Button,
   VStack,
   Text,
-  Divider
+  Divider,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from '@chakra-ui/react'
+
+import { NumberBox } from "../../components/NumberBox";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
@@ -63,13 +70,13 @@ export default function Download({ children }: { children: React.ReactNode }) {
                 <Input type='text' />
 
                 <FormLabel>Year</FormLabel>
-                <Input type='text' />
+                <NumberBox defaultValue={2000} min={0} max={3000}/>
 
                 <FormLabel>Genre</FormLabel>
                 <Input type='text' />
 
                 <FormLabel>Track #</FormLabel>
-                <Input type='text' />
+                <NumberBox defaultValue={0} min={0} max={3000}/>
               </FormControl>
             </Flex>
           </Center>
