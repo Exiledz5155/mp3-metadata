@@ -8,10 +8,20 @@ import { Providers } from "../providers";
 // DO NOT MODIFY OR DELETE - Danny
 
 export default function Download({ children }: { children: React.ReactNode }) {
+  const makeApiCall = async () => {
+    await fetch("/api/hello", {
+      method: "POST",
+      body: JSON.stringify({ hello: "world" }),
+    });
+  };
+
   return (
     <CacheProvider>
       {/* Place stuff above providers */}
-      <Providers>{children}</Providers>
+      <Providers>
+        <button onClick={makeApiCall}>Click here to make a call</button>
+        {children}
+      </Providers>
     </CacheProvider>
   );
 }
