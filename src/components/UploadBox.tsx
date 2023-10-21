@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
-// import { update_metadata } from "./fileEditing"; Adjust the path as needed
+import { update_metadata } from "./fileEditing"; //Adjust the path as needed
 
 export function UploadBox() {
   // Might need to look into dark/light mode for this css
@@ -35,50 +35,50 @@ export function UploadBox() {
   // NOT SURE WHAT THIS DOES
   //   Code from https://react-dropzone.js.org/#section-basic-example
   //   https://www.digitalocean.com/community/tutorials/react-react-dropzone
-  const onDrop = useCallback((acceptedFiles: any[]) => {
-    acceptedFiles.forEach((file) => {
-      const reader = new FileReader();
-
-      reader.onabort = () => console.log("file reading was aborted");
-      reader.onerror = () => console.log("file reading has failed");
-      reader.onload = () => {
-        // Do whatever you want with the file contents
-        const binaryStr = reader.result;
-        console.log(binaryStr);
-      };
-      reader.readAsArrayBuffer(file);
-    });
-  }, []);
-
-  // const onDrop = useCallback((acceptedFiles) => {
+  // const onDrop = useCallback((acceptedFiles: any[]) => {
   //   acceptedFiles.forEach((file) => {
   //     const reader = new FileReader();
-  
+
   //     reader.onabort = () => console.log("file reading was aborted");
   //     reader.onerror = () => console.log("file reading has failed");
-  //     reader.onload = async () => {
+  //     reader.onload = () => {
+  //       // Do whatever you want with the file contents
   //       const binaryStr = reader.result;
-  
-  //       // Call the update_metadata function with the binary data and metadata tags
-  //       const tags = {
-  //         title: "New Title",
-  //         artist: "New Artist",
-  //         album: "New Album",
-  //         APIC: "./example/cover.jpg",
-  //         TRCK: "27"
-  //       };
-  
-  //       const success = await update_metadata(tags, binaryStr);
-  //       if (success) {
-  //         console.log('Metadata successfully updated.');
-  //       } else {
-  //         console.log('Failed to update.');
-  //       }
+  //       console.log(binaryStr);
   //     };
-  
   //     reader.readAsArrayBuffer(file);
   //   });
   // }, []);
+
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.forEach((file) => {
+      const reader = new FileReader();
+  
+      reader.onabort = () => console.log("file reading was aborted");
+      reader.onerror = () => console.log("file reading has failed");
+      reader.onload = async () => {
+        const binaryStr = reader.result;
+  
+        // Call the update_metadata function with the binary data and metadata tags
+        const tags = {
+          title: "New Title",
+          artist: "New Artist",
+          album: "New Album",
+          APIC: "./example/cover.jpg",
+          TRCK: "27"
+        };
+  
+        const success = await update_metadata(tags, binaryStr);
+        if (success) {
+          console.log('Metadata successfully updated.');
+        } else {
+          console.log('Failed to update.');
+        }
+      };
+  
+      reader.readAsArrayBuffer(file);
+    });
+  }, []);
   
 
   const {

@@ -17,6 +17,7 @@
     "@emotion/styled": "^11.11.0",
     "@viselect/react": "^3.4.0",
     "framer-motion": "^10.16.4",
+    "fs": "^0.0.1-security",
     "next": "13.5.4",
     "node-id3": "^0.2.6",
     "react": "^18",
