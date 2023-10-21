@@ -3,7 +3,7 @@ const multer = require('multer');
 const fs = require('fs');
 const id3Parser = require('id3-parser');
 const path = require('path');
-
+const { update_metadata, read_metadata } = require('../components/fileEditing'); // ADDED THIS
 const app = express(); // Make an instance of the express app
 
 const PORT = process.env.PORT || 3000; // Make the port that the app will listen to.
@@ -50,20 +50,28 @@ app.post('/upload', upload.single('mp3file'), (req, res) => { // Handle file upl
     // Here, you can access the uploaded file as req.file
     
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // IMPLEMENT MP3 METADATA EDITING USING ID3-PARSER AND LOGIC
-    // WE WANT TO EDIT VARIOUS FIELDS OF AN MP3 FILE
-    // LETS DISCUSS THIS TOGETHER!!!!!!!!!!!!!!!!!
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    return res.json({ message:'File uploaded and metadata edited successfully'}); // RETURN A RESPONSE TO SERVER
-});
+const mp3File = req.file.path; // Assuming Multer stores the file path in req.file.path
+const tags = {
+    title: "New Title",
+    artist: "New Artist",
+    album: "New Album",
+    APIC: "./example/cover.jpg",
+    TRCK: "27"
+};
 
+// Update the metadata using your fileEditing.js logic
+const success = update_metadata(tags, mp3File);
+
+if (success) {
+    return res.json({ message: 'File uploaded and metadata edited successfully' });
+} else {
+    return res.status(500).json({ error: 'Failed to update metadata' });
+}
+});
 
 app.listen(PORT, () => {
-    console.log('Server is running on ${3000}');
+    console.log(`Server is running on ${PORT}`);
 });
-
-
-
 
 // MANUALLY KILLING A LIVE SERVER:
 // PS C:\Users\Calvi\Desktop\MP3 Meta data Project\mp3-metadata> tasklist | findstr "node"

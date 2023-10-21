@@ -1,4 +1,5 @@
 const NodeID3 = require('node-id3')
+module.exports = { update_metadata, read_metadata };
 
 function update_metadata(tags, mp3File) {
     const success = NodeID3.update(tags, mp3File)
@@ -27,5 +28,4 @@ const tags = {
 update_metadata(tags, mp3File)
 console.log(read_metadata(mp3File))
 
-module.exports = { update_metadata, read_metadata };
 
