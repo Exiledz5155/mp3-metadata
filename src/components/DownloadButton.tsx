@@ -2,7 +2,7 @@ import { Button, Box, AbsoluteCenter, Container, Stack, Heading} from '@chakra-u
 
 function DownloadButton(){
     let test = "/test.txt" // ideally the zipped file
-    let files = [test]  // ideally - list of files to be zipped into the zipped file 
+    let files = [test, "another_test.txt"]  // ideally - list of files to be zipped into the zipped file 
     const downloadFileAtURL = (url)=>{
 
         const fileName = url.split("/").pop();  // exclude the file path
