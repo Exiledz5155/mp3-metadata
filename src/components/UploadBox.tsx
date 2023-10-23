@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
-import { update_metadata } from "./fileEditing"; //Adjust the path as needed
+import { update_metadata } from "../app/metadata"; //Adjust the path as needed
+import * as fs from 'node:fs';
 
 export function UploadBox() {
   // Might need to look into dark/light mode for this css
@@ -32,23 +33,6 @@ export function UploadBox() {
     borderColor: "#ff1744",
   };
 
-  // NOT SURE WHAT THIS DOES
-  //   Code from https://react-dropzone.js.org/#section-basic-example
-  //   https://www.digitalocean.com/community/tutorials/react-react-dropzone
-  // const onDrop = useCallback((acceptedFiles: any[]) => {
-  //   acceptedFiles.forEach((file) => {
-  //     const reader = new FileReader();
-
-  //     reader.onabort = () => console.log("file reading was aborted");
-  //     reader.onerror = () => console.log("file reading has failed");
-  //     reader.onload = () => {
-  //       // Do whatever you want with the file contents
-  //       const binaryStr = reader.result;
-  //       console.log(binaryStr);
-  //     };
-  //     reader.readAsArrayBuffer(file);
-  //   });
-  // }, []);
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
