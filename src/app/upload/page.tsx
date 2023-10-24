@@ -1,17 +1,28 @@
-// app/providers.tsx
-"use client";
+// // app/providers.tsx
+// "use client";
 
-import { CacheProvider } from "@chakra-ui/next-js";
-import { Providers } from "../providers";
+// import { CacheProvider } from "@chakra-ui/next-js";
+// import { Providers } from "../providers";
 
-// THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
-// DO NOT MODIFY OR DELETE - Danny
+// // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
+// // DO NOT MODIFY OR DELETE - Danny
 
-export default function Download({ children }: { children: React.ReactNode }) {
+// export default function Download({ children }: { children: React.ReactNode }) {
+//   return (
+//     <CacheProvider>
+//       {/* Place stuff above providers */}
+//       <Providers>{children}</Providers>
+//     </CacheProvider>
+//   );
+// }
+
+import { UploadForm } from "../../components/UploadForm";
+
+export default function UploadPage() {
   return (
-    <CacheProvider>
-      {/* Place stuff above providers */}
-      <Providers>{children}</Providers>
-    </CacheProvider>
+    <div>
+      <h1>File Upload Page</h1>
+      <UploadForm />
+    </div>
   );
 }
