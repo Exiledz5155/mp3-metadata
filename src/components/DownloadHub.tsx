@@ -1,4 +1,9 @@
 import { CacheProvider } from "@chakra-ui/next-js";
+import styled from 'styled-components';
+const StyledText = styled.h1` 
+  font-family: 'Monsterrat', sans-serif; 
+  font-size: 30px; 
+`; 
 import {
   Grid,
   GridItem,
@@ -9,9 +14,34 @@ import {
   Th,
   Tbody,
   Box,
+  Flex,
 } from "@chakra-ui/react";
 import { Providers } from "../app/providers";
 import { MusicCard } from "./MusicCard";
+import { extendTheme } from '@chakra-ui/react'
+const theme = extendTheme({
+  textStyles: {
+    h1: {
+      // you can also use responsive styles
+      fontSize: ['1000px', '1072px'],
+      fontWeight: 'bold',
+      lineHeight: '110%',
+      letterSpacing: '-2%',
+    },
+    h2: {
+      fontSize: ['36px', '48px'],
+      fontWeight: 'semibold',
+      lineHeight: '110%',
+      letterSpacing: '-1%',
+    },
+  },
+})
+
+// 3. Consume the text styles in your component
+function Example() {
+  return <Box textStyle='h1'>This is a box</Box>
+}
+
 
 export default function DownloadHub({
   children,
@@ -44,32 +74,162 @@ export default function DownloadHub({
       "Song 4",
       "Artist 4",
     ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 5",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
+    [
+      "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
+      "image_alt",
+      "Song 4",
+      "Artist 4",
+    ],
   ];
 
   return (
     <CacheProvider>
       {/* Place stuff above providers */}
 
-      <Grid
-        h="100%"
-        w="100%"
-        templateRows="repeat(2, 1fr)"
-        templateColumns="repeat(5, 1fr)"
-        gap={4}
-      >
-        <GridItem
-          rowSpan={2}
-          colSpan={1}
+        <Box
           bg={useColorModeValue("green.400", "gray.900")}
         >
           <Box maxHeight="100%" overflowY="auto">
             <Table colorScheme="green" overflowY="auto">
               <Thead top={0}>
                 <Tr>
-                  <Th>File List</Th>
+                  <Th>
+                    <StyledText>
+                      File List
+                    </StyledText>
+                    </Th>
+                </Tr>
+                <Tr>
+
                 </Tr>
               </Thead>
-              <Tbody>
+              <Tbody textStyle='h1'>
                 {/* Maps the mock data and creates individual MusicCards */}
                 {fileProps.map((file) => (
                   // Make sure backend checks for metadata matching
@@ -81,8 +241,7 @@ export default function DownloadHub({
               </Tbody>
             </Table>
           </Box>
-        </GridItem>
-      </Grid>
+        </Box>
       <Providers>{children}</Providers>
     </CacheProvider>
   );
