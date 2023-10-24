@@ -9,17 +9,19 @@ import {
   Image,
 } from "@chakra-ui/react";
 
-export function MusicCard() {
+export function MusicCard(songData) {
   const music = {
-    imageUrl: "https://nektony.com/wp-content/uploads/2019/08/spotify-icon.png",
-    imageAlt: "Music file Icon",
-    title: "Song Title",
-    artist: "Various Artists",
+    imageUrl: songData.props[0],
+    imageAlt: songData.props[1],
+    title: songData.props[2],
+    artist: songData.props[3],
   };
-
+  // console.log("music:", props);
+  // console.log(songData[0]);
+  // console.log(typeof songData);
   return (
     <Box
-      maxW="sm"
+      maxW="sm%"
       borderWidth="1px"
       borderRadius="lg"
       h="60px"
