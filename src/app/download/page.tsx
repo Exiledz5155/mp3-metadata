@@ -6,16 +6,15 @@ import { Providers } from "../providers";
 import DownloadButton from "../../components/DownloadButton";
 import DownloadHub from "../../components/DownloadHub";
 
-// THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
-// DO NOT MODIFY OR DELETE - Danny
-
 export default function Download({ children }: { children: React.ReactNode }) {
   return (
     <CacheProvider>
-      {/* Place stuff above providers */}
-      <DownloadHub children={""}></DownloadHub>
-      <DownloadButton></DownloadButton>
-      <Providers>{children}</Providers>
+      {/* Place stuff INSIDE providers */}
+      <Providers>
+        <DownloadHub children={""}></DownloadHub>
+        <DownloadButton></DownloadButton>
+        {children}
+      </Providers>
     </CacheProvider>
   );
 }
