@@ -104,42 +104,44 @@ export default function Download({ children }: { children: React.ReactNode }) {
   ];
   return (
     <CacheProvider>
-      {/* Place stuff above providers */}
+      <Providers>
+        {/* Place stuff above providers */}
 
-      <Grid
-        h="100%"
-        w="100%"
-        templateRows="repeat(2, 1fr)"
-        templateColumns="repeat(5, 1fr)"
-        gap={4}
-      >
-        <GridItem
-          rowSpan={2}
-          colSpan={1}
-          bg={useColorModeValue("green.400", "gray.900")}
+        <Grid
+          h="100%"
+          w="100%"
+          templateRows="repeat(2, 1fr)"
+          templateColumns="repeat(5, 1fr)"
+          gap={4}
         >
-          <Box maxHeight="100%" overflowY="auto">
-            <Table colorScheme="green" overflowY="auto">
-              <Thead top={0}>
-                <Tr>
-                  <Th>File List</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {fileHub.map((file) => (
+          <GridItem
+            rowSpan={2}
+            colSpan={1}
+            bg={useColorModeValue("green.400", "gray.900")}
+          >
+            <Box maxHeight="100%" overflowY="auto">
+              <Table colorScheme="green" overflowY="auto">
+                <Thead top={0}>
                   <Tr>
-                    <MusicCard></MusicCard>
+                    <Th>File List</Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </Box>
-        </GridItem>
-        <GridItem colSpan={2} bg="papayawhip" />
-        <GridItem colSpan={2} bg="papayawhip" />
-        <GridItem colSpan={4} bg="tomato" />
-      </Grid>
-      <Providers>{children}</Providers>
+                </Thead>
+                <Tbody>
+                  {fileHub.map((file) => (
+                    <Tr>
+                      <MusicCard></MusicCard>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </Box>
+          </GridItem>
+          <GridItem colSpan={2} bg="papayawhip" />
+          <GridItem colSpan={2} bg="papayawhip" />
+          <GridItem colSpan={4} bg="tomato" />
+        </Grid>
+        {children}
+      </Providers>
     </CacheProvider>
   );
 }
