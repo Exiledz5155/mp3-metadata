@@ -1,10 +1,7 @@
 "use client";
 
-import { CacheProvider } from "@chakra-ui/next-js";
 import styled from "styled-components";
 import {
-  Grid,
-  GridItem,
   useColorModeValue,
   Table,
   Thead,
@@ -12,9 +9,7 @@ import {
   Th,
   Tbody,
   Box,
-  Flex,
 } from "@chakra-ui/react";
-import { Providers } from "../app/providers";
 import { MusicCard } from "./MusicCard";
 import { extendTheme } from "@chakra-ui/react";
 
