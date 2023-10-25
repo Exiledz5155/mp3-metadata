@@ -25,6 +25,7 @@ import {
 } from "@chakra-ui/react";
 import { NumberBox } from "../../components/NumberBox";
 import { Providers } from "../providers";
+import { EditButton } from "../../components/EditButton"
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
@@ -119,7 +120,7 @@ export default function Download({ children }: { children: React.ReactNode }) {
           </Center>
         </GridItem>
       </Grid>
-
+      <EditButton />
       <Providers>{children}</Providers>
     </CacheProvider>
   );
