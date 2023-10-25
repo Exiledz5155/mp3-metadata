@@ -79,127 +79,127 @@ export default function DownloadHub() {
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 6",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 7",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 8",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 9",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 10",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 11",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 12",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 13",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 14",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 15",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 16",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 17",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 18",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 19",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 20",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 21",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 22",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 23",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 24",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 25",
       "Artist 4",
     ],
     [
       "https://www.graphicdesignforum.com/uploads/default/original/2X/8/8f2f98d3793cc6aa38d7566340bd346156523ccd.jpeg",
       "image_alt",
-      "Song 4",
+      "Song 26",
       "Artist 4",
     ],
   ];
@@ -215,7 +215,8 @@ export default function DownloadHub() {
               </Th>
             </Tr>
           </Thead>
-          <Tbody>
+          {/* colormode doesn't seem to respond correctly for Tbody */}
+          <Tbody bg={useColorModeValue("green.400", "gray.900")}>
             {/* Maps the mock data and creates individual MusicCards */}
             {fileProps.map((file) => (
               // Make sure backend checks for metadata matching
