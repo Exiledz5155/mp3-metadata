@@ -9,9 +9,8 @@ import DownloadHub from "../../components/DownloadHub";
 export default function Download({ children }: { children: React.ReactNode }) {
   return (
     <CacheProvider>
-      {/* Place stuff INSIDE providers */}
       <Providers>
-        <DownloadHub children={""}></DownloadHub>
+        <DownloadHub></DownloadHub>
         <DownloadButton></DownloadButton>
         {children}
       </Providers>

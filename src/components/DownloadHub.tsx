@@ -41,11 +41,7 @@ const theme = extendTheme({
   },
 });
 
-export default function DownloadHub({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function DownloadHub() {
   // Creates mock song data
   const fileProps = [
     [
@@ -207,31 +203,28 @@ export default function DownloadHub({
   ];
 
   return (
-    <CacheProvider>
-      <Box bg={useColorModeValue("green.400", "gray.900")}>
-        <Box maxHeight="80%" overflowY="auto">
-          <Table colorScheme="green" overflowY="auto">
-            <Thead top={0}>
-              <Tr>
-                <Th>
-                  <StyledText>File List</StyledText>
-                </Th>
+    <Box bg={useColorModeValue("green.400", "gray.900")}>
+      <Box maxHeight="80%" overflowY="auto">
+        <Table colorScheme="green" overflowY="auto">
+          <Thead top={0}>
+            <Tr>
+              <Th>
+                <StyledText>File List</StyledText>
+              </Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {/* Maps the mock data and creates individual MusicCards */}
+            {fileProps.map((file) => (
+              // Make sure backend checks for metadata matching
+              // Since if 2 songs share the same title, they share the same key
+              <Tr key={file[2]}>
+                <MusicCard props={file}></MusicCard>
               </Tr>
-            </Thead>
-            <Tbody>
-              {/* Maps the mock data and creates individual MusicCards */}
-              {fileProps.map((file) => (
-                // Make sure backend checks for metadata matching
-                // Since if 2 songs share the same title, they share the same key
-                <Tr key={file[2]}>
-                  <MusicCard props={file}></MusicCard>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </Box>
+            ))}
+          </Tbody>
+        </Table>
       </Box>
-      <Providers>{children}</Providers>
-    </CacheProvider>
+    </Box>
   );
 }
