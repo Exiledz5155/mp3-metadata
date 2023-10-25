@@ -18,11 +18,13 @@ import { Providers } from "../app/providers";
 import { MusicCard } from "./MusicCard";
 import { extendTheme } from "@chakra-ui/react";
 
+// NON-CHAKRA UI STYLED TEXT (WORKS)
 const StyledText = styled.h1`
   font-family: "Monsterrat", sans-serif;
   font-size: 30px;
 `;
 
+// CHAKRA UI STYLED TEXT, DOESN'T WORK, WE WANT TO SWITCH TO THIS
 const theme = extendTheme({
   textStyles: {
     h1: {
