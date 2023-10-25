@@ -206,7 +206,7 @@ export default function DownloadHub() {
 
   return (
     <Box bg={useColorModeValue("green.400", "gray.900")}>
-      <Box maxHeight="80%" overflowY="auto">
+      <Box maxHeight="100%" overflowY="auto">
         <Table colorScheme="green" overflowY="auto">
           <Thead top={0}>
             <Tr>

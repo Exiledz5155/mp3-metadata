@@ -10,6 +10,8 @@ import {
 } from "@chakra-ui/react";
 
 export function MusicCard(songData) {
+  // Maps the songData passed in as an object containing an array
+  // We access the object array with .props
   const music = {
     imageUrl: songData.props[0],
     imageAlt: songData.props[1],
