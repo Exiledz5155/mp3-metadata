@@ -7,6 +7,8 @@ import {
   Center,
   Box,
   Image,
+  Checkbox,
+  CheckboxGroup
 } from "@chakra-ui/react";
 
 export function MusicCard(songData) {
@@ -23,32 +25,31 @@ export function MusicCard(songData) {
   // console.log(typeof songData);
   return (
     <Box
-      as='button'
-      maxW="sm%"
+      w="100%"
       borderWidth="1px"
-      borderRadius="lg"
       h="60px"
       overflow="hidden"
-      _hover={{ bg: '#ebedf0' }}
     >
       <Grid
         h="100%"
         w="100%"
-        templateRows="repeat(2, 1fr)"
-        templateColumns="repeat(5, 1fr)"
+        templateRows="repeat(3, 1fr)"
+        templateColumns="repeat(10, 1fr)"
         gap={0}
       >
+        <GridItem rowSpan={3} colSpan={1}>
+          <Checkbox colorScheme='green' defaultChecked/>
+        </GridItem>
         <GridItem
           rowSpan={2}
           colSpan={1}
-          bg={useColorModeValue("green.400", "gray.900")}
         >
           <Center w="60px" h="60px">
             <Image src={music.imageUrl} alt={music.imageAlt} boxSize="50px" />
           </Center>
         </GridItem>
-        <GridItem colSpan={4}>{music.title}</GridItem>
-        <GridItem colSpan={4}>{music.artist}</GridItem>
+        <GridItem colSpan={2} rowSpan={2}>{music.title}</GridItem>
+        <GridItem colSpan={2} rowSpan={2}>{music.artist}</GridItem>
       </Grid>
     </Box>
   );

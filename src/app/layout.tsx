@@ -34,7 +34,7 @@ export default function RootLayout({
           <Navbar />
  
           {/* Refactor this to it's own component */}
-          <DragSelection />
+          {/* <DragSelection /> */}
           <Flex h="125vh">
             {children}
           </Flex>
