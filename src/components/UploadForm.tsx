@@ -1,5 +1,8 @@
 'use client'
 
+import {
+  Button,
+} from "@chakra-ui/react";
 import { useState } from 'react'
 
 export function UploadForm() {
@@ -32,7 +35,6 @@ export function UploadForm() {
         name="file"
         onChange={(e) => setFile(e.target.files?.[0])}
       />
-      <input type="submit" value="Upload" />
     </form>
   )
 }

@@ -1,3 +1,7 @@
+import {
+  Button,
+} from "@chakra-ui/react";
+
 export function EditButton() {
   const handleUpdateMetadata = async () => {
     try {
@@ -16,7 +20,7 @@ export function EditButton() {
 
   return (
     <div>
-      <button onClick={handleUpdateMetadata}>Update Metadata</button>
+      <Button onClick={handleUpdateMetadata}>Update Metadata</Button>
     </div>
   );
 }

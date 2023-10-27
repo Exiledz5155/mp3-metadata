@@ -16,6 +16,7 @@ import {
   Button,
   VStack,
   Text,
+  IconButton,
   Divider,
   NumberInput,
   NumberInputField,
@@ -23,9 +24,11 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "@chakra-ui/react";
+import { SearchIcon } from '@chakra-ui/icons'
 import { NumberBox } from "../../components/NumberBox";
 import { Providers } from "../providers";
 import { EditButton } from "../../components/EditButton"
+import { UploadForm } from "../../components/UploadForm";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
@@ -48,13 +51,18 @@ export default function Download({ children }: { children: React.ReactNode }) {
               color="white"
               borderRadius={10}
             >
-              <VStack spacing={40} align="stretch">
+              <VStack spacing={20} align="stretch">
                 <Center>
                   <Flex p="10px" maxW="300px">
                     <Image src="https://m.media-amazon.com/images/I/71NUQhdZDJL._UF1000,1000_QL80_.jpg" />
                   </Flex>
                 </Center>
-                <Button colorScheme="gray">Upload</Button>
+                <Center>
+                  <EditButton/>
+                </Center>
+                <Button maxW="350px">
+                 <UploadForm/>
+                </Button>
               </VStack>
             </Flex>
           </Center>
@@ -120,7 +128,6 @@ export default function Download({ children }: { children: React.ReactNode }) {
           </Center>
         </GridItem>
       </Grid>
-      <EditButton />
       <Providers>{children}</Providers>
     </CacheProvider>
   );

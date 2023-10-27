@@ -27,7 +27,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Links = ["Upload", "Edit", "Download"];
+const Links = ["Edit", "Download"];
 
 
 // converts a list of props (strings) into a linked ("/examplepage") navbar element
