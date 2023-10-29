@@ -1,7 +1,7 @@
 import * as NodeID3 from 'node-id3';
 //const fs = require('fs');
 
-export function update_metadata(tags: NodeID3.Tags, mp3File: string): boolean {
+export function update_metadata(tags: {}, mp3File: string): boolean {
   try {
     const success = NodeID3.update(tags, mp3File);
     if (success) {

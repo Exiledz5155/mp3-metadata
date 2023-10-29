@@ -13,7 +13,7 @@ import {
   createIcon,
   AspectRatio,
 } from "@chakra-ui/react";
-import { UploadBox } from "./uploadbox";
+import { UploadBox } from "./UploadBox";
 
 // Refactor this to a better name later
 // Modified from https://chakra-templates.dev/page-sections/hero
