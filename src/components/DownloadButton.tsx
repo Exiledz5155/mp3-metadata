@@ -7,7 +7,8 @@ import {
   Heading,
 } from "@chakra-ui/react";
 
-function download(files){
+// Put Zip function here
+function download(files) {
   let test = files[0]; // ideally the zipped file
   const fileName = test.split("/").pop(); // exclude the file path
   const aTag = document.createElement("a"); // create a 'dummy' anchor element
@@ -16,12 +17,12 @@ function download(files){
   document.body.appendChild(aTag);
   aTag.click();
   aTag.remove(); // remove dummy anchor
-};
+}
 
-let DownloadButton = ({selected_files})=> {
-  console.log('inside download button');
+let DownloadButton = ({ selected_files }) => {
+  console.log("inside download button");
   console.log(selected_files);
-  console.log(typeof(selected_files))
+  console.log(typeof selected_files);
   return (
     <Container centerContent>
       <Stack>
@@ -29,10 +30,11 @@ let DownloadButton = ({selected_files})=> {
         <Box bg="green.100" padding={"10px"}>
           {selected_files.map((f) => {
             return (
-            <Box key={f} bg="green.400" textAlign={"center"} padding={"10px"}>
-              {f.split("/").pop()}
-            </Box> // display all the files to be zipped
-          )})}
+              <Box key={f} bg="green.400" textAlign={"center"} padding={"10px"}>
+                {f.split("/").pop()}
+              </Box> // display all the files to be zipped
+            );
+          })}
         </Box>
         <Box position="relative" h="100px">
           <AbsoluteCenter bg="green.100" p="4" color="white" axis="both">
@@ -47,5 +49,5 @@ let DownloadButton = ({selected_files})=> {
       </Stack>
     </Container>
   );
-}
+};
 export default DownloadButton;
