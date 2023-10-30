@@ -3,6 +3,7 @@
 
 import { CacheProvider } from "@chakra-ui/next-js";
 import React, { useState } from 'react';
+import { getFilePaths } from '../fileStorage';
 
 import {
   FormControl,
@@ -29,6 +30,9 @@ import { Providers } from "../providers";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
+
+
+var filePaths =['1'];
 
 export default function Download({ children }: { children: React.ReactNode }) {
   const [formData, setFormData] = useState({
@@ -67,6 +71,10 @@ export default function Download({ children }: { children: React.ReactNode }) {
       console.error('An error occurred:', error);
     }
     };
+
+    filePaths = getFilePaths();
+    //filePaths = ['test']
+    console.log(filePaths)
 
   
   return (
@@ -188,6 +196,7 @@ export default function Download({ children }: { children: React.ReactNode }) {
                 <Text>Length: 4 minutes and 31 seconds</Text>
                 <Text>Date Created: March 15, 2015</Text>
                 <Text>Date Modified: Today</Text>
+                <Text>{ filePaths }</Text>
               </VStack>
             </Flex>
           </Center>
