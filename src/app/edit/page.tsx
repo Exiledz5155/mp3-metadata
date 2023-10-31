@@ -2,8 +2,8 @@
 "use client";
 
 import { CacheProvider } from "@chakra-ui/next-js";
-import React, { useState } from 'react';
-import { getFilePaths } from '../fileStorage';
+import React, { useState, useEffect } from 'react';
+//import { getFilePaths } from '../fileStorage';
 
 import {
   FormControl,
@@ -31,8 +31,6 @@ import { Providers } from "../providers";
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
 
-
-var filePaths =['1'];
 
 export default function Download({ children }: { children: React.ReactNode }) {
   const [formData, setFormData] = useState({
@@ -63,7 +61,6 @@ export default function Download({ children }: { children: React.ReactNode }) {
   
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
       } else {
         console.error('Failed to send metadata.');
       }
@@ -72,9 +69,27 @@ export default function Download({ children }: { children: React.ReactNode }) {
     }
     };
 
-    filePaths = getFilePaths();
-    //filePaths = ['test']
-    console.log(filePaths)
+    //filepaths
+    const [data, setData] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('../api/filepaths');
+        if (response.ok) {
+          const result = await response.json();
+          setData(result);
+        } else {
+          console.error('Request failed with status:', response.status);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
+  const filePaths = data
 
   
   return (
