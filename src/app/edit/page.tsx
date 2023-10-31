@@ -3,7 +3,6 @@
 
 import { CacheProvider } from "@chakra-ui/next-js";
 import React, { useState, useEffect } from 'react';
-//import { getFilePaths } from '../fileStorage';
 
 import {
   FormControl,
@@ -90,6 +89,8 @@ export default function Download({ children }: { children: React.ReactNode }) {
     fetchData();
   }, []);
   const filePaths = data
+  console.log('edit page')
+  console.log(filePaths)
 
   
   return (
@@ -211,7 +212,6 @@ export default function Download({ children }: { children: React.ReactNode }) {
                 <Text>Length: 4 minutes and 31 seconds</Text>
                 <Text>Date Created: March 15, 2015</Text>
                 <Text>Date Modified: Today</Text>
-                <Text>{ filePaths }</Text>
               </VStack>
             </Flex>
           </Center>

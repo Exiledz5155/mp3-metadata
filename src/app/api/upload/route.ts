@@ -1,6 +1,7 @@
 import { writeFile } from 'fs/promises'
 import { NextRequest, NextResponse } from 'next/server'
 import { addFilePath } from '../../fileStorage'
+import { read_metadata } from '../../metadata'
 
 export async function POST(request: NextRequest) {
   const data = await request.formData()
@@ -20,7 +21,12 @@ export async function POST(request: NextRequest) {
   console.log(`open ${path} to see the uploaded file`)
 
   //add to filePaths list
-  addFilePath(path);
+  const fileInfo = read_metadata(path);
+  fileInfo['filePath'] = path
+  //const fileInfo = path
+  console.log('upload route')
+  console.log(fileInfo)
+  addFilePath(fileInfo);
 
 
   return NextResponse.json({ success: true })
