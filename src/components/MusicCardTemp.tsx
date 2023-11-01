@@ -8,10 +8,10 @@ import {
   Box,
   Image,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
 } from "@chakra-ui/react";
 
-export function MusicCard(songData) {
+export function MusicCardTemp(songData) {
   // Maps the songData passed in as an object containing an array
   // We access the object array with .props
   const music = {
@@ -24,12 +24,7 @@ export function MusicCard(songData) {
   // console.log(songData[0]);
   // console.log(typeof songData);
   return (
-    <Box
-      w="100%"
-      borderWidth="1px"
-      h="60px"
-      overflow="hidden"
-    >
+    <Box w="100%" borderWidth="1px" h="60px" overflow="hidden">
       <Grid
         h="100%"
         w="100%"
@@ -38,18 +33,19 @@ export function MusicCard(songData) {
         gap={0}
       >
         <GridItem rowSpan={3} colSpan={1}>
-          <Checkbox colorScheme='green' defaultChecked/>
+          <Checkbox colorScheme="green" defaultChecked />
         </GridItem>
-        <GridItem
-          rowSpan={2}
-          colSpan={1}
-        >
+        <GridItem rowSpan={2} colSpan={1}>
           <Center w="60px" h="60px">
             <Image src={music.imageUrl} alt={music.imageAlt} boxSize="50px" />
           </Center>
         </GridItem>
-        <GridItem colSpan={2} rowSpan={2}>{music.title}</GridItem>
-        <GridItem colSpan={2} rowSpan={2}>{music.artist}</GridItem>
+        <GridItem colSpan={2} rowSpan={2}>
+          {music.title}
+        </GridItem>
+        <GridItem colSpan={2} rowSpan={2}>
+          {music.artist}
+        </GridItem>
       </Grid>
     </Box>
   );
