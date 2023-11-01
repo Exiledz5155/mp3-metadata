@@ -10,7 +10,7 @@ import { EditForm } from "../../components/EditForm";
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
 
-export default function Download({ children }: { children: React.ReactNode }) {
+export default function EditPage({ children }: { children: React.ReactNode }) {
   return (
     <CacheProvider>
       {/* Placeholder for filehub */}
