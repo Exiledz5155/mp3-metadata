@@ -222,7 +222,7 @@ export default function Download({ children }: { children: React.ReactNode }) {
                       // Make sure backend checks for metadata matching
                       // Since if 2 songs share the same title, they share the same key
                       <Tr key={file[2]}>
-                        <MusicCard props={file}></MusicCard>
+                        <MusicCardTemp props={file}></MusicCardTemp>
                       </Tr>
                     ))}
                   </Tbody>
