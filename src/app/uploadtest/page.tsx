@@ -4,7 +4,7 @@
 import { CacheProvider } from "@chakra-ui/next-js";
 import { Providers } from "../providers";
 import { EditCardView } from "../../components/EditCardView";
-import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, Flex, useColorModeValue } from "@chakra-ui/react";
 import { EditForm } from "../../components/EditForm";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
@@ -13,18 +13,18 @@ import { EditForm } from "../../components/EditForm";
 export default function Download({ children }: { children: React.ReactNode }) {
   return (
     <CacheProvider>
+      {/* Placeholder for filehub */}
       <Box bg={useColorModeValue("green.400", "gray.900")}>
-        <Box maxHeight="100%" overflowY="auto"></Box>
+        <Box maxHeight="100%" overflowY="auto">
+          Filehub placeholder for now Filler filler
+        </Box>
       </Box>
-      {/* THIS IS AN EXTRA FLEX BOX, REFACTOR TO 1 LATER
-      The second flex box can be found in EditCardView */}
+
       <Flex
-        alignItems="flex-start"
-        flexDirection="row"
-        p={50}
+        alignItems="center"
+        flexDirection="column"
         w="full"
         justifyContent="center"
-        flexWrap="wrap"
       >
         <EditCardView></EditCardView>
         <EditForm></EditForm>
