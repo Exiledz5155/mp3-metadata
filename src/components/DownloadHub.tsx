@@ -91,7 +91,6 @@ export default function DownloadHub({
                       remover(file);
                       // console.log("Removed the file " + file["title"]);
                     }
-                    k++;
                   }}
                 >
                   <MusicCard props={file}></MusicCard>
