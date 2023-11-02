@@ -1,3 +1,4 @@
+import { DownloadIcon, EmailIcon } from "@chakra-ui/icons";
 import {
   Button,
   Box,
@@ -5,6 +6,7 @@ import {
   Container,
   Stack,
   Heading,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 // Put Zip function here
@@ -33,9 +35,13 @@ let DownloadButton = ({ selected_files }: DownloadButtonProps) => {
   console.log(typeof selected_files);
   return (
     <Container centerContent>
-      <Stack>
+      <Stack               
+        as={Box}
+        textAlign={"center"}
+        spacing={{ base: 4, md: 10 }}
+        py={{ base: 20, md: 36 }}>
         <Heading>Download Your Files Here!</Heading>
-        <Box bg="green.100" padding={"10px"} margin="30px">
+        <Box bg="green.100" padding={"10px"} margin="30px" borderRadius='md' >
           {selected_files.map((f) => {
             return (
               <Box
@@ -44,22 +50,22 @@ let DownloadButton = ({ selected_files }: DownloadButtonProps) => {
                 textAlign={"center"}
                 padding={"10px"}
                 margin={"10px"}
+                borderRadius='sm'
               >
                 {f["title"]}
               </Box> // display all the files to be zipped
             );
           })}
         </Box>
-        <Box position="relative" bg="green.100" margin="30px">
-          <AbsoluteCenter bg="green.400" p="4" color="white" axis="both">
-            <Button
+        {/* <Box position="relative" bg="green.100" margin="30px">
+
+        </Box> */}
+            <Button leftIcon={<DownloadIcon />} colorScheme='green'
               onClick={() => download(selected_files)}
               justifyContent={"center"}
             >
               Download Zip
             </Button>
-          </AbsoluteCenter>
-        </Box>
       </Stack>
     </Container>
   );

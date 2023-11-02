@@ -16,20 +16,20 @@
 //   );
 // }
 
-import { Flex } from "@chakra-ui/react";
+import { Flex, Heading, Container, Stack, Box } from "@chakra-ui/react";
 import { UploadForm } from "../../components/UploadForm";
 
 export default function UploadPage() {
   return (
-    <Flex
-      alignItems="center"
-      flexDirection="column"
-      w="full"
-      justifyContent="right"
-      mt={40}
-    >
-      <h1>File Upload</h1>
+    <Container centerContent>
+      <Stack
+        as={Box}
+        textAlign={"center"}
+        spacing={{ base: 4, md: 10 }}
+        py={{ base: 20, md: 36 }}>
+      <Heading>File Upload</Heading>
       <UploadForm />
-    </Flex>
+    </Stack>
+    </Container>
   );
 }
