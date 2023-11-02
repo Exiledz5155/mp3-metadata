@@ -15,7 +15,36 @@ import {
   Container,
 } from "@chakra-ui/react";
 
-export function EditCardView() {
+function loadFileView(selectFile) {
+  if (selectFile !== undefined) {
+    try {
+      let f = selectFile[0];
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
+}
+
+export function EditCardView({ selectFile }) {
+  let f;
+
+  try {
+    // Galaxy brain bug fix PLEASE DO NOT DELETE THANK
+    f = selectFile[0]["title"];
+    f = selectFile[0];
+  } catch (error) {
+    console.error("An error occurred:", error);
+    // Provide a default value or take appropriate action
+    f = {
+      title: "Title Not Available",
+      artist: "Artist Not Available",
+      album: "Album Not Available",
+      year: "Year Not Available",
+      genre: "Genre Not Available",
+      trackNumber: "Track Number Not Available",
+    };
+  }
+
   return (
     <Card
       bg={useColorModeValue("green.400", "gray.900")}
@@ -38,7 +67,7 @@ export function EditCardView() {
           flexDirection="column"
         >
           <Text ml={5} mb={5} as="b" fontSize="3xl">
-            Song Title
+            {f["title"]}
           </Text>
 
           <Text
@@ -48,23 +77,23 @@ export function EditCardView() {
             mb={5}
             fontSize="xl"
           >
-            Artist
+            {f["artist"]}
           </Text>
 
           <Text ml={5} mb={5} fontSize="xl">
-            Album Title
+            {f["album"]}
           </Text>
 
           <Text ml={5} mb={5} fontSize="l">
-            Year
+            {f["year"]}
           </Text>
 
           <Text ml={5} mb={5} fontSize="l">
-            Genre
+            {f["genre"]}
           </Text>
 
           <Text ml={5} mb={5} fontSize="l">
-            Track #
+            {f["trackNumber"]}
           </Text>
         </Box>
       </Flex>

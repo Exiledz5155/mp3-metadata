@@ -22,13 +22,13 @@ export function MusicCard(songData) {
   // console.log(typeof songData);
   return (
     <Box
-      as='button'
+      as="button"
       maxW="sm%"
       borderWidth="1px"
       borderRadius="lg"
       h="60px"
       overflow="hidden"
-      _hover={{ bg: '#ebedf0' }}
+      _hover={{ bg: "#ebedf0" }}
     >
       <Grid
         h="100%"
@@ -43,7 +43,11 @@ export function MusicCard(songData) {
           bg={useColorModeValue("green.400", "gray.900")}
         >
           <Center w="60px" h="60px">
-            <Image src={music.imageUrl} alt={"Image not displayed"} boxSize="50px" />
+            <Image
+              src={music.imageUrl}
+              alt={"Image not displayed"}
+              boxSize="50px"
+            />
           </Center>
         </GridItem>
         <GridItem colSpan={4}>{music.title}</GridItem>

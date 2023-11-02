@@ -63,7 +63,7 @@ export default function EditPage({ children }: { children: React.ReactNode }) {
         w="full"
         justifyContent="center"
       >
-        <EditCardView></EditCardView>
+        <EditCardView selectFile={selected}></EditCardView>
         <EditForm selectFile={selected}></EditForm>
       </Flex>
 

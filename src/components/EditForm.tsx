@@ -15,8 +15,8 @@ import { useState, useEffect } from "react";
 // DO NOT MODIFY OR DELETE - Danny
 
 export function EditForm({ selectFile }) {
-  const filePath = selectFile['filePath'];
-  console.log(filePath)
+  // const filePath = selectFile['filePath'];
+  // console.log(filePath)
 
   const [formData, setFormData] = useState({
     title: "",
@@ -38,8 +38,8 @@ export function EditForm({ selectFile }) {
     e.preventDefault();
     console.log(formData);
     try {
-      const filePath = selectFile[0]['filePath'];
-      formData['filePath'] = filePath;
+      const filePath = selectFile[0]["filePath"];
+      formData["filePath"] = filePath;
       const response = await fetch("../api/update-metadata", {
         method: "PUT",
         headers: {
