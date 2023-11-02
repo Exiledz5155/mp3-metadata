@@ -1,7 +1,9 @@
-export var filePaths = []
+const filePaths = []
+export default filePaths;   // made this a default export
 
 export function addFilePath(path) {
     filePaths.push(path);
+    console.log("Pushed to filePaths", filePaths)
     const paths = getFilePaths();
 }
 
