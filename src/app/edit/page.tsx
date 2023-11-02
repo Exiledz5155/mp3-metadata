@@ -4,7 +4,13 @@
 import { CacheProvider } from "@chakra-ui/next-js";
 import { Providers } from "../providers";
 import { EditCardView } from "../../components/EditCardView";
-import { Box, Container, Flex, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Flex,
+  HStack,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { EditForm } from "../../components/EditForm";
 import { useState, useEffect } from "react";
 import DownloadHub from "../../components/DownloadHub";
@@ -50,24 +56,26 @@ export default function EditPage({ children }: { children: React.ReactNode }) {
 
   return (
     <CacheProvider>
-      <DownloadHub
-        selected_files={selected}
-        fileProps={fileProps}
-        adder={selectFile}
-        remover={deselectFile}
-      ></DownloadHub>
+      <Providers>
+        <DownloadHub
+          selected_files={selected}
+          fileProps={fileProps}
+          adder={selectFile}
+          remover={deselectFile}
+        ></DownloadHub>
 
-      <Flex
-        alignItems="center"
-        flexDirection="column"
-        w="full"
-        justifyContent="center"
-      >
-        <EditCardView selectFile={selected}></EditCardView>
-        <EditForm selectFile={selected}></EditForm>
-      </Flex>
-
-      <Providers>{children}</Providers>
+        <Flex
+          alignItems="center"
+          flexDirection="column"
+          w="full"
+          justifyContent="right"
+          mt={55}
+        >
+          <EditCardView selectFile={selected}></EditCardView>
+          <EditForm selectFile={selected}></EditForm>
+        </Flex>
+        {children}
+      </Providers>
     </CacheProvider>
   );
 }

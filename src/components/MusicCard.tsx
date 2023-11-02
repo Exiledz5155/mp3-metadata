@@ -43,11 +43,7 @@ export function MusicCard(songData) {
           bg={useColorModeValue("green.400", "gray.900")}
         >
           <Center w="60px" h="60px">
-            <Image
-              src={music.imageUrl}
-              alt={"Image not displayed"}
-              boxSize="50px"
-            />
+            <Image src={music.imageUrl} alt={"An Image"} boxSize="50px" />
           </Center>
         </GridItem>
         <GridItem colSpan={4}>{music.title}</GridItem>

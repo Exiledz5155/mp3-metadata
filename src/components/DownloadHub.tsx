@@ -16,7 +16,7 @@ import { extendTheme } from "@chakra-ui/react";
 // NON-CHAKRA UI STYLED TEXT (WORKS)
 const StyledText = styled.h1`
   font-family: "Monsterrat", sans-serif;
-  font-size: 30px;
+  font-size: 25px;
 `;
 
 type DownloadHubProps = {
@@ -55,7 +55,7 @@ export default function DownloadHub({
   console.log("Inside DownloadHub");
   console.log("fileProps: ", fileProps);
   console.log("selectedFiles: ", selected_files);
-  let k = 0;
+  // let k = 0;
   // console.log("typeof :", typeof fileProps);
   return (
     <Box bg={useColorModeValue("green.400", "gray.900")}>

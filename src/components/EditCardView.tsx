@@ -54,7 +54,7 @@ export function EditCardView({ selectFile }) {
     >
       <Flex alignItems={"center"}>
         <Image
-          src="https://m.media-amazon.com/images/I/71NUQhdZDJL._UF1000,1000_QL80_.jpg"
+          src="https://i1.sndcdn.com/artworks-000168416914-fnqzbz-t500x500.jpg"
           alt="Sample Image"
           boxSize="300px"
           objectFit="cover"

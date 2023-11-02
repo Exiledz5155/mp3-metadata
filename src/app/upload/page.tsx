@@ -16,13 +16,20 @@
 //   );
 // }
 
+import { Flex } from "@chakra-ui/react";
 import { UploadForm } from "../../components/UploadForm";
 
 export default function UploadPage() {
   return (
-    <div>
-      <h1>File Upload Page</h1>
+    <Flex
+      alignItems="center"
+      flexDirection="column"
+      w="full"
+      justifyContent="right"
+      mt={40}
+    >
+      <h1>File Upload</h1>
       <UploadForm />
-    </div>
+    </Flex>
   );
 }
