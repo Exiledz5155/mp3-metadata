@@ -28,7 +28,7 @@ export function MusicCard(songData) {
       borderRadius="lg"
       h="60px"
       overflow="hidden"
-      _hover={{ bg: "#ebedf0" }}
+      _hover={{ bg: "gray.700" }}
     >
       <Grid
         h="100%"
@@ -43,7 +43,13 @@ export function MusicCard(songData) {
           bg={useColorModeValue("green.400", "gray.900")}
         >
           <Center w="60px" h="60px">
-            <Image src={music.imageUrl} alt={"An Image"} boxSize="50px" />
+            <Image
+              src={
+                "https://i1.sndcdn.com/artworks-000168416914-fnqzbz-t500x500.jpg"
+              }
+              alt={"An Image"}
+              boxSize="50px"
+            />
           </Center>
         </GridItem>
         <GridItem colSpan={4}>{music.title}</GridItem>
