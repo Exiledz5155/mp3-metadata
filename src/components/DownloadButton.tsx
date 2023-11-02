@@ -11,19 +11,27 @@ import {
 function download(files) {
   console.log("Inside download")
   for(let i = 0; i < files.length; i++){
-    let f = files[i]; // ideally the zipped file
-    const fileName = (f["filePath"]).split("/").pop(); // exclude the file path
+    let f = files[i]; 
+    const fileName = (f["filePath"]).split("/").pop();
     console.log(fileName)
-    const aTag = document.createElement("a"); // create a 'dummy' anchor element
+    const aTag = document.createElement("a");
     const filePath = f["filePath"]
     console.log(filePath);
-    aTag.href = filePath
-    aTag.setAttribute("download", fileName); // allow dummy element to be downloaded
+    // create a blob object from the file data
+    const blob = new Blob([f["raw"]], {type: "audio/mpeg"});
+    // create a blob URL from the blob object
+    const blobURL = URL.createObjectURL(blob);
+    // use the blob URL as the href attribute
+    aTag.href = blobURL;
+    aTag.setAttribute("download", fileName);
     document.body.appendChild(aTag);
     aTag.click();
     aTag.remove(); // remove dummy anchor
+    // revoke the blob URL to free memory
+    URL.revokeObjectURL(blobURL);
   }
 }
+
 type DownloadButtonProps = {
   selected_files: JSON[]
 };
