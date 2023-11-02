@@ -74,8 +74,6 @@ export function EditForm() {
     fetchData();
   }, []);
   const filePaths = data;
-  console.log("edit page");
-  console.log(filePaths);
 
   return (
     <Container>

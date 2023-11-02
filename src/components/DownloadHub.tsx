@@ -45,13 +45,18 @@ const theme = extendTheme({
   },
 });
 
-export default function DownloadHub({selected_files, fileProps, adder, remover}: DownloadHubProps) {
+export default function DownloadHub({
+  selected_files,
+  fileProps,
+  adder,
+  remover,
+}: DownloadHubProps) {
   // Creates mock song data
-  console.log("Inside DownloadHub")
+  console.log("Inside DownloadHub");
   console.log("fileProps: ", fileProps);
   console.log("selectedFiles: ", selected_files);
   let k = 0;
-  console.log("typeof :", typeof(fileProps))
+  // console.log("typeof :", typeof fileProps);
   return (
     <Box bg={useColorModeValue("green.400", "gray.900")}>
       <Box maxHeight="100%" overflowY="auto">
@@ -68,27 +73,31 @@ export default function DownloadHub({selected_files, fileProps, adder, remover}:
             {/* Maps the mock data and creates individual MusicCards */}
             {fileProps.map((file) => {
               return (
-              // Make sure backend checks for metadata matching
-              // Since if 2 songs share the same title, they share the same key
-                <Tr key={file["title"]} onClick={()=>{
-                  console.log("You clicked on me!")
-                  console.log("k:", k)
-                  let file_index = selected_files.indexOf(file);
-                  if(file_index == -1){ // file isn't selected, so add it
-                    adder(file);
-                    console.log("file: " + file)
-                    console.log("title:" + file["title"])
-                    console.log("Added the file " + file["title"])
-                  }
-                  else{
-                    remover(file);
-                    console.log("Removed the file " + file["title"])
-                  }
-                  k++;
-                }}>
-                    <MusicCard props={file}></MusicCard>  
+                // Make sure backend checks for metadata matching
+                // Since if 2 songs share the same title, they share the same key
+                <Tr
+                  key={file["title"]}
+                  onClick={() => {
+                    // console.log("You clicked on me!");
+                    // console.log("k:", k);
+                    let file_index = selected_files.indexOf(file);
+                    if (file_index == -1) {
+                      // file isn't selected, so add it
+                      adder(file);
+                      console.log("file: " + file);
+                      // console.log("title:" + file["title"])
+                      // console.log("Added the file " + file["title"])
+                    } else {
+                      remover(file);
+                      // console.log("Removed the file " + file["title"]);
+                    }
+                    k++;
+                  }}
+                >
+                  <MusicCard props={file}></MusicCard>
                 </Tr>
-            )})}
+              );
+            })}
           </Tbody>
         </Table>
       </Box>
