@@ -33,3 +33,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ignore all files in tmp
+public/tmp/*
+
+# exception to the rule above
+!public/tmp/All Alone.mp3
+
