@@ -20,10 +20,10 @@ const StyledText = styled.h1`
 `;
 
 type DownloadHubProps = {
-  selected_files: string[];
-  fileProps: string[][];
-  adder: (file: string) => void;
-  remover: (file: string) => void;
+  selected_files: JSON[];
+  fileProps: JSON[];
+  adder: (file: JSON) => void;
+  remover: (file: JSON) => void;
 };
 
 // CHAKRA UI STYLED TEXT, DOESN'T WORK, WE WANT TO SWITCH TO THIS
@@ -68,16 +68,16 @@ export default function DownloadHub({selected_files, fileProps, adder, remover}:
               return (
               // Make sure backend checks for metadata matching
               // Since if 2 songs share the same title, they share the same key
-                <Tr key={file[2]} onClick={()=>{
+                <Tr key={file["title"]} onClick={()=>{
                   console.log("You clicked on me!")
-                  let file_index = selected_files.indexOf(file[2]);
+                  let file_index = selected_files.indexOf(file);
                   if(file_index == -1){ // file isn't selected, so add it
-                    adder(file[2]);
-                    console.log("Added the file " + file[2])
+                    adder(file);
+                    console.log("Added the file " + file["title"])
                   }
                   else{
-                    remover(file[2]);
-                    console.log("Removed the file " + file[2])
+                    remover(file);
+                    console.log("Removed the file " + file["title"])
                   }
                 }}>
                     <MusicCard props={file}></MusicCard>  
