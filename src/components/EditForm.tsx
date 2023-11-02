@@ -14,7 +14,10 @@ import { useState, useEffect } from "react";
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
 
-export function EditForm() {
+export function EditForm({ selectFile }) {
+  const filePath = selectFile['filePath'];
+  console.log(filePath)
+
   const [formData, setFormData] = useState({
     title: "",
     artist: "",
@@ -35,6 +38,8 @@ export function EditForm() {
     e.preventDefault();
     console.log(formData);
     try {
+      const filePath = selectFile[0]['filePath'];
+      formData['filePath'] = filePath;
       const response = await fetch("../api/update-metadata", {
         method: "PUT",
         headers: {

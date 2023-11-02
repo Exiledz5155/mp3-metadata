@@ -7,7 +7,8 @@ export async function PUT(req, res) {
     const tags = await req.json();
     //TODO remove empty fields from dict
     console.log(tags);
-    const mp3File = "C:/tmp/test.mp3";
+    const mp3File = tags.filePath;
+    delete tags['filePath'];
 
     const success = update_metadata(tags, mp3File);
 

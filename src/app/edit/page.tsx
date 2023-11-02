@@ -50,7 +50,6 @@ export default function EditPage({ children }: { children: React.ReactNode }) {
 
   return (
     <CacheProvider>
-      {/* Placeholder for filehub */}
       <DownloadHub
         selected_files={selected}
         fileProps={fileProps}
@@ -65,7 +64,7 @@ export default function EditPage({ children }: { children: React.ReactNode }) {
         justifyContent="center"
       >
         <EditCardView></EditCardView>
-        <EditForm></EditForm>
+        <EditForm selectFile={selected}></EditForm>
       </Flex>
 
       <Providers>{children}</Providers>
