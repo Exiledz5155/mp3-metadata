@@ -13,10 +13,9 @@ export function MusicCard(songData) {
   // Maps the songData passed in as an object containing an array
   // We access the object array with .props
   const music = {
-    imageUrl: songData.props[0],
-    imageAlt: songData.props[1],
-    title: songData.props[2],
-    artist: songData.props[3],
+    imageUrl: songData.props["image"],
+    title: songData.props["title"],
+    artist: songData.props["artist"],
   };
   // console.log("music:", props);
   // console.log(songData[0]);
@@ -44,7 +43,7 @@ export function MusicCard(songData) {
           bg={useColorModeValue("green.400", "gray.900")}
         >
           <Center w="60px" h="60px">
-            <Image src={music.imageUrl} alt={music.imageAlt} boxSize="50px" />
+            <Image src={music.imageUrl} alt={"Image not displayed"} boxSize="50px" />
           </Center>
         </GridItem>
         <GridItem colSpan={4}>{music.title}</GridItem>

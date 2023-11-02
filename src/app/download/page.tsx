@@ -27,7 +27,7 @@ useEffect(() => {
 
   fetchData();
 }, []);
-const fileProps = data
+const fileProps = data 
 console.log('download page')
 console.log(fileProps)
 
