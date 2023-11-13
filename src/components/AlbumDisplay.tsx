@@ -41,9 +41,11 @@ export function AlbumDisplay() {
       <Card>
         <CardHeader>
           <Heading size='md'>Your Albums</Heading>
+          
         </CardHeader>
-        <Divider />
+        <Divider/>
         <CardBody>
+        
           <Wrap>
             <WrapItem>
               <AspectRatio w='150px' ratio={3 / 4}>
@@ -54,7 +56,7 @@ export function AlbumDisplay() {
                 w="100%"
                 h="100%"
                 overflow="hidden"
-                _hover={{bg: "#F6F6F6", _dark:{bg: "#1A202C"}}}
+                _hover={{bg: "#F6F6F6", _dark:{bg: "#1A202C"}, w:"160px", h:"210px", m:"-5px"}}
                 display='flex'
                 boxShadow='2xl' rounded='md'
               >
@@ -63,15 +65,24 @@ export function AlbumDisplay() {
                   templateColumns='repeat(6, 1fr)'
                 >
                   <GridItem rowSpan={6} colSpan={6}>
-                  <Image src={"https://media.s-bol.com/3BBmVKWZ4GM/1200x1191.jpg"} alt={"An Image"} w="100%"/>
+                    <Center w="100%" h="100%">
+                      <Image src={"https://media.s-bol.com/3BBmVKWZ4GM/1200x1191.jpg"} alt={"An Image"} w="90%"/>                     
+                    </Center>
                   </GridItem>
-                  <GridItem colSpan={6} rowSpan={1}><Text as='b' align='left' noOfLines={1}>The Album 1 2 3 4 5 1 2 3 4</Text></GridItem>
-                  <GridItem colSpan={6} rowSpan={1}><Text align='left' noOfLines={1}>Rick Astley</Text></GridItem>
+                  <GridItem colSpan={6} rowSpan={1}>
+                    <Center w="100%" h="100%">
+                      <Text as='b' align='left' noOfLines={1} w="90%">The Album 1 2 3 4 5 1 2 3 4</Text>            
+                    </Center>
+                  </GridItem>
+                  <GridItem colSpan={6} rowSpan={1}>
+                    <Center w="100%" h="100%">
+                      <Text align='left' noOfLines={1} w="90%">Rick Astley</Text>         
+                    </Center>
+                  </GridItem>
                 </Grid>
               </Box>
               </AspectRatio> 
             </WrapItem>
-            
             
           </Wrap>
         </CardBody>
