@@ -27,13 +27,13 @@ function loadFileView(selectFile) {
 
 export function EditCardView({ selectFile }) {
   let f;
-
+  
   try {
     // Galaxy brain bug fix PLEASE DO NOT DELETE THANK
     f = selectFile[0]["title"];
     f = selectFile[0];
   } catch (error) {
-    console.error("An error occurred:", error);
+    //console.error("An error occurred:", error);
     // Provide a default value or take appropriate action
     f = {
       title: "Title Not Available",

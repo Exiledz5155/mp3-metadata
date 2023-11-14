@@ -33,7 +33,7 @@ const Links = ["Upload", "Edit", "Download"];
 // converts a list of props (strings) into a linked ("/examplepage") navbar element
 const NavLink = (props: Props) => {
   const { children } = props;
-  console.log(typeof children);
+  //console.log(typeof children);
   return (
     <Box
       as="a"

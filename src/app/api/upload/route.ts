@@ -24,8 +24,8 @@ export async function POST(request: NextRequest) {
   const fileInfo = read_metadata(path);
   fileInfo["filePath"] = path;
   //const fileInfo = path
-  console.log("upload route");
-  console.log(fileInfo);
+  // console.log("upload route");
+  // console.log(fileInfo);
   addFilePath(fileInfo);
 
   return NextResponse.json({ success: true });

@@ -28,8 +28,7 @@ useEffect(() => {
   fetchData();
 }, []);
 const fileProps = data 
-console.log('download page')
-console.log(fileProps)
+console.log('download page received fileProps', fileProps)
 
   const [selected, setSelected] = useState([]); // set of selected file
  // const addFile = (f)=> {

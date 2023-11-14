@@ -37,10 +37,9 @@ export default function EditPage({ children }: { children: React.ReactNode }) {
     }
 
     fetchData();
-  }, []);
+  });
   const fileProps = data;
-  // console.log("download page");
-  // console.log(fileProps);
+  console.log('edit page received fileProps', fileProps)
 
   const [selected, setSelected] = useState([]); // set of selected file
   // const addFile = (f)=> {

@@ -11,7 +11,7 @@ import {
 
 // Put Zip function here
 function download(files) {
-  console.log("Inside download");
+  // console.log("Inside download");
   for (let i = 0; i < files.length; i++) {
     let f = files[i];
     const fileName = f["filePath"].split("/").pop();
@@ -30,9 +30,9 @@ type DownloadButtonProps = {
   selected_files: JSON[];
 };
 let DownloadButton = ({ selected_files }: DownloadButtonProps) => {
-  console.log("inside download button");
-  console.log(selected_files);
-  console.log(typeof selected_files);
+  // console.log("inside download button");
+  // console.log(selected_files);
+  // console.log(typeof selected_files);
   return (
     <Container centerContent>
       <Stack               

@@ -17,5 +17,12 @@ export function update_metadata(tags: {}, mp3File: string): boolean {
 }
 
 export function read_metadata(mp3File: string): NodeID3.Tags {
+  //add error checking?
   return NodeID3.read(mp3File);
+}
+
+export function reset_metadata(mp3File: string) {
+  //add error checking?
+  console.log("in reset_metadata from metadata.tsx")
+  return NodeID3.removeTags(mp3File)
 }
