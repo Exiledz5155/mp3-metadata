@@ -40,10 +40,10 @@ export function AlbumDisplay() {
       {/* Editable Text in a Column View */}
       <Card>
         <CardHeader>
-          <Heading size='md'>Your Albums</Heading>
+          <Heading size='lg' pl="20px">Your Albums</Heading>
           
         </CardHeader>
-        <Divider/>
+        <Box pl="40px"><Divider/></Box>
         <CardBody>
         
           <Wrap>
@@ -65,8 +65,8 @@ export function AlbumDisplay() {
                   templateColumns='repeat(6, 1fr)'
                 >
                   <GridItem rowSpan={6} colSpan={6}>
-                    <Center w="100%" h="100%">
-                      <Image src={"https://media.s-bol.com/3BBmVKWZ4GM/1200x1191.jpg"} alt={"An Image"} w="90%"/>                     
+                    <Center w="100%" h="100%" >
+                      <Image src={"https://media.s-bol.com/3BBmVKWZ4GM/1200x1191.jpg"} alt={"An Image"} w="90%" rounded='md'/>                     
                     </Center>
                   </GridItem>
                   <GridItem colSpan={6} rowSpan={1}>
