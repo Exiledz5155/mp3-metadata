@@ -18,7 +18,8 @@ import {
   useColorMode,
   Stack,
   defineStyle, 
-  defineStyleConfig
+  defineStyleConfig,
+  Card
 } from "@chakra-ui/react";
   import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
   import { Link } from "@chakra-ui/next-js";
@@ -40,7 +41,6 @@ const NavLink = (props: Props) => {
       px={2}
       py={1}
       rounded={"md"}
-      color='white'
       _hover={{
         textDecoration: "none",
         bg: useColorModeValue("green.500", "gray.700"),
@@ -59,11 +59,10 @@ export function Navbar() {
 
   return (
     <>
-      <Box bg={useColorModeValue("green.400", "gray.900")} px={4}>
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+      <Card px={4} position="fixed" overflow='hidden' w="100%" borderRadius="0">
+        <Flex h={16} alignItems={"center"} justifyContent={"space-between"} position="static">
           <IconButton
             size={"md"}
-            colorScheme='green'
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={"Open Menu"}
             display={{ md: "none" }}
@@ -80,21 +79,18 @@ export function Navbar() {
               }}
               href="/"
             >
-              <Box marginLeft={10} color={'white'}>MP3 Metadata</Box>
+              <Box marginLeft={10}><Text as='b'>MP3 Metadata</Text></Box>
             </Link>
             <HStack
               as={"nav"}
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <NavLink key={link} >{link}</NavLink>
-              ))}
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
             <Stack direction={'row'} spacing={7}>
-              <Button onClick={toggleColorMode} colorScheme='green'>
+              <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
             </Stack>
@@ -110,7 +106,7 @@ export function Navbar() {
             </Stack>
           </Box>
         ) : null}
-      </Box>
+      </Card>
     </>
   );
 }

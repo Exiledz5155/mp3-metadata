@@ -31,8 +31,8 @@ export default function RootLayout({
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         {/* For styling to work, components need to be placed under providers */}
         <Providers>
-          <Navbar />
- 
+          {/* <Navbar />
+  */}
           {/* Refactor this to it's own component */}
           {/* <DragSelection /> */}
           <Flex h="125vh">
