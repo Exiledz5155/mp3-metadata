@@ -51,16 +51,33 @@ import { AlbumInfoSection } from "./AlbumInfoSection";
 
 export function SongDisplay() {
   return (
-    <Container maxW="container.xxl">
+    <Container maxW="container.xxl" maxHeight={"100vh"} mt={"-10"}>
       {/* Editable Text in a Column View */}
-      <Card p={"20px"}>
+      <Card p={"20px"} h="100%" overflow={"hidden"} pb={0}>
         <AlbumInfoSection></AlbumInfoSection>
-        <CardBody m={"0"} px={0} pt={"8"}>
-          <Grid>
-            <GridItem colSpan={1}>
-              <Box overflow={"auto"} alignItems={"center"}>
-                <SongGridLabel></SongGridLabel>
-                <Divider />
+        <CardBody m={"0"} px={0} pt={"8"} h="100%" overflowY={"auto"}>
+          <Grid h="100%">
+            <SongGridLabel></SongGridLabel>
+            <Divider />
+            <GridItem colSpan={1} overflowY={"auto"}>
+              <Box overflowY={"auto"} h={"100%"} alignItems={"center"}>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
+                <SongGridCard></SongGridCard>
                 <SongGridCard></SongGridCard>
                 <SongGridCard></SongGridCard>
                 <SongGridCard></SongGridCard>

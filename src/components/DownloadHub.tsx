@@ -58,7 +58,7 @@ export default function DownloadHub({
   // let k = 0;
   // console.log("typeof :", typeof fileProps);
   return (
-    <Box bg={useColorModeValue("green.400", "gray.900")}>
+    <Box maxHeight={"100vh"} bg={useColorModeValue("green.400", "gray.900")}>
       <Box maxHeight="100%" overflowY="auto">
         <Table colorScheme="green" overflowY="auto">
           <Thead top={0}>
