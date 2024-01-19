@@ -1,8 +1,10 @@
+"use client";
+
 import { Box, Center, Heading, Stack } from "@chakra-ui/react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { chakra } from "@chakra-ui/react";
 
-const LinkButton   = chakra<typeof NextLink, NextLinkProps>(NextLink, {
+const LinkButton = chakra<typeof NextLink, NextLinkProps>(NextLink, {
   // ensure that you're forwarding all of the required props for your case
   shouldForwardProp: (prop) => ["href", "target", "children"].includes(prop),
 });
@@ -23,7 +25,7 @@ export function Home() {
           MP3 Metadata Editor
         </Heading>
         <LinkButton
-          href="albums"
+          href="/editor/albums"
           p={2}
           color="white"
           fontSize={{ base: "md", sm: "lg", md: "lg" }}
