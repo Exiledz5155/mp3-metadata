@@ -88,7 +88,7 @@ export function Navbar() {
               display={{ base: "none", md: "flex" }}
             >
               {Links.map((link) => (
-                <NavLink key={link} >{link}</NavLink>
+                <Link href={link.toLowerCase()} >{link}</Link>
               ))}
             </HStack>
           </HStack>
