@@ -1,7 +1,7 @@
 "use client";
 
 import { Providers } from "../providers";
-import { Box } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { chakra } from "@chakra-ui/react";
 
@@ -17,19 +17,24 @@ export default function RootLayout({
 }) {
   return (
     <Providers>
-      <Box  p="4">
-        <LinkButton
-          href="/"
-          color="white"
-          fontSize={{ base: "md", sm: "lg", md: "lg" }}
-          bgClip="text"
-          fontWeight='extrabold'
-          bgGradient="linear(to-r, purple.600, cyan.600)"
-        >
-          MP3 Metadata
-        </LinkButton>
+      <Box bg={useColorModeValue("white", "black")} h='100vh'>
+        <Box p="4">
+          <LinkButton
+            href="/"
+            color="white"
+            fontSize={{ base: "md", sm: "lg", md: "lg" }}
+            bgClip="text"
+            fontWeight="extrabold"
+            bgGradient="linear(to-r, purple.600, cyan.600)"
+            _hover={{
+              bgGradient: "linear(to-r, purple.300, cyan.300)",
+            }}
+          >
+            MP3 Metadata
+          </LinkButton>
+        </Box>
+        {children}
       </Box>
-      {children}
     </Providers>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Center, Heading, Stack } from "@chakra-ui/react";
+import { Box, Center, Heading, Stack, useColorModeValue } from "@chakra-ui/react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { chakra } from "@chakra-ui/react";
 
@@ -17,6 +17,8 @@ export function Home() {
         textAlign={"left"}
         spacing={{ base: 4, md: 10 }}
         py={{ base: 20, md: 60 }}
+        bg={useColorModeValue("white", "black")}
+        h = '100vh'
       >
         <Heading
           fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
