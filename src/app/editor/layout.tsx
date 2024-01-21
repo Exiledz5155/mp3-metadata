@@ -5,6 +5,7 @@ import { Box, useColorModeValue } from "@chakra-ui/react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { chakra } from "@chakra-ui/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const LinkButton = chakra<typeof NextLink, NextLinkProps>(NextLink, {
   // ensure that you're forwarding all of the required props for your case
@@ -18,7 +19,6 @@ export default function RootLayout({
 }) {
   return (
     <Providers>
-      <SpeedInsights />
       <Box bg={useColorModeValue("white", "black")} h="100vh">
         <Box p="4">
           <LinkButton
@@ -37,6 +37,8 @@ export default function RootLayout({
         </Box>
         {children}
       </Box>
+      <SpeedInsights />
+      <Analytics />
     </Providers>
   );
 }
