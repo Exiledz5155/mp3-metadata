@@ -2,7 +2,7 @@
 "use client";
 
 import { CacheProvider } from "@chakra-ui/next-js";
-import { Providers } from "../providers";
+import { Providers } from "../../app/providers";
 import {
   FormControl,
   FormLabel,
