@@ -13,7 +13,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { UploadForm } from "../../components/UploadForm";
+import { UploadForm } from "../../../components/UploadForm";
 
 export default function editPopUp() {
   return (
@@ -26,9 +26,9 @@ export default function editPopUp() {
         w={"50%"}
       >
         {/* row flex */}
-        <Flex  flexDirection={"row"}>
+        <Flex flexDirection={"row"}>
           {/* 1'st column flex with image */}
-          <Flex flexDirection={"column"} >
+          <Flex flexDirection={"column"}>
             <Text mb={"1em"} as={"b"} fontSize={"xl"}>
               {" "}
               Edit{" "}
@@ -84,7 +84,7 @@ export default function editPopUp() {
                 placeholder="Enter Album Artist(s)"
               />
             </FormControl>
-            
+
             <Stack
               ml={"3em"}
               mt={"1.9em"}

@@ -13,9 +13,9 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { UploadForm } from "../../components/UploadForm";
-import { ImagForm } from "../../components/ImagForm";
-import { EditInput } from "../../components/EditInput";
+import { UploadForm } from "../../../components/UploadForm";
+import { ImagForm } from "../../../components/ImagForm";
+import { EditInput } from "../../../components/EditInput";
 
 export default function editPopUp() {
   return (
@@ -28,9 +28,9 @@ export default function editPopUp() {
         w={"50%"}
       >
         {/* row flex */}
-        <Flex  flexDirection={"row"}>
-          < ImagForm />
-          < EditInput/>
+        <Flex flexDirection={"row"}>
+          <ImagForm />
+          <EditInput />
         </Flex>
       </Card>
     </Flex>
