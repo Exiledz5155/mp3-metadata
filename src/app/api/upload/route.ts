@@ -1,32 +1,26 @@
-import { writeFile } from "fs/promises";
-import { NextRequest, NextResponse } from "next/server";
-import { addFilePath } from "../../fileStorage";
-import { read_metadata } from "../../metadata";
+import { put } from "@vercel/blob";
+import { NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
-  const data = await request.formData();
-  const file: File | null = data.get("file") as unknown as File;
+export async function POST(request: Request): Promise<NextResponse> {
+  const { searchParams } = new URL(request.url);
+  const filename = searchParams.get("filename");
 
-  if (!file) {
-    return NextResponse.json({ success: false });
-  }
+  // ⚠️ The below code is for App Router Route Handlers only
+  const blob = await put(filename, request.body, {
+    access: "public",
+  });
 
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
+  // Here's the code for Pages API Routes:
+  // const blob = await put(filename, request, {
+  //   access: 'public',
+  // });
 
-  // With the file data in the buffer, you can do whatever you want with it.
-  // For this, we'll just write it to the filesystem in a new location
-  const path = `public/tmp/${file.name}`;
-  await writeFile(path, buffer);
-  console.log(`open ${path} to see the uploaded file`);
-
-  //add to filePaths list
-  const fileInfo = read_metadata(path);
-  fileInfo["filePath"] = path;
-  //const fileInfo = path
-  console.log("upload route");
-  console.log(fileInfo);
-  addFilePath(fileInfo);
-
-  return NextResponse.json({ success: true });
+  return NextResponse.json(blob);
 }
+
+// The next lines are required for Pages API Routes only
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
