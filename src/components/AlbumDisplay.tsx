@@ -1,6 +1,7 @@
 // app/providers.tsx
 "use client";
 
+import { Link } from "@chakra-ui/next-js";
 import {
   Button,
   Card,
@@ -28,7 +29,6 @@ import {
   Wrap,
   IconButton,
   WrapItem,
-  Link,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
@@ -48,7 +48,7 @@ export function AlbumDisplay() {
           <Wrap>
             <WrapItem>
               <AspectRatio w="150px" ratio={3 / 4}>
-                <Link href="./album-view">
+                <Link href="./album-view" _hover={{ as:'none' }}>
                   <Box
                     as="button"
                     borderWidth="1px"
