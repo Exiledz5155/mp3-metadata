@@ -68,7 +68,7 @@ export function AlbumDisplay() {
                       <GridItem rowSpan={6} colSpan={6}>
                         <Image
                           src={
-                            "https://media.s-bol.com/3BBmVKWZ4GM/1200x1191.jpg"
+                            "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
                           }
                           p={2}
                           borderRadius="md"
@@ -78,12 +78,12 @@ export function AlbumDisplay() {
                       </GridItem>
                       <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                         <Text as="b" align="left" noOfLines={1}>
-                          The Album 1 2 3 4 5 1 2 3 4
+                          Goodbye & Good Riddance
                         </Text>
                       </GridItem>
                       <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                         <Text align="left" noOfLines={1}>
-                          Rick Astley
+                          Juice WRLD
                         </Text>
                       </GridItem>
                     </Grid>
