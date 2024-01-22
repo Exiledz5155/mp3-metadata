@@ -1,6 +1,7 @@
 "use client";
 
-import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
+import { Heading, extendTheme, type ThemeConfig } from "@chakra-ui/react";
+import "@fontsource/roboto-mono";
 
 const config: ThemeConfig = {
   initialColorMode: "dark",
@@ -20,6 +21,10 @@ export const theme = extendTheme({
     brand: {
       100: "#121212",
       200: "#171717",
+      300: "#222222",
     },
+  },
+  fonts: {
+    mono: `'Roboto Mono', monospace`,
   },
 });

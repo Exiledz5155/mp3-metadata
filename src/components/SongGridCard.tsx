@@ -38,11 +38,11 @@ export function SongGridCard() {
       align={"center"}
       borderRadius={"10px"}
       justify={"space-between"}
-      _hover={!isClicked && { bg: "#F6F6F6", _dark: { bg: "gray.600" } }}
+      _hover={!isClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
       onClick={handleClick} // Attach the click event handler
-      bg={isClicked ? "#F6F6F6" : isHovered ? "#F6F6F6" : "transparent"} // Update the background color based on isClicked state and hover state
+      bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
       _dark={{
-        bg: isClicked ? "gray.500" : isHovered ? "gray.600" : "transparent",
+        bg: isClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
       }}
       py={"2"}
       cursor={"pointer"}
@@ -71,7 +71,13 @@ export function SongGridCard() {
       <Text textAlign={"center"} noOfLines={1}>
         Goodbye & Good Riddance
       </Text>
-      <Text textAlign={"center"} mr={"4"} noOfLines={1}>
+      <Text
+        textAlign={"center"}
+        mr={"4"}
+        noOfLines={1}
+        fontFamily={"mono"}
+        letterSpacing={"-10%"}
+      >
         1:14
       </Text>
     </HStack>
