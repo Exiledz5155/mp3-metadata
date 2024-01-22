@@ -48,19 +48,19 @@ export function AlbumDisplay() {
           <Wrap>
             <WrapItem>
               <AspectRatio w="150px" ratio={3 / 4}>
-                <Link href="./album-view">
-                  <Box
-                    as="button"
-                    borderWidth="1px"
-                    borderRadius="lg"
-                    w="100%"
-                    h="100%"
-                    overflow="hidden"
-                    _hover={{ bg: "#F6F6F6", _dark: { bg: "#1A202C" } }}
-                    display="flex"
-                    boxShadow="2xl"
-                    rounded="md"
-                  >
+                <Box
+                  as="button"
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  w="100%"
+                  h="100%"
+                  overflow="hidden"
+                  _hover={{ bg: "#F6F6F6", _dark: { bg: "brand.200" } }}
+                  display="flex"
+                  boxShadow="2xl"
+                  rounded="md"
+                >
+                  <Link href="./album-view" _hover={{ textDecoration: "none" }}>
                     <Grid
                       templateRows="repeat(8, 1fr)"
                       templateColumns="repeat(6, 1fr)"
@@ -87,8 +87,8 @@ export function AlbumDisplay() {
                         </Text>
                       </GridItem>
                     </Grid>
-                  </Box>
-                </Link>
+                  </Link>
+                </Box>
               </AspectRatio>
             </WrapItem>
           </Wrap>
