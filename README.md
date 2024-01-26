@@ -23,6 +23,7 @@ yarn dev
 pnpm dev
 # or
 bun dev
+```
 
 1. Start the Next.js server: `npm run dev`
 2. Access the application in your browser: [http://localhost:3000](http://localhost:3000)
@@ -60,21 +61,22 @@ We might want to add details about how to interact with our system. We wil need 
 import { editMetadata } from 'mp3-metadata-editor';
 
 const editedFile = editMetadata(file, metadata);
+```
 
 ## Security Considerations
 
 - Uploaded files are stored securely using Azure Blob Storage.
-- Session IDs and u8ploaded files are quickly discarded after use.
+- Session IDs and uploaded files are quickly discarded after use.
 
 For any inquiries, feel free to contact the project maintainers:
 
-Calvin Duddingston: duddi021@umn.edu
-Danny Bui: bui00109@umn.edu
-Nicholas Hinds: hinds084@umn.edu
-Nelson Trinh: trinh127@umn.edu
-Bernie Nnadi: nnadi014@umn.edu
-Aidan Ruiz: ruiz0150@umn.edu
-Mark Gustafson: gust0971@umn.edu
-Ethan Harris: harr3380@umn.edu
-Charles Sayles: sayle093@umn.edu
+- Calvin Duddingston: duddi021@umn.edu
+- Danny Bui: bui00109@umn.edu
+- Nicholas Hinds: hinds084@umn.edu
+- Nelson Trinh: trinh127@umn.edu
+- Bernie Nnadi: nnadi014@umn.edu
+- Aidan Ruiz: ruiz0150@umn.edu
+- Mark Gustafson: gust0971@umn.edu
+- Ethan Harris: harr3380@umn.edu
+- Charles Sayles: sayle093@umn.edu
 /* IF YOUR NAME ISN'T HERE ADD IT*/
