@@ -21,5 +21,9 @@ export const theme = extendTheme({
       100: "#121212",
       200: "#171717",
     },
+    linear:{
+      100: "#8795D5",
+      200: "#CF97F4"
+    },
   },
 });
