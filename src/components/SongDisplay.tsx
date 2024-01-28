@@ -58,6 +58,7 @@ export function SongDisplay() {
       pb={0}
       bg={useColorModeValue("white", "brand.100")}
       w="100%"
+      rounded={"xl"}
     >
       <AlbumInfoSection></AlbumInfoSection>
       <CardBody m={"0"} px={0} pt={"8"}>

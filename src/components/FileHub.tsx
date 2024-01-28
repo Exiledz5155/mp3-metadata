@@ -24,7 +24,12 @@ import { FileHubAlbum } from "./FileHubAlbum";
 
 export function FileHub() {
   return (
-    <Card bg={useColorModeValue("white", "brand.100")} h="100%" p={"20px"}>
+    <Card
+      bg={useColorModeValue("white", "brand.100")}
+      h="100%"
+      p={"20px"}
+      rounded={"xl"}
+    >
       <CardBody maxH={"100vh"} overflow={"auto"} p={"0"}>
         <Box bg="brand.100">
           <InputGroup

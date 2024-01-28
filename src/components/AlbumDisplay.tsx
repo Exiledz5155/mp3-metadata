@@ -39,7 +39,7 @@ import { AlbumDisplayItem } from "./AlbumDisplayItem";
 
 export function AlbumDisplay() {
   return (
-    <Card bg={useColorModeValue("white", "brand.100")} h="100%">
+    <Card bg={useColorModeValue("white", "brand.100")} h="100%" rounded={"xl"}>
       <CardHeader>
         <Heading size="lg">Your Albums</Heading>
       </CardHeader>
