@@ -1,23 +1,28 @@
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { Flex, FormControl, FormLabel, Input, Stack, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Button,
+} from "@chakra-ui/react";
 
-
-export function EditInput(){
-
-    return (
-        <>
-        <Flex flexDirection={"column"}>
-        <FormControl ml={"3em"} mt={"2.75em"} mb={"1em"}>
+export function EditInput() {
+  return (
+    <>
+      <Flex flexDirection={"column"}>
+        <FormControl mt={"3em"} mb={"12%"}>
           <FormLabel>Song Title</FormLabel>
           <Input type="text" name="Title" placeholder="Enter Song Title" />
         </FormControl>
 
-        <FormControl ml={"3em"} mt={"1em"} mb={"1em"}>
+        <FormControl mb={"12%"}>
           <FormLabel>Artist(s)</FormLabel>
           <Input type="text" name="atist" placeholder="Enter Artist(s)" />
         </FormControl>
 
-        <FormControl ml={"3em"} mt={"1em"} mb={"1em"}>
+        <FormControl mb={"12%"}>
           <FormLabel>Album Title</FormLabel>
           <Input
             type="text"
@@ -26,7 +31,7 @@ export function EditInput(){
           />
         </FormControl>
 
-        <FormControl ml={"3em"} mt={"1em"} mb={"1em"}>
+        <FormControl mb={"10%"}>
           <FormLabel>Album Artist(s)</FormLabel>
           <Input
             type="text"
@@ -34,14 +39,8 @@ export function EditInput(){
             placeholder="Enter Album Artist(s)"
           />
         </FormControl>
-        
-        <Stack
-          ml={"3em"}
-          mt={"1.9em"}
-          align={"center"}
-          spacing={"6em"}
-          direction={"row"}
-        >
+
+        <Stack mt={"10%"} align={"center"} spacing={"2em"} direction={"row"}>
           <Button
             leftIcon={<CheckIcon />}
             colorScheme="blue"
@@ -62,6 +61,6 @@ export function EditInput(){
           </Button>
         </Stack>
       </Flex>
-      </>
-    );
+    </>
+  );
 }

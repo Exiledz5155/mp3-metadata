@@ -17,7 +17,7 @@
 // }
 
 import { Flex, Heading, Container, Stack, Box } from "@chakra-ui/react";
-import { UploadForm } from "../../components/UploadForm";
+import { UploadForm } from "../components/UploadForm";
 
 export default function UploadPage() {
   return (
@@ -26,10 +26,11 @@ export default function UploadPage() {
         as={Box}
         textAlign={"center"}
         spacing={{ base: 4, md: 10 }}
-        py={{ base: 20, md: 36 }}>
-      <Heading>File Upload</Heading>
-      <UploadForm />
-    </Stack>
+        py={{ base: 20, md: 36 }}
+      >
+        <Heading>File Upload</Heading>
+        <UploadForm />
+      </Stack>
     </Container>
   );
 }

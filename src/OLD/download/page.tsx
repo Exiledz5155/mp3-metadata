@@ -3,8 +3,8 @@
 
 import { CacheProvider } from "@chakra-ui/next-js";
 import { Providers } from "../../app/providers";
-import DownloadButton from "../../components/DownloadButton";
-import DownloadHub from "../../components/DownloadHub";
+import DownloadButton from "../components/DownloadButton";
+import DownloadHub from "../components/DownloadHub";
 import { useState, useEffect } from "react"; // will need to refactor to useContext in layout.tsx
 
 export default function Download({ children }: { children: React.ReactNode }) {

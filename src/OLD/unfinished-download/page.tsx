@@ -3,8 +3,6 @@
 
 import { CacheProvider } from "@chakra-ui/next-js";
 import { Providers } from "../../app/providers";
-import DownloadButton from "../../components/DownloadButton";
-import DownloadHub from "../../components/DownloadHub";
 import {
   Box,
   Heading,
@@ -26,7 +24,7 @@ import {
   TableCaption,
   Tfoot,
 } from "@chakra-ui/react";
-import { MusicCardTemp } from "../../components/MusicCardTemp";
+import { MusicCardTemp } from "../components/MusicCardTemp";
 // Remember to change and reimport MusicCard
 
 export default function Download({ children }: { children: React.ReactNode }) {
