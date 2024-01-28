@@ -34,7 +34,7 @@ export function FileHubAlbum() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Box pt="5">
+    <Box pb={1}>
       <Box
         as="button"
         w="100%"

@@ -15,6 +15,7 @@ import {
   InputGroup,
   InputLeftElement,
   HStack,
+  Spacer,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 
@@ -27,7 +28,7 @@ export function FileHub() {
       <CardBody maxH={"100vh"} overflow={"auto"} p={"0"}>
         <Box bg="brand.100">
           <InputGroup
-            pb="4"
+            pb="5"
             w="100%"
             bgGradient="linear(to-r, linear.100, linear.200)"
             bgClip={"text"}
@@ -41,9 +42,15 @@ export function FileHub() {
             leftIcon={<AddIcon />}
             w="100%"
             bgGradient="linear(to-r, linear.100, linear.200)"
+            mb={5}
           >
             Upload Files
           </Button>
+          <FileHubAlbum />
+          <FileHubAlbum />
+          <FileHubAlbum />
+          <FileHubAlbum />
+          <FileHubAlbum />
           <FileHubAlbum />
         </Box>
       </CardBody>
