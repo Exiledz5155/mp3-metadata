@@ -14,7 +14,6 @@ import { chakra } from "@chakra-ui/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { FileHub } from "../../components/FileHub";
-import DownloadHub from "../../components/DownloadHub";
 
 const LinkButton = chakra<typeof NextLink, NextLinkProps>(NextLink, {
   // ensure that you're forwarding all of the required props for your case
