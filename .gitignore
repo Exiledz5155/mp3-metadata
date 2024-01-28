@@ -40,3 +40,5 @@ public/tmp/*
 # exception to the rule above
 !public/tmp/All Alone.mp3
 
+.env.development.local
+
