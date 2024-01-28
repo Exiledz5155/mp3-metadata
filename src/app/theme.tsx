@@ -23,6 +23,10 @@ export const theme = extendTheme({
       200: "#171717",
       300: "#222222",
     },
+    linear:{
+      100: "#8795D5",
+      200: "#CF97F4"
+    },
   },
   fonts: {
     mono: `'Roboto Mono', monospace`,

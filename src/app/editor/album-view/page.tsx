@@ -23,15 +23,7 @@ import { SongDisplay } from "../../../components/SongDisplay";
 export default function AlbumView() {
   return (
     <Providers>
-      <Flex
-        alignItems="center"
-        flexDirection="column"
-        w="full"
-        justifyContent="right"
-        mt={55}
-      >
-        <SongDisplay></SongDisplay>
-      </Flex>
+      <SongDisplay></SongDisplay>
     </Providers>
   );
 }
