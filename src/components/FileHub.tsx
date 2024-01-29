@@ -16,7 +16,10 @@ import {
   InputLeftElement,
   HStack,
   Spacer,
-  Accordion
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 
@@ -52,7 +55,26 @@ export function FileHub() {
           >
             Upload Files
           </Button>
-          <Accordion>
+          <Accordion
+            allowMultiple
+            sx={{
+              ".chakra-accordion__item": {
+                borderTop: "none",
+                borderBottom: "none",
+                padding: "0", // Remove padding from accordion item
+                margin: "0", // Remove margin from accordion item
+              },
+              ".chakra-accordion__button": {
+                padding: "0", // Remove padding from accordion button
+              },
+              ".chakra-accordion__panel": {
+                padding: "0", // Remove padding from accordion panel
+              },
+              ".chakra-accordion__button:focus": {
+                boxShadow: "none",
+              },
+            }}
+          >
             <FileHubAlbum />
             <FileHubAlbum />
             <FileHubAlbum />
