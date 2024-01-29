@@ -2,7 +2,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Center, HStack, Image, Text } from "@chakra-ui/react";
+import { 
+  Box, 
+  Center, 
+  VStack,
+  HStack, 
+  Image, 
+  Text,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon 
+} from "@chakra-ui/react";
 
 export function FileHubAlbum() {
   // Use state to track whether the card is clicked
@@ -34,24 +45,25 @@ export function FileHubAlbum() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Box>
-      <Box
-        as="button"
-        w="100%"
-        borderRadius="lg"
-        h="55px"
-        overflow="hidden"
-        _hover={!isClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
-        onClick={handleClick} // Attach the click event handler
-        bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
-        _dark={{
-          bg: isClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
-        }}
-        cursor={"pointer"}
-        onMouseOver={handleHover} // Attach the hover event handler
-        onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
-      >
-        <HStack spacing="10px">
+    <AccordionItem>
+      <AccordionButton>
+        <Box
+          as="button"
+          w="100%"
+          borderRadius="lg"
+          h="55px"
+          overflow="hidden"
+          _hover={!isClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
+          onClick={handleClick} // Attach the click event handler
+          bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
+          _dark={{
+            bg: isClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
+          }}
+          cursor={"pointer"}
+          onMouseOver={handleHover} // Attach the hover event handler
+          onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
+        >  
+         <HStack spacing="10px">
           <Center w="55px" h="55px">
             <Image
               src={
@@ -61,12 +73,23 @@ export function FileHubAlbum() {
               borderRadius="base"
               boxSize="45px"
             />
-          </Center>
+          </Center>  
           <Text noOfLines={1} maxW={200} align="left">
             Goodbye & Good Riddance
           </Text>
         </HStack>
-      </Box>
-    </Box>
+        </Box>
+      </AccordionButton>
+          <AccordionPanel>
+            <VStack spacing="10px">
+              <Box>
+                Song 1
+              </Box>
+              <Box>
+                Song 2
+              </Box>
+            </VStack>
+          </AccordionPanel>
+      </AccordionItem>
   );
 }

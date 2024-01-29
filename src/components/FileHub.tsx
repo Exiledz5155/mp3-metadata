@@ -16,6 +16,7 @@ import {
   InputLeftElement,
   HStack,
   Spacer,
+  Accordion
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 
@@ -51,12 +52,14 @@ export function FileHub() {
           >
             Upload Files
           </Button>
-          <FileHubAlbum />
-          <FileHubAlbum />
-          <FileHubAlbum />
-          <FileHubAlbum />
-          <FileHubAlbum />
-          <FileHubAlbum />
+          <Accordion>
+            <FileHubAlbum />
+            <FileHubAlbum />
+            <FileHubAlbum />
+            <FileHubAlbum />
+            <FileHubAlbum />
+            <FileHubAlbum />
+          </Accordion>
         </Box>
       </CardBody>
     </Card>
