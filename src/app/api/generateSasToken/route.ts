@@ -5,8 +5,8 @@ export async function GET() {
     // Setup for Azure Storage and SAS token generation
     const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME || '';
     const accountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY || '';
-    const containerName = "test"; // Replace with actual container name
-    const blobName = "test.mp3"; // Replace with the intended blob name
+    const containerName = "test"; //what container file will be uploaded to // each uuid should probably get their own container
+    const blobName = "test.mp3"; //name of file within container // should probably match file name of whats being uploaded?
 
     const sharedKeyCredential = new StorageSharedKeyCredential(accountName, accountKey);
     const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_STORAGE_CONNECTION_STRING || '');
