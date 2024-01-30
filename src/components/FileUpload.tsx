@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 
 interface FileUploadProps {
@@ -44,14 +45,14 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess, onUploadFailur
 export default FileUpload;
 
 async function uploadFile(file: File): Promise<Response> {
-    // Implement the upload logic here.
-    // Make sure to adjust this function to properly fetch your SAS token
-    // and construct the request to Azure Blob Storage.
-    
-    const response = await fetch('/api/get-sas-token'); // Adjust the endpoint as needed
+    const response = await fetch('/api/generateSasToken');
     const { blobUrl, sasToken } = await response.json();
 
-    const fullBlobUrl = `${blobUrl}?${sasToken}`;
+    const blobName = "test.mp3" //Workaround for now this is supposed to be coming in with blobName
+
+    const fullBlobUrl = `${blobUrl}/${blobName}?${sasToken}`;
+    console.log("blob url:", blobUrl) //DELETE ME
+    console.log("full url:", fullBlobUrl) //logging. DELETE ME
     const requestOptions: RequestInit = {
         method: 'PUT',
         headers: {
