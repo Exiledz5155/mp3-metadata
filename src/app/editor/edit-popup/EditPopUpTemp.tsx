@@ -13,7 +13,6 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { UploadForm } from "../../../components/UploadForm";
 
 export default function editPopUp() {
   return (

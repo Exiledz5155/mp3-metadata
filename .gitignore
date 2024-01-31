@@ -42,6 +42,7 @@ public/tmp/*
 
 .env.development.local
 
+
 # Environment Variables
 .env
 

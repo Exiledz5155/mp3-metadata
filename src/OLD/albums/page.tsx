@@ -11,9 +11,8 @@ import {
   HStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { EditForm } from "../../components/EditForm";
 import { useState, useEffect } from "react";
-import DownloadHub from "../../components/DownloadHub";
+import DownloadHub from "../components/DownloadHub";
 import { AlbumDisplay } from "../../components/AlbumDisplay";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
