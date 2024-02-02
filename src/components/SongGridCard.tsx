@@ -38,7 +38,7 @@ export function SongGridCard() {
       align={"center"}
       borderRadius={"10px"}
       justify={"space-between"}
-      _hover={!isClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
+      _hover={!isClicked && { bg: "brand.300", _dark: { bg: "brand.200"} }}
       onClick={handleClick} // Attach the click event handler
       bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
       _dark={{

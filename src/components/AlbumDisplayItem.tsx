@@ -21,7 +21,7 @@ export function AlbumDisplayItem() {
           w="100%"
           h="100%"
           overflow="hidden"
-          _hover={{ bg: "#F6F6F6", _dark: { bg: "brand.300" } }}
+          _hover={{ bg: "#F6F6F6", _dark: { bg: "brand.300", bgGradient: "linear(to-r, linear.100, linear.200)", bgClip: "border-box"} }}
           bg={useColorModeValue("white", "brand.200")}
           display="flex"
           boxShadow="2xl" // no effect?
