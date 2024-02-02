@@ -28,36 +28,6 @@ import React, { useRef } from "react";
 // DO NOT MODIFY OR DELETE - Danny
 
 export function FileHub() {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const files = event.target.files;
-    if (files && files[0]) {
-      const formData = new FormData();
-      formData.append("file", files[0]);
-
-      try {
-        const response = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (response.ok) {
-          console.log("File uploaded successfully");
-          // Handle success
-        } else {
-          console.error("Upload failed");
-          // Handle error
-        }
-      } catch (error) {
-        console.error("Error uploading file", error);
-        // Handle error
-      }
-    }
-  };
-
   return (
     <Card
       bg={useColorModeValue("white", "brand.100")}
