@@ -79,4 +79,5 @@ For any inquiries, feel free to contact the project maintainers:
 - Mark Gustafson: gust0971@umn.edu
 - Ethan Harris: harr3380@umn.edu
 - Charles Sayles: sayle093@umn.edu
+- Daniel Tran: tran1116@umn.edu
 /* IF YOUR NAME ISN'T HERE ADD IT*/
