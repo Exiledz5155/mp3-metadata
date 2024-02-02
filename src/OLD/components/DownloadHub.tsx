@@ -14,10 +14,6 @@ import { MusicCard } from "./MusicCard";
 import { extendTheme } from "@chakra-ui/react";
 
 // NON-CHAKRA UI STYLED TEXT (WORKS)
-const StyledText = styled.h1`
-  font-family: "Monsterrat", sans-serif;
-  font-size: 25px;
-`;
 
 type DownloadHubProps = {
   selected_files: JSON[];
@@ -64,7 +60,7 @@ export default function DownloadHub({
           <Thead top={0}>
             <Tr>
               <Th>
-                <StyledText>File List</StyledText>
+                File List
               </Th>
             </Tr>
           </Thead>

@@ -27,7 +27,7 @@ function loadFileView(selectFile) {
 
 export function EditCardView({ selectFile }) {
   let f;
-
+  console.log("selectedFile", selectFile)
   try {
     // Galaxy brain bug fix PLEASE DO NOT DELETE THANK
     f = selectFile[0]["title"];
