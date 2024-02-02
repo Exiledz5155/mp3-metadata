@@ -48,16 +48,10 @@ export function FileHub() {
             </InputLeftElement>
             <Input placeholder="Search files" borderColor="linear.100" />
           </InputGroup>
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileUpload}
-            style={{ display: "none" }}
-          />
+          <input type="file" style={{ display: "none" }} />
           <Button
             leftIcon={<AddIcon />}
             w="100%"
-            onClick={() => fileInputRef.current?.click()}
             bgGradient="linear(to-r, linear.100, linear.200)"
             mb={5}
           >
