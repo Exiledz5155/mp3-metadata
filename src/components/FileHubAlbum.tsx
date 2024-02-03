@@ -14,6 +14,7 @@ import {
   AccordionPanel,
   AccordionIcon 
 } from "@chakra-ui/react";
+import { FileHubCard } from "./FileHubCard";
 
 export function FileHubAlbum() {
   // Use state to track whether the card is clicked
@@ -81,14 +82,11 @@ export function FileHubAlbum() {
         </Box>
       </AccordionButton>
           <AccordionPanel>
-            <VStack spacing="10px">
-              <Box>
-                Song 1
-              </Box>
-              <Box>
-                Song 2
-              </Box>
-            </VStack>
+            <FileHubCard />
+            <FileHubCard />
+            <FileHubCard />
+            <FileHubCard />
+            <FileHubCard />
           </AccordionPanel>
       </AccordionItem>
   );
