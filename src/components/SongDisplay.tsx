@@ -54,10 +54,10 @@ export function SongDisplay() {
     <Card
       p={"20px"}
       h={"100%"}
+      maxH={"93.25vh"}
       overflow={"hidden"}
       pb={0}
       bg={useColorModeValue("white", "brand.100")}
-      w="100%"
       rounded={"xl"}
     >
       <AlbumInfoSection></AlbumInfoSection>

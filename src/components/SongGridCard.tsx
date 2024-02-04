@@ -38,13 +38,13 @@ export function SongGridCard() {
       align={"center"}
       borderRadius={"10px"}
       justify={"space-between"}
-      _hover={!isClicked && { bg: "brand.300", _dark: { bg: "brand.200"} }}
+      _hover={!isClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
       onClick={handleClick} // Attach the click event handler
       bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
       _dark={{
         bg: isClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
       }}
-      py={"2"}
+      py={"1"}
       cursor={"pointer"}
       onMouseOver={handleHover} // Attach the hover event handler
       onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
@@ -61,7 +61,7 @@ export function SongGridCard() {
           borderRadius={"5px"}
           mx={"4"}
         />
-        <Text textAlign={"center"} noOfLines={1}>
+        <Text textAlign={"center"} noOfLines={1} maxWidth={"50%"}>
           Intro
         </Text>
       </Flex>

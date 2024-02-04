@@ -39,11 +39,17 @@ import { AlbumDisplayItem } from "./AlbumDisplayItem";
 
 export function AlbumDisplay() {
   return (
-    <Card bg={useColorModeValue("white", "brand.100")} h="100%" rounded={"xl"}>
+    <Card
+      bg={useColorModeValue("white", "brand.100")}
+      h="100%"
+      rounded={"xl"}
+      maxH={"93.25vh"}
+      overflow={"hidden"}
+    >
       <CardHeader>
         <Heading size="lg">Your Albums</Heading>
       </CardHeader>
-      <CardBody>
+      <CardBody overflowY={"auto"}>
         <Wrap spacing={"5"}>
           {/* TODO: Make size of AlbumDisplayItem slightly responsive
           so that the padding on the right side of the screen is the same

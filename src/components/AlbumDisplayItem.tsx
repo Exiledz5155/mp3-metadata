@@ -10,6 +10,7 @@ import {
   useColorModeValue,
   Text,
   Image,
+  Fade,
 } from "@chakra-ui/react";
 
 export function AlbumDisplayItem() {
@@ -21,7 +22,14 @@ export function AlbumDisplayItem() {
           w="100%"
           h="100%"
           overflow="hidden"
-          _hover={{ bg: "#F6F6F6", _dark: { bg: "brand.300", bgGradient: "linear(to-r, linear.100, linear.200)", bgClip: "border-box"} }}
+          _hover={{
+            bg: "#F6F6F6",
+            _dark: {
+              bg: "brand.300",
+              bgGradient: "linear(to-r, linear.100, linear.200)", // Add fade transition, not traditionally possible with gradient
+              bgClip: "border-box",
+            },
+          }}
           bg={useColorModeValue("white", "brand.200")}
           display="flex"
           boxShadow="2xl" // no effect?
