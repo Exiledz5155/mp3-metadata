@@ -78,6 +78,6 @@ For any inquiries, feel free to contact the project maintainers:
 - Aidan Ruiz: ruiz0150@umn.edu
 - Mark Gustafson: gust0971@umn.edu
 - Aitan Singh: sing0922@umn.edu
-- Ethan Harris: harr3380@umn.edu
+- Ethan Harris: harr3380@umn.edu 
 - Charles Sayles: sayle093@umn.edu
 - Daniel Tran: tran1116@umn.edu
