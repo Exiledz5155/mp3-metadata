@@ -81,5 +81,3 @@ For any inquiries, feel free to contact the project maintainers:
 - Ethan Harris: harr3380@umn.edu
 - Charles Sayles: sayle093@umn.edu
 - Daniel Tran: tran1116@umn.edu
-
-/* IF YOUR NAME ISN'T HERE ADD IT*/
