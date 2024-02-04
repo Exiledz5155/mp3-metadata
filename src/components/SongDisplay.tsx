@@ -45,11 +45,38 @@ import { useState, useEffect } from "react";
 import { SongGridCard } from "./SongGridCard";
 import { SongGridLabel } from "./SongGridLabel";
 import { AlbumInfoSection } from "./AlbumInfoSection";
+import React from "react";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
 
 export function SongDisplay() {
+  const SongGridCards = [
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+    <SongGridCard />,
+  ];
+
   return (
     <Card
       p={"20px"}
@@ -68,28 +95,11 @@ export function SongDisplay() {
           <GridItem colSpan={1}>
             <Box maxH={"72vh"} overflowY="auto">
               {/* TODO: Implement mapping function here */}
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
-              <SongGridCard></SongGridCard>
+              {SongGridCards.map((card, index) =>
+                React.cloneElement(card, {
+                  isLast: index === SongGridCards.length - 1,
+                })
+              )}
             </Box>
           </GridItem>
         </Grid>
