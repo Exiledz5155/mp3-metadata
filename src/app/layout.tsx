@@ -1,19 +1,19 @@
 // app/layout.tsx
 
-'use client'
-import { DarkModeButton } from '../components/DarkModeButton'
-import { Providers } from './providers'
+"use client";
+import { DarkModeButton } from "../components/DarkModeButton";
+import { Providers } from "./providers";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode,
+  children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body>
         <Providers>{children}</Providers>
       </body>
     </html>
-  )
+  );
 }

@@ -44,7 +44,7 @@ export function SongGridCard() {
       _dark={{
         bg: isClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
       }}
-      py={"2"}
+      py={"1"}
       cursor={"pointer"}
       onMouseOver={handleHover} // Attach the hover event handler
       onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
@@ -61,7 +61,7 @@ export function SongGridCard() {
           borderRadius={"5px"}
           mx={"4"}
         />
-        <Text textAlign={"center"} noOfLines={1}>
+        <Text textAlign={"center"} noOfLines={1} maxWidth={"50%"}>
           Intro
         </Text>
       </Flex>

@@ -31,11 +31,12 @@ export function FileHub() {
   return (
     <Card
       bg={useColorModeValue("white", "brand.100")}
-      h="100%"
+      h={"100%"}
+      maxH={"93.25vh"}
       p={"20px"}
       rounded={"xl"}
     >
-      <CardBody maxH={"100vh"} overflow={"auto"} p={"0"}>
+      <CardBody overflow={"hidden"} p={"0"}>
         <Box bg="brand.100">
           <InputGroup
             pb="5"
@@ -57,12 +58,15 @@ export function FileHub() {
           >
             Upload Files
           </Button>
+        </Box>
+        <Box overflowY={"auto"} maxH={"100%"}>
           <Accordion
             allowMultiple
             sx={{
               ".chakra-accordion__item": {
                 borderTop: "none",
                 borderBottom: "none",
+                borderBottomRadius: "lg", // WORKS BUT DOESN'T AFFECT ALBUMCARD
                 padding: "0", // Remove padding from accordion item
                 margin: "0", // Remove margin from accordion item
               },
