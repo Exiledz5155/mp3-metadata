@@ -2,6 +2,10 @@
 
 A web-based MP3 metadata editor built with Next.js, TypeScript, and Azure Blob Storage.
 
+## Design Doc
+
+https://exiledz5155.github.io/MP3-Metadata-Design-Doc/
+
 ## Installation
 
 To install the project, follow these steps:
