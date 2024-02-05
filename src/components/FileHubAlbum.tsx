@@ -19,13 +19,11 @@ import { FileHubAlbumCard } from "./FileHubAlbumCard";
 export function FileHubAlbum() {
   // Use state to track whether the card is clicked
   const [isClicked, setIsClicked] = useState(false);
-
   // Function to handle the click event
   const handleClick = () => {
     // Toggle the isClicked state when the card is clicked
     setIsClicked(!isClicked);
   };
-
   // Function to handle hover effect
   const handleHover = () => {
     // Apply hover effect only if the card is not already selected
@@ -33,7 +31,6 @@ export function FileHubAlbum() {
       setIsHovered(true);
     }
   };
-
   // Function to handle mouse leave
   const handleMouseLeave = () => {
     // Remove hover effect only if the card is not already selected
@@ -63,7 +60,11 @@ export function FileHubAlbum() {
           borderBottomRadius={isClicked ? "none" : "lg"}
           h="55px"
           overflow="hidden"
-          _hover={!isClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
+          _hover={
+            isClicked
+              ? undefined
+              : { bg: "brand.300", _dark: { bg: "brand.200" } }
+          }
           onClick={handleClick} // Attach the click event handler
           bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
           _dark={{
