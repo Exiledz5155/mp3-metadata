@@ -17,7 +17,7 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or 
+# or
 yarn dev
 # or
 pnpm dev
@@ -49,16 +49,18 @@ bun dev
 - Adjust any other configuration settings in `config.json` as needed.
 
 ## Database Schema (SUBJECT TO CHANGE)
+
 mySQL for efficient blob querying, a brief overview of the database schema. This can include tables for user sessions, uploaded files, and any other relevant information.
 
 ## API
+
 We might want to add details about how to interact with our system. We wil need to flesh this out later.
 
 ## Examples (SUBJECT TO CHANGE)
 
 ```typescript
 // Sample TypeScript code snippet demonstrating how to use the editor API
-import { editMetadata } from 'mp3-metadata-editor';
+import { editMetadata } from "mp3-metadata-editor";
 
 const editedFile = editMetadata(file, metadata);
 ```
@@ -78,6 +80,8 @@ For any inquiries, feel free to contact the project maintainers:
 - Aidan Ruiz: ruiz0150@umn.edu
 - Mark Gustafson: gust0971@umn.edu
 - Aitan Singh: sing0922@umn.edu
-- Ethan Harris: harr3380@umn.edu 
+- Ethan Harris: harr3380@umn.edu
 - Charles Sayles: sayle093@umn.edu
 - Daniel Tran: tran1116@umn.edu
+
+.
