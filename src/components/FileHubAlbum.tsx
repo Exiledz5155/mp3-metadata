@@ -2,7 +2,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Center, HStack, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  VStack,
+  HStack,
+  Image,
+  Text,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+} from "@chakra-ui/react";
+import { FileHubAlbumCard } from "./FileHubAlbumCard";
 
 export function FileHubAlbum() {
   // Use state to track whether the card is clicked
@@ -33,40 +45,60 @@ export function FileHubAlbum() {
   // State to track hover effect
   const [isHovered, setIsHovered] = useState(false);
 
+  const albumCards = [
+    <FileHubAlbumCard />,
+    <FileHubAlbumCard />,
+    <FileHubAlbumCard />,
+    <FileHubAlbumCard />,
+    <FileHubAlbumCard />,
+  ];
+
   return (
-    <Box>
-      <Box
-        as="button"
-        w="100%"
-        borderRadius="lg"
-        h="55px"
-        overflow="hidden"
-        _hover={!isClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
-        onClick={handleClick} // Attach the click event handler
-        bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
-        _dark={{
-          bg: isClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
-        }}
-        cursor={"pointer"}
-        onMouseOver={handleHover} // Attach the hover event handler
-        onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
-      >
-        <HStack spacing="10px">
-          <Center w="55px" h="55px">
-            <Image
-              src={
-                "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
-              }
-              alt={"An Image"}
-              borderRadius="base"
-              boxSize="45px"
-            />
-          </Center>
-          <Text noOfLines={1} maxW={200} align="left">
-            Goodbye & Good Riddance
-          </Text>
-        </HStack>
-      </Box>
-    </Box>
+    <AccordionItem>
+      <AccordionButton>
+        <Box
+          as="button"
+          w="100%"
+          borderTopRadius={"lg"}
+          borderBottomRadius={isClicked ? "none" : "lg"}
+          h="55px"
+          overflow="hidden"
+          _hover={!isClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
+          onClick={handleClick} // Attach the click event handler
+          bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
+          _dark={{
+            bg: isClicked
+              ? "brand.300"
+              : isHovered
+              ? "brand.200"
+              : "transparent",
+          }}
+          cursor={"pointer"}
+          onMouseOver={handleHover} // Attach the hover event handler
+          onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
+        >
+          <HStack spacing="10px">
+            <Center w="55px" h="55px">
+              <Image
+                src={
+                  "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
+                }
+                alt={"An Image"}
+                borderRadius="base"
+                boxSize="45px"
+              />
+            </Center>
+            <Text noOfLines={1} maxW={200} align="left">
+              Goodbye & Good Riddance
+            </Text>
+          </HStack>
+        </Box>
+      </AccordionButton>
+      <AccordionPanel>
+        {albumCards.map((card, index) =>
+          React.cloneElement(card, { isLast: index === albumCards.length - 1 })
+        )}
+      </AccordionPanel>
+    </AccordionItem>
   );
 }

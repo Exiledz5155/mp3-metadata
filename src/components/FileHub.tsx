@@ -16,8 +16,13 @@ import {
   InputLeftElement,
   HStack,
   Spacer,
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
+import React, { useRef } from "react";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
@@ -26,11 +31,12 @@ export function FileHub() {
   return (
     <Card
       bg={useColorModeValue("white", "brand.100")}
-      h="100%"
+      h={"100%"}
+      maxH={"93.25vh"}
       p={"20px"}
       rounded={"xl"}
     >
-      <CardBody maxH={"100vh"} overflow={"auto"} p={"0"}>
+      <CardBody overflow={"hidden"} p={"0"}>
         <Box bg="brand.100">
           <InputGroup
             pb="5"
@@ -43,6 +49,7 @@ export function FileHub() {
             </InputLeftElement>
             <Input placeholder="Search files" borderColor="linear.100" />
           </InputGroup>
+          <input type="file" style={{ display: "none" }} />
           <Button
             leftIcon={<AddIcon />}
             w="100%"
@@ -51,12 +58,36 @@ export function FileHub() {
           >
             Upload Files
           </Button>
-          <FileHubAlbum />
-          <FileHubAlbum />
-          <FileHubAlbum />
-          <FileHubAlbum />
-          <FileHubAlbum />
-          <FileHubAlbum />
+        </Box>
+        <Box overflowY={"auto"} maxH={"100%"}>
+          <Accordion
+            allowMultiple
+            sx={{
+              ".chakra-accordion__item": {
+                borderTop: "none",
+                borderBottom: "none",
+                borderBottomRadius: "lg", // WORKS BUT DOESN'T AFFECT ALBUMCARD
+                padding: "0", // Remove padding from accordion item
+                margin: "0", // Remove margin from accordion item
+              },
+              ".chakra-accordion__button": {
+                padding: "0", // Remove padding from accordion button
+              },
+              ".chakra-accordion__panel": {
+                padding: "0", // Remove padding from accordion panel
+              },
+              ".chakra-accordion__button:focus": {
+                boxShadow: "none",
+              },
+            }}
+          >
+            <FileHubAlbum />
+            <FileHubAlbum />
+            <FileHubAlbum />
+            <FileHubAlbum />
+            <FileHubAlbum />
+            <FileHubAlbum />
+          </Accordion>
         </Box>
       </CardBody>
     </Card>

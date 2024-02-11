@@ -1,6 +1,7 @@
 "use client";
 
-import { HStack, Flex, Divider, Text } from "@chakra-ui/react";
+import { TimeIcon } from "@chakra-ui/icons";
+import { HStack, Flex, Divider, Text, Icon } from "@chakra-ui/react";
 
 export function SongGridLabel() {
   return (
@@ -24,8 +25,8 @@ export function SongGridLabel() {
       <Text textAlign={"center"} noOfLines={1}>
         Album
       </Text>
-      <Text textAlign={"center"} mr={"4"} noOfLines={1}>
-        Length
+      <Text textAlign={"center"} mr={"10"} noOfLines={1}>
+        <Icon as={TimeIcon} />
       </Text>
     </HStack>
   );

@@ -41,3 +41,9 @@ public/tmp/*
 !public/tmp/All Alone.mp3
 
 .env.development.local
+
+
+# Environment Variables
+.env
+
+
