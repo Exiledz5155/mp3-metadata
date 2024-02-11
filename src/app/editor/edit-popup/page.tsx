@@ -2,7 +2,7 @@
 
 import { Flex, Card, useColorModeValue, CardBody } from "@chakra-ui/react";
 import { ImagForm } from "../../../components/ImagForm";
-import { EditInput } from "../../../components/EditInput";
+import { Edit } from "../../../components/Edit";
 
 export default function editPopUp() {
   return (
@@ -33,7 +33,7 @@ export default function editPopUp() {
       {/* row flex */}
       <CardBody>
         <ImagForm />
-        <EditInput />
+        <Edit />
       </CardBody>
     </Card>
   );
