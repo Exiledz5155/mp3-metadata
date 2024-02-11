@@ -47,6 +47,7 @@ export const Edit: React.FC<EditComponentProps> = ({ isOpen, onClose }) => {
                   borderRadius={"5px"}
                 />
               </GridItem>
+              {/*TODO: Change on focus color for input */}
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Song Title</FormLabel>
