@@ -109,8 +109,9 @@ export function SongGridCard() {
       </HStack>
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
-        <ModalContent bg={"brand.200"}>
+        <ModalContent bg={"brand.200"} pb={25} borderRadius={"xl"}>
           <ModalHeader>Edit</ModalHeader>
+          {/* TODO: FIX PLACEMENT OF CLOSE BUTTON */}
           <ModalCloseButton />
           <ModalBody>
             <Grid
@@ -130,43 +131,43 @@ export function SongGridCard() {
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Song Title</FormLabel>
-                  <Input variant="unstyled" />
+                  <Input />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Artist(s)</FormLabel>
-                  <Input variant="unstyled" />
+                  <Input />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
                 <FormControl>
                   <FormLabel>Year</FormLabel>
-                  <Input variant="unstyled" />
+                  <Input />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Album Title</FormLabel>
-                  <Input variant="unstyled" />
+                  <Input />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
                 <FormControl>
                   <FormLabel>Genre</FormLabel>
-                  <Input variant="unstyled" />
+                  <Input />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Album Artist(s)</FormLabel>
-                  <Input variant="unstyled" />
+                  <Input />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
                 <FormControl>
                   <FormLabel>Track</FormLabel>
-                  <Input variant="unstyled" />
+                  <Input />
                 </FormControl>
               </GridItem>
             </Grid>
@@ -178,7 +179,6 @@ export function SongGridCard() {
               bgGradient="linear(to-r, linear.100, linear.200)"
               // isLoading
               // loadingText={'Submitting'}
-              mr={3}
               size="md"
               variant="solid"
               onClick={onClose}
