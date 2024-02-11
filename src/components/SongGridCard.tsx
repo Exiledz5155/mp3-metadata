@@ -109,7 +109,7 @@ export function SongGridCard() {
       </HStack>
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg={"brand.200"}>
           <ModalHeader>Edit</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -175,23 +175,15 @@ export function SongGridCard() {
           <ModalFooter>
             <Button
               leftIcon={<CheckIcon />}
-              colorScheme="blue"
+              bgGradient="linear(to-r, linear.100, linear.200)"
               // isLoading
               // loadingText={'Submitting'}
               mr={3}
               size="md"
               variant="solid"
-            >
-              Save
-            </Button>
-            <Button
-              leftIcon={<CloseIcon />}
-              colorScheme="blue"
-              size="md"
-              variant="outline"
               onClick={onClose}
             >
-              Cancel
+              Save
             </Button>
           </ModalFooter>
         </ModalContent>
