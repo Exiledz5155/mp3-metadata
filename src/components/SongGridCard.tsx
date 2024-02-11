@@ -21,6 +21,8 @@ import {
   Input,
   Stack,
   useColorModeValue,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
@@ -112,91 +114,63 @@ export function SongGridCard() {
           <ModalHeader>Edit</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Flex>
-              <Card>
-                {/* row flex */}
-                <Flex flexDirection={"row"}>
-                  {/* 1'st column flex with image */}
-                  <Flex flexDirection={"column"}>
-                    <Image
-                      src="https://i1.sndcdn.com/artworks-000168416914-fnqzbz-t500x500.jpg"
-                      alt="Sample Image"
-                      boxSize="200px"
-                      objectFit="cover"
-                    />
-
-                    <FormControl mt={"1em"} mb={"1em"}>
-                      <FormLabel>Year</FormLabel>
-                      <Input type="text" name="Year" placeholder="Enter Year" />
-                    </FormControl>
-
-                    <FormControl mb={"1em"}>
-                      <FormLabel>Genre</FormLabel>
-                      <Input
-                        type="text"
-                        name="genre"
-                        placeholder="Enter Genre"
-                      />
-                    </FormControl>
-
-                    <FormControl mb={"1em"}>
-                      <FormLabel>Track</FormLabel>
-                      <Input
-                        type="text"
-                        name="Track"
-                        placeholder="Enter Track"
-                      />
-                    </FormControl>
-                  </Flex>
-                  {/* 2nd flex with rest of form inputs */}
-                  <Flex flexDirection={"column"}>
-                    <FormControl ml={"3em"} mt={"2.75em"} mb={"1em"}>
-                      <FormLabel>Song Title</FormLabel>
-                      <Input
-                        type="text"
-                        name="Title"
-                        placeholder="Enter Song Title"
-                      />
-                    </FormControl>
-
-                    <FormControl ml={"3em"} mt={"1em"} mb={"1em"}>
-                      <FormLabel>Artist(s)</FormLabel>
-                      <Input
-                        type="text"
-                        name="atist"
-                        placeholder="Enter Artist(s)"
-                      />
-                    </FormControl>
-
-                    <FormControl ml={"3em"} mt={"1em"} mb={"1em"}>
-                      <FormLabel>Album Title</FormLabel>
-                      <Input
-                        type="text"
-                        name="album title"
-                        placeholder="Enter Album Title"
-                      />
-                    </FormControl>
-
-                    <FormControl ml={"3em"} mt={"1em"} mb={"1em"}>
-                      <FormLabel>Album Artist(s)</FormLabel>
-                      <Input
-                        type="text"
-                        name="Album Artist"
-                        placeholder="Enter Album Artist(s)"
-                      />
-                    </FormControl>
-
-                    <Stack
-                      ml={"3em"}
-                      mt={"1.9em"}
-                      align={"center"}
-                      spacing={"6em"}
-                      direction={"row"}
-                    ></Stack>
-                  </Flex>
-                </Flex>
-              </Card>
-            </Flex>
+            <Grid
+              h="sm"
+              templateRows="repeat(30, 1fr)"
+              templateColumns="repeat(34, 1fr)"
+              gap={4}
+            >
+              <GridItem rowSpan={12} colSpan={12}>
+                {" "}
+                <Image
+                  src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
+                  alt="Album Cover"
+                  borderRadius={"5px"}
+                />
+              </GridItem>
+              <GridItem rowSpan={6} colSpan={22}>
+                <FormControl>
+                  <FormLabel>Song Title</FormLabel>
+                  <Input variant="unstyled" />
+                </FormControl>
+              </GridItem>
+              <GridItem rowSpan={6} colSpan={22}>
+                <FormControl>
+                  <FormLabel>Artist(s)</FormLabel>
+                  <Input variant="unstyled" />
+                </FormControl>
+              </GridItem>
+              <GridItem rowSpan={6} colSpan={12}>
+                <FormControl>
+                  <FormLabel>Year</FormLabel>
+                  <Input variant="unstyled" />
+                </FormControl>
+              </GridItem>
+              <GridItem rowSpan={6} colSpan={22}>
+                <FormControl>
+                  <FormLabel>Album Title</FormLabel>
+                  <Input variant="unstyled" />
+                </FormControl>
+              </GridItem>
+              <GridItem rowSpan={6} colSpan={12}>
+                <FormControl>
+                  <FormLabel>Genre</FormLabel>
+                  <Input variant="unstyled" />
+                </FormControl>
+              </GridItem>
+              <GridItem rowSpan={6} colSpan={22}>
+                <FormControl>
+                  <FormLabel>Album Artist(s)</FormLabel>
+                  <Input variant="unstyled" />
+                </FormControl>
+              </GridItem>
+              <GridItem rowSpan={6} colSpan={12}>
+                <FormControl>
+                  <FormLabel>Track</FormLabel>
+                  <Input variant="unstyled" />
+                </FormControl>
+              </GridItem>
+            </Grid>
           </ModalBody>
 
           <ModalFooter>
@@ -205,7 +179,7 @@ export function SongGridCard() {
               colorScheme="blue"
               // isLoading
               // loadingText={'Submitting'}
-              mr={3} 
+              mr={3}
               size="md"
               variant="solid"
             >
