@@ -28,44 +28,15 @@ import React, { useRef } from "react";
 // DO NOT MODIFY OR DELETE - Danny
 
 export function FileHub() {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const files = event.target.files;
-    if (files && files[0]) {
-      const formData = new FormData();
-      formData.append("file", files[0]);
-
-      try {
-        const response = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (response.ok) {
-          console.log("File uploaded successfully");
-          // Handle success
-        } else {
-          console.error("Upload failed");
-          // Handle error
-        }
-      } catch (error) {
-        console.error("Error uploading file", error);
-        // Handle error
-      }
-    }
-  };
-
   return (
     <Card
       bg={useColorModeValue("white", "brand.100")}
-      h="100%"
+      h={"100%"}
+      maxH={"93.25vh"}
       p={"20px"}
       rounded={"xl"}
     >
-      <CardBody maxH={"100vh"} overflow={"auto"} p={"0"}>
+      <CardBody overflow={"hidden"} p={"0"}>
         <Box bg="brand.100">
           <InputGroup
             pb="5"
@@ -78,27 +49,24 @@ export function FileHub() {
             </InputLeftElement>
             <Input placeholder="Search files" borderColor="linear.100" />
           </InputGroup>
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileUpload}
-            style={{ display: "none" }}
-          />
+          <input type="file" style={{ display: "none" }} />
           <Button
             leftIcon={<AddIcon />}
             w="100%"
-            onClick={() => fileInputRef.current?.click()}
             bgGradient="linear(to-r, linear.100, linear.200)"
             mb={5}
           >
             Upload Files
           </Button>
+        </Box>
+        <Box overflowY={"auto"} maxH={"100%"}>
           <Accordion
             allowMultiple
             sx={{
               ".chakra-accordion__item": {
                 borderTop: "none",
                 borderBottom: "none",
+                borderBottomRadius: "lg", // WORKS BUT DOESN'T AFFECT ALBUMCARD
                 padding: "0", // Remove padding from accordion item
                 margin: "0", // Remove margin from accordion item
               },

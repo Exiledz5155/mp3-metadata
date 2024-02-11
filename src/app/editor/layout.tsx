@@ -27,13 +27,19 @@ export default function RootLayout({
 }) {
   return (
     <Providers>
-      <Box bg={useColorModeValue("white", "black")} h="100vh">
+      <Box
+        bg={useColorModeValue("white", "black")}
+        h="100vh"
+        maxH={"100%"}
+        overflow={"hidden"}
+      >
         <Grid
           templateAreas={`"header header"
                   "nav main"`}
           gridTemplateRows={"50px 1fr"}
           gridTemplateColumns={"350px 1fr"}
           h="100vh"
+          maxH={"100%"}
           gap="1"
           color="blackAlpha.700"
         >
@@ -49,10 +55,10 @@ export default function RootLayout({
               MP3 Metadata
             </LinkButton>
           </GridItem>
-          <GridItem pl="2" pb="2" area={"nav"}>
+          <GridItem pl="4" pb="2" pr="1" area={"nav"}>
             <FileHub />
           </GridItem>
-          <GridItem pl="2" pr="2" pb="2" area={"main"}>
+          <GridItem pl="1" pr="4" pb="2" area={"main"}>
             {children}
           </GridItem>
         </Grid>
