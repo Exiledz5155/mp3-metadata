@@ -89,8 +89,9 @@ export function SongDisplay() {
       <AlbumInfoSection></AlbumInfoSection>
       <CardBody
         m={"0"}
-        px={0}
-        pt={"8"}
+        px={"0"}
+        pb={"0"}
+        pt={"5"}
         display={"flex"}
         flexDirection={"column"}
         overflow={"hidden"}

@@ -36,7 +36,12 @@ export function FileHub() {
       p={"20px"}
       rounded={"xl"}
     >
-      <CardBody overflow={"hidden"} p={"0"} display={'flex'} flexDirection={'column'}>
+      <CardBody
+        overflow={"hidden"}
+        p={"0"}
+        display={"flex"}
+        flexDirection={"column"}
+      >
         <Box bg="brand.100">
           <InputGroup
             pb="5"
@@ -51,7 +56,7 @@ export function FileHub() {
           </InputGroup>
           <input type="file" style={{ display: "none" }} />
           <Button
-            leftIcon={<AddIcon />}
+            leftIcon={<AddIcon />} // Change to upload icon MdOutlineFileUpload from figma
             w="100%"
             bgGradient="linear(to-r, linear.100, linear.200)"
             mb={5}
@@ -59,7 +64,7 @@ export function FileHub() {
             Upload Files
           </Button>
         </Box>
-        <Box overflowY={"auto"} >
+        <Box overflowY={"auto"}>
           <Accordion
             allowMultiple
             sx={{
