@@ -50,7 +50,7 @@ export function AlbumDisplay() {
         <Heading size="lg">Your Albums</Heading>
       </CardHeader>
       <CardBody overflowY={"auto"}>
-        <Wrap spacing={"5"}>
+        <SimpleGrid minChildWidth="170px" spacing="5px">
           {/* TODO: Make size of AlbumDisplayItem slightly responsive
           so that the padding on the right side of the screen is the same
           as the left side. */}
@@ -74,7 +74,7 @@ export function AlbumDisplay() {
           <AlbumDisplayItem />
           <AlbumDisplayItem />
           <AlbumDisplayItem />
-        </Wrap>
+        </SimpleGrid>
       </CardBody>
     </Card>
   );

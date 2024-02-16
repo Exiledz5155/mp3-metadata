@@ -16,7 +16,7 @@ import {
 export function AlbumDisplayItem() {
   return (
     <WrapItem>
-      <AspectRatio w="150px" ratio={3 / 4}>
+      <AspectRatio w="100%" maxWidth={"200px"} ratio={3 / 4}>
         <Box
           as="button"
           w="100%"
