@@ -16,6 +16,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto-mono": "^5.0.16",
+    "@prisma/client": "^5.9.1",
     "@vercel/analytics": "^1.1.2",
     "@vercel/blob": "^0.20.0",
     "@vercel/speed-insights": "^1.0.5",
@@ -35,6 +36,7 @@
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "postcss": "^8",
+    "prisma": "^5.9.1",
     "tailwindcss": "^3",
     "typescript": "^5"
   }
