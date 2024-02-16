@@ -47,13 +47,11 @@ export function AlbumDisplay() {
       overflow={"hidden"}
     >
       <CardHeader>
-        <Heading size="lg">Your Albums</Heading>
+        <Heading size="lg">Albums</Heading>
       </CardHeader>
-      <CardBody overflowY={"auto"}>
-        <SimpleGrid minChildWidth="170px" spacing="5px">
-          {/* TODO: Make size of AlbumDisplayItem slightly responsive
-          so that the padding on the right side of the screen is the same
-          as the left side. */}
+      <CardBody overflowY={"auto"} pt={"0"}>
+        <Divider mb={"20px"} p={"0"} />
+        <SimpleGrid minChildWidth="150px" spacing="15px">
           <AlbumDisplayItem />
           <AlbumDisplayItem />
           <AlbumDisplayItem />
