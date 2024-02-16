@@ -8,6 +8,9 @@ import {
 
 export async function GET(request: Request) {
   // Takes in params (filename) from API call creates a const for later use
+
+  const userUUID = sessionStorage.getItem('userUUID');
+
   const url = new URL(request.url);
   const blobName = url.searchParams.get("fileName") || "defaultFileName.mp3";
 
