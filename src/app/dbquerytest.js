@@ -1,15 +1,13 @@
 const { PrismaClient } = require('@prisma/client');
-
 const prisma = new PrismaClient();
 
 async function main() {
-  const newTest = await prisma.test.create({
-    data: {
-      name: 'Alice',
+  const test = await prisma.test.findUnique({
+    where: {
       email: 'alice@example.com',
     },
   });
-  console.log('New Test:', newTest);
+  console.log(test);
 }
 
 main()
