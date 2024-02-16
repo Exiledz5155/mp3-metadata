@@ -80,29 +80,31 @@ export function SongDisplay() {
   return (
     <Card
       p={"20px"}
-      h={"100%"}
+      bg={useColorModeValue("white", "brand.100")}
+      h="100%"
+      rounded={"xl"}
       maxH={"93.25vh"}
       overflow={"hidden"}
-      pb={0}
-      bg={useColorModeValue("white", "brand.100")}
-      rounded={"xl"}
     >
       <AlbumInfoSection></AlbumInfoSection>
-      <CardBody m={"0"} px={0} pt={"8"}>
-        <Grid>
-          <SongGridLabel></SongGridLabel>
-          <Divider />
-          <GridItem colSpan={1}>
-            <Box maxH={"72vh"} overflowY="auto">
-              {/* TODO: Implement mapping function here */}
-              {SongGridCards.map((card, index) =>
-                React.cloneElement(card, {
-                  isLast: index === SongGridCards.length - 1,
-                })
-              )}
-            </Box>
-          </GridItem>
-        </Grid>
+      <CardBody
+        m={"0"}
+        px={0}
+        pt={"8"}
+        display={"flex"}
+        flexDirection={"column"}
+        overflow={"hidden"}
+      >
+        <SongGridLabel></SongGridLabel>
+        <Divider />
+        <Box overflowY="auto">
+          {/* TODO: Implement mapping function here */}
+          {SongGridCards.map((card, index) =>
+            React.cloneElement(card, {
+              isLast: index === SongGridCards.length - 1,
+            })
+          )}
+        </Box>
       </CardBody>
     </Card>
   );

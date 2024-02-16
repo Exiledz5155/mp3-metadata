@@ -8,9 +8,5 @@ import { SongDisplay } from "../../../components/SongDisplay";
 // DO NOT MODIFY OR DELETE - Danny
 
 export default function AlbumView() {
-  return (
-    <Providers>
-      <SongDisplay></SongDisplay>
-    </Providers>
-  );
+return <SongDisplay />;
 }

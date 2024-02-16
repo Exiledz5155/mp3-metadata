@@ -36,7 +36,7 @@ export function FileHub() {
       p={"20px"}
       rounded={"xl"}
     >
-      <CardBody overflow={"hidden"} p={"0"}>
+      <CardBody overflow={"hidden"} p={"0"} display={'flex'} flexDirection={'column'}>
         <Box bg="brand.100">
           <InputGroup
             pb="5"
@@ -59,7 +59,7 @@ export function FileHub() {
             Upload Files
           </Button>
         </Box>
-        <Box overflowY={"auto"} maxH={"100%"}>
+        <Box overflowY={"auto"} >
           <Accordion
             allowMultiple
             sx={{
