@@ -16,15 +16,17 @@ import { app, InvocationContext } from "@azure/functions";
 import * as ID3 from "node-id3";
 import { PrismaClient } from "@prisma/client";
 
-//initialize prisma
-const prisma = new PrismaClient();
 
 // Handler function to process the uploaded MP3 blob and extract metadata
 async function ProcessMetadataOnUpload(blob: Buffer, context: InvocationContext): Promise<void> {
     context.log(`Storage blob function processed blob with size ${blob.length} bytes`);
 
+    //initialize prisma
+    const prisma = new PrismaClient();
+
     // Read MP3 Metadata
     const tags = ID3.read(blob);
+
     if (tags) {
         // Map ID3 tags to Song model
         const songData = {
@@ -44,6 +46,8 @@ async function ProcessMetadataOnUpload(blob: Buffer, context: InvocationContext)
             context.log(`Inserted song metadata into database: ${JSON.stringify(song)}`);
         } catch (error) {
             context.log(`Error inserting song metadata into database`);
+        } finally {
+            await prisma.$disconnect();
         }
     } else {
         context.log("No tags found in MP3 file.");

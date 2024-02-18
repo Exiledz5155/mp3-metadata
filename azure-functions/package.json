@@ -8,9 +8,13 @@
     "clean": "rimraf dist",
     "prestart": "npm run clean && npm run build",
     "start": "func start",
-    "test": "echo \"No tests yet...\""
+    "test": "echo \"No tests yet...\"",
+    "prisma:generate": "prisma generate --schema=../prisma/schema.prisma"
   },
   "dependencies": {
+    "@prisma/client": "^5.9.1",
+    "prisma": "^5.9.1",
+    "node-id3": "^0.2.6",
     "@azure/functions": "^4.0.0"
   },
   "devDependencies": {
