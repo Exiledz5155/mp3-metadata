@@ -27,7 +27,10 @@ export default function download() {
       });
     }
   return (
-    
+    <div>
+      <h1>Download Page</h1>
+      <button id="downloadButton">Download</button>
+    </div>
   );
 }
 
