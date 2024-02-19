@@ -67,6 +67,7 @@ export function SongGridCard() {
         borderRadius={"10px"}
         justify={"space-between"}
         onClick={onOpen} // Attach the click event handler
+        transition="background-color 0.2s ease"
         bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
         _dark={{
           bg: isClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
