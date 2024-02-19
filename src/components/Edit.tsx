@@ -51,43 +51,43 @@ export const Edit: React.FC<EditComponentProps> = ({ isOpen, onClose }) => {
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Song Title</FormLabel>
-                  <Input />
+                  <Input focusBorderColor="linear.200" />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Artist(s)</FormLabel>
-                  <Input />
+                  <Input focusBorderColor="linear.200" />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
                 <FormControl>
                   <FormLabel>Year</FormLabel>
-                  <Input />
+                  <Input focusBorderColor="linear.200" />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Album Title</FormLabel>
-                  <Input />
+                  <Input focusBorderColor="linear.200" />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
                 <FormControl>
                   <FormLabel>Genre</FormLabel>
-                  <Input />
+                  <Input focusBorderColor="linear.200" />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Album Artist(s)</FormLabel>
-                  <Input />
+                  <Input focusBorderColor="linear.200" />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
                 <FormControl>
                   <FormLabel>Track</FormLabel>
-                  <Input />
+                  <Input focusBorderColor="linear.200" />
                 </FormControl>
               </GridItem>
             </Grid>
