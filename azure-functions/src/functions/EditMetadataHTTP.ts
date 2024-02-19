@@ -1,4 +1,4 @@
-//TODO
+//TODO make this function query db for metadata and update mp3 metadata in blob accordingly
 
 //default HTTP trigger function template
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";

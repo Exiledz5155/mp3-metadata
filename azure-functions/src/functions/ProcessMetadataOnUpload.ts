@@ -1,17 +1,3 @@
-//default azure blob storage trigger function template
-// import { app, InvocationContext } from "@azure/functions";
-
-// export async function ProcessMetadataOnUpload(blob: Buffer, context: InvocationContext): Promise<void> {
-//     context.log(`Storage blob function processed blob "${context.triggerMetadata.name}" with size ${blob.length} bytes`);
-// }
-
-// app.storageBlob('ProcessMetadataOnUpload', {
-//     path: 'mp3container',
-//     connection: '9bef36_STORAGE',
-//     handler: ProcessMetadataOnUpload
-// });
-
-
 import { app, InvocationContext } from "@azure/functions";
 import * as ID3 from "node-id3";
 import { PrismaClient } from "@prisma/client";
@@ -45,8 +31,9 @@ async function ProcessMetadataOnUpload(blob: Buffer, context: InvocationContext)
             });
             context.log(`Inserted song metadata into database: ${JSON.stringify(song)}`);
         } catch (error) {
-            context.log(`Error inserting song metadata into database`);
+            context.log(`Error inserting song metadata into database: ${error.message}`);
         } finally {
+            //need to disconnect from prisma after we are done
             await prisma.$disconnect();
         }
     } else {
