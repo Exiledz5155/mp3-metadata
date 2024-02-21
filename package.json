@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/functions": "^4.2.0",
     "@azure/storage-blob": "^12.17.0",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/next-js": "^2.1.5",
@@ -16,6 +17,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto-mono": "^5.0.16",
+    "@prisma/client": "^5.9.1",
     "@vercel/analytics": "^1.1.2",
     "@vercel/blob": "^0.0.2",
     "@vercel/speed-insights": "^1.0.5",
@@ -35,6 +37,7 @@
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "postcss": "^8",
+    "prisma": "^5.9.1",
     "tailwindcss": "^3",
     "typescript": "5.3.3"
   }
