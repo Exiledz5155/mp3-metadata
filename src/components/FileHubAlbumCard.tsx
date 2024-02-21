@@ -32,6 +32,7 @@ export function FileHubAlbumCard({ isLast = false }) {
   return (
     <Flex
       justifyContent={"space-between"}
+      transition="background-color 0.2s ease"
       _hover={
         isClicked ? undefined : { bg: "brand.300", _dark: { bg: "brand.200" } }
       }
