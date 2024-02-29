@@ -1,7 +1,7 @@
 // app/providers.tsx
 "use client";
 
-import { AddIcon, SearchIcon } from "@chakra-ui/icons";
+import { AddIcon, ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Button,
   Card,
@@ -20,9 +20,17 @@ import {
   AccordionButton,
   AccordionItem,
   AccordionPanel,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
@@ -63,8 +71,45 @@ export function FileHub() {
           >
             Upload Files
           </Button>
+          <Menu closeOnSelect={false}>
+            <MenuButton
+              as = {Button}
+              position = "absolute"
+              variant = "ghost"
+              h = "30px"
+              w = "70px"
+              left = "10px"
+              bottom = "665px"
+            >
+              Filter
+            </MenuButton>
+            <MenuList>
+              <MenuOptionGroup type="checkbox">
+                <MenuItemOption>Genre</MenuItemOption>
+                <MenuItemOption>Year</MenuItemOption>
+              </MenuOptionGroup>
+            </MenuList>
+          </Menu>
+          <Menu>
+            <MenuButton 
+              as = {Button}
+              position = "absolute"
+              variant = "ghost"
+              h = "30px"
+              w = "100px"
+              left = "210px"
+              bottom = "665px"
+            >
+              Sort By:<ChevronDownIcon />
+            </MenuButton>
+            <MenuList>
+              <MenuItem>A-Z</MenuItem>
+              <MenuItem>Artist</MenuItem>
+              <MenuItem>Recently Added</MenuItem>
+            </MenuList>
+          </Menu>
         </Box>
-        <Box overflowY={"auto"}>
+        <Box overflowY={"auto"} mt="4">
           <Accordion
             allowMultiple
             sx={{
