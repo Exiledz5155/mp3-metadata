@@ -74,12 +74,10 @@ export function FileHub() {
           <Menu closeOnSelect={false}>
             <MenuButton
               as = {Button}
-              position = "absolute"
               variant = "ghost"
               h = "30px"
               w = "70px"
-              left = "10px"
-              bottom = "665px"
+              bottom = "10px"
             >
               Filter
             </MenuButton>
@@ -93,12 +91,11 @@ export function FileHub() {
           <Menu>
             <MenuButton 
               as = {Button}
-              position = "absolute"
               variant = "ghost"
               h = "30px"
               w = "100px"
-              left = "210px"
-              bottom = "665px"
+              left = "120px"
+              bottom = "10px"
             >
               Sort By:<ChevronDownIcon />
             </MenuButton>
@@ -109,7 +106,7 @@ export function FileHub() {
             </MenuList>
           </Menu>
         </Box>
-        <Box overflowY={"auto"} mt="4">
+        <Box overflowY={"auto"}>
           <Accordion
             allowMultiple
             sx={{
