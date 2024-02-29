@@ -5,27 +5,22 @@ import { HStack, Flex, Divider, Text, Icon } from "@chakra-ui/react";
 
 export function SongGridLabel() {
   return (
-    <HStack
-      spacing={4}
-      align={"center"}
-      borderRadius={"10px"}
-      justify={"space-between"}
-    >
-      <Flex align={"center"}>
+    <HStack align={"left"} borderRadius={"10px"} background={"green"} position={"fixed"}>
+      <Flex align={"left"} w="30%">
         <Text fontSize={"md"} mx={"4"}>
           #
         </Text>
-        <Text textAlign={"center"} noOfLines={1}>
+        <Text textAlign={"left"} noOfLines={1}>
           Title
         </Text>
       </Flex>
-      <Text textAlign={"center"} noOfLines={1}>
+      <Text textAlign={"left"} noOfLines={1} w="30%">
         Artist(s)
       </Text>
-      <Text textAlign={"center"} noOfLines={1}>
+      <Text textAlign={"left"} noOfLines={1} w="30%">
         Album
       </Text>
-      <Text textAlign={"center"} mr={"10"} noOfLines={1}>
+      <Text textAlign={"center"} noOfLines={1} w="10%">
         <Icon as={TimeIcon} />
       </Text>
     </HStack>
