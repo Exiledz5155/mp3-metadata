@@ -15,9 +15,9 @@ async function ProcessMetadataOnUpload(
   const prisma = new PrismaClient();
   
   // Placeholder Session Handling
-  let session = await prisma.session.findUnique({
+  let session = await prisma.session.findFirst({
     where: {
-      id: "your-session-id", // Use the actual session ID here
+      id: "test", // Use the actual session ID here
     },
   });
   if (!session) {
@@ -55,12 +55,12 @@ async function ProcessMetadataOnUpload(
 
     // Map ID3 tags to mp3File model
     const mp3Data = {
-      title: tags.title || "Unknown Title",
-      artist: tags.artist || "Unknown Artist",
-      year: parseInt(tags.year || "", 10) ?? 0,
-      albumTitle: tags.album || "Unknown Album",
-      albumArtist: tags.artist || "Unknown Artist",
-      trackNumber: parseInt(tags.trackNumber || "", 10) ?? 0,
+      title: tags.title || null,
+      artist: tags.artist || null,
+      year: tags.year ? parseInt(tags.year, 10) : null,
+      albumTitle: tags.album || null,
+      albumArtist: tags.artist || null,
+      trackNumber: tags.trackNumber ? parseInt(tags.trackNumber, 10) : null,
       image: "path-or-url-to-image", // Modify as per your logic
       albumId: album.id, // Link to the Album ID
       sessionId: session.id, // Link to the placeholder Session ID
