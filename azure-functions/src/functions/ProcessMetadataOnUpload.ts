@@ -11,39 +11,75 @@ async function ProcessMetadataOnUpload(
     `Storage blob function processed blob with size ${blob.length} bytes`
   );
 
-  //initialize prisma
+  // Initialize Prisma
   const prisma = new PrismaClient();
+  
+  // Placeholder Session Handling
+  let session = await prisma.session.findUnique({
+    where: {
+      id: "your-session-id", // Use the actual session ID here
+    },
+  });
+  if (!session) {
+    // Create a new Session if it doesn't exist
+    session = await prisma.session.create({
+      data: {
+        id: "test" || "Unknown ID"
+        // Add any required fields for a Session here
+      },
+    });
+  }
 
   // Read MP3 Metadata
   const tags = ID3.read(blob);
 
   if (tags) {
-    // Map ID3 tags to Song model
-    const songData = {
+    // Handling Album
+    let album = await prisma.album.findFirst({
+      where: {
+        title: tags.album || "Unknown Album",
+        // Here we ensure that the album is also linked to our placeholder session
+        sessionId: session.id,
+      },
+    });
+
+    if (!album) {
+      // Create new Album if it doesn't exist, linked to the placeholder Session
+      album = await prisma.album.create({
+        data: {
+          title: tags.album || "Unknown Album",
+          sessionId: session.id, // Link to the placeholder Session ID
+        },
+      });
+    }
+
+    // Map ID3 tags to mp3File model
+    const mp3Data = {
       title: tags.title || "Unknown Title",
       artist: tags.artist || "Unknown Artist",
-      // year: parseInt(tags.year, 10) || 0,
-      year: parseInt(tags.year || "", 10) ?? 0, // Forces a string to be passed
-      album: tags.album || "Unknown Album",
-      genre: tags.genre || "Unknown Genre",
-      // track: parseInt(tags.trackNumber, 10) || 0,
-      track: parseInt(tags.trackNumber || "", 10) ?? 0, // Forces a string to be passed
+      year: parseInt(tags.year || "", 10) ?? 0,
+      albumTitle: tags.album || "Unknown Album",
+      albumArtist: tags.artist || "Unknown Artist",
+      trackNumber: parseInt(tags.trackNumber || "", 10) ?? 0,
+      image: "path-or-url-to-image", // Modify as per your logic
+      albumId: album.id, // Link to the Album ID
+      sessionId: session.id, // Link to the placeholder Session ID
     };
 
     // Insert metadata into Azure SQL Database
     try {
-      const song = await prisma.song.create({
-        data: songData,
+      const mp3File = await prisma.mp3File.create({
+        data: mp3Data,
       });
       context.log(
-        `Inserted song metadata into database: ${JSON.stringify(song)}`
+        `Inserted MP3 file metadata into database: ${JSON.stringify(mp3File)}`
       );
     } catch (error) {
       context.log(
-        `Error inserting song metadata into database: ${error.message}`
+        `Error inserting MP3 file metadata into database: ${error.message}`
       );
     } finally {
-      //need to disconnect from prisma after we are done
+      // Disconnect from Prisma after we are done
       await prisma.$disconnect();
     }
   } else {
