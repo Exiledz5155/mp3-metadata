@@ -73,36 +73,47 @@ export function FileHub() {
           </Button>
           <Menu closeOnSelect={false}>
             <MenuButton
-              as = {Button}
-              variant = "ghost"
-              h = "30px"
-              w = "70px"
-              bottom = "10px"
+              as={Button}
+              variant="ghost"
+              h="30px"
+              w="70px"
+              bottom="10px"
             >
               Filter
             </MenuButton>
-            <MenuList>
+            <MenuList bg="brand.100">
               <MenuOptionGroup type="checkbox">
-                <MenuItemOption>Genre</MenuItemOption>
-                <MenuItemOption>Year</MenuItemOption>
+                <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
+                  Genre
+                </MenuItemOption>
+                <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
+                  Year
+                </MenuItemOption>
               </MenuOptionGroup>
             </MenuList>
           </Menu>
           <Menu>
-            <MenuButton 
-              as = {Button}
-              variant = "ghost"
-              h = "30px"
-              w = "100px"
-              left = "120px"
-              bottom = "10px"
+            <MenuButton
+              as={Button}
+              variant="ghost"
+              h="30px"
+              w="100px"
+              left="120px"
+              bottom="10px"
             >
-              Sort By:<ChevronDownIcon />
+              Sort By:
+              <ChevronDownIcon />
             </MenuButton>
-            <MenuList>
-              <MenuItem>A-Z</MenuItem>
-              <MenuItem>Artist</MenuItem>
-              <MenuItem>Recently Added</MenuItem>
+            <MenuList bg="brand.100">
+              <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
+                A-Z
+              </MenuItem>
+              <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
+                Artist
+              </MenuItem>
+              <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
+                Recently Added
+              </MenuItem>
             </MenuList>
           </Menu>
         </Box>
