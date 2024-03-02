@@ -8,7 +8,7 @@
 //npx prisma migrate dev --name your_migration_name      this applies the changes in development. kind of like git commit
 //npx prisma migrate deploy     this deploys the changes
 
-//may also need to cd into azure-functions and run "npx prisma generate --schema=../prisma/schema.prisma" however havent figured out if this is necessary
+//there is currently 2 schemas, apply changes to both. see other schema file for more info
 
 //use "npx prisma studio" to open db in browser
 
@@ -39,6 +39,7 @@ model Album {
 
 model mp3File {
   id          Int     @id @default(autoincrement())
+  filePath    String  @unique
   title       String?
   artist      String?
   year        Int?

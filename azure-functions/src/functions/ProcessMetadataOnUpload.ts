@@ -7,6 +7,13 @@ async function ProcessMetadataOnUpload(
   blob: Buffer,
   context: InvocationContext
 ): Promise<void> {
+
+  //get userUUID and fileName from file path
+  const userUUID = context.triggerMetadata.userUUID as string;
+  const fileName = context.triggerMetadata.name as string;
+  // reconstruct filePath
+  const path = "mp3container/" + userUUID + "/" + fileName
+
   context.log(
     `Storage blob function processed blob with size ${blob.length} bytes`
   );
@@ -14,31 +21,31 @@ async function ProcessMetadataOnUpload(
   // Initialize Prisma
   const prisma = new PrismaClient();
   
-  // Placeholder Session Handling
-  let session = await prisma.session.findFirst({
+  // check if there is already a session of userUUID
+  let session = await prisma.session.findUnique({
     where: {
-      id: "test", // Use the actual session ID here
+      id: userUUID
     },
   });
   if (!session) {
     // Create a new Session if it doesn't exist
     session = await prisma.session.create({
       data: {
-        id: "test" || "Unknown ID"
+        id: userUUID || "Unknown ID"
         // Add any required fields for a Session here
       },
     });
   }
 
-  // Read MP3 Metadata
+  // Read MP3 Metadata of file
   const tags = ID3.read(blob);
 
   if (tags) {
     // Handling Album
-    let album = await prisma.album.findFirst({
+    let album = await prisma.album.findFirst({ //may need to change this for case where users tries to make multiple albums of same name
       where: {
         title: tags.album || "Unknown Album",
-        // Here we ensure that the album is also linked to our placeholder session
+        // Here we ensure that the album is also linked to our session
         sessionId: session.id,
       },
     });
@@ -55,6 +62,7 @@ async function ProcessMetadataOnUpload(
 
     // Map ID3 tags to mp3File model
     const mp3Data = {
+      filePath: path,
       title: tags.title || null,
       artist: tags.artist || null,
       year: tags.year ? parseInt(tags.year, 10) : null,
@@ -68,8 +76,13 @@ async function ProcessMetadataOnUpload(
 
     // Insert metadata into Azure SQL Database
     try {
-      const mp3File = await prisma.mp3File.create({
-        data: mp3Data,
+      const mp3File = await prisma.mp3File.upsert({
+        //if file already exists update metadata else create new 
+        where: {
+          filePath: path
+        },
+        update: mp3Data,
+        create: mp3Data,
       });
       context.log(
         `Inserted MP3 file metadata into database: ${JSON.stringify(mp3File)}`
@@ -89,7 +102,7 @@ async function ProcessMetadataOnUpload(
 
 // Register the Blob storage trigger with the Azure Functions app
 app.storageBlob("ProcessMetadataOnUpload", {
-  path: "mp3container/{name}", // Listen for blobs uploaded to 'mp3container' container
+  path: "mp3container/{userUUID}/{name}", // Listen for blobs uploaded to 'mp3container' container
   connection: "AzureWebJobsStorage", // Use the connection string named 'AzureWebJobsStorage' from the application settings
   handler: ProcessMetadataOnUpload,
 });
