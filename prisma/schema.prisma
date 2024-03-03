@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+//Error: P1001: Can't reach database server at `mp3mysql.database.windows.net`:`1433` = add yourself to azure firewall
+
+//commands for changing schema
+//npx prisma generate     run this after making changes to the schema. this basically complies it
+//npx prisma migrate dev --name your_migration_name      this applies the changes in development. kind of like git commit
+//npx prisma migrate deploy     this deploys the changes
+
+//may also need to cd into azure-functions and run "npx prisma generate --schema=../prisma/schema.prisma" however havent figured out if this is necessary
+
+//use "npx prisma studio" to open db in browser
+
+generator client {
+  provider = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Song {
+  id    Int     @id @default(autoincrement()) //model must have unique id. this should be correlated to uuid somehow
+  title String
+  artist String
+  year Int
+  album String
+  genre String
+  // album arists should this be a string or something else
+  track Int
+}

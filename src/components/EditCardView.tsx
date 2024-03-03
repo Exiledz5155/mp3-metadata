@@ -15,6 +15,8 @@ import {
   Container,
 } from "@chakra-ui/react";
 
+// THIS IS OLD FROM MVP DELETE LATER
+
 function loadFileView(selectFile) {
   if (selectFile !== undefined) {
     try {

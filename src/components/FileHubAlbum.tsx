@@ -60,6 +60,7 @@ export function FileHubAlbum() {
           borderBottomRadius={isClicked ? "none" : "lg"}
           h="55px"
           overflow="hidden"
+          transition="background-color 0.2s ease"
           _hover={
             isClicked
               ? undefined
