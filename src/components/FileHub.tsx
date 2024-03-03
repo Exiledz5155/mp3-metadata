@@ -1,7 +1,7 @@
 // app/providers.tsx
 "use client";
 
-import { AddIcon, SearchIcon } from "@chakra-ui/icons";
+import { AddIcon, ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Button,
   Card,
@@ -20,9 +20,17 @@ import {
   AccordionButton,
   AccordionItem,
   AccordionPanel,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
@@ -63,6 +71,51 @@ export function FileHub() {
           >
             Upload Files
           </Button>
+          <Menu closeOnSelect={false}>
+            <MenuButton
+              as={Button}
+              variant="ghost"
+              h="30px"
+              w="70px"
+              bottom="10px"
+            >
+              Filter
+            </MenuButton>
+            <MenuList bg="brand.100">
+              <MenuOptionGroup type="checkbox">
+                <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
+                  Genre
+                </MenuItemOption>
+                <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
+                  Year
+                </MenuItemOption>
+              </MenuOptionGroup>
+            </MenuList>
+          </Menu>
+          <Menu>
+            <MenuButton
+              as={Button}
+              variant="ghost"
+              h="30px"
+              w="100px"
+              left="120px"
+              bottom="10px"
+            >
+              Sort By:
+              <ChevronDownIcon />
+            </MenuButton>
+            <MenuList bg="brand.100">
+              <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
+                A-Z
+              </MenuItem>
+              <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
+                Artist
+              </MenuItem>
+              <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
+                Recently Added
+              </MenuItem>
+            </MenuList>
+          </Menu>
         </Box>
         <Box overflowY={"auto"}>
           <Accordion
