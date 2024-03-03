@@ -91,13 +91,13 @@ export function SongDisplay() {
         m={"0"}
         px={"0"}
         pb={"0"}
-        pt={"5"}
+        pt={"0"}
         display={"flex"}
         flexDirection={"column"}
         overflow={"auto"}
       >
         <SongGridLabel></SongGridLabel>
-        <Divider />
+        <Divider position={"sticky"} top="6" />
         <Box>
           {/* TODO: Implement mapping function here */}
           {SongGridCards.map((card, index) =>
