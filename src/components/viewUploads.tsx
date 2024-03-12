@@ -1,13 +1,16 @@
-// viewUploads.tsx
-"use client"
+// src/components/viewUploads.tsx
+"use client";
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid'; // Import uuid function
+import { ID3Metadata } from './UUIDFileUpload';
+
 
 interface UploadedFile {
   userId: string; // Unique user UUID
   fileId: string; // Unique file UUID
   fileName: string;
-  timestamp: string; // Assuming timestamp is a string, you can adjust the type accordingly
+  timestamp: string;
+  id3Metadata: ID3Metadata;
 }
 
 export default function UploadedFilesList() {
@@ -33,7 +36,8 @@ export default function UploadedFilesList() {
 
       if (storedUserUUID) {
         setUserUUID(storedUserUUID);
-      } else {
+      }
+      else {
         // If user UUID doesn't exist, generate a new one
         const newUserUUID = uuidv4();
         sessionStorage.setItem('userUUID', newUserUUID);
@@ -41,12 +45,13 @@ export default function UploadedFilesList() {
       }
 
       const storedFiles = JSON.parse(sessionStorage.getItem('uploadedFiles') || '[]');
-      
+
       // Add user UUID and unique file UUID to each uploaded file
       const filesWithUUID = storedFiles.map(file => ({
         ...file,
         userId: userUUID || '', // Use the userUUID from state or an empty string if not available
         fileId: uuidv4(),
+        
       }));
 
       setUploadedFiles(filesWithUUID);
@@ -88,6 +93,11 @@ export default function UploadedFilesList() {
             flex: 1;
             margin-right: 10px;
           }
+
+          /* Additional styling for indented ID3 metadata */
+          .id3Metadata {
+            margin-left: 20px;
+          }
         `}
       </style>
       <h2>Uploaded Files</h2>
@@ -97,8 +107,15 @@ export default function UploadedFilesList() {
             <li key={index}>
               <span>User: {file.userId}</span>
               <span>File: {file.fileId}</span>
-              <span>{file.fileName}</span>
-              <span>{file.timestamp}</span>
+              <span>FileName: {file.fileName}</span>
+              <span>Timestamp: {file.timestamp}</span>
+              {/* Display ID3Metadata properties with indentation */}
+              <span className="id3Metadata">Title: {file.id3Metadata.title}</span>
+              <span className="id3Metadata">Artist: {file.id3Metadata.artist}</span>
+              <span className="id3Metadata">Album: {file.id3Metadata.album}</span>
+              <span className="id3Metadata">Year: {file.id3Metadata.year}</span>
+              <span className="id3Metadata">Genre: {file.id3Metadata.genre}</span>
+              <span className="id3Metadata">Track Number: {file.id3Metadata.track}</span>
             </li>
           ))}
         </ul>
