@@ -1,6 +1,7 @@
 import { app, InvocationContext } from "@azure/functions";
 import * as ID3 from "node-id3";
 import { PrismaClient } from "@prisma/client";
+import { BlobServiceClient } from "@azure/storage-blob";
 
 // Handler function to process the uploaded MP3 blob and extract metadata
 async function ProcessMetadataOnUpload(
@@ -41,6 +42,29 @@ async function ProcessMetadataOnUpload(
   const tags = ID3.read(blob);
 
   if (tags) {
+
+    //Initialize Azure Blob Service Client
+    const AZURE_STORAGE_CONNECTION_STRING = process.env["AzureWebJobsStorage"];
+    const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
+    const containerName = 'imagecontainer'; // Use the same container as MP3 files
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+
+    let imagePath = null;
+
+    if (tags.image && typeof tags.image !== 'string' && 'imageBuffer' in tags.image) {
+      // Store the image in a 'images/' directory within the same container
+      const imageFileName = `${fileName.replace(/\.[^/.]+$/, "")}-cover.jpg`; // Change file extension to .jpg
+      const blobName = `${userUUID}/${imageFileName}`; // Include the userUUID to keep user data separate
+      const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+      await blockBlobClient.upload(tags.image.imageBuffer, tags.image.imageBuffer.length);
+
+      imagePath = blockBlobClient.url; // This is the URL to the uploaded image
+    } else {
+      // Handle cases where `image` is not an object with `imageBuffer` or doesn't exist
+      context.log("No image found or image format is not supported.");
+    }
+
     // Handling Album
     let album = await prisma.album.findFirst({ //may need to change this for case where users tries to make multiple albums of same name
       where: {
@@ -69,7 +93,7 @@ async function ProcessMetadataOnUpload(
       albumTitle: tags.album || null,
       albumArtist: tags.artist || null,
       trackNumber: tags.trackNumber ? parseInt(tags.trackNumber, 10) : null,
-      image: "path-or-url-to-image", // Modify as per your logic
+      image: imagePath || null, // Modify as per your logic
       albumId: album.id, // Link to the Album ID
       sessionId: session.id, // Link to the placeholder Session ID
     };
