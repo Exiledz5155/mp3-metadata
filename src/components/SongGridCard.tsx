@@ -62,10 +62,7 @@ export function SongGridCard() {
     <>
       {" "}
       <HStack
-        spacing={4}
-        align={"center"}
         borderRadius={"10px"}
-        justify={"space-between"}
         onClick={onOpen} // Attach the click event handler
         transition="background-color 0.2s ease"
         bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
@@ -77,7 +74,7 @@ export function SongGridCard() {
         onMouseOver={handleHover} // Attach the hover event handler
         onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
       >
-        <Flex align={"center"}>
+        <Flex align={"center"} w="30%">
           <Text fontSize={"md"} ml={"4"}>
             1
           </Text>
@@ -93,18 +90,17 @@ export function SongGridCard() {
             Intro
           </Text>
         </Flex>
-        <Text textAlign={"center"} noOfLines={1}>
+        <Text textAlign={"left"} noOfLines={1} w="30%">
           Juice WRLD
         </Text>
-        <Text textAlign={"center"} noOfLines={1}>
+        <Text textAlign={"left"} noOfLines={1} w="30%">
           Goodbye & Good Riddance
         </Text>
         <Text
           textAlign={"center"}
-          mr={"4"}
           noOfLines={1}
           fontFamily={"mono"}
-          letterSpacing={"-10%"}
+          w="10%"
         >
           1:14
         </Text>

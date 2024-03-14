@@ -89,16 +89,17 @@ export function SongDisplay() {
       <AlbumInfoSection></AlbumInfoSection>
       <CardBody
         m={"0"}
+        mt={"5"}
         px={"0"}
         pb={"0"}
-        pt={"5"}
+        pt={"0"}
         display={"flex"}
         flexDirection={"column"}
-        overflow={"hidden"}
+        overflow={"auto"}
       >
         <SongGridLabel></SongGridLabel>
-        <Divider />
-        <Box overflowY="auto">
+        <Divider position={"sticky"} top="6" />
+        <Box>
           {/* TODO: Implement mapping function here */}
           {SongGridCards.map((card, index) =>
             React.cloneElement(card, {
