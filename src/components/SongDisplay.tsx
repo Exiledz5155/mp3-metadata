@@ -89,6 +89,7 @@ export function SongDisplay() {
       <AlbumInfoSection></AlbumInfoSection>
       <CardBody
         m={"0"}
+        mt={"5"}
         px={"0"}
         pb={"0"}
         pt={"0"}
