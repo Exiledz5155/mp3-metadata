@@ -49,6 +49,10 @@ async function ProcessMetadataOnUpload(
 
     //Initialize Azure Blob Service Client
     const AZURE_STORAGE_CONNECTION_STRING = process.env["AzureWebJobsStorage"];
+    if (!AZURE_STORAGE_CONNECTION_STRING) {
+      context.log('AzureWebJobsStorage environment variable is not defined.');
+      return;
+    }
     const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
     const containerName = 'imagecontainer'; // Use the same container as MP3 files
     const containerClient = blobServiceClient.getContainerClient(containerName);
