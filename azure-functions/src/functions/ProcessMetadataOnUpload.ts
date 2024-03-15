@@ -57,7 +57,7 @@ async function ProcessMetadataOnUpload(
     const containerName = 'imagecontainer'; // Use the same container as MP3 files
     const containerClient = blobServiceClient.getContainerClient(containerName);
 
-    let imagePath = null;
+    let imagePath: string | null = null;
 
     if (tags.image && typeof tags.image !== 'string' && 'imageBuffer' in tags.image) {
       // Store the image in a 'images/' directory within the same container
