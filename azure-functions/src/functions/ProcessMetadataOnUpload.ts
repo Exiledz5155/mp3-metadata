@@ -8,7 +8,11 @@ async function ProcessMetadataOnUpload(
   blob: Buffer,
   context: InvocationContext
 ): Promise<void> {
-
+  // Ensure triggerMetadata is not undefined
+  if (!context.triggerMetadata) {
+    context.log('triggerMetadata is undefined.');
+    return;
+  }
   //get userUUID and fileName from file path
   const userUUID = context.triggerMetadata.userUUID as string;
   const fileName = context.triggerMetadata.name as string;
