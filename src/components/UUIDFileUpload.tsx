@@ -72,11 +72,11 @@ function generateUUID(): string {
 
 // Async function to upload the file with user UUID
 async function uploadFile(file: File, userUUID: string): Promise<Response> {
-  // Set file name to URLComponent
-  const fileName = encodeURIComponent(file.name);
-  // Use fetch to call SAS API route with file name and user UUID as query params
+  // create file path using userUUID and file name
+  const userFilePath = `${userUUID}/${encodeURIComponent(file.name)}`;
+  // Use fetch to call SAS API route with file path as param
   const response = await fetch(
-    `/api/generateSasToken?fileName=${fileName}&userUUID=${userUUID}`
+    `/api/generateSasToken?fileName=${userFilePath}`
   );
 
   const { blobUrl, sasToken } = await response.json();

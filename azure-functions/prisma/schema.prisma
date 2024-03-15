@@ -7,12 +7,8 @@
 //npx prisma generate     run this after making changes to the schema. this basically complies it
 //npx prisma migrate dev --name your_migration_name      this applies the changes in development. kind of like git commit
 //npx prisma migrate deploy     this deploys the changes
-//or just npx prisma generate then npx prisma db push
 
-//there is currently another prisma schema in azure-functions. not sure if there is a differnt way to do it. 
-//for now copy any changes into other schema and cd into azure-functions and run npx prisma generate.
-
-
+//there is currently 2 schemas, apply changes to both. see other schema file for more info
 
 //use "npx prisma studio" to open db in browser
 
@@ -56,4 +52,5 @@ model mp3File {
   album       Album?  @relation(fields: [albumId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   session     Session @relation(fields: [sessionId], references: [id], onUpdate: NoAction)
 }
+
 
