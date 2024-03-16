@@ -28,14 +28,20 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 import React, { useRef, useState } from "react";
+import { FileUploadBox } from "./FileUploadBox";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
 
+
+
 export function FileHub() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  
   return (
     <Card
       bg={useColorModeValue("white", "brand.100")}
@@ -68,9 +74,13 @@ export function FileHub() {
             w="100%"
             bgGradient="linear(to-r, linear.100, linear.200)"
             mb={5}
+            onClick={() => {
+              onOpen();
+            }}
           >
             Upload Files
           </Button>
+          <FileUploadBox isOpen={isOpen} onClose={onClose} />
           <Menu closeOnSelect={false}>
             <MenuButton
               as={Button}
