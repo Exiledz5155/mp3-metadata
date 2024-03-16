@@ -1,4 +1,4 @@
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import React from "react";
 import {
   Flex,
   FormControl,
@@ -16,96 +16,161 @@ import {
   ModalHeader,
   ModalOverlay,
   Image,
+  Icon,
+  Box,
+  Text,
+  Progress,
+  VStack,
+  useColorModeValue
 } from "@chakra-ui/react";
+import { MdOutlineFilePresent } from "react-icons/md";
+import { IoCloudUploadOutline } from "react-icons/io5";
+import { 
+  FiFileText,
+  FiRotateCcw } from "react-icons/fi";
+import { BsFillTrashFill } from "react-icons/bs";
 
 interface UploadBoxProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen: boolean; // Whether the modal is open or not
+  onClose: () => void; // Function to close the modal
 }
-
 export const FileUploadBox: React.FC<UploadBoxProps> = ({ isOpen, onClose }) => {
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+      {/* Modal component */}
+      <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
-        <ModalContent bg={"brand.200"} pb={25} borderRadius={"xl"}>
-          <ModalHeader>Edit</ModalHeader>
-          {/* TODO: FIX PLACEMENT OF CLOSE BUTTON */}
-          <ModalCloseButton />
+        <ModalContent bg={"brand.200"} pb={25} borderRadius={"xl"} width={["100%", "50%"]}>
+          {/* Modal header */}
+          <ModalHeader>
+            <Flex alignItems="center">
+              <Icon as={MdOutlineFilePresent} boxSize={8} />
+              <Box fontSize="2xl" ml={2}>Upload Files</Box>
+            </Flex>
+          </ModalHeader>
           <ModalBody>
-            <Grid
-              h="sm"
-              templateRows="repeat(30, 1fr)"
-              templateColumns="repeat(34, 1fr)"
-              gap={4}
+            {/* File upload box */}
+            <Box border="2px dashed" p={4} borderRadius="2xl">
+              <Flex direction="column" justifyContent="center" alignItems="center">
+                <Icon as={IoCloudUploadOutline} boxSize={12} mb={2} />
+                <Text fontWeight="bold">Drag and drop files here</Text>
+                <Text color="#8E95A3">or</Text>
+                <Button
+                  as="label"
+                  htmlFor="fileInput"
+                  variant="outline"
+                  mt={2}
+                  bg="#A0AEC0"
+                  color="#1A202C"
+                  _hover={{ cursor: 'pointer' }}
+                >
+                  Browse Files
+                  <Input type="file" id="fileInput" style={{ display: "none" }} />
+                </Button>
+              </Flex>
+            </Box>
+            <Text color="#8E95A3" mt={3} mb={6}>Only .mp3 files. Max size 30mb.</Text>
+            
+            {/* File list */}
+            <ModalHeader pl={0}>
+              <Box fontSize="l">Upload Files</Box>
+            </ModalHeader>
+            <Box 
+              mb={5}
+              overflowY="auto" 
+              maxHeight="275px"
+              paddingRight="10px"
+              css={{
+                '&::-webkit-scrollbar': {
+                  width: '5px',
+                },
+                '&::-webkit-scrollbar-track': {
+                  background: 'transparent',
+                  borderRadius: '10px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: '#888',
+                  borderRadius: '10px',
+                },
+                '&::-webkit-scrollbar-thumb:hover': {
+                  background: '#555',
+                },
+              }}
             >
-              <GridItem rowSpan={12} colSpan={12}>
-                {" "}
-                <Image
-                  src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
-                  alt="Album Cover"
-                  borderRadius={"5px"}
-                />
-              </GridItem>
-              {/*TODO: Change on focus color for input */}
-              <GridItem rowSpan={6} colSpan={22}>
-                <FormControl>
-                  <FormLabel>Song Title</FormLabel>
-                  <Input focusBorderColor="linear.200" />
-                </FormControl>
-              </GridItem>
-              <GridItem rowSpan={6} colSpan={22}>
-                <FormControl>
-                  <FormLabel>Artist(s)</FormLabel>
-                  <Input focusBorderColor="linear.200" />
-                </FormControl>
-              </GridItem>
-              <GridItem rowSpan={6} colSpan={12}>
-                <FormControl>
-                  <FormLabel>Year</FormLabel>
-                  <Input focusBorderColor="linear.200" />
-                </FormControl>
-              </GridItem>
-              <GridItem rowSpan={6} colSpan={22}>
-                <FormControl>
-                  <FormLabel>Album Title</FormLabel>
-                  <Input focusBorderColor="linear.200" />
-                </FormControl>
-              </GridItem>
-              <GridItem rowSpan={6} colSpan={12}>
-                <FormControl>
-                  <FormLabel>Genre</FormLabel>
-                  <Input focusBorderColor="linear.200" />
-                </FormControl>
-              </GridItem>
-              <GridItem rowSpan={6} colSpan={22}>
-                <FormControl>
-                  <FormLabel>Album Artist(s)</FormLabel>
-                  <Input focusBorderColor="linear.200" />
-                </FormControl>
-              </GridItem>
-              <GridItem rowSpan={6} colSpan={12}>
-                <FormControl>
-                  <FormLabel>Track</FormLabel>
-                  <Input focusBorderColor="linear.200" />
-                </FormControl>
-              </GridItem>
-            </Grid>
-          </ModalBody>
+              {/* File item */}
+              <Box border="2px" mb={4} p={4} borderRadius="2xl">
+                <Flex align="center">
+                  <Icon as={FiFileText} boxSize={6} />
+                  <Flex flex={1} pl={6} direction="column"> {/* Change this line */}
+                    <Text mb="-1" textAlign="left">PRIDE. - Kendrick Lamar.mp3</Text>
+                    <Text fontSize="xs" mb="-2" textAlign="left" color="#8E95A3">7.8mb | 72%</Text> 
+                  </Flex>
+                  <Icon as={BsFillTrashFill} boxSize={6} /> 
+                </Flex>
+                <Progress mt={4} value={72} size="sm" colorScheme="linear" borderRadius="md"/>
+              </Box>
 
-          <ModalFooter>
-            <Button
-              leftIcon={<CheckIcon />}
-              bgGradient="linear(to-r, linear.100, linear.200)"
-              // isLoading
-              // loadingText={'Submitting'}
-              size="md"
-              variant="solid"
-              onClick={onClose}
-            >
-              Save
-            </Button>
-          </ModalFooter>
+              {/* File item */}
+              <Box border="2px" mb={4} p={4} borderRadius="2xl">
+                <Flex align="center">
+                  <Icon as={FiFileText} boxSize={6} />
+                  <Flex flex={1} pl={6} direction="column"> {/* Change this line */}
+                    <Text mb="-1" textAlign="left">Show Me How - Men I Trust.mp3</Text>
+                    <Text fontSize="xs" textAlign="left" color="#FF7074">Upload Failed</Text> 
+                  </Flex>
+                  <Icon as={BsFillTrashFill} boxSize={6} mr={5} /> 
+                  <Icon as={FiRotateCcw} boxSize={6} /> 
+                </Flex>
+              </Box>
+
+              {/* File item */}
+              <Box border="2px" mb={4} p={4} borderRadius="2xl">
+                <Flex align="center">
+                  <Icon as={FiFileText} boxSize={6} />
+                  <Flex flex={1} pl={6} direction="column"> {/* Change this line */}
+                    <Text mb="-1" textAlign="left">No More Parties In LA - Kanye West.mp3</Text>
+                    <Text fontSize="xs" textAlign="left" color="#8E95A3">14.8mb</Text> 
+                  </Flex>
+                  <Icon as={BsFillTrashFill} boxSize={6} /> 
+                </Flex>
+              </Box>
+              <Box border="2px" mb={4} p={4} borderRadius="2xl">
+                <Flex align="center">
+                  <Icon as={FiFileText} boxSize={6} />
+                  <Flex flex={1} pl={6} direction="column"> {/* Change this line */}
+                    <Text mb="-2" textAlign="left">No More Parties In LA - Kanye West.mp3</Text>
+                    <Text fontSize="xs" textAlign="left" color="#8E95A3">14.8mb</Text> 
+                  </Flex>
+                  <Icon as={BsFillTrashFill} boxSize={6} /> 
+                </Flex>
+              </Box>
+            </Box>
+            
+            {/* Modal footer */}
+            <Flex justifyContent="space-between">
+              <Button
+                flex="1"
+                bg="#F7FAFC"
+                color="#1A202C"
+                size="lg"
+                variant="solid"
+                onClick={onClose}
+                mr={4}
+              >
+                Cancel
+              </Button>
+              <Button
+                flex="1"
+                bg="#4299E1"
+                color="#1A202C"
+                size="lg"
+                variant="solid"
+                onClick={onClose}
+              >
+                Upload Files
+              </Button>
+            </Flex>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>
