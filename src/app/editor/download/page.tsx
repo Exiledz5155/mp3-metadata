@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from "uuid";
 
 const DownloadPage: React.FC = () => {
   const [fileName, setFileName] = useState('');
@@ -8,6 +9,8 @@ const DownloadPage: React.FC = () => {
   const handleDownload = async () => {
     try {
       // Call the download API to get the download URL
+      const userUUID = sessionStorage.getItem("userUUID") || generateUUID();
+      sessionStorage.setItem("userUUID", userUUID);
       const response = await fetch(`/api/download?fileName=${encodeURIComponent(fileName)}&userUUID=${encodeURIComponent(userUUID)}`);
       const { blobUrl, sasToken } = await response.json();
 
@@ -34,4 +37,10 @@ const DownloadPage: React.FC = () => {
 };
 
 export default DownloadPage;
+
+// Utility function to generate a UUID
+function generateUUID(): string {
+  const generatedUUID = uuidv4();
+  return generatedUUID;
+}
 
