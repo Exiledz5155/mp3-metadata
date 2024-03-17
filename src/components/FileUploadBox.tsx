@@ -45,7 +45,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
           bg={"brand.200"}
           py={25}
           borderRadius={"xl"}
-          width={["100%", "50%"]}
+          width={["100%", "60%"]}
         >
           {/* Modal header */}
           <ModalHeader pt={0}>
@@ -61,7 +61,6 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
               right="25px"
               size="md"
             />
-            {/* Should the ModalCloseButton function the same as the cancel button? */}
           </ModalHeader>
           <ModalBody pb={0}>
             {/* File upload box */}
@@ -227,8 +226,6 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
               >
                 Cancel
               </Button>
-              {/* Should the cancel button have the same functionality as the close button? 
-                  Or should it remove all currently uploaded files */}
               <Button
                 flex="1"
                 bgGradient="linear(to-r, linear.100, linear.200)"
