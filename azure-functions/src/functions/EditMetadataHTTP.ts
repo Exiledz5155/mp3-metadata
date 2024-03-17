@@ -2,7 +2,12 @@ import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/fu
 import { BlobDownloadResponseModel, BlobServiceClient, BlockBlobUploadOptions } from "@azure/storage-blob";
 import { PrismaClient } from '@prisma/client';
 import * as nodeID3 from "node-id3";
+import axios from 'axios';
 
+async function getImageAsBuffer(imageUrl: string): Promise<Buffer> {
+    const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+    return Buffer.from(response.data);
+}
 
 async function updateMP3Metadata(filePath: string, metadata: any): Promise<void> {
     // Split the filePath by '/' to get an array of segments
@@ -19,6 +24,22 @@ async function updateMP3Metadata(filePath: string, metadata: any): Promise<void>
     const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
     const containerName = "mp3container"; // Replace with your actual container name
     const blockBlobClient = blobServiceClient.getContainerClient(containerName).getBlockBlobClient(blobPath);
+
+    if (metadata.image) {
+        // Download the image from the URL
+        const imageBuffer = await getImageAsBuffer(metadata.image);
+
+        // Add image to metadata
+        metadata.image = {
+            mime: 'image/jpeg', 
+            type: {
+                id: 3,
+                name: 'front cover'
+            },
+            description: 'Cover image',
+            imageBuffer: imageBuffer
+        };
+    }
 
     try {
         // Download the MP3 file from Azure Blob Storage
@@ -93,7 +114,7 @@ export async function EditMetadataHTTP(request: HttpRequest, context: Invocation
 
         // Creating a dictionary with keys that have non-null values
         let metadata = {};
-        const keys = ['title', 'artist', 'year', 'albumTitle', 'albumArtist', 'trackNumber']; //TODO add image
+        const keys = ['title', 'artist', 'year', 'albumTitle', 'albumArtist', 'trackNumber', 'image'];
         keys.forEach(key => {
             if (mp3File[key] !== null && mp3File[key] !== undefined) {
                 metadata[key] = mp3File[key];
