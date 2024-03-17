@@ -4,7 +4,7 @@ import { BlobServiceClient, StorageSharedKeyCredential, generateBlobSASQueryPara
 export async function GET(request: Request) {
   // Extract fileName and userUUID from the query parameters
   const url = new URL(request.url);
-  const blobName = url.searchParams.get("fileName") || "defaultFileName.mp3";
+  const blobName = url.searchParams.get("fileName") || "Cigarettes.mp3";
 
   // Azure Storage setup
   const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME || "";
