@@ -25,7 +25,7 @@ export async function GET(request: Request) {
     containerName,
     blobName,
     permissions: ContainerSASPermissions.parse("racwd"), // "r" means read permission
-    startsOn: new Date(),
+    startsOn: new Date(new Date().valueOf() - 5 * 60 * 1000),
     expiresOn: new Date(new Date().valueOf() + 3600 * 1000), // 1 hour expiration
   }, sharedKeyCredential).toString();
 
