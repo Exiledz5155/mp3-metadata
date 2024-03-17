@@ -57,10 +57,11 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
             </Flex>
             <ModalCloseButton
               position="absolute"
-              top="28px" // Adjust this value to match your desired top padding
-              right="25px" // Adjust this value to match your desired right padding
+              top="28px" 
+              right="25px"
               size="md"
             />
+            {/* Should the ModalCloseButton function the same as the cancel button? */}
           </ModalHeader>
           <ModalBody pb={0}>
             {/* File upload box */}
@@ -93,6 +94,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                     id="fileInput"
                     style={{ display: "none" }}
                   />
+                  {/* TODO: Link file uploads for button/drag + drop */}
                 </Button>
               </Flex>
             </Box>
@@ -102,7 +104,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
 
             {/* File list */}
             <ModalHeader pl={0}>
-              <Box fontSize="l">Upload Files</Box>
+              <Box fontSize="l">Uploaded Files</Box>
             </ModalHeader>
             <Box
               mb={5}
@@ -127,6 +129,8 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 },
               }}
             >
+              {/* TODO: Create function to add and delete file components.
+                  Also need to make buttons functional */}
               {/* File item */}
               <Box border="2px" mb={4} p={4} borderRadius="2xl">
                 <Flex align="center">
@@ -162,7 +166,6 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 <Flex align="center">
                   <Icon as={FiFileText} boxSize={6} />
                   <Flex flex={1} pl={6} direction="column">
-                    {" "}
                     {/* Change this line */}
                     <Text mb="-1" textAlign="left" noOfLines={1}>
                       Show Me How - Men I Trust.mp3
@@ -197,8 +200,6 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 <Flex align="center">
                   <Icon as={FiFileText} boxSize={6} />
                   <Flex flex={1} pl={6} direction="column">
-                    {" "}
-                    {/* Change this line */}
                     <Text mb="-2" textAlign="left" noOfLines={1}>
                       No More Parties In LA - Kanye West.mp3
                     </Text>
@@ -226,6 +227,8 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
               >
                 Cancel
               </Button>
+              {/* Should the cancel button have the same functionality as the close button? 
+                  Or should it remove all currently uploaded files */}
               <Button
                 flex="1"
                 bgGradient="linear(to-r, linear.100, linear.200)"
@@ -236,7 +239,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 color="brand.200"
                 onClick={onClose}
               >
-                Upload Files
+                Confirm
               </Button>
             </Flex>
           </ModalBody>
