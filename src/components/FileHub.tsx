@@ -56,21 +56,31 @@ export function FileHub() {
         flexDirection={"column"}
       >
         <Box bg="brand.100">
+          {/* BUG FIX CARET NOT UPDATING AFTER TEXT REACHS END OF INPUT BOX */}
           <InputGroup
             pb="5"
             w="100%"
-            bgGradient="linear(to-r, linear.100, linear.200)"
+            bg="linear.100"
             bgClip={"text"}
             sx={{
-              caretColor: "linear(to-r, linear.100, linear.200)",
+              caretColor: "white",
             }}
           >
             <InputLeftElement pointerEvents="none">
               <SearchIcon color="linear.100" />
             </InputLeftElement>
-            <Input placeholder="Search files" borderColor="linear.100" s />
+            <Input
+              placeholder="Search files"
+              borderColor="linear.100"
+              _hover={{ borderColor: "linear.100" }}
+              _focus={{
+                borderColor: "linear.100",
+                boxShadow: "none",
+              }}
+              type="text"
+            />
           </InputGroup>
-          <input type="file" style={{ display: "none" }} />
+
           <Button
             leftIcon={<IoCloudUploadOutline size="24px" />}
             w="100%"
