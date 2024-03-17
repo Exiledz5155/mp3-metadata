@@ -38,6 +38,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
 }) => {
   return (
     <>
+      {/* TODO make modal NOT close when clicking outside of it */}
       {/* Modal component */}
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
         <ModalOverlay />
@@ -45,7 +46,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
           bg={"brand.200"}
           py={25}
           borderRadius={"xl"}
-          width={["100%", "50%"]}
+          width={["100%", "60%"]}
         >
           {/* Modal header */}
           <ModalHeader pt={0}>
@@ -57,7 +58,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
             </Flex>
             <ModalCloseButton
               position="absolute"
-              top="28px" 
+              top="28px"
               right="25px"
               size="md"
             />
