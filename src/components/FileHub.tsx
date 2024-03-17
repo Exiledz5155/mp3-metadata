@@ -28,14 +28,19 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 import React, { useRef, useState } from "react";
+import { FileUploadBox } from "./FileUploadBox";
+import { IoCloudUploadOutline } from "react-icons/io5";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
 
 export function FileHub() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Card
       bg={useColorModeValue("white", "brand.100")}
@@ -51,26 +56,45 @@ export function FileHub() {
         flexDirection={"column"}
       >
         <Box bg="brand.100">
+          {/* BUG FIX CARET NOT UPDATING AFTER TEXT REACHS END OF INPUT BOX */}
           <InputGroup
             pb="5"
             w="100%"
-            bgGradient="linear(to-r, linear.100, linear.200)"
+            bg="linear.100"
             bgClip={"text"}
+            sx={{
+              caretColor: "white",
+            }}
           >
             <InputLeftElement pointerEvents="none">
               <SearchIcon color="linear.100" />
             </InputLeftElement>
-            <Input placeholder="Search files" borderColor="linear.100" />
+            <Input
+              placeholder="Search files"
+              borderColor="linear.100"
+              _hover={{ borderColor: "linear.100" }}
+              _focus={{
+                borderColor: "linear.100",
+                boxShadow: "none",
+              }}
+              type="text"
+            />
           </InputGroup>
-          <input type="file" style={{ display: "none" }} />
+
           <Button
-            leftIcon={<AddIcon />} // Change to upload icon MdOutlineFileUpload from figma
+            leftIcon={<IoCloudUploadOutline size="24px" />}
             w="100%"
             bgGradient="linear(to-r, linear.100, linear.200)"
+            _hover={{ color: "white", bg: "brand.300" }}
+            color={"brand.200"}
             mb={5}
+            onClick={() => {
+              onOpen();
+            }}
           >
             Upload Files
           </Button>
+          <FileUploadBox isOpen={isOpen} onClose={onClose} />
           <Menu closeOnSelect={false}>
             <MenuButton
               as={Button}
