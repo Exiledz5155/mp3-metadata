@@ -33,15 +33,14 @@ import {
 import { FileHubAlbum } from "./FileHubAlbum";
 import React, { useRef, useState } from "react";
 import { FileUploadBox } from "./FileUploadBox";
+import { IoCloudUploadOutline } from "react-icons/io5";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny
 
-
-
 export function FileHub() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
+
   return (
     <Card
       bg={useColorModeValue("white", "brand.100")}
@@ -62,17 +61,22 @@ export function FileHub() {
             w="100%"
             bgGradient="linear(to-r, linear.100, linear.200)"
             bgClip={"text"}
+            sx={{
+              caretColor: "linear(to-r, linear.100, linear.200)",
+            }}
           >
             <InputLeftElement pointerEvents="none">
               <SearchIcon color="linear.100" />
             </InputLeftElement>
-            <Input placeholder="Search files" borderColor="linear.100" />
+            <Input placeholder="Search files" borderColor="linear.100" s />
           </InputGroup>
           <input type="file" style={{ display: "none" }} />
           <Button
-            leftIcon={<AddIcon />} // Change to upload icon MdOutlineFileUpload from figma
+            leftIcon={<IoCloudUploadOutline size="24px" />}
             w="100%"
             bgGradient="linear(to-r, linear.100, linear.200)"
+            _hover={{ color: "white", bg: "brand.300" }}
+            color={"brand.200"}
             mb={5}
             onClick={() => {
               onOpen();
