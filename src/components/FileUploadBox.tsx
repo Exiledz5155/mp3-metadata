@@ -13,6 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import FileUploadCard from "./FileUploadCard";
+import FileCardGenerator from "./FileCardGenerator";
 import { MdOutlineFilePresent } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
 
@@ -20,10 +21,20 @@ interface UploadBoxProps {
   isOpen: boolean; // Whether the modal is open or not
   onClose: () => void; // Function to close the modal
 }
+
 export const FileUploadBox: React.FC<UploadBoxProps> = ({
   isOpen,
   onClose,
 }) => {
+  const [isCardOpen, setCardOpen] = React.useState(false);
+  const handleGenerateFiles = () => {
+    setCardOpen(true);
+  };
+
+  const handleCardClose = () => {
+    setCardOpen(false);
+  };
+  {/* Delete lines 29-36 & 96-113 when file upload backend is functional */}
   return (
     <>
       {/* Modal component */}
@@ -95,9 +106,11 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                   }}
                   rounded={"xl"}
                   color="brand.200"
+                  onClick={handleGenerateFiles}
                 >
-                  Browse Files
+                  Generate Files
                 </Button>
+                <FileCardGenerator isCardOpen={isCardOpen} onCardClose={handleCardClose} />
                 {/* TODO: Link file uploads for button/drag + drop */}
               </Flex>
             </Box>
