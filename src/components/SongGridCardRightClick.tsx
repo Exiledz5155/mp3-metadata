@@ -59,23 +59,40 @@ import {
               borderBottomRightRadius: "0" 
             }}
           >
-            <svg
+            <svg 
               width="17px" 
               height="17px" 
+              stroke-width="2" 
               viewBox="0 0 24 24" 
-              stroke-width="2.0" 
               fill="none" 
               xmlns="http://www.w3.org/2000/svg" 
               color="#ffffff"
-              style={{ marginRight: "0.5rem" }}
+              style={{ marginRight: "0.5rem", marginLeft: "-0.5em" }}
             >
-              <path 
-                d="M14.3632 5.65156L15.8431 4.17157C16.6242 3.39052 17.8905 3.39052 18.6716 4.17157L20.0858 5.58579C20.8668 6.36683 20.8668 7.63316 20.0858 8.41421L18.6058 9.8942M14.3632 5.65156L4.74749 15.2672C4.41542 15.5993 4.21079 16.0376 4.16947 16.5054L3.92738 19.2459C3.87261 19.8659 4.39148 20.3848 5.0115 20.33L7.75191 20.0879C8.21972 20.0466 8.65806 19.8419 8.99013 19.5099L18.6058 9.8942M14.3632 5.65156L18.6058 9.8942" 
-                stroke="#ffffff" 
-                stroke-width="2.0" 
-                stroke-linecap="round" 
-                stroke-linejoin="round">
-              </path>
+            <path 
+              d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" 
+              stroke="#ffffff" 
+              stroke-width="2" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+            >
+            </path>
+            <path 
+              d="M8 21.1679V14L12 7L16 14V21.1679" 
+              stroke="#ffffff" 
+              stroke-width="2" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+            >
+            </path>
+            <path 
+              d="M8 14C8 14 9.12676 15 10 15C10.8732 15 12 14 12 14C12 14 13.1268 15 14 15C14.8732 15 16 14 16 14" 
+              stroke="#ffffff" 
+              stroke-width="2" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+            >
+            </path>
             </svg>
             <Text fontSize={sizeOfFont}>  
               Edit
@@ -97,7 +114,7 @@ import {
               fill="none" 
               xmlns="http://www.w3.org/2000/svg" 
               color="#ffffff"
-              style={{ marginRight: "0.5rem" }}
+              style={{ marginRight: "0.5rem", marginLeft: "-0.5em" }}
             >
               <path 
                 d="M12 11.5V16.5" 
@@ -136,24 +153,31 @@ import {
             <svg 
               width="17px" 
               height="17px" 
-              stroke-width="2.0" 
+              stroke-width="2" 
               viewBox="0 0 24 24" 
               fill="none" 
               xmlns="http://www.w3.org/2000/svg" 
               color="#ffffff"
-              style={{ marginRight: "0.5rem" }}
+              style={{ marginRight: "0.5rem", marginLeft: "-0.5em" }}
             >
               <path 
-                d="M6 20L18 20" 
+                d="M9 17L15 17" 
                 stroke="#ffffff" 
-                stroke-width="2.0" 
+                stroke-width="2" 
                 stroke-linecap="round" 
                 stroke-linejoin="round">
               </path>
               <path 
-                d="M12 4V16M12 16L15.5 12.5M12 16L8.5 12.5" 
+                d="M12 6V13M12 13L15.5 9.5M12 13L8.5 9.5" 
                 stroke="#ffffff" 
-                stroke-width="2.0" 
+                stroke-width="2" 
+                stroke-linecap="round" 
+                stroke-linejoin="round">
+              </path>
+              <path 
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" 
+                stroke="#ffffff" 
+                stroke-width="2" 
                 stroke-linecap="round" 
                 stroke-linejoin="round">
               </path>
@@ -181,7 +205,7 @@ import {
             fill="none" 
             xmlns="http://www.w3.org/2000/svg" 
             color="#ffffff"
-            style={{ marginRight: "0.5rem" }}
+            style={{ marginRight: "0.5rem", marginLeft: "-0.5em" }}
           >
             <path 
               d="M8 12H16" 
