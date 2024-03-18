@@ -20,6 +20,7 @@ interface FileUploadCardProps {
   uploadFailed: boolean;
   inProgress: boolean;
   progressValue: number;
+  onDelete: () => void; // Function to delete the card
 }
 
 export const FileUploadCard: React.FC<FileUploadCardProps> = ({
@@ -29,6 +30,7 @@ export const FileUploadCard: React.FC<FileUploadCardProps> = ({
   uploadFailed,
   inProgress,
   progressValue,
+  onDelete,
 }) => {
   // Ensure inProgress is always false if uploadFailed is true
   const correctedInProgress = uploadFailed ? false : inProgress;
@@ -39,7 +41,7 @@ export const FileUploadCard: React.FC<FileUploadCardProps> = ({
         <Icon as={FiFileText} boxSize={6} />
         <Flex flex={1} pl={6} direction="column">
           <Text mb="-1" textAlign="left" noOfLines={1}>
-            {fileName}.{fileType}
+            {fileName}{fileType}
           </Text>
           {uploadFailed ? (
             <Text fontSize="xs" textAlign="left" color="#FF7074">
@@ -62,11 +64,11 @@ export const FileUploadCard: React.FC<FileUploadCardProps> = ({
         </Flex>
         {uploadFailed ? (
           <>
-            <Icon as={BsFillTrashFill} boxSize={6} mr={5} />
-            <Icon as={FiRotateCcw} boxSize={6} />
+            <Icon as={BsFillTrashFill} boxSize={6} onClick={onDelete} style={{cursor: "pointer"}} mr={5} />
+            <Icon as={FiRotateCcw} boxSize={6} onClick={onDelete} style={{cursor: "pointer"}} />
           </>
         ) : (
-          <Icon as={BsFillTrashFill} boxSize={6} />
+          <Icon as={BsFillTrashFill} boxSize={6} onClick={onDelete} style={{cursor: "pointer"}} />
         )}
       </Flex>
       {correctedInProgress && (

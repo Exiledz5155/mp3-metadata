@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Flex,
   Button,
@@ -12,7 +12,6 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
-import FileUploadCard from "./FileUploadCard";
 import FileCardGenerator from "./FileCardGenerator";
 import { MdOutlineFilePresent } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
@@ -26,7 +25,9 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
   isOpen,
   onClose,
 }) => {
-  const [isCardOpen, setCardOpen] = React.useState(false);
+  const [isCardOpen, setCardOpen] = useState(false);
+  const [generatedCards, setGeneratedCards] = useState<JSX.Element[]>([]);
+
   const handleGenerateFiles = () => {
     setCardOpen(true);
   };
@@ -34,19 +35,27 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
   const handleCardClose = () => {
     setCardOpen(false);
   };
-  {/* Delete lines 29-36 & 96-113 when file upload backend is functional */}
+
+  const addGeneratedCard = (newCard: JSX.Element) => {
+    setGeneratedCards((prevCards) => [...prevCards, newCard]);
+  };
+
+  const deleteCard = (cardToDelete: React.ReactElement) => {
+    setGeneratedCards((prevCards) => {
+      return prevCards.filter((card) => card !== cardToDelete);
+    });
+  };
+
   return (
     <>
-      {/* Modal component */}
-      <Modal isOpen={isOpen} onClose={onClose} size="lg" closeOnOverlayClick={false}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size="lg"
+        closeOnOverlayClick={false}
+      >
         <ModalOverlay />
-        <ModalContent
-          bg={"brand.200"}
-          py={25}
-          borderRadius={"xl"}
-          width={["100%", "60%"]}
-        >
-          {/* Modal header */}
+        <ModalContent bg={"brand.200"} py={25} borderRadius={"xl"} width={["100%", "60%"]}>
           <ModalHeader pt={0}>
             <Flex alignItems="center">
               <Icon as={MdOutlineFilePresent} boxSize={8} />
@@ -54,71 +63,38 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 Upload Files
               </Box>
             </Flex>
-            <ModalCloseButton
-              position="absolute"
-              top="28px" 
-              right="25px"
-              size="md"
-            />
+            <ModalCloseButton position="absolute" top="28px" right="25px" size="md" />
           </ModalHeader>
           <ModalBody pb={0}>
-            {/* File upload box */}
             <Box border="2px dashed" p={4} borderRadius="2xl">
-              <Flex
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-              >
+              <Flex direction="column" justifyContent="center" alignItems="center">
                 <Icon as={IoCloudUploadOutline} boxSize={12} mb={2} />
                 <Text fontWeight="bold">Drag and drop files here</Text>
                 <Text color="#8E95A3">or</Text>
-                {/* <Button
-                  as="label"
-                  htmlFor="fileInput"
-                  variant="solid"
-                  mt={2}
-                  bgGradient="linear(to-r, linear.100, linear.200)"
-                  _hover={{
-                    cursor: "pointer",
-                    color: "white",
-                    bg: "brand.300",
-                  }}
-                  rounded={"xl"}
-                  color="brand.200"
-                >
-                  Browse Files
-                  <Input
-                    type="file"
-                    id="fileInput"
-                    style={{ display: "none" }}
-                  />
-                </Button> */}
                 <Button
                   as="label"
                   htmlFor="fileInput"
                   variant="solid"
                   mt={2}
                   bgGradient="linear(to-r, linear.100, linear.200)"
-                  _hover={{
-                    cursor: "pointer",
-                    color: "white",
-                    bg: "brand.300",
-                  }}
+                  _hover={{ cursor: "pointer", color: "white", bg: "brand.300" }}
                   rounded={"xl"}
                   color="brand.200"
                   onClick={handleGenerateFiles}
                 >
                   Generate Files
                 </Button>
-                <FileCardGenerator isCardOpen={isCardOpen} onCardClose={handleCardClose} />
-                {/* TODO: Link file uploads for button/drag + drop */}
+                <FileCardGenerator
+                  isCardOpen={isCardOpen}
+                  onCardClose={handleCardClose}
+                  addGeneratedCard={addGeneratedCard}
+                />
               </Flex>
             </Box>
             <Text color="#8E95A3" mt={3}>
               Only .mp3 files. Max size 30mb.
             </Text>
 
-            {/* File list */}
             <ModalHeader pl={0}>
               <Box fontSize="l">Uploaded Files</Box>
             </ModalHeader>
@@ -127,7 +103,6 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
               overflowY="auto"
               maxHeight="275px"
               paddingRight="10px"
-              // Custom scrollbar
               css={{
                 "&::-webkit-scrollbar": {
                   width: "5px",
@@ -145,41 +120,13 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 },
               }}
             >
-              <FileUploadCard 
-                fileName="PRIDE. - Kendrick Lamar" 
-                fileType="mp3"
-                fileSizeInBytes={10830000} 
-                uploadFailed={false} 
-                inProgress={true}
-                progressValue={72}
-              />
-              <FileUploadCard 
-                fileName="Show Me How - Men I Trust"
-                fileType="mp3"
-                fileSizeInBytes={1120000}
-                uploadFailed={true}
-                inProgress={false}
-                progressValue={0}
-              />
-              <FileUploadCard 
-                fileName="No More Parties In LA - Kanye West" 
-                fileType="mp3"
-                fileSizeInBytes={14800000} 
-                uploadFailed={false} 
-                inProgress={false}
-                progressValue={100}
-              />
-              <FileUploadCard 
-                fileName="No More Parties In LA - Kanye West"
-                fileType="mp3" 
-                fileSizeInBytes={14800000} 
-                uploadFailed={false} 
-                inProgress={false}
-                progressValue={100}
-              />
+              {generatedCards.map((card) => (
+                <React.Fragment key={card.key}>
+                  {React.cloneElement(card, { onDelete: () => deleteCard(card) })}
+                </React.Fragment>
+              ))}
             </Box>
 
-            {/* Modal footer */}
             <Flex justifyContent="space-between">
               <Button
                 flex="1"

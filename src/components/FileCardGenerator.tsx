@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Flex,
   Button,
@@ -15,63 +15,68 @@ import {
   FormLabel,
   Input,
   Switch,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { MdOutlineFilePresent } from "react-icons/md";
 import FileUploadCard from "./FileUploadCard";
 
 interface FileCardGeneratorProps {
-  isCardOpen: boolean; // Whether the FileCardGenerator modal is open or not
-  onCardClose: () => void; // Function to close the FileCardGenerator modal
+  isCardOpen: boolean;
+  onCardClose: () => void;
+  addGeneratedCard: (newCard: JSX.Element) => void;
 }
 
 export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
   isCardOpen,
   onCardClose,
+  addGeneratedCard,
 }) => {
-  const [fileName, setFileName] = useState("");
-  const [fileType, setFileType] = useState("");
-  const [fileSizeInBytes, setFileSizeInBytes] = useState(0);
-  const [uploadFailed, setUploadFailed] = useState(false);
   const [inProgress, setInProgress] = useState(false);
   const [progressValue, setProgressValue] = useState(0);
+  const [fileName, setFileName] = useState("");
+  const [fileType, setFileType] = useState("");
+  const [fileSize, setFileSize] = useState<number | string>("");
+  const [uploadFailed, setUploadFailed] = useState(false);
+  const [progressValueError, setProgressValueError] = useState("");
+
+  useEffect(() => {
+    if (!isCardOpen) {
+      setInProgress(false);
+      setProgressValue(0);
+      setFileName("");
+      setFileType("");
+      setFileSize("");
+      setUploadFailed(false);
+      setProgressValueError("");
+    }
+  }, [isCardOpen]);
 
   const handleGenerate = () => {
-    // Create a new FileUploadCard component with the provided values
-    const newFileUploadCard = (
+    if (inProgress && (progressValue < 0 || progressValue > 100)) {
+      setProgressValueError("Enter a value between 0 and 100");
+      return;
+    }
+
+    const newCard = (
       <FileUploadCard
         fileName={fileName}
         fileType={fileType}
-        fileSizeInBytes={fileSizeInBytes}
+        fileSizeInBytes={parseInt(fileSize as string)}
         uploadFailed={uploadFailed}
         inProgress={inProgress}
         progressValue={progressValue}
+        onDelete={() => {}} // Deletion is handled in FileUploadBox.tsx
       />
     );
-
-    // Render the newly generated FileUploadCard component or take other actions as needed
-    console.log("Generated FileUploadCard:", newFileUploadCard);
-
-    // Close the modal
+    addGeneratedCard(newCard);
     onCardClose();
   };
 
   return (
     <>
-      {/* Modal component */}
-      <Modal
-        isOpen={isCardOpen}
-        onClose={onCardClose}
-        size="lg"
-        closeOnOverlayClick={false}
-      >
+      <Modal isOpen={isCardOpen} onClose={onCardClose} size="lg" closeOnOverlayClick={false}>
         <ModalOverlay />
-        <ModalContent
-          bg={"brand.200"}
-          py={25}
-          borderRadius={"xl"}
-          width={["100%", "60%"]}
-        >
-          {/* Modal header */}
+        <ModalContent bg={"brand.200"} py={25} borderRadius={"xl"} width={["100%", "60%"]}>
           <ModalHeader pt={0}>
             <Flex alignItems="center">
               <Icon as={MdOutlineFilePresent} boxSize={8} />
@@ -82,7 +87,6 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
             <ModalCloseButton position="absolute" top="28px" right="25px" size="md" />
           </ModalHeader>
           <ModalBody pb={0}>
-            {/* File upload form */}
             <Box border="2px dashed" p={4} borderRadius="2xl" mb={4}>
               <FormControl>
                 <FormLabel>File Name</FormLabel>
@@ -99,7 +103,14 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                   type="text"
                   placeholder="Enter file type"
                   value={fileType}
-                  onChange={(e) => setFileType(e.target.value)}
+                  onChange={(e) => {
+                    let value = e.target.value;
+                    // Ensure the input always starts with a dot (".")
+                    if (!value.startsWith(".")) {
+                      value = "." + value;
+                    }
+                    setFileType(value);
+                  }}
                 />
               </FormControl>
               <FormControl mt={4}>
@@ -107,8 +118,8 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                 <Input
                   type="number"
                   placeholder="Enter file size"
-                  value={fileSizeInBytes}
-                  onChange={(e) => setFileSizeInBytes(parseInt(e.target.value))}
+                  value={fileSize as string}
+                  onChange={(e) => setFileSize(e.target.value)}
                 />
               </FormControl>
               <Flex mt={4}>
@@ -119,7 +130,7 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                   <Switch
                     id="uploadFailed"
                     isChecked={uploadFailed}
-                    onChange={() => setUploadFailed(!uploadFailed)}
+                    onChange={(e) => setUploadFailed(e.target.checked)}
                   />
                 </FormControl>
                 <FormControl display="flex" alignItems="center" mr={4}>
@@ -129,15 +140,15 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                   <Switch
                     id="inProgress"
                     isChecked={inProgress}
-                    onChange={() => {
-                      setInProgress(!inProgress);
-                      setProgressValue(0); // Reset progress value when toggled off
+                    onChange={(e) => {
+                      setInProgress(e.target.checked);
+                      setProgressValue(0);
                     }}
                   />
                 </FormControl>
               </Flex>
               {inProgress && (
-                <FormControl mt={4}>
+                <FormControl mt={4} isInvalid={!!progressValueError}>
                   <FormLabel>Progress Value (0-100)</FormLabel>
                   <Input
                     type="number"
@@ -145,12 +156,15 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                     min={0}
                     max={100}
                     value={progressValue}
-                    onChange={(e) => setProgressValue(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setProgressValue(parseInt(e.target.value));
+                      setProgressValueError("");
+                    }}
                   />
+                  <FormErrorMessage>{progressValueError}</FormErrorMessage>
                 </FormControl>
               )}
             </Box>
-            {/* Modal footer */}
             <Flex justifyContent="space-between">
               <Button
                 flex="1"
