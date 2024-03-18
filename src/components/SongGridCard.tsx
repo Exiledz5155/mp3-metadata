@@ -31,11 +31,9 @@ export function SongGridCard() {
 
   // Function to handle mouse leave
   const handleMouseLeave = () => {
+    // Remove hover and right click effects
     setIsRightClicked(false);
-    // Remove hover effect only if the card is not already selected
-    if (!isRightClicked) {
-      setIsHovered(false);
-    }
+    setIsHovered(false);
   };
 
   return (
@@ -44,12 +42,12 @@ export function SongGridCard() {
       align={"center"}
       borderRadius={"10px"}
       justify={"space-between"}
-      _hover={!isRightClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
+      // _hover={!isRightClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
       onContextMenu={handleRightClick} // Right click event handler
-      bg={isRightClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
-      _dark={{
-        bg: isRightClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
-      }}
+      bg={isRightClicked ? "brand.300" : isHovered ? "brand.200" : "transparent"} // Update the background color based on isClicked state and hover state
+      // _dark={{
+      //   bg: isRightClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
+      // }}
       py={"1"}
       cursor={"pointer"}
       onMouseOver={handleHover} // Attach the hover event handler
