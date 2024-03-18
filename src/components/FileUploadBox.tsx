@@ -23,6 +23,7 @@ import {
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
+import FileUploadCard from "./FileUploadCard";
 import { MdOutlineFilePresent } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { FiFileText, FiRotateCcw } from "react-icons/fi";
@@ -128,87 +129,34 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 },
               }}
             >
-              {/* TODO: Create function to add and delete file components.
-                  Also need to make buttons functional */}
-              {/* File item */}
-              <Box border="2px" mb={4} p={4} borderRadius="2xl">
-                <Flex align="center">
-                  <Icon as={FiFileText} boxSize={6} />
-                  <Flex flex={1} pl={6} direction="column">
-                    {" "}
-                    {/* Change this line */}
-                    <Text mb="-1" textAlign="left" noOfLines={1}>
-                      PRIDE. - Kendrick Lamar.mp3
-                    </Text>
-                    <Text
-                      fontSize="xs"
-                      mb="-2"
-                      textAlign="left"
-                      color="#8E95A3"
-                    >
-                      7.8mb | 72%
-                    </Text>
-                  </Flex>
-                  <Icon as={BsFillTrashFill} boxSize={6} />
-                </Flex>
-                <Progress
-                  mt={4}
-                  value={72}
-                  size="sm"
-                  colorScheme="linear"
-                  borderRadius="md"
-                />
-              </Box>
-
-              {/* File item */}
-              <Box border="2px" mb={4} p={4} borderRadius="2xl">
-                <Flex align="center">
-                  <Icon as={FiFileText} boxSize={6} />
-                  <Flex flex={1} pl={6} direction="column">
-                    {/* Change this line */}
-                    <Text mb="-1" textAlign="left" noOfLines={1}>
-                      Show Me How - Men I Trust.mp3
-                    </Text>
-                    <Text fontSize="xs" textAlign="left" color="#FF7074">
-                      Upload Failed
-                    </Text>
-                  </Flex>
-                  <Icon as={BsFillTrashFill} boxSize={6} mr={5} />
-                  <Icon as={FiRotateCcw} boxSize={6} />
-                </Flex>
-              </Box>
-
-              {/* File item */}
-              <Box border="2px" mb={4} p={4} borderRadius="2xl">
-                <Flex align="center">
-                  <Icon as={FiFileText} boxSize={6} />
-                  <Flex flex={1} pl={6} direction="column">
-                    {" "}
-                    {/* Change this line */}
-                    <Text mb="-1" textAlign="left" noOfLines={1}>
-                      No More Parties In LA - Kanye West.mp3
-                    </Text>
-                    <Text fontSize="xs" textAlign="left" color="#8E95A3">
-                      14.8mb
-                    </Text>
-                  </Flex>
-                  <Icon as={BsFillTrashFill} boxSize={6} />
-                </Flex>
-              </Box>
-              <Box border="2px" mb={4} p={4} borderRadius="2xl">
-                <Flex align="center">
-                  <Icon as={FiFileText} boxSize={6} />
-                  <Flex flex={1} pl={6} direction="column">
-                    <Text mb="-2" textAlign="left" noOfLines={1}>
-                      No More Parties In LA - Kanye West.mp3
-                    </Text>
-                    <Text fontSize="xs" textAlign="left" color="#8E95A3">
-                      14.8mb
-                    </Text>
-                  </Flex>
-                  <Icon as={BsFillTrashFill} boxSize={6} />
-                </Flex>
-              </Box>
+              <FileUploadCard 
+                fileName="PRIDE. - Kendrick Lamar.mp3" 
+                fileSizeInBytes={10830000} 
+                uploadFailed={false} 
+                inProgress={true}
+                progressValue={72}
+              />
+              <FileUploadCard 
+                fileName="Show Me How - Men I Trust.mp3"
+                fileSizeInBytes={1120000}
+                uploadFailed={true}
+                inProgress={false}
+                progressValue={0}
+              />
+              <FileUploadCard 
+                fileName="No More Parties In LA - Kanye West.mp3" 
+                fileSizeInBytes={14800000} 
+                uploadFailed={false} 
+                inProgress={false}
+                progressValue={100}
+              />
+              <FileUploadCard 
+                fileName="No More Parties In LA - Kanye West.mp3" 
+                fileSizeInBytes={14800000} 
+                uploadFailed={false} 
+                inProgress={false}
+                progressValue={100}
+              />
             </Box>
 
             {/* Modal footer */}
