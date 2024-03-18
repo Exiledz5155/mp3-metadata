@@ -2,35 +2,41 @@
 
 import React, { useState } from "react";
 import { HStack, Flex, Image, Text } from "@chakra-ui/react";
+import { SongGridCardRightClick } from "./SongGridCardRightClick";
 
 export function SongGridCard() {
-  // Use state to track whether the card is clicked
-  const [isClicked, setIsClicked] = useState(false);
+  // Use state to track whether the card is right clicked
+  const [isRightClicked, setIsRightClicked] = useState(false);
+  // x,y coordinates of the pop up menu
+  const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
+  // State to track hover effect
+  const [isHovered, setIsHovered] = useState(false);
 
-  // Function to handle the click event
-  const handleClick = () => {
-    // Toggle the isClicked state when the card is clicked
-    setIsClicked(!isClicked);
+  // Function to handle the right click event
+  const handleRightClick = (event) => {
+    setIsRightClicked(true);
+    event.preventDefault(); // Prevents the default right click
+    const x = event.clientX;
+    const y = event.clientY;
+    setRightClickPosition({ x, y }); // Set state to display right-click menu
   };
 
   // Function to handle hover effect
   const handleHover = () => {
     // Apply hover effect only if the card is not already selected
-    if (!isClicked) {
+    if (!isRightClicked) {
       setIsHovered(true);
     }
   };
 
   // Function to handle mouse leave
   const handleMouseLeave = () => {
+    setIsRightClicked(false);
     // Remove hover effect only if the card is not already selected
-    if (!isClicked) {
+    if (!isRightClicked) {
       setIsHovered(false);
     }
   };
-
-  // State to track hover effect
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <HStack
@@ -38,11 +44,11 @@ export function SongGridCard() {
       align={"center"}
       borderRadius={"10px"}
       justify={"space-between"}
-      _hover={!isClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
-      onClick={handleClick} // Attach the click event handler
-      bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
+      _hover={!isRightClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
+      onContextMenu={handleRightClick} // Right click event handler
+      bg={isRightClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
       _dark={{
-        bg: isClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
+        bg: isRightClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
       }}
       py={"1"}
       cursor={"pointer"}
@@ -80,6 +86,14 @@ export function SongGridCard() {
       >
         1:14
       </Text>
+
+      {/* Render right-click menu when a song card is right clicked */}
+      {isRightClicked && (
+        <SongGridCardRightClick 
+          position={ rightClickPosition }
+          onClose={ () => setIsRightClicked(false) } 
+        />)
+      }
     </HStack>
   );
 }

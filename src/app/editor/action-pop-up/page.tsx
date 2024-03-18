@@ -22,7 +22,7 @@ import {
 
 import { ChangeEvent, useState } from "react";
 
-export default function ActionPopUp() {
+export function ActionPopUp() {
 
   const [showCard, setShowCard] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
