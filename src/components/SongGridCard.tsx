@@ -16,8 +16,8 @@ export function SongGridCard() {
   const handleRightClick = (event) => {
     setIsRightClicked(true);
     event.preventDefault(); // Prevents the default right click
-    const x = event.clientX;
-    const y = event.clientY;
+    var x = event.clientX;
+    var y = event.clientY;
     setRightClickPosition({ x, y }); // Set state to display right-click menu
   };
 

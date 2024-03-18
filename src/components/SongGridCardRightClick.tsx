@@ -28,7 +28,6 @@ import {
     // variables to set styles so I don't have to change them in 50 places
     const borderRad = "15px";
     const sizeOfFont = "md";
-
     return (
       <Card 
         variant={"elevated"} 
@@ -37,7 +36,7 @@ import {
         height="auto"
         position="fixed"
         onMouseLeave={handleMouseLeave} // onMouseLeave event handler
-        bottom={position.y}
+        top={position.y}
         left={position.x}
         borderRadius={borderRad}
         borderBottomLeftRadius="0"
