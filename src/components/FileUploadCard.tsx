@@ -15,6 +15,7 @@ function formatFileSize(bytes: number): string {
 
 interface FileUploadCardProps {
   fileName: string;
+  fileType: string;
   fileSizeInBytes: number;
   uploadFailed: boolean;
   inProgress: boolean;
@@ -23,6 +24,7 @@ interface FileUploadCardProps {
 
 export const FileUploadCard: React.FC<FileUploadCardProps> = ({
   fileName,
+  fileType,
   fileSizeInBytes,
   uploadFailed,
   inProgress,
@@ -37,7 +39,7 @@ export const FileUploadCard: React.FC<FileUploadCardProps> = ({
         <Icon as={FiFileText} boxSize={6} />
         <Flex flex={1} pl={6} direction="column">
           <Text mb="-1" textAlign="left" noOfLines={1}>
-            {fileName}
+            {fileName}.{fileType}
           </Text>
           {uploadFailed ? (
             <Text fontSize="xs" textAlign="left" color="#FF7074">

@@ -146,28 +146,32 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
               }}
             >
               <FileUploadCard 
-                fileName="PRIDE. - Kendrick Lamar.mp3" 
+                fileName="PRIDE. - Kendrick Lamar" 
+                fileType="mp3"
                 fileSizeInBytes={10830000} 
                 uploadFailed={false} 
                 inProgress={true}
                 progressValue={72}
               />
               <FileUploadCard 
-                fileName="Show Me How - Men I Trust.mp3"
+                fileName="Show Me How - Men I Trust"
+                fileType="mp3"
                 fileSizeInBytes={1120000}
                 uploadFailed={true}
                 inProgress={false}
                 progressValue={0}
               />
               <FileUploadCard 
-                fileName="No More Parties In LA - Kanye West.mp3" 
+                fileName="No More Parties In LA - Kanye West" 
+                fileType="mp3"
                 fileSizeInBytes={14800000} 
                 uploadFailed={false} 
                 inProgress={false}
                 progressValue={100}
               />
               <FileUploadCard 
-                fileName="No More Parties In LA - Kanye West.mp3" 
+                fileName="No More Parties In LA - Kanye West"
+                fileType="mp3" 
                 fileSizeInBytes={14800000} 
                 uploadFailed={false} 
                 inProgress={false}
