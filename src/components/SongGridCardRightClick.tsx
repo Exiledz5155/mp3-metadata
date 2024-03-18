@@ -121,21 +121,24 @@ import {
                 stroke="#ffffff" 
                 stroke-width="2.0" 
                 stroke-linecap="round" 
-                stroke-linejoin="round">
+                stroke-linejoin="round"
+              >
               </path>
               <path 
                 d="M12 7.51L12.01 7.49889" 
                 stroke="#ffffff" 
                 stroke-width="2.0" 
                 stroke-linecap="round" 
-                stroke-linejoin="round">
+                stroke-linejoin="round"
+              >
               </path>
               <path 
                 d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" 
                 stroke="#ffffff" 
                 stroke-width="2.0" 
                 stroke-linecap="round" 
-                stroke-linejoin="round">
+                stroke-linejoin="round"
+              >
               </path>
             </svg>
             <Text fontSize={sizeOfFont}>  
@@ -165,21 +168,24 @@ import {
                 stroke="#ffffff" 
                 stroke-width="2" 
                 stroke-linecap="round" 
-                stroke-linejoin="round">
+                stroke-linejoin="round"
+              >
               </path>
               <path 
                 d="M12 6V13M12 13L15.5 9.5M12 13L8.5 9.5" 
                 stroke="#ffffff" 
                 stroke-width="2" 
                 stroke-linecap="round" 
-                stroke-linejoin="round">
+                stroke-linejoin="round"
+              >
               </path>
               <path 
                 d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" 
                 stroke="#ffffff" 
                 stroke-width="2" 
                 stroke-linecap="round" 
-                stroke-linejoin="round">
+                stroke-linejoin="round"
+              >
               </path>
             </svg>
             <Text fontSize={sizeOfFont}>  
@@ -212,14 +218,16 @@ import {
               stroke="#ffffff" 
               stroke-width="2" 
               stroke-linecap="round" 
-              stroke-linejoin="round">
+              stroke-linejoin="round"
+            >
             </path>
             <path 
               d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" 
               stroke="#ffffff" 
               stroke-width="2" 
               stroke-linecap="round" 
-              stroke-linejoin="round">
+              stroke-linejoin="round"
+            >
             </path>
           </svg>
             <Text fontSize={sizeOfFont}>  
