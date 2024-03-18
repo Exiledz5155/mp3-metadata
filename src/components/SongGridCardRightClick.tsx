@@ -30,8 +30,7 @@ import {
     const sizeOfFont = "md";
     return (
       <Card 
-        variant={"elevated"} 
-        // w={"20%"} 
+        variant={"elevated"}
         margin={"auto"}
         height="auto"
         position="fixed"
