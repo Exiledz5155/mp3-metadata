@@ -40,7 +40,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
   return (
     <>
       {/* Modal component */}
-      <Modal isOpen={isOpen} onClose={onClose} size="lg">
+      <Modal isOpen={isOpen} onClose={onClose} size="lg" closeOnOverlayClick={false}>
         <ModalOverlay />
         <ModalContent
           bg={"brand.200"}
@@ -74,7 +74,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 <Icon as={IoCloudUploadOutline} boxSize={12} mb={2} />
                 <Text fontWeight="bold">Drag and drop files here</Text>
                 <Text color="#8E95A3">or</Text>
-                <Button
+                {/* <Button
                   as="label"
                   htmlFor="fileInput"
                   variant="solid"
@@ -94,8 +94,24 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                     id="fileInput"
                     style={{ display: "none" }}
                   />
-                  {/* TODO: Link file uploads for button/drag + drop */}
+                </Button> */}
+                <Button
+                  as="label"
+                  htmlFor="fileInput"
+                  variant="solid"
+                  mt={2}
+                  bgGradient="linear(to-r, linear.100, linear.200)"
+                  _hover={{
+                    cursor: "pointer",
+                    color: "white",
+                    bg: "brand.300",
+                  }}
+                  rounded={"xl"}
+                  color="brand.200"
+                >
+                  Browse Files
                 </Button>
+                {/* TODO: Link file uploads for button/drag + drop */}
               </Flex>
             </Box>
             <Text color="#8E95A3" mt={3}>
