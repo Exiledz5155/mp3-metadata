@@ -7,7 +7,7 @@ import { SongGridCardRightClick } from "./SongGridCardRightClick";
 export function SongGridCard() {
   // Use state to track whether the card is right clicked
   const [isRightClicked, setIsRightClicked] = useState(false);
-  // x,y coordinates of the pop up menu
+  // x,y coordinates of where the right click menu should be
   const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
   // State to track hover effect
   const [isHovered, setIsHovered] = useState(false);
