@@ -4,10 +4,11 @@ import {
   StackDivider,
   Button,
   Text,
-  Link,
+  useDisclosure
 } from "@chakra-ui/react";
 
 import { ChangeEvent, useState, useEffect, useRef } from "react";
+import { Edit } from "./Edit";
 
 /**
  * @param position x and y coordinates of the bottom left corner of the menu
@@ -27,7 +28,7 @@ export function SongGridCardRightClick({ position, onClose }) {
       cardRef.current.style.top = `${topPosition}px`;
     }
   }, [position, onClose]);
-  
+
   //Event handler for when the mouse leaves the right click menue
   const handleMouseLeave = () => {
     onClose(); // removes the pop op menue
@@ -36,6 +37,7 @@ export function SongGridCardRightClick({ position, onClose }) {
   // variables to set styles so I don't have to change them in 50 places
   const borderRad = "15px";
   const sizeOfFont = "md";
+  const { isOpen, onOpen } = useDisclosure();
   return (
     <Card
       ref={cardRef} // Attaches a reference to the Card component
@@ -99,6 +101,7 @@ export function SongGridCardRightClick({ position, onClose }) {
             ></path>
           </svg>
           <Text fontSize={sizeOfFont}>Edit</Text>
+          <Edit isOpen={isOpen} onClose={onClose} />
         </Button>
         <Button
           style={{
