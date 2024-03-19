@@ -1,3 +1,7 @@
+//NOTE
+//this api is not currently being used. logic has been moved to azure-functions/EditMetadataHTTP
+
+
 import { BlobServiceClient, StorageSharedKeyCredential, generateBlobSASQueryParameters, ContainerSASPermissions, } from "@azure/storage-blob";
 
 

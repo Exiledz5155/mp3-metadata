@@ -8,24 +8,35 @@ const DownloadPage: React.FC = () => {
 
   const handleDownload = async () => {
     try {
-      // Call the download API to get the download URL
+      //get uuid
       const userUUID = sessionStorage.getItem("userUUID") || generateUUID();
       sessionStorage.setItem("userUUID", userUUID);
-      const response = await fetch(`/api/download?fileName=${encodeURIComponent(fileName)}&userUUID=${encodeURIComponent(userUUID)}`);
-      const { blobUrl, sasToken } = await response.json();
 
-      // Check if blobUrl or sasToken is undefined
-      if (!blobUrl || !sasToken) {
-      console.error('Blob URL or SAS token is missing from the response');
-      return; // Exit the function to avoid further errors
+      //TODO: get actual file name for what is getting downloaded
+      const fileName = `Cigarettes.mp3`
+
+      //call azure function to download file and update metadata 
+      const response = await fetch(`https://mp3functions.azurewebsites.net/api/editmetadatahttp?filePath=mp3container/${userUUID}/${fileName}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
 
-    // Navigate directly using blobUrl and sasToken
-    window.location.href = `${blobUrl}?${sasToken}`;
-  } catch (error) {
-    console.error('Failed to download file:', error);
-  }
-};
+      // Assuming the function returns a binary file, adjust the mime type if necessary
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName; // Specify the filename you want for the download
+      document.body.appendChild(a); // Required for this to work in FireFox
+      a.click();
+      a.remove(); // After downloading, remove the element and revoke the URL
+
+      // Optional: free up memory by revoking the object URL
+      window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error('Failed to download file:', error);
+        }
+      };
 
   return (
     <div>
