@@ -77,47 +77,36 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
 
   return (
     <>
-      <Modal 
-        isOpen={isGeneratorOpen} 
-        onClose={onGeneratorClose} 
-        size="lg" 
+      <Modal
+        isOpen={isGeneratorOpen}
+        onClose={onGeneratorClose}
+        size="lg"
         closeOnOverlayClick={false}
         closeOnEsc={false}
       >
-        <ModalOverlay/>
-        <ModalContent 
-          bg={"brand.200"} 
-          py={25} 
-          borderRadius={"xl"} 
+        <ModalOverlay />
+        <ModalContent
+          bg={"brand.200"}
+          py={25}
+          borderRadius={"xl"}
           width={["100%", "60%"]}
         >
           <ModalHeader pt={0}>
             <Flex alignItems="center">
-              <Icon 
-                as={MdOutlineFilePresent} 
-                boxSize={8} 
-              />
-              <Box 
-                fontSize="2xl"
-                ml={2}
-              >
+              <Icon as={MdOutlineFilePresent} boxSize={8} />
+              <Box fontSize="2xl" ml={2}>
                 File Generator
               </Box>
             </Flex>
-            <ModalCloseButton 
-              position="absolute" 
-              top="28px" 
-              right="25px" 
-              size="md" 
+            <ModalCloseButton
+              position="absolute"
+              top="28px"
+              right="25px"
+              size="md"
             />
           </ModalHeader>
           <ModalBody pb={0}>
-            <Box 
-              border="2px dashed" 
-              p={4} 
-              borderRadius="2xl" 
-              mb={4}
-            >
+            <Box border="2px dashed" p={4} borderRadius="2xl" mb={4}>
               {/* Form/switch fields for the file inputs */}
               <FormControl>
                 <FormLabel>File Name</FormLabel>
@@ -126,6 +115,7 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                   placeholder="Enter file name"
                   value={fileName}
                   onChange={(e) => setFileName(e.target.value)}
+                  focusBorderColor="linear.200"
                 />
               </FormControl>
               <FormControl mt={4}>
@@ -142,6 +132,7 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                     }
                     setFileType(value);
                   }}
+                  focusBorderColor="linear.200"
                 />
               </FormControl>
               <FormControl mt={4}>
@@ -151,38 +142,40 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                   placeholder="Enter file size"
                   value={fileSize as string}
                   onChange={(e) => setFileSize(e.target.value)}
+                  focusBorderColor="linear.200"
                 />
               </FormControl>
-              <Flex 
-                mt={4} 
-                justifyContent="space-between"
-              >
-                <FormControl 
-                  display="flex" 
-                  alignItems="center" 
+              <Flex mt={4} justifyContent="space-between">
+                <FormControl
+                  display="flex"
+                  alignItems="center"
                   justifyContent="center"
                 >
-                  <FormLabel 
-                    htmlFor="uploadFailed" 
-                    mb="0"
-                  >
+                  <FormLabel htmlFor="uploadFailed" mb="0">
                     Upload Failed
                   </FormLabel>
                   <Switch
                     id="uploadFailed"
                     isChecked={uploadFailed}
                     onChange={(e) => setUploadFailed(e.target.checked)}
+                    sx={{
+                      ".chakra-switch__track": {
+                        bg: uploadFailed
+                          ? "linear-gradient(90deg, rgba(135,149,213,1) 0%, rgba(207,151,244,1) 100%)"
+                          : "brand.400",
+                      },
+                      ".chakra-switch__thumb": {
+                        bg: "white", // Or any color you want
+                      },
+                    }}
                   />
                 </FormControl>
-                <FormControl 
-                  display="flex" 
-                  alignItems="center" 
+                <FormControl
+                  display="flex"
+                  alignItems="center"
                   justifyContent="center"
                 >
-                  <FormLabel 
-                    htmlFor="inProgress" 
-                    mb="0"
-                  >
+                  <FormLabel htmlFor="inProgress" mb="0">
                     In Progress
                   </FormLabel>
                   <Switch
@@ -192,14 +185,21 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                       setInProgress(e.target.checked);
                       setProgressValue(0);
                     }}
+                    sx={{
+                      ".chakra-switch__track": {
+                        bg: inProgress
+                          ? "linear-gradient(90deg, rgba(135,149,213,1) 0%, rgba(207,151,244,1) 100%)"
+                          : "brand.400",
+                      },
+                      ".chakra-switch__thumb": {
+                        bg: "white", // Or any color you want
+                      },
+                    }}
                   />
                 </FormControl>
               </Flex>
               {inProgress && (
-                <FormControl 
-                  mt={4} 
-                  isInvalid={!!progressValueError}
-                >
+                <FormControl mt={4} isInvalid={!!progressValueError}>
                   {/* Ensure the progress value is between 0 and 100 */}
                   <FormLabel>Progress Value (0-100)</FormLabel>
                   <Input
@@ -212,6 +212,7 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                       setProgressValue(parseInt(e.target.value));
                       setProgressValueError("");
                     }}
+                    focusBorderColor="linear.200"
                   />
                   <FormErrorMessage>{progressValueError}</FormErrorMessage>
                 </FormControl>
