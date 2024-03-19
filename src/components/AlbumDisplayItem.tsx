@@ -13,7 +13,15 @@ import {
   Fade,
 } from "@chakra-ui/react";
 
-export function AlbumDisplayItem() {
+interface AlbumDisplayItemProps {
+  albumName: string;
+  albumArtist: string; 
+  albumCover: string; // a link
+}
+
+export function AlbumDisplayItem(props: AlbumDisplayItemProps) {
+  const { albumName, albumArtist, albumCover } = props;
+
   return (
     <WrapItem>
       <AspectRatio w="100%" maxWidth={"200px"} ratio={3 / 4}>
@@ -42,7 +50,7 @@ export function AlbumDisplayItem() {
               <GridItem rowSpan={6} colSpan={6}>
                 <Image
                   src={
-                    "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
+                    albumCover
                   }
                   p={2}
                   borderRadius={"15"}
@@ -52,14 +60,14 @@ export function AlbumDisplayItem() {
               </GridItem>
               <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                 <Text as="b" align="left" noOfLines={1}>
-                  Goodbye & Good Riddance
+                  {albumName}
                 </Text>
               </GridItem>
               {/* TODO: NOT ENOUGH EMPTY SPACE BELOW JUICE WLRD TEXT */}
               {/* i.e, empty space between contents and border is not even all around */}
               <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                 <Text align="left" noOfLines={1}>
-                  Juice WRLD
+                  {albumArtist}
                 </Text>
               </GridItem>
             </Grid>
