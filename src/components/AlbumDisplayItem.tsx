@@ -13,7 +13,32 @@ import {
   Fade,
 } from "@chakra-ui/react";
 
-export function AlbumDisplayItem() {
+interface musicObj {
+  id: string;
+  title: string;
+  artist: string;
+  album: string;
+  "album-artist": string;
+  composer: string;
+  genre: string;
+  year: number;
+  "track-num": number;
+  "track-total": number;
+  "disc-num": number;
+  "disc-total": number;
+  compilation: boolean;
+  rating: number;
+  bpm: number;
+  artwork: string;
+  "song-duration": number;
+}
+
+export function AlbumDisplayItem(songData: musicObj) {
+  const album = {
+    imageUrl: songData.artwork,
+    title: songData.album,
+  };
+
   return (
     <WrapItem>
       <AspectRatio w="100%" maxWidth={"200px"} ratio={3 / 4}>
@@ -41,9 +66,7 @@ export function AlbumDisplayItem() {
             >
               <GridItem rowSpan={6} colSpan={6}>
                 <Image
-                  src={
-                    "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
-                  }
+                  src={songData.artwork}
                   p={2}
                   borderRadius={"15"}
                   alt={"An Image"}
@@ -52,14 +75,14 @@ export function AlbumDisplayItem() {
               </GridItem>
               <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                 <Text as="b" align="left" noOfLines={1}>
-                  Goodbye & Good Riddance
+                  {songData.album}
                 </Text>
               </GridItem>
               {/* TODO: NOT ENOUGH EMPTY SPACE BELOW JUICE WLRD TEXT */}
               {/* i.e, empty space between contents and border is not even all around */}
               <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                 <Text align="left" noOfLines={1}>
-                  Juice WRLD
+                  {songData["album-artist"]}
                 </Text>
               </GridItem>
             </Grid>
