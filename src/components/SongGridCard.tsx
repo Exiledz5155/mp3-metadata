@@ -83,14 +83,15 @@ export function SongGridCard() {
         <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
           1:14
         </Text>
+      
+        {/* Render right-click menu when a song card is right clicked */}
+        {isRightClicked && (
+          <SongGridCardRightClick
+            position={rightClickPosition}
+            onClose={() => setIsRightClicked(false)}
+          />
+        )}
       </HStack>
-      {/* Render right-click menu when a song card is right clicked */}
-      {isRightClicked && (
-        <SongGridCardRightClick
-          position={rightClickPosition}
-          onClose={() => setIsRightClicked(false)}
-        />
-      )}
     </>
   );
 }

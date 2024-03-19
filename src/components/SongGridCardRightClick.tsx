@@ -27,7 +27,7 @@ export function SongGridCardRightClick({ position, onClose }) {
       cardRef.current.style.top = `${topPosition}px`;
     }
   }, [position, onClose]);
-
+  
   //Event handler for when the mouse leaves the right click menue
   const handleMouseLeave = () => {
     onClose(); // removes the pop op menue
