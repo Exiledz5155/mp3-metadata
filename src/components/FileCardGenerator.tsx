@@ -84,19 +84,40 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
         closeOnOverlayClick={false}
         closeOnEsc={false}
       >
-        <ModalOverlay />
-        <ModalContent bg={"brand.200"} py={25} borderRadius={"xl"} width={["100%", "60%"]}>
+        <ModalOverlay/>
+        <ModalContent 
+          bg={"brand.200"} 
+          py={25} 
+          borderRadius={"xl"} 
+          width={["100%", "60%"]}
+        >
           <ModalHeader pt={0}>
             <Flex alignItems="center">
-              <Icon as={MdOutlineFilePresent} boxSize={8} />
-              <Box fontSize="2xl" ml={2}>
+              <Icon 
+                as={MdOutlineFilePresent} 
+                boxSize={8} 
+              />
+              <Box 
+                fontSize="2xl"
+                ml={2}
+              >
                 File Generator
               </Box>
             </Flex>
-            <ModalCloseButton position="absolute" top="28px" right="25px" size="md" />
+            <ModalCloseButton 
+              position="absolute" 
+              top="28px" 
+              right="25px" 
+              size="md" 
+            />
           </ModalHeader>
           <ModalBody pb={0}>
-            <Box border="2px dashed" p={4} borderRadius="2xl" mb={4}>
+            <Box 
+              border="2px dashed" 
+              p={4} 
+              borderRadius="2xl" 
+              mb={4}
+            >
               {/* Form/switch fields for the file inputs */}
               <FormControl>
                 <FormLabel>File Name</FormLabel>
@@ -132,9 +153,19 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                   onChange={(e) => setFileSize(e.target.value)}
                 />
               </FormControl>
-              <Flex mt={4}>
-                <FormControl display="flex" alignItems="center" mr={4}>
-                  <FormLabel htmlFor="uploadFailed" mb="0">
+              <Flex 
+                mt={4} 
+                justifyContent="space-between"
+              >
+                <FormControl 
+                  display="flex" 
+                  alignItems="center" 
+                  justifyContent="center"
+                >
+                  <FormLabel 
+                    htmlFor="uploadFailed" 
+                    mb="0"
+                  >
                     Upload Failed
                   </FormLabel>
                   <Switch
@@ -143,8 +174,15 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                     onChange={(e) => setUploadFailed(e.target.checked)}
                   />
                 </FormControl>
-                <FormControl display="flex" alignItems="center" mr={4}>
-                  <FormLabel htmlFor="inProgress" mb="0">
+                <FormControl 
+                  display="flex" 
+                  alignItems="center" 
+                  justifyContent="center"
+                >
+                  <FormLabel 
+                    htmlFor="inProgress" 
+                    mb="0"
+                  >
                     In Progress
                   </FormLabel>
                   <Switch
@@ -158,7 +196,10 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                 </FormControl>
               </Flex>
               {inProgress && (
-                <FormControl mt={4} isInvalid={!!progressValueError}>
+                <FormControl 
+                  mt={4} 
+                  isInvalid={!!progressValueError}
+                >
                   {/* Ensure the progress value is between 0 and 100 */}
                   <FormLabel>Progress Value (0-100)</FormLabel>
                   <Input

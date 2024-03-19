@@ -64,7 +64,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
         closeOnOverlayClick={false} 
         closeOnEsc={false}
       >
-        <ModalOverlay />
+        <ModalOverlay/>
         <ModalContent 
           bg={"brand.200"} 
           py={25}
@@ -73,17 +73,40 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
           width={["100%", "60%"]}>
           <ModalHeader pt={0}>
             <Flex alignItems="center">
-              <Icon as={MdOutlineFilePresent} boxSize={8} />
-              <Box fontSize="2xl" ml={2}>
+              <Icon 
+                as={MdOutlineFilePresent} 
+                boxSize={8} 
+              />
+              <Box 
+                fontSize="2xl" 
+                ml={2}
+              >
                 Upload Files
               </Box>
             </Flex>
-            <ModalCloseButton position="absolute" top="28px" right="25px" size="md" />
+            <ModalCloseButton 
+              position="absolute" 
+              top="28px" 
+              right="25px" 
+              size="md" 
+            />
           </ModalHeader>
           <ModalBody pb={0}>
-            <Box border="2px dashed" p={4} borderRadius="2xl">
-              <Flex direction="column" justifyContent="center" alignItems="center">
-                <Icon as={IoCloudUploadOutline} boxSize={12} mb={2} />
+            <Box 
+              border="2px dashed" 
+              p={4} 
+              borderRadius="2xl"
+            >
+              <Flex 
+                direction="column" 
+                justifyContent="center" 
+                alignItems="center"
+              >
+                <Icon 
+                  as={IoCloudUploadOutline} 
+                  boxSize={12} 
+                  mb={2} 
+                />
                 <Text fontWeight="bold">Drag and drop files here</Text>
                 <Text color="#8E95A3">or</Text>
                 {/* This button should be removed once a proper backend link has been established */}
@@ -129,7 +152,10 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 />
               </Flex>
             </Box>
-            <Text color="#8E95A3" mt={3}>
+            <Text 
+              color="#8E95A3" 
+              mt={3}
+            >
               Only .mp3 files. Max size 30mb.
             </Text>
 
@@ -160,8 +186,16 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
               }}
             >
               {generatedCards.length === 0 ? ( // Checking if the array is empty
-              <Box border="2px" mb={4} p={4} borderRadius="2xl">
-              <Flex align="center" justifyContent="center">
+              <Box 
+                border="2px" 
+                mb={4} 
+                p={4}
+                borderRadius="2xl"
+              >
+              <Flex 
+                align="center" 
+                justifyContent="center"
+              >
                   <Text // Default display text
                     as='i'
                     color="#8E95A3"
