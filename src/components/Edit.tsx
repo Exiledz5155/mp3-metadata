@@ -42,7 +42,7 @@ export const Edit: React.FC<EditComponentProps> = ({ isOpen, onClose }) => {
               <GridItem rowSpan={12} colSpan={12}>
                 {" "}
                 <Image
-                  src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
+                  src="https://m.media-amazon.com/images/I/71YMac+JmAL._UF1000,1000_QL80_.jpg"
                   alt="Album Cover"
                   borderRadius={"5px"}
                 />

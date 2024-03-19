@@ -121,7 +121,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                   color="brand.200"
                   onClick={handleGenerateFiles}
                 >
-                  Generate Files
+                  Browse Files
                 </Button>
                 {/* <Button
                   as="label"

@@ -80,8 +80,8 @@ export function SongGridCard(props: SongGridCardProps) {
             borderRadius={"5px"}
             mx={"4"}
           />
-          <Text textAlign={"center"} noOfLines={1}>
-          {songName}
+          <Text textAlign={"left"} noOfLines={1}>
+            {songName}
           </Text>
         </Flex>
         <Text textAlign={"left"} noOfLines={1} w="30%">

@@ -52,24 +52,20 @@ import React from "react";
 
 export function SongDisplay() {
   const SongGridCards = [
-    <SongGridCard songName="Sherane a.k.a Master Splinter's Daughter" songLength="4:33" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="1"/>,
-    <SongGridCard songName="B***h, Don't Kill My Vibe" songLength="5:10" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="2"/>,
-    <SongGridCard songName="Backseat Freestyle" songLength="3:32" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="3"/>,
-    <SongGridCard songName="The Art of Peer Pressure" songLength="5:24" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="4"/>,
-    <SongGridCard songName="Money Trees (feat. Jay Rock)" songLength="6:26" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="5"/>,
-    <SongGridCard songName="Poetic Justice (feat. Drake)" songLength="5:00" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="6"/>,
-    <SongGridCard songName="Good Kid" songLength="3:34" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="7"/>,
-    <SongGridCard songName="m.A.A.d city (feat. MC Eiht)" songLength="5:50" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="8"/>,
-    <SongGridCard songName="Swimming Pools (Drank) [Extended Version]" songLength="5:13" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="9"/>,
-    <SongGridCard songName="Sing About Me, I'm Dying of Thirst" songLength="12:03" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="10"/>,
-    <SongGridCard songName="Real (feat. Anna Wise)" songLength="7:23" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="11"/>,
-    <SongGridCard songName="Compton (feat. Dr. Dre)" songLength="4:08" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="12"/>,
-    <SongGridCard songName="The Recipe (feat. Dr. Dre)" songLength="5:53" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="13"/>,
-    <SongGridCard songName="Black Boy Fly" songLength="4:39" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="14"/>,
-    <SongGridCard songName="Now or Never (feat. Mary J. Blige)" songLength="4:17" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="15"/>,
-    <SongGridCard songName="Collect Calls" songLength="3:58" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="16"/>,
-    <SongGridCard songName="Swimming Pools (Drank)" songLength="4:08" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="17"/>,
-    <SongGridCard songName="B***h, Don't Kill My Vibe (feat. JAY Z) [Remix]" songLength="4:39" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="18"/>,
+    <SongGridCard songName="Backseat Freestyle" songLength="3:32" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="1"/>,
+    <SongGridCard songName="The Art of Peer Pressure" songLength="5:24" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="2"/>,
+    <SongGridCard songName="Money Trees (feat. Jay Rock)" songLength="6:26" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="3"/>,
+    <SongGridCard songName="Poetic Justice (feat. Drake)" songLength="5:00" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="4"/>,
+    <SongGridCard songName="Good Kid" songLength="3:34" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="5"/>,
+    <SongGridCard songName="m.A.A.d city (feat. MC Eiht)" songLength="5:50" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="6"/>,
+    <SongGridCard songName="Sing About Me, I'm Dying of Thirst" songLength="12:03" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="7"/>,
+    <SongGridCard songName="Real (feat. Anna Wise)" songLength="7:23" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="8"/>,
+    <SongGridCard songName="Compton (feat. Dr. Dre)" songLength="4:08" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="9"/>,
+    <SongGridCard songName="The Recipe (feat. Dr. Dre)" songLength="5:53" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="10"/>,
+    <SongGridCard songName="Black Boy Fly" songLength="4:39" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="11"/>,
+    <SongGridCard songName="Now or Never (feat. Mary J. Blige)" songLength="4:17" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="12"/>,
+    <SongGridCard songName="Collect Calls" songLength="3:58" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="13"/>,
+    <SongGridCard songName="Swimming Pools (Drank)" songLength="4:08" songArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)" trackNumber="14"/>,
   ];
 
   return (

@@ -20,7 +20,7 @@ export function AlbumInfoSection() {
           Kendrick Lamar
         </Text>
         <Text fontSize={"md"} as="b" noOfLines={1}>
-          2012 • 18 songs • 1 hour 36 minutes
+          2012 • 14 songs • 1 hour 17 minutes
         </Text>
       </VStack>
     </HStack>
