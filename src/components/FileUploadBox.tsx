@@ -62,6 +62,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
         size="lg"
         // Disabled clicking outside the overlay to close the modal
         closeOnOverlayClick={false} 
+        closeOnEsc={false}
       >
         <ModalOverlay />
         <ModalContent 

@@ -82,6 +82,7 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
         onClose={onGeneratorClose} 
         size="lg" 
         closeOnOverlayClick={false}
+        closeOnEsc={false}
       >
         <ModalOverlay />
         <ModalContent bg={"brand.200"} py={25} borderRadius={"xl"} width={["100%", "60%"]}>
