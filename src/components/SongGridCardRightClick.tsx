@@ -4,7 +4,7 @@ import {
   StackDivider,
   Button,
   Text,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { ChangeEvent, useState, useEffect, useRef } from "react";
@@ -38,6 +38,7 @@ export function SongGridCardRightClick({ position, onClose }) {
   const borderRad = "15px";
   const sizeOfFont = "md";
   const { isOpen, onOpen } = useDisclosure();
+
   return (
     <Card
       ref={cardRef} // Attaches a reference to the Card component
@@ -59,6 +60,7 @@ export function SongGridCardRightClick({ position, onClose }) {
         borderBottomLeftRadius="0"
       >
         <Button
+          onClick={onOpen}
           style={{
             display: "flex",
             alignItems: "center",
