@@ -1,30 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  HStack,
-  Flex,
-  Image,
-  Text,
-  ModalContent,
-  ModalOverlay,
-  Modal,
-  ModalFooter,
-  Button,
-  useDisclosure,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  Card,
-  FormControl,
-  FormLabel,
-  Input,
-  Stack,
-  useColorModeValue,
-  Grid,
-  GridItem,
-} from "@chakra-ui/react";
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { HStack, Flex, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { Edit } from "./Edit";
 
 export function SongGridCard() {
@@ -96,12 +73,7 @@ export function SongGridCard() {
         <Text textAlign={"left"} noOfLines={1} w="30%">
           Goodbye & Good Riddance
         </Text>
-        <Text
-          textAlign={"center"}
-          noOfLines={1}
-          fontFamily={"mono"}
-          w="10%"
-        >
+        <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
           1:14
         </Text>
       </HStack>
