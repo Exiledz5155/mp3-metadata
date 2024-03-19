@@ -15,7 +15,7 @@ import { ChangeEvent, useState, useEffect, useRef } from "react";
  **/
 export function SongGridCardRightClick({ position, onClose }) {
   // Creates a reference to the Card component
-  const cardRef = useRef<HTMLElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   // Function that dynamically calculates and sets the top position of the Card component
   // based on the cursor position and the height of the Card itself.
   useEffect(() => {
