@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { HStack, Flex, Image, Text } from "@chakra-ui/react";
 import { SongGridCardRightClick } from "./SongGridCardRightClick";
 
-
 export function SongGridCard() {
   // Use state to track whether the card is right clicked
   const [isRightClicked, setIsRightClicked] = useState(false);
@@ -37,22 +36,22 @@ export function SongGridCard() {
     setIsHovered(false);
   };
 
-  // State to track hover effect
-  const [isHovered, setIsHovered] = useState(false);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <>
       {" "}
       <HStack
         borderRadius={"10px"}
-        onClick={onOpen} // Attach the click event handler
         transition="background-color 0.2s ease"
-        onContextMenu={handleRightClick} // Right click event handler 
-        bg={isRightClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
+        onContextMenu={handleRightClick} // Right click event handler
+        bg={
+          isRightClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"
+        } // Update the background color based on isClicked state and hover state
         _dark={{
-          bg: isRightClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
+          bg: isRightClicked
+            ? "brand.300"
+            : isHovered
+            ? "brand.200"
+            : "transparent",
         }}
         py={"2"}
         cursor={"pointer"}
@@ -85,13 +84,13 @@ export function SongGridCard() {
           1:14
         </Text>
       </HStack>
-{/* Render right-click menu when a song card is right clicked */}
+      {/* Render right-click menu when a song card is right clicked */}
       {isRightClicked && (
-        <SongGridCardRightClick 
-          position={ rightClickPosition }
-          onClose={ () => setIsRightClicked(false) } 
-        />)
-      }
+        <SongGridCardRightClick
+          position={rightClickPosition}
+          onClose={() => setIsRightClicked(false)}
+        />
+      )}
     </>
   );
 }
