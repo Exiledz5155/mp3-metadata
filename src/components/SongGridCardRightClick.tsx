@@ -19,15 +19,15 @@ export function SongGridCardRightClick({ position, onClose }) {
   const cardRef = useRef<HTMLDivElement>(null);
   // Function that dynamically calculates and sets the top position of the Card component
   // based on the cursor position and the height of the Card itself.
-  useEffect(() => {
-    if (cardRef.current) {
-      // Check if cardRef.current is not null
-      const cardHeight = cardRef.current.clientHeight;
-      // Calculate menu height and set the top position
-      const topPosition = position.y - cardHeight;
-      cardRef.current.style.top = `${topPosition}px`;
-    }
-  }, [position, onClose]);
+  // useEffect(() => {
+  //   if (cardRef.current) {
+  //     // Check if cardRef.current is not null
+  //     const cardHeight = cardRef.current.clientHeight;
+  //     // Calculate menu height and set the top position
+  //     const topPosition = position.y - cardHeight;
+  //     cardRef.current.style.top = `${topPosition}px`;
+  //   }
+  // }, [position, onClose]);
 
   //Event handler for when the mouse leaves the right click menue
   const handleMouseLeave = () => {
@@ -35,7 +35,7 @@ export function SongGridCardRightClick({ position, onClose }) {
   };
 
   // variables to set styles so I don't have to change them in 50 places
-  const borderRad = "15px";
+  const borderRad = "5px";
   const sizeOfFont = "md";
   const { isOpen, onOpen } = useDisclosure();
 
@@ -50,14 +50,12 @@ export function SongGridCardRightClick({ position, onClose }) {
       top={position.y}
       left={position.x}
       borderRadius={borderRad}
-      borderBottomLeftRadius="0"
     >
       <Stack
-        divider={<StackDivider />}
+        // divider={<StackDivider />}
         spacing="0"
         bg={"brand.200"}
         borderRadius={borderRad}
-        borderBottomLeftRadius="0"
       >
         <Button
           onClick={onOpen}
@@ -197,7 +195,6 @@ export function SongGridCardRightClick({ position, onClose }) {
             borderRadius: borderRad,
             borderTopLeftRadius: "0",
             borderTopRightRadius: "0",
-            borderBottomLeftRadius: "0",
           }}
         >
           <svg
