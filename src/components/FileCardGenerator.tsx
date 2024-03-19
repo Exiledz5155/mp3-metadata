@@ -10,7 +10,6 @@ import {
   ModalOverlay,
   Icon,
   Box,
-  Text,
   FormControl,
   FormLabel,
   Input,
@@ -21,16 +20,17 @@ import { MdOutlineFilePresent } from "react-icons/md";
 import FileUploadCard from "./FileUploadCard";
 
 interface FileCardGeneratorProps {
-  isCardOpen: boolean;
-  onCardClose: () => void;
-  addGeneratedCard: (newCard: JSX.Element) => void;
+  isGeneratorOpen: boolean;
+  onGeneratorClose: () => void;
+  addGeneratedCard: (newCard: JSX.Element) => void; // Function to add a new generated FileUploadCard to the array
 }
 
 export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
-  isCardOpen,
-  onCardClose,
+  isGeneratorOpen,
+  onGeneratorClose,
   addGeneratedCard,
 }) => {
+  // These constants are for storing inputs from the forms and switches
   const [inProgress, setInProgress] = useState(false);
   const [progressValue, setProgressValue] = useState(0);
   const [fileName, setFileName] = useState("");
@@ -39,8 +39,9 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
   const [uploadFailed, setUploadFailed] = useState(false);
   const [progressValueError, setProgressValueError] = useState("");
 
+  // Reset the input fields when the generator is closed
   useEffect(() => {
-    if (!isCardOpen) {
+    if (!isGeneratorOpen) {
       setInProgress(false);
       setProgressValue(0);
       setFileName("");
@@ -49,14 +50,16 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
       setUploadFailed(false);
       setProgressValueError("");
     }
-  }, [isCardOpen]);
+  }, [isGeneratorOpen]);
 
   const handleGenerate = () => {
+    // Ensure the file size is a number between 0 and 100
     if (inProgress && (progressValue < 0 || progressValue > 100)) {
       setProgressValueError("Enter a value between 0 and 100");
       return;
     }
 
+    // Create a new FileUploadCard with the input values
     const newCard = (
       <FileUploadCard
         fileName={fileName}
@@ -69,25 +72,31 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
       />
     );
     addGeneratedCard(newCard);
-    onCardClose();
+    onGeneratorClose();
   };
 
   return (
     <>
-      <Modal isOpen={isCardOpen} onClose={onCardClose} size="lg" closeOnOverlayClick={false}>
+      <Modal 
+        isOpen={isGeneratorOpen} 
+        onClose={onGeneratorClose} 
+        size="lg" 
+        closeOnOverlayClick={false}
+      >
         <ModalOverlay />
         <ModalContent bg={"brand.200"} py={25} borderRadius={"xl"} width={["100%", "60%"]}>
           <ModalHeader pt={0}>
             <Flex alignItems="center">
               <Icon as={MdOutlineFilePresent} boxSize={8} />
               <Box fontSize="2xl" ml={2}>
-                Generate Files
+                File Generator
               </Box>
             </Flex>
             <ModalCloseButton position="absolute" top="28px" right="25px" size="md" />
           </ModalHeader>
           <ModalBody pb={0}>
             <Box border="2px dashed" p={4} borderRadius="2xl" mb={4}>
+              {/* Form/switch fields for the file inputs */}
               <FormControl>
                 <FormLabel>File Name</FormLabel>
                 <Input
@@ -105,7 +114,7 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                   value={fileType}
                   onChange={(e) => {
                     let value = e.target.value;
-                    // Ensure the input always starts with a dot (".")
+                    // Ensure the file type always starts with a dot (".")
                     if (!value.startsWith(".")) {
                       value = "." + value;
                     }
@@ -149,6 +158,7 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
               </Flex>
               {inProgress && (
                 <FormControl mt={4} isInvalid={!!progressValueError}>
+                  {/* Ensure the progress value is between 0 and 100 */}
                   <FormLabel>Progress Value (0-100)</FormLabel>
                   <Input
                     type="number"
@@ -174,7 +184,7 @@ export const FileCardGenerator: React.FC<FileCardGeneratorProps> = ({
                 size="lg"
                 variant="solid"
                 rounded={"xl"}
-                onClick={onCardClose}
+                onClick={onGeneratorClose}
                 mr={4}
               >
                 Cancel

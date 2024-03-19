@@ -11,6 +11,7 @@ import {
   Icon,
   Box,
   Text,
+  Input,
 } from "@chakra-ui/react";
 import FileCardGenerator from "./FileCardGenerator";
 import { MdOutlineFilePresent } from "react-icons/md";
@@ -25,21 +26,28 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
   isOpen,
   onClose,
 }) => {
-  const [isCardOpen, setCardOpen] = useState(false);
-  const [generatedCards, setGeneratedCards] = useState<JSX.Element[]>([]);
+  // Determining if FileCardGenerator component is open
+  const [isGeneratorOpen, setGeneratorOpen] = useState(false); 
 
+  // Initializing array of generated FileUploadCards
+  const [generatedCards, setGeneratedCards] = useState<JSX.Element[]>([]); 
+
+  // Function to open the FileCardGenerator component
   const handleGenerateFiles = () => {
-    setCardOpen(true);
+    setGeneratorOpen(true);
   };
 
+  // Function to close the FileCardGenerator component
   const handleCardClose = () => {
-    setCardOpen(false);
+    setGeneratorOpen(false);
   };
 
+  // Function to add a new generated FileUploadCard to the array
   const addGeneratedCard = (newCard: JSX.Element) => {
     setGeneratedCards((prevCards) => [...prevCards, newCard]);
   };
 
+  // Function to delete a generated FileUploadCard from the array
   const deleteCard = (cardToDelete: React.ReactElement) => {
     setGeneratedCards((prevCards) => {
       return prevCards.filter((card) => card !== cardToDelete);
@@ -52,10 +60,16 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
         isOpen={isOpen}
         onClose={onClose}
         size="lg"
-        closeOnOverlayClick={false}
+        // Disabled clicking outside the overlay to close the modal
+        closeOnOverlayClick={false} 
       >
         <ModalOverlay />
-        <ModalContent bg={"brand.200"} py={25} borderRadius={"xl"} width={["100%", "60%"]}>
+        <ModalContent 
+          bg={"brand.200"} 
+          py={25}
+          borderRadius={"xl"} 
+          // Setting lower bound on width to 60% to prevent overflow of content
+          width={["100%", "60%"]}>
           <ModalHeader pt={0}>
             <Flex alignItems="center">
               <Icon as={MdOutlineFilePresent} boxSize={8} />
@@ -71,6 +85,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 <Icon as={IoCloudUploadOutline} boxSize={12} mb={2} />
                 <Text fontWeight="bold">Drag and drop files here</Text>
                 <Text color="#8E95A3">or</Text>
+                {/* This button should be removed once a proper backend link has been established */}
                 <Button
                   as="label"
                   htmlFor="fileInput"
@@ -84,9 +99,31 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 >
                   Generate Files
                 </Button>
+                {/* <Button
+                  as="label"
+                  htmlFor="fileInput"
+                  variant="solid"
+                  mt={2}
+                  bgGradient="linear(to-r, linear.100, linear.200)"
+                  _hover={{
+                    cursor: "pointer",
+                    color: "white",
+                    bg: "brand.300",
+                  }}
+                  rounded={"xl"}
+                  color="brand.200"
+                >
+                  Browse Files
+                  <Input
+                    type="file"
+                    id="fileInput"
+                    style={{ display: "none" }}
+                  />
+                </Button> */}
+                {/* This component should be removed once a proper backend link has been established */}
                 <FileCardGenerator
-                  isCardOpen={isCardOpen}
-                  onCardClose={handleCardClose}
+                  isGeneratorOpen={isGeneratorOpen} // Pass in the FileCardGenerator props
+                  onGeneratorClose={handleCardClose}
                   addGeneratedCard={addGeneratedCard}
                 />
               </Flex>
@@ -103,6 +140,7 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
               overflowY="auto"
               maxHeight="275px"
               paddingRight="10px"
+              // Customizing scrollbar
               css={{
                 "&::-webkit-scrollbar": {
                   width: "5px",
@@ -120,11 +158,25 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 },
               }}
             >
-              {generatedCards.map((card) => (
-                <React.Fragment key={card.key}>
-                  {React.cloneElement(card, { onDelete: () => deleteCard(card) })}
-                </React.Fragment>
-              ))}
+              {generatedCards.length === 0 ? ( // Checking if the array is empty
+              <Box border="2px" mb={4} p={4} borderRadius="2xl">
+              <Flex align="center" justifyContent="center">
+                  <Text // Default display text
+                    as='i'
+                    color="#8E95A3"
+                    noOfLines={1}
+                  >
+                    Uploaded files will appear here
+                  </Text>
+                </Flex>
+                </Box>
+              ) : (
+                generatedCards.map((card) => ( // Display cards/map onDelete function
+                  <React.Fragment key={card.key}>
+                    {React.cloneElement(card, { onDelete: () => deleteCard(card) })}
+                  </React.Fragment>
+                ))
+              )}
             </Box>
 
             <Flex justifyContent="space-between">
