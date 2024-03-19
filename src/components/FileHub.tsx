@@ -163,12 +163,9 @@ export function FileHub() {
               },
             }}
           >
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
+            <FileHubAlbum albumCover="https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg" albumArtist="Kanye West" albumName="Graduation"/>
+            <FileHubAlbum albumCover="https://m.media-amazon.com/images/I/71YMac+JmAL._UF1000,1000_QL80_.jpg" albumArtist="Kendrick Lamar" albumName="good kid, m.A.A.d city (Deluxe)"/>
+            <FileHubAlbum albumCover="https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png" albumArtist="Pink Floyd" albumName="The Dark Side of the Moon"/>
           </Accordion>
         </Box>
       </CardBody>

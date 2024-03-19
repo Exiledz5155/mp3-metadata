@@ -2,7 +2,14 @@
 import React, { useState } from "react";
 import { Box, HStack, Flex, Image, Text, VStack } from "@chakra-ui/react";
 
-export function FileHubAlbumCard({ isLast = false }) {
+interface FileHubAlbumCardProps {
+  songName: string;
+  songArtist: string; 
+  songLength: string; 
+  isLast?: boolean;
+}
+
+export function FileHubAlbumCard({ songName, songArtist, songLength, isLast = false}: FileHubAlbumCardProps) {
   const [isClicked, setIsClicked] = useState(false);
 
   // Function to handle the click event
@@ -54,15 +61,15 @@ export function FileHubAlbumCard({ isLast = false }) {
         gap={"0px"}
       >
         <Text fontSize={"15px"} noOfLines={1} pt={"2px"}>
-          Wasted (feat. Lil Uzi Vert)
+          {songName}
         </Text>
         <Text fontSize={"10px"} noOfLines={1} pb={"3px"}>
-          Juice WRLD, Lil Uzi Vert
+          {songArtist}
         </Text>
       </VStack>
       <Flex alignItems={"center"} pr={"15px"} maxWidth={"40%"}>
         <Text fontFamily={"mono"} fontSize={"15px"}>
-          1:14
+          {songLength}
         </Text>
       </Flex>
     </Flex>

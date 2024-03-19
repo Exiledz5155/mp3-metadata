@@ -7,20 +7,20 @@ export function AlbumInfoSection() {
     <HStack align={"start"}>
       <Image
         maxW={{ base: "100%", sm: "200px" }}
-        src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
+        src="https://m.media-amazon.com/images/I/71YMac+JmAL._UF1000,1000_QL80_.jpg"
         alt="Album Cover"
         mr={"20px"}
         borderRadius={"10px"}
       />
       <VStack align={"start"} w={"100%"}>
         <Text fontSize={"4xl"} as="b" noOfLines={1}>
-          Goodbye & Good Riddance
+        good kid, m.A.A.d city (Deluxe)
         </Text>
         <Text fontSize={"xl"} as="b" noOfLines={1}>
-          Juice WRLD
+          Kendrick Lamar
         </Text>
         <Text fontSize={"md"} as="b" noOfLines={1}>
-          2018 • 17 songs • 47 min 30 sec
+          2012 • 18 songs • 1 hour 36 minutes
         </Text>
       </VStack>
     </HStack>

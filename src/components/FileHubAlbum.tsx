@@ -16,7 +16,15 @@ import {
 } from "@chakra-ui/react";
 import { FileHubAlbumCard } from "./FileHubAlbumCard";
 
-export function FileHubAlbum() {
+interface FileHubAlbumProps {
+  albumName: string;
+  albumArtist: string; 
+  albumCover: string; // a link
+}
+
+export function FileHubAlbum(props: FileHubAlbumProps) {
+  const { albumName, albumArtist, albumCover } = props;
+    
   // Use state to track whether the card is clicked
   const [isClicked, setIsClicked] = useState(false);
   // Function to handle the click event
@@ -43,11 +51,13 @@ export function FileHubAlbum() {
   const [isHovered, setIsHovered] = useState(false);
 
   const albumCards = [
-    <FileHubAlbumCard />,
-    <FileHubAlbumCard />,
-    <FileHubAlbumCard />,
-    <FileHubAlbumCard />,
-    <FileHubAlbumCard />,
+    <FileHubAlbumCard songName="Good Morning" songArtist="Kanye West" songLength="3:15"/>,
+    <FileHubAlbumCard songName="Stronger" songArtist="Kanye West" songLength="5:12"/>,
+    <FileHubAlbumCard songName="I Wonder" songArtist="Kanye West" songLength="4:03"/>,
+    <FileHubAlbumCard songName="Good Life (feat. T-Pain)" songArtist="Kanye West" songLength="3:27"/>,
+    <FileHubAlbumCard songName="Can't Tell Me Nothing" songArtist="Kanye West" songLength="4:31"/>,
+    <FileHubAlbumCard songName="Flashing Lights (feat. Dwele)" songArtist="Kanye West" songLength="3:57"/>,
+    <FileHubAlbumCard songName="Homecoming (feat. Chris Martin)" songArtist="Kanye West" songLength="3:23"/>,
   ];
 
   return (
@@ -82,16 +92,14 @@ export function FileHubAlbum() {
           <HStack spacing="10px">
             <Center w="55px" h="55px">
               <Image
-                src={
-                  "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
-                }
+                src={albumCover}
                 alt={"An Image"}
                 borderRadius="base"
                 boxSize="45px"
               />
             </Center>
             <Text noOfLines={1} maxW={200} align="left">
-              Goodbye & Good Riddance
+              {albumName}
             </Text>
           </HStack>
         </Box>

@@ -4,7 +4,17 @@ import React, { useState } from "react";
 import { HStack, Flex, Image, Text } from "@chakra-ui/react";
 import { SongGridCardRightClick } from "./SongGridCardRightClick";
 
-export function SongGridCard() {
+interface SongGridCardProps {
+  songName: string;
+  songArtist: string; 
+  songLength: string; 
+  albumName: string;
+  trackNumber: string;
+}
+
+export function SongGridCard(props: SongGridCardProps) {
+  const { songName, songArtist, songLength , albumName, trackNumber } = props; 
+
   // Use state to track whether the card is right clicked
   const [isRightClicked, setIsRightClicked] = useState(false);
   // x,y coordinates of where the right click menu should be
@@ -60,10 +70,10 @@ export function SongGridCard() {
       >
         <Flex align={"center"} w="30%">
           <Text fontSize={"md"} ml={"4"}>
-            1
+            {trackNumber}
           </Text>
           <Image
-            src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
+            src="https://m.media-amazon.com/images/I/71YMac+JmAL._UF1000,1000_QL80_.jpg"
             alt="Album Cover"
             w="50px"
             h="50px"
@@ -71,17 +81,17 @@ export function SongGridCard() {
             mx={"4"}
           />
           <Text textAlign={"center"} noOfLines={1}>
-            Intro
+          {songName}
           </Text>
         </Flex>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          Juice WRLD
+          {songArtist}
         </Text>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          Goodbye & Good Riddance
+          {albumName}
         </Text>
         <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
-          1:14
+          {songLength}
         </Text>
       
         {/* Render right-click menu when a song card is right clicked */}
