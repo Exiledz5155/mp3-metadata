@@ -1,16 +1,10 @@
 import {
-    ChakraProvider,
-    Heading,
     Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
     Stack,
     StackDivider,
-    Box,
     Button,
-    ButtonGroup,
-    Text
+    Text,
+    Link
   } from "@chakra-ui/react";
   
 import { ChangeEvent, useState, useEffect, useRef } from "react";
