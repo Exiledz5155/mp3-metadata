@@ -16,19 +16,17 @@ import {
 export function AlbumDisplayItem() {
   return (
     <WrapItem>
-      <AspectRatio w="150px" ratio={3 / 4}>
+      <AspectRatio w="100%" maxWidth={"200px"} ratio={3 / 4}>
         <Box
           as="button"
           w="100%"
           h="100%"
           overflow="hidden"
+          transition="box-shadow 0.3s ease, border 0.3s ease"
           _hover={{
-            bg: "#F6F6F6",
-            _dark: {
-              bg: "brand.300",
-              bgGradient: "linear(to-r, linear.100, linear.200)", // Add fade transition, not traditionally possible with gradient
-              bgClip: "border-box",
-            },
+            boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+            // Remove or comment out the background changes to focus on the glow effect
+            bg: "brand.300",
           }}
           bg={useColorModeValue("white", "brand.200")}
           display="flex"

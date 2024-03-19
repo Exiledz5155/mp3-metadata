@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+//Error: P1001: Can't reach database server at `mp3mysql.database.windows.net`:`1433` = add yourself to azure firewall
+
+//commands for changing schema
+//npx prisma generate     run this after making changes to the schema. this basically complies it
+//npx prisma migrate dev --name your_migration_name      this applies the changes in development. kind of like git commit
+//npx prisma migrate deploy     this deploys the changes
+//or just npx prisma generate then npx prisma db push
+
+//there is currently another prisma schema in azure-functions. not sure if there is a differnt way to do it. 
+//for now copy any changes into other schema and cd into azure-functions and run npx prisma generate.
+
+
+
+//use "npx prisma studio" to open db in browser
+
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider          = "sqlserver"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Session {
+  id       String    @id
+  albums   Album[]
+  mp3Files mp3File[]
+}
+
+model Album {
+  id        Int       @id @default(autoincrement())
+  title     String
+  sessionId String    @map("session_id")
+  session   Session   @relation(fields: [sessionId], references: [id])
+  mp3Files  mp3File[]
+}
+
+model mp3File {
+  id          Int     @id @default(autoincrement())
+  filePath    String  @unique
+  title       String?
+  artist      String?
+  year        Int?
+  albumTitle  String?
+  albumArtist String?
+  trackNumber Int?
+  image       String?
+  albumId     Int?
+  sessionId   String  @map("session_id")
+  album       Album?  @relation(fields: [albumId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  session     Session @relation(fields: [sessionId], references: [id], onUpdate: NoAction)
+}
+

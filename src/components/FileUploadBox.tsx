@@ -1,0 +1,253 @@
+import React from "react";
+import {
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Button,
+  Grid,
+  GridItem,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Image,
+  Icon,
+  Box,
+  Text,
+  Progress,
+  VStack,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { MdOutlineFilePresent } from "react-icons/md";
+import { IoCloudUploadOutline } from "react-icons/io5";
+import { FiFileText, FiRotateCcw } from "react-icons/fi";
+import { BsFillTrashFill } from "react-icons/bs";
+
+interface UploadBoxProps {
+  isOpen: boolean; // Whether the modal is open or not
+  onClose: () => void; // Function to close the modal
+}
+export const FileUploadBox: React.FC<UploadBoxProps> = ({
+  isOpen,
+  onClose,
+}) => {
+  return (
+    <>
+      {/* TODO make modal NOT close when clicking outside of it */}
+      {/* Modal component */}
+      <Modal isOpen={isOpen} onClose={onClose} size="lg">
+        <ModalOverlay />
+        <ModalContent
+          bg={"brand.200"}
+          py={25}
+          borderRadius={"xl"}
+          width={["100%", "60%"]}
+        >
+          {/* Modal header */}
+          <ModalHeader pt={0}>
+            <Flex alignItems="center">
+              <Icon as={MdOutlineFilePresent} boxSize={8} />
+              <Box fontSize="2xl" ml={2}>
+                Upload Files
+              </Box>
+            </Flex>
+            <ModalCloseButton
+              position="absolute"
+              top="28px"
+              right="25px"
+              size="md"
+            />
+            {/* Should the ModalCloseButton function the same as the cancel button? */}
+          </ModalHeader>
+          <ModalBody pb={0}>
+            {/* File upload box */}
+            <Box border="2px dashed" p={4} borderRadius="2xl">
+              <Flex
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Icon as={IoCloudUploadOutline} boxSize={12} mb={2} />
+                <Text fontWeight="bold">Drag and drop files here</Text>
+                <Text color="#8E95A3">or</Text>
+                <Button
+                  as="label"
+                  htmlFor="fileInput"
+                  variant="solid"
+                  mt={2}
+                  bgGradient="linear(to-r, linear.100, linear.200)"
+                  _hover={{
+                    cursor: "pointer",
+                    color: "white",
+                    bg: "brand.300",
+                  }}
+                  rounded={"xl"}
+                  color="brand.200"
+                >
+                  Browse Files
+                  <Input
+                    type="file"
+                    id="fileInput"
+                    style={{ display: "none" }}
+                  />
+                  {/* TODO: Link file uploads for button/drag + drop */}
+                </Button>
+              </Flex>
+            </Box>
+            <Text color="#8E95A3" mt={3}>
+              Only .mp3 files. Max size 30mb.
+            </Text>
+
+            {/* File list */}
+            <ModalHeader pl={0}>
+              <Box fontSize="l">Uploaded Files</Box>
+            </ModalHeader>
+            <Box
+              mb={5}
+              overflowY="auto"
+              maxHeight="275px"
+              paddingRight="10px"
+              // Custom scrollbar
+              css={{
+                "&::-webkit-scrollbar": {
+                  width: "5px",
+                },
+                "&::-webkit-scrollbar-track": {
+                  background: "transparent",
+                  borderRadius: "10px",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  background: "#888",
+                  borderRadius: "10px",
+                },
+                "&::-webkit-scrollbar-thumb:hover": {
+                  background: "#555",
+                },
+              }}
+            >
+              {/* TODO: Create function to add and delete file components.
+                  Also need to make buttons functional */}
+              {/* File item */}
+              <Box border="2px" mb={4} p={4} borderRadius="2xl">
+                <Flex align="center">
+                  <Icon as={FiFileText} boxSize={6} />
+                  <Flex flex={1} pl={6} direction="column">
+                    {" "}
+                    {/* Change this line */}
+                    <Text mb="-1" textAlign="left" noOfLines={1}>
+                      PRIDE. - Kendrick Lamar.mp3
+                    </Text>
+                    <Text
+                      fontSize="xs"
+                      mb="-2"
+                      textAlign="left"
+                      color="#8E95A3"
+                    >
+                      7.8mb | 72%
+                    </Text>
+                  </Flex>
+                  <Icon as={BsFillTrashFill} boxSize={6} />
+                </Flex>
+                <Progress
+                  mt={4}
+                  value={72}
+                  size="sm"
+                  colorScheme="linear"
+                  borderRadius="md"
+                />
+              </Box>
+
+              {/* File item */}
+              <Box border="2px" mb={4} p={4} borderRadius="2xl">
+                <Flex align="center">
+                  <Icon as={FiFileText} boxSize={6} />
+                  <Flex flex={1} pl={6} direction="column">
+                    {/* Change this line */}
+                    <Text mb="-1" textAlign="left" noOfLines={1}>
+                      Show Me How - Men I Trust.mp3
+                    </Text>
+                    <Text fontSize="xs" textAlign="left" color="#FF7074">
+                      Upload Failed
+                    </Text>
+                  </Flex>
+                  <Icon as={BsFillTrashFill} boxSize={6} mr={5} />
+                  <Icon as={FiRotateCcw} boxSize={6} />
+                </Flex>
+              </Box>
+
+              {/* File item */}
+              <Box border="2px" mb={4} p={4} borderRadius="2xl">
+                <Flex align="center">
+                  <Icon as={FiFileText} boxSize={6} />
+                  <Flex flex={1} pl={6} direction="column">
+                    {" "}
+                    {/* Change this line */}
+                    <Text mb="-1" textAlign="left" noOfLines={1}>
+                      No More Parties In LA - Kanye West.mp3
+                    </Text>
+                    <Text fontSize="xs" textAlign="left" color="#8E95A3">
+                      14.8mb
+                    </Text>
+                  </Flex>
+                  <Icon as={BsFillTrashFill} boxSize={6} />
+                </Flex>
+              </Box>
+              <Box border="2px" mb={4} p={4} borderRadius="2xl">
+                <Flex align="center">
+                  <Icon as={FiFileText} boxSize={6} />
+                  <Flex flex={1} pl={6} direction="column">
+                    <Text mb="-2" textAlign="left" noOfLines={1}>
+                      No More Parties In LA - Kanye West.mp3
+                    </Text>
+                    <Text fontSize="xs" textAlign="left" color="#8E95A3">
+                      14.8mb
+                    </Text>
+                  </Flex>
+                  <Icon as={BsFillTrashFill} boxSize={6} />
+                </Flex>
+              </Box>
+            </Box>
+
+            {/* Modal footer */}
+            <Flex justifyContent="space-between">
+              <Button
+                flex="1"
+                bg="#F7FAFC"
+                color={"black"}
+                _hover={{ color: "white", bg: "brand.300" }}
+                size="lg"
+                variant="solid"
+                rounded={"xl"}
+                onClick={onClose}
+                mr={4}
+              >
+                Cancel
+              </Button>
+              {/* Should the cancel button have the same functionality as the close button? 
+                  Or should it remove all currently uploaded files */}
+              <Button
+                flex="1"
+                bgGradient="linear(to-r, linear.100, linear.200)"
+                _hover={{ color: "white", bg: "brand.300" }}
+                size="lg"
+                variant="solid"
+                rounded={"xl"}
+                color="brand.200"
+                onClick={onClose}
+              >
+                Confirm
+              </Button>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
+export default FileUploadBox;

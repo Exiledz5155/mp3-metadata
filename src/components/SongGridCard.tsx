@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { HStack, Flex, Image, Text } from "@chakra-ui/react";
 import { SongGridCardRightClick } from "./SongGridCardRightClick";
 
+
 export function SongGridCard() {
   // Use state to track whether the card is right clicked
   const [isRightClicked, setIsRightClicked] = useState(false);
@@ -36,62 +37,61 @@ export function SongGridCard() {
     setIsHovered(false);
   };
 
-  return (
-    <HStack
-      spacing={4}
-      align={"center"}
-      borderRadius={"10px"}
-      justify={"space-between"}
-      // _hover={!isRightClicked && { bg: "brand.300", _dark: { bg: "brand.200" } }}
-      onContextMenu={handleRightClick} // Right click event handler
-      bg={isRightClicked ? "brand.300" : isHovered ? "brand.200" : "transparent"} // Update the background color based on isClicked state and hover state
-      // _dark={{
-      //   bg: isRightClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
-      // }}
-      py={"1"}
-      cursor={"pointer"}
-      onMouseOver={handleHover} // Attach the hover event handler
-      onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
-    >
-      <Flex align={"center"}>
-        <Text fontSize={"md"} ml={"4"}>
-          1
-        </Text>
-        <Image
-          src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
-          alt="Album Cover"
-          w="50px"
-          h="50px"
-          borderRadius={"5px"}
-          mx={"4"}
-        />
-        <Text textAlign={"center"} noOfLines={1} maxWidth={"50%"}>
-          Intro
-        </Text>
-      </Flex>
-      <Text textAlign={"center"} noOfLines={1}>
-        Juice WRLD
-      </Text>
-      <Text textAlign={"center"} noOfLines={1}>
-        Goodbye & Good Riddance
-      </Text>
-      <Text
-        textAlign={"center"}
-        mr={"4"}
-        noOfLines={1}
-        fontFamily={"mono"}
-        letterSpacing={"-10%"}
-      >
-        1:14
-      </Text>
+  // State to track hover effect
+  const [isHovered, setIsHovered] = useState(false);
 
-      {/* Render right-click menu when a song card is right clicked */}
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <>
+      {" "}
+      <HStack
+        borderRadius={"10px"}
+        onClick={onOpen} // Attach the click event handler
+        transition="background-color 0.2s ease"
+        onContextMenu={handleRightClick} // Right click event handler 
+        bg={isRightClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
+        _dark={{
+          bg: isRightClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
+        }}
+        py={"2"}
+        cursor={"pointer"}
+        onMouseOver={handleHover} // Attach the hover event handler
+        onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
+      >
+        <Flex align={"center"} w="30%">
+          <Text fontSize={"md"} ml={"4"}>
+            1
+          </Text>
+          <Image
+            src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
+            alt="Album Cover"
+            w="50px"
+            h="50px"
+            borderRadius={"5px"}
+            mx={"4"}
+          />
+          <Text textAlign={"center"} noOfLines={1}>
+            Intro
+          </Text>
+        </Flex>
+        <Text textAlign={"left"} noOfLines={1} w="30%">
+          Juice WRLD
+        </Text>
+        <Text textAlign={"left"} noOfLines={1} w="30%">
+          Goodbye & Good Riddance
+        </Text>
+        <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
+          1:14
+        </Text>
+      </HStack>
+{/* Render right-click menu when a song card is right clicked */}
       {isRightClicked && (
         <SongGridCardRightClick 
           position={ rightClickPosition }
           onClose={ () => setIsRightClicked(false) } 
         />)
       }
-    </HStack>
+    </>
   );
 }
