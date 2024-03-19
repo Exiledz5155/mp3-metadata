@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { Ellipse1Icon } from "./Elipse1Icon";
 import { Ellipse2Icon } from "./Elipse2Icon";
 import { Ellipse3Icon } from "./Elipse3Icon";
-// import { FaGithub } from 'react-icons/fa';
+import { FaGithub } from "react-icons/fa";
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 
 const LinkButton = chakra<typeof NextLink, NextLinkProps>(NextLink, {
@@ -22,19 +22,23 @@ const LinkButton = chakra<typeof NextLink, NextLinkProps>(NextLink, {
 });
 
 export function Home() {
-  {/*Functions to deal with mouse position */}
+  {
+    /*Functions to deal with mouse position */
+  }
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (event) => {
     setMousePosition({ x: event.clientX, y: event.clientY });
   };
 
-  {/*Functions to deal with calculating colo based on mouse position */}
+  {
+    /*Functions to deal with calculating colo based on mouse position */
+  }
   const calculateColor = () => {
     // Check if window object is defined (i.e., we are on the client-side)
     if (typeof window !== "undefined") {
       const color1 = [0, 255, 255]; // RGBA values for the first color
-      const color2 = [151, 71, 255]; // RGBA values for the second color
+      const color2 = [151, 71, 255] // RGBA values for the second color
 
       const xRatio = mousePosition.x / window.innerWidth; // Calculate x-axis ratio based on mouse position
       const yRatio = mousePosition.y / window.innerHeight; // Calculate y-axis ratio based on mouse position
@@ -50,35 +54,37 @@ export function Home() {
       return `rgba(${interpolatedColor.join()}, 0.5)`; // Construct RGBA color string
     }
   };
+  //ended up not using in final design but could be useful later on while redesigning
+  // const calculateBlurRadius = () => {
+  //   if (typeof window !== "undefined") {
+  //     const distanceFromCenter = Math.sqrt(
+  //       Math.pow(mousePosition.x - window.innerWidth / 2, 2) +
+  //         Math.pow(mousePosition.y - window.innerHeight / 2, 2)
+  //     );
+  //     const maxBlurRadius = 100; // Maximum blur radius
+  //     const blurStartRadius = 0; // Radius from the center where blur starts to appear
+  //     const blurEndRadius = Math.min(
+  //       window.innerWidth / 2,
+  //       window.innerHeight / 2
+  //     ); // Radius from the center where blur effect ends
+  //     let blurRadius = 0;
 
+  //     if (distanceFromCenter >= blurStartRadius) {
+  //       // Calculate blur radius based on distance from the center
+  //       blurRadius =
+  //         ((distanceFromCenter - blurStartRadius) /
+  //           (blurEndRadius - blurStartRadius)) *
+  //         maxBlurRadius;
+  //     }
 
-  const calculateBlurRadius = () => {
-    if (typeof window !== "undefined") {
-      const distanceFromCenter = Math.sqrt(
-        Math.pow(mousePosition.x - window.innerWidth / 2, 2) +
-          Math.pow(mousePosition.y - window.innerHeight / 2, 2)
-      );
-      const maxBlurRadius = 100; // Maximum blur radius
-      const blurStartRadius = 0; // Radius from the center where blur starts to appear
-      const blurEndRadius = Math.min(
-        window.innerWidth / 2,
-        window.innerHeight / 2
-      ); // Radius from the center where blur effect ends
-      let blurRadius = 0;
-  
-      if (distanceFromCenter >= blurStartRadius) {
-        // Calculate blur radius based on distance from the center
-        blurRadius =
-          ((distanceFromCenter - blurStartRadius) /
-            (blurEndRadius - blurStartRadius)) *
-          maxBlurRadius;
-      }
-  
-      return blurRadius;
-    }
-  };
-  
-  {/*Constant size of the blurs can change based on what we want*/}
+  //     return blurRadius;
+  //   }
+  // };
+
+  {
+    /*Constant size of the blurs can change based on what we want*/
+  }
+  const blurRadius = 50     //adjust how blury the curor blur is
   const gradientSize = 250; // Adjust the size of the gradient circle as needed
 
   return (
@@ -103,16 +109,26 @@ export function Home() {
           height={`${gradientSize}px`}
           borderRadius="50%"
           background={`radial-gradient(circle, ${calculateColor()} 0%, rgba(0,0,0,0) 100%)`}
-          style={{ filter: `blur(${calculateBlurRadius()}px)` }}
-        />
+          style={{ filter: `blur(${blurRadius}px)` }}
+        />  
 
         {/*Github Icon  - need to fix this*/}
-        {/* <LinkButton
-          href="https://github.com/Exiledz5155/mp3-metadata"
-
+        <Box
+          position={"absolute"}
+          top={"20px"}
+          left="20px" // Adjust left position as needed
+          zIndex="10" // Ensure the icon appears above other content
         >
-          <Center><FaGithub/></Center>
-        </LinkButton> */}
+          <LinkButton
+            href="https://github.com/Exiledz5155/mp3-metadata"
+            target="_blank" // Open link in a new tab
+            rel="noopener noreferrer" // Security best practice for links opening in a new tab
+          >
+            <Center>
+              <FaGithub size={24} /> {/* Adjust size of the icon as needed */}
+            </Center>
+          </LinkButton>
+        </Box>
 
         {/* Ellipse 1 */}
         <Box
@@ -170,7 +186,7 @@ export function Home() {
           color="white"
           fontSize={{ base: "md", sm: "lg", md: "lg" }}
           borderRadius="full"
-          bgGradient="linear(to-r, purple.600, cyan.600)"
+          bgGradient="linear(to-r, #8795D5, #CF97F4)"
           _hover={{
             bgGradient: "linear(to-r, purple.300, cyan.300)",
           }}
