@@ -88,4 +88,4 @@ For any inquiries, feel free to contact the project maintainers:
 - Charles Sayles: sayle093@umn.edu
 - Daniel Tran: tran1116@umn.edu
 
-.
+![MP3 Metadata Concept Design](photos\image1.png "An old design we showed off last fall.")
