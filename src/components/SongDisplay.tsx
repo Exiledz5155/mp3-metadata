@@ -2,81 +2,38 @@
 "use client";
 
 import {
-  Button,
   Card,
-  Container,
-  CardHeader,
-  Heading,
   CardBody,
   Divider,
   useColorModeValue,
-  Text,
-  Flex,
-  Stack,
-  StackDivider,
-  FormControl,
-  FormLabel,
-  Input,
-  Image,
-  Grid,
-  GridItem,
-  Center,
-  AspectRatio,
   Box,
-  SimpleGrid,
-  Badge,
-  Wrap,
-  IconButton,
-  WrapItem,
-  CardFooter,
-  HStack,
-  VStack,
-  Table,
-  TableCaption,
-  TableContainer,
-  Tbody,
-  Td,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
 import { SongGridCard } from "./SongGridCard";
 import { SongGridLabel } from "./SongGridLabel";
 import { AlbumInfoSection } from "./AlbumInfoSection";
 import React from "react";
 
-// THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
-// DO NOT MODIFY OR DELETE - Danny
+interface Song {
+  id: string;
+  title: string;
+  duration: string;
+  artist: string;
+  album: string;
+  year: number;
+  genre: string;
+  image: string;
+}
 
-export function SongDisplay() {
-  const SongGridCards = [
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-    <SongGridCard />,
-  ];
+interface AlbumObj {
+  album: string;
+  artist: string;
+  albumArtURL: string;
+  year: number;
+  genre: string;
+  songs: Song[];
+}
 
+export function SongDisplay({ album }: { album: AlbumObj }) {
   return (
     <Card
       p={"20px"}
@@ -86,26 +43,43 @@ export function SongDisplay() {
       maxH={"93.25vh"}
       overflow={"hidden"}
     >
-      <AlbumInfoSection></AlbumInfoSection>
+      {/* UPDATE THIS WITH PROPS */}
+      <AlbumInfoSection album={album}></AlbumInfoSection>
+      <SongGridLabel></SongGridLabel>
+      <Divider position={"sticky"} top="6" mb={2} />
       <CardBody
         m={"0"}
-        mt={"5"}
         px={"0"}
         pb={"0"}
         pt={"0"}
         display={"flex"}
         flexDirection={"column"}
         overflow={"auto"}
+        css={{
+          "&::-webkit-scrollbar": {
+            width: "5px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "transparent",
+            borderRadius: "10px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#888",
+            borderRadius: "10px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#555",
+          },
+        }}
       >
-        <SongGridLabel></SongGridLabel>
-        <Divider position={"sticky"} top="6" />
         <Box>
-          {/* TODO: Implement mapping function here */}
-          {SongGridCards.map((card, index) =>
-            React.cloneElement(card, {
-              isLast: index === SongGridCards.length - 1,
-            })
-          )}
+          {album.songs.map((song, index) => (
+            <SongGridCard
+              key={song.id} // Assuming each song has a unique ID
+              song={song}
+              // isLast={index === album.songs.length - 1}
+            />
+          ))}
         </Box>
       </CardBody>
     </Card>

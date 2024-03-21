@@ -5,18 +5,36 @@ import React, { useState } from "react";
 import {
   Box,
   Center,
-  VStack,
   HStack,
   Image,
   Text,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-  AccordionIcon,
 } from "@chakra-ui/react";
 import { FileHubAlbumCard } from "./FileHubAlbumCard";
 
-export function FileHubAlbum() {
+interface Song {
+  id: string;
+  title: string;
+  duration: string;
+  artist: string;
+  album: string;
+  year: number;
+  genre: string;
+  image: string;
+}
+
+interface AlbumObj {
+  album: string;
+  artist: string;
+  albumArtURL: string;
+  year: number;
+  genre: string;
+  songs: Song[];
+}
+
+export function FileHubAlbum({ album }: { album: AlbumObj }) {
   // Use state to track whether the card is clicked
   const [isClicked, setIsClicked] = useState(false);
   // Function to handle the click event
@@ -41,14 +59,6 @@ export function FileHubAlbum() {
 
   // State to track hover effect
   const [isHovered, setIsHovered] = useState(false);
-
-  const albumCards = [
-    <FileHubAlbumCard />,
-    <FileHubAlbumCard />,
-    <FileHubAlbumCard />,
-    <FileHubAlbumCard />,
-    <FileHubAlbumCard />,
-  ];
 
   return (
     <AccordionItem>
@@ -82,24 +92,26 @@ export function FileHubAlbum() {
           <HStack spacing="10px">
             <Center w="55px" h="55px">
               <Image
-                src={
-                  "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
-                }
-                alt={"An Image"}
+                src={album.albumArtURL}
+                alt={"Album Image Cover"}
                 borderRadius="base"
                 boxSize="45px"
               />
             </Center>
             <Text noOfLines={1} maxW={200} align="left">
-              Goodbye & Good Riddance
+              {album.album}
             </Text>
           </HStack>
         </Box>
       </AccordionButton>
       <AccordionPanel>
-        {albumCards.map((card, index) =>
-          React.cloneElement(card, { isLast: index === albumCards.length - 1 })
-        )}
+        {album.songs.map((song, index) => (
+          <FileHubAlbumCard
+            key={song.id}
+            isLast={index === album.songs.length - 1}
+            song={song}
+          />
+        ))}
       </AccordionPanel>
     </AccordionItem>
   );

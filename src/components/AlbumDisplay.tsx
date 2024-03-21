@@ -3,39 +3,16 @@
 
 import { Link } from "@chakra-ui/next-js";
 import {
-  Button,
   Card,
-  Container,
   CardHeader,
   Heading,
   CardBody,
   Divider,
   useColorModeValue,
-  Text,
-  Flex,
-  Stack,
-  StackDivider,
-  FormControl,
-  FormLabel,
-  Input,
-  Image,
-  Grid,
-  GridItem,
-  Center,
-  AspectRatio,
-  Box,
   SimpleGrid,
-  Badge,
-  Wrap,
-  IconButton,
-  WrapItem,
-  Spacer,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
 import { AlbumDisplayItem } from "./AlbumDisplayItem";
-
-// THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
-// DO NOT MODIFY OR DELETE - Danny
+const albumData = require("../../public/albums.json");
 
 export function AlbumDisplay() {
   return (
@@ -49,29 +26,31 @@ export function AlbumDisplay() {
       <CardHeader>
         <Heading size="lg">Albums</Heading>
       </CardHeader>
-      <CardBody overflowY={"auto"} pt={"0"}>
+      <CardBody
+        overflowY={"auto"}
+        pt={"0"}
+        css={{
+          "&::-webkit-scrollbar": {
+            width: "5px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "transparent",
+            borderRadius: "10px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#888",
+            borderRadius: "10px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#555",
+          },
+        }}
+      >
         <Divider mb={"20px"} p={"0"} />
         <SimpleGrid minChildWidth="150px" spacing="15px">
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
-          <AlbumDisplayItem />
+          {albumData.map((album, index) => (
+            <AlbumDisplayItem key={index} album={album} />
+          ))}
         </SimpleGrid>
       </CardBody>
     </Card>

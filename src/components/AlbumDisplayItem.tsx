@@ -5,15 +5,37 @@ import {
   Box,
   Grid,
   GridItem,
-  Link,
   WrapItem,
   useColorModeValue,
   Text,
   Image,
-  Fade,
 } from "@chakra-ui/react";
+import Link from "next/link";
 
-export function AlbumDisplayItem() {
+// TODO: make these props global and just import instead
+interface Song {
+  id: string;
+  title: string;
+  duration: string;
+  artist: string;
+  album: string;
+  year: number;
+  genre: string;
+  image: string;
+}
+
+interface AlbumObj {
+  album: string;
+  artist: string;
+  image: string;
+  year: number;
+  genre: string;
+  songs: Song[];
+}
+
+export function AlbumDisplayItem({ album }: { album: AlbumObj }) {
+  const albumImage = album.songs[0].image;
+
   return (
     <WrapItem>
       <AspectRatio w="100%" maxWidth={"200px"} ratio={3 / 4}>
@@ -34,16 +56,14 @@ export function AlbumDisplayItem() {
           rounded="lg"
           p={"1"}
         >
-          <Link href="./album-view" _hover={{ textDecoration: "none" }}>
+          <Link href={`/editor/${encodeURIComponent(album.album)}`} passHref>
             <Grid
               templateRows="repeat(8, 1fr)"
               templateColumns="repeat(6, 1fr)"
             >
               <GridItem rowSpan={6} colSpan={6}>
                 <Image
-                  src={
-                    "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
-                  }
+                  src={albumImage}
                   p={2}
                   borderRadius={"15"}
                   alt={"An Image"}
@@ -52,14 +72,14 @@ export function AlbumDisplayItem() {
               </GridItem>
               <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                 <Text as="b" align="left" noOfLines={1}>
-                  Goodbye & Good Riddance
+                  {album.album}
                 </Text>
               </GridItem>
               {/* TODO: NOT ENOUGH EMPTY SPACE BELOW JUICE WLRD TEXT */}
               {/* i.e, empty space between contents and border is not even all around */}
               <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                 <Text align="left" noOfLines={1}>
-                  Juice WRLD
+                  {album.artist}
                 </Text>
               </GridItem>
             </Grid>

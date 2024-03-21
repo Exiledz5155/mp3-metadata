@@ -1,45 +1,48 @@
 // app/providers.tsx
 "use client";
 
-import { AddIcon, ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Button,
   Card,
   CardBody,
   useColorModeValue,
-  Text,
   Input,
-  Image,
-  Center,
   Box,
   InputGroup,
   InputLeftElement,
-  HStack,
-  Spacer,
   Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuItemOption,
-  MenuGroup,
   MenuOptionGroup,
-  MenuDivider,
   useDisclosure,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { FileUploadBox } from "./FileUploadBox";
 import { IoCloudUploadOutline } from "react-icons/io5";
-
-// THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
-// DO NOT MODIFY OR DELETE - Danny
+import { SongGridCardRightClick } from "./SongGridCardRightClick";
+const albumData = require("../../public/albums.json");
 
 export function FileHub() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // Use state to track whether the card is right clicked
+  const [isRightClicked, setIsRightClicked] = useState(false);
+  // x,y coordinates of where the right click menu should be
+  const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
+
+  // Function to handle the right click event
+  const handleRightClick = (event) => {
+    setIsRightClicked(true);
+    event.preventDefault(); // Prevents the default right click
+    var x = event.clientX;
+    var y = event.clientY;
+    setRightClickPosition({ x, y }); // Set state to display right-click menu
+  };
 
   return (
     <Card
@@ -141,7 +144,28 @@ export function FileHub() {
             </MenuList>
           </Menu>
         </Box>
-        <Box overflowY={"auto"}>
+        <Box
+          overflowY={"auto"}
+          css={{
+            display: "flex", // Set display to flex
+            flexDirection: "column", // Arrange children in a column
+            alignItems: "flex-start", // Align children to the start of the flex container
+            "&::-webkit-scrollbar": {
+              width: "5px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "transparent",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "#888",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              background: "#555",
+            },
+          }}
+        >
           <Accordion
             allowMultiple
             sx={{
@@ -162,13 +186,17 @@ export function FileHub() {
                 boxShadow: "none",
               },
             }}
+            onContextMenu={handleRightClick}
           >
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
+            {albumData.map((album, index) => (
+              <FileHubAlbum key={index} album={album} />
+            ))}
+            {isRightClicked && (
+              <SongGridCardRightClick
+                position={rightClickPosition}
+                onClose={() => setIsRightClicked(false)}
+              />
+            )}
           </Accordion>
         </Box>
       </CardBody>
