@@ -45,18 +45,33 @@ export function SongDisplay({ album }: { album: AlbumObj }) {
     >
       {/* UPDATE THIS WITH PROPS */}
       <AlbumInfoSection album={album}></AlbumInfoSection>
+      <SongGridLabel></SongGridLabel>
+      <Divider position={"sticky"} top="6" mb={2} />
       <CardBody
         m={"0"}
-        mt={"5"}
         px={"0"}
         pb={"0"}
         pt={"0"}
         display={"flex"}
         flexDirection={"column"}
         overflow={"auto"}
+        css={{
+          "&::-webkit-scrollbar": {
+            width: "5px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "transparent",
+            borderRadius: "10px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#888",
+            borderRadius: "10px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#555",
+          },
+        }}
       >
-        <SongGridLabel></SongGridLabel>
-        <Divider position={"sticky"} top="6" />
         <Box>
           {album.songs.map((song, index) => (
             <SongGridCard

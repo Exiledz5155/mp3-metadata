@@ -129,7 +129,28 @@ export function FileHub() {
             </MenuList>
           </Menu>
         </Box>
-        <Box overflowY={"auto"}>
+        <Box
+          overflowY={"auto"}
+          css={{
+            display: "flex", // Set display to flex
+            flexDirection: "column", // Arrange children in a column
+            alignItems: "flex-start", // Align children to the start of the flex container
+            "&::-webkit-scrollbar": {
+              width: "5px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "transparent",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "#888",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              background: "#555",
+            },
+          }}
+        >
           <Accordion
             allowMultiple
             sx={{

@@ -79,7 +79,7 @@ export function FileHubAlbumCard({
       </VStack>
       <Flex alignItems={"center"} pr={"15px"} maxWidth={"40%"}>
         <Text fontFamily={"mono"} fontSize={"15px"}>
-          1:14
+          {song.duration}
         </Text>
       </Flex>
     </Flex>
