@@ -5,6 +5,7 @@ import { HStack, Flex, Image, Text } from "@chakra-ui/react";
 import { SongGridCardRightClick } from "./SongGridCardRightClick";
 
 interface Song {
+  trackNumber: number;
   id: string;
   title: string;
   duration: string;
@@ -69,9 +70,10 @@ export function SongGridCard({ song }: { song: Song }) {
         onMouseOver={handleHover} // Attach the hover event handler
         onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
       >
+        {/* TODO: FIX MISALIGNMENT WHEN TRACK NUMBER IS DOUBLE DIGIT */}
         <Flex align={"center"} w="30%">
           <Text fontSize={"md"} ml={"4"}>
-            1
+            {song.trackNumber}
           </Text>
           <Image
             src={song.image}

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Flex, Text, VStack } from "@chakra-ui/react";
 
 interface Song {
+  trackNumber: number;
   id: string;
   title: string;
   duration: string;

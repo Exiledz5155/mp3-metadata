@@ -14,6 +14,7 @@ import { AlbumInfoSection } from "./AlbumInfoSection";
 import React from "react";
 
 interface Song {
+  trackNumber: number;
   id: string;
   title: string;
   duration: string;

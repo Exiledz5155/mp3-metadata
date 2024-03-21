@@ -15,6 +15,7 @@ import {
 import { FileHubAlbumCard } from "./FileHubAlbumCard";
 
 interface Song {
+  trackNumber: number;
   id: string;
   title: string;
   duration: string;
