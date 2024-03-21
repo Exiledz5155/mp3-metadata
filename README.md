@@ -37,7 +37,7 @@ bun dev
 - Edit MP3 metadata, including title, artist, album, etc.
 - Unique sessions for each user to manage their uploaded files.
 - No user accounts required.
-- Hassle free
+- Hassle free.
 
 ## Technologies Used
 
@@ -45,7 +45,7 @@ bun dev
 - **TypeScript**: Superset of JavaScript adding static types.
 - **Azure Blob Storage**: Storage solution for user file uploads and downloads.
 - **Vercel**: Platform for deploying and hosting the web application.
-- **mySQL**: Efficient Blob Querying System
+- **mySQL**: Efficient Blob Querying System.
 
 ## Configuration
 
@@ -87,5 +87,3 @@ For any inquiries, feel free to contact the project maintainers:
 - Ethan Harris: harr3380@umn.edu
 - Charles Sayles: sayle093@umn.edu
 - Daniel Tran: tran1116@umn.edu
-
-.

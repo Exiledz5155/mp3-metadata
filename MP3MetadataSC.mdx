@@ -1,7 +1,7 @@
 ---
 title: MP3 Metadata
 description: A web-based editor for MP3 Metadata.
-date: 09/12/2023
+date: 03/14/2024
 active: true
 links:
   - name: "Github"
@@ -11,38 +11,42 @@ members:
     role: "Team Lead"
     linkedin: "https://www.linkedin.com/in/dannybui51/"
     github: "https://github.com/Exiledz5155"
+  - name: "Aitan Singh"
+    role: "Backend Developer"
+    linkedin: "https://www.linkedin.com/in/aitan-singh-0265b228b/"
+    github: "https://github.com/AitanSingh"
+  - name: "Bernie Nnadi"
+    role: "Backend Developer"
+    linkedin: "https://www.linkedin.com/in/berniennadi/"
+    github: "https://github.com/BernieN09"
   - name: "Calvin Duddingston"
     role: "Backend Developer"
     linkedin: https://linkedin.com/in/calvinduddingston
     github: "https://github.com/CalvinDudd"
-  - name: "Nelson Trinh"
-    role: "Frontend Developer"
-    linkedin: "https://www.linkedin.com/in/duc-trinh-4a0657236"
-    github: "https://github.com/ducttri"
-  - name: "Aitan"
-    role: "Backend Developer"
-    linkedin:
-    github:
   - name: "Mark Gustafson"
     role: "Backend Developer"
-    linkedin: https://linkedin.com/in/marcus-gustafson-9a6813291
+    linkedin: "https://www.linkedin.com/in/marcus-gustafson/"
     github: "https://github.com/marcus-gustafson"
   - name: "Aidan Ruiz"
     role: "Frontend Developer"
     linkedin: https://www.linkedin.com/in/aidan-ruiz-6ba9b0238/
     github: "https://github.com/Aidan-R-1032"
-  - name: "Ethan Harris"
-    role: "Frontend Developer & Designer"
-    linkedin: "https://www.linkedin.com/in/ethan-harris-920b91271"
-    github: "https://github.com/Ethan-Harris07"
-  - name: "Bernie Nnadi"
-    role: "Backend Developer"
-    linkedin: "https://www.linkedin.com/in/berniennadi/"
-    github: "https://github.com/BernieN09"
   - name: "Charley Sayles"
     role: "Frontend Developer"
     linkedin: "https://www.linkedin.com/in/charley-sayles-24b89b256/"
     github: "https://github.com/Charleys488"
+  - name: "Daniel Tran"
+    role: "Frontend Developer"
+    linkedin: "https://www.linkedin.com/in/daniel-tran-54ab85216/" 
+    github: "https://github.com/DanielTran24"
+  - name: "Ethan Harris"
+    role: "Frontend Developer & Designer"
+    linkedin: "https://www.linkedin.com/in/ethan-harris-920b91271"
+    github: "https://github.com/Ethan-Harris07"
+  - name: "Nelson Trinh"
+    role: "Frontend Developer"
+    linkedin: "https://www.linkedin.com/in/duc-trinh-4a0657236"
+    github: "https://github.com/ducttri"
   - name: "Nick Hinds"
     role: "Frontend Developer"
     linkedin: "https://www.linkedin.com/in/nicholashinds/"
@@ -55,7 +59,43 @@ MP3 Metadata is a project that aims to create a web-based version of common thir
 Many first and third party metadata editors are clunky, buggy and/or not visually appealing.
 Our goal with MP3 Metadata is to provide a platform for music enthusiasts who wish to customize their audio files, focusing on an appealing design and intuitive user experience.
 
-![MP3 Metadata Concept Design](/projects/MP3Metadata/image1.png "An old design we showed off last fall.")
+![MP3 Metadata Landing Page](photos/image1.png "The landing page for the MP3 Metadata website.")
+
+## High-level Overview
+
+The process begins when the user uploads an audio file to the website. 
+During the upload process, the metadata is extracted and sent to a MySQL database for storage. 
+Then, when the user wants to edit the metadata, a query is sent to the database to update the metadata in the Azure Blob Storage.
+Finally, once a user is ready to download their file(s), the files are pulled from Azure and sent to the user's device.
+
+![MP3 Metadata High-Level Design](photos/image2.png "A diagram of the high-level design.")
+
+## Frontend
+
+The frontend is built using React, Chakra UI, and Next.js.
+By keeping things simple, anyone can easily edit the metadata of their audio files without any prior knowledge of the process.
+
+![MP3 Metadata Album View](photos/image3.png "The main album view for the MP3 Metadata website.")
+
+The main page of the website is the album view. 
+By having uploaded songs displayed in an album format, users can choose to easily build their own albums, or edit individual songs.
+
+![MP3 Metadata Upload View](photos/image4.png "An example of the Upload view.")
+
+From the main page, the user can either edit and download their albums/songs, or upload new files. 
+
+![MP3 Metadata Individual Album View](photos/image5.png "An album example for the MP3 Metadata website.")
+
+When a user selects the album of their choice, they can view the current metadata of the album and the tracklist. 
+From here, the user can edit the metadata of the album or individual tracks.
+
+![MP3 Metadata Edit View](photos/image6.png "An example of the Edit view.")
+
+## Backend
+
+The backend is built using MySQL, Prisma, and Azure Blob Storage, and deployed to Vercel.
+The backend is responsible for storing, updating, and parsing files to display to the user.
+A Blob Storage is used to accommodate larger audio files.
 
 ## Technologies
 
@@ -67,4 +107,5 @@ Our goal with MP3 Metadata is to provide a platform for music enthusiasts who wi
 - Prisma
 - Azure Blob
 
-We're currently working on a design doc we will link here later.
+## Design Doc
+To view the design document, click [here](https://exiledz5155.github.io/mp3-metadata-design-doc/).
