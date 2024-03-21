@@ -27,6 +27,7 @@ interface Song {
 interface AlbumObj {
   album: string;
   artist: string;
+  albumArtURL: string;
   year: number;
   genre: string;
   songs: Song[];
@@ -43,7 +44,7 @@ export function SongDisplay({ album }: { album: AlbumObj }) {
       overflow={"hidden"}
     >
       {/* UPDATE THIS WITH PROPS */}
-      <AlbumInfoSection></AlbumInfoSection>
+      <AlbumInfoSection album={album}></AlbumInfoSection>
       <CardBody
         m={"0"}
         mt={"5"}

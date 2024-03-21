@@ -3,40 +3,17 @@
 
 import { Link } from "@chakra-ui/next-js";
 import {
-  Button,
   Card,
-  Container,
   CardHeader,
   Heading,
   CardBody,
   Divider,
   useColorModeValue,
-  Text,
-  Flex,
-  Stack,
-  StackDivider,
-  FormControl,
-  FormLabel,
-  Input,
-  Image,
-  Grid,
-  GridItem,
-  Center,
-  AspectRatio,
-  Box,
   SimpleGrid,
-  Badge,
-  Wrap,
-  IconButton,
-  WrapItem,
-  Spacer,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { AlbumDisplayItem } from "./AlbumDisplayItem";
 const albumData = require("../../public/albums.json");
-
-// THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
-// DO NOT MODIFY OR DELETE - Danny
 
 export function AlbumDisplay() {
   return (

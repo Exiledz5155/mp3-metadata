@@ -12,20 +12,25 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
+// TODO: make these props global and just import instead
+interface Song {
+  id: string;
+  title: string;
+  duration: string;
+  artist: string;
+  album: string;
+  year: number;
+  genre: string;
+  image: string;
+}
+
 interface AlbumObj {
   album: string;
   artist: string;
+  image: string;
   year: number;
   genre: string;
-  songs: {
-    title: string;
-    duration: string;
-    artist: string;
-    album: string;
-    year: number;
-    genre: string;
-    image: string;
-  }[];
+  songs: Song[];
 }
 
 export function AlbumDisplayItem({ album }: { album: AlbumObj }) {
