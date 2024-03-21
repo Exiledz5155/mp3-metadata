@@ -4,7 +4,7 @@ A web-based MP3 metadata editor built with Next.js, TypeScript, ChakraUI, MySQL 
 
 ## Design Doc
 
-https://exiledz5155.github.io/MP3-Metadata-Design-Doc/
+[https://exiledz5155.github.io/MP3-Metadata-Design-Doc/](https://docs.google.com/document/d/1bkD40GM4VroXaYY5UScWF6WjU58Q6NS_1-z4f8bT9y4/edit?usp=sharing)
 
 ## Installation
 
