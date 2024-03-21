@@ -1,7 +1,7 @@
 // app/providers.tsx
 "use client";
 
-import { AddIcon, ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Button,
   Card,
@@ -21,13 +21,28 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
-import React from "react";
+import React, { useState } from "react";
 import { FileUploadBox } from "./FileUploadBox";
 import { IoCloudUploadOutline } from "react-icons/io5";
+import { SongGridCardRightClick } from "./SongGridCardRightClick";
 const albumData = require("../../public/albums.json");
 
 export function FileHub() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // Use state to track whether the card is right clicked
+  const [isRightClicked, setIsRightClicked] = useState(false);
+  // x,y coordinates of where the right click menu should be
+  const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
+
+  // Function to handle the right click event
+  const handleRightClick = (event) => {
+    setIsRightClicked(true);
+    event.preventDefault(); // Prevents the default right click
+    var x = event.clientX;
+    var y = event.clientY;
+    setRightClickPosition({ x, y }); // Set state to display right-click menu
+  };
 
   return (
     <Card
@@ -171,10 +186,17 @@ export function FileHub() {
                 boxShadow: "none",
               },
             }}
+            onContextMenu={handleRightClick}
           >
             {albumData.map((album, index) => (
               <FileHubAlbum key={index} album={album} />
             ))}
+            {isRightClicked && (
+              <SongGridCardRightClick
+                position={rightClickPosition}
+                onClose={() => setIsRightClicked(false)}
+              />
+            )}
           </Accordion>
         </Box>
       </CardBody>
