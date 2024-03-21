@@ -4,7 +4,18 @@ import React, { useState } from "react";
 import { HStack, Flex, Image, Text } from "@chakra-ui/react";
 import { SongGridCardRightClick } from "./SongGridCardRightClick";
 
-export function SongGridCard() {
+interface Song {
+  id: string;
+  title: string;
+  duration: string;
+  artist: string;
+  album: string;
+  year: number;
+  genre: string;
+  image: string;
+}
+
+export function SongGridCard({ song }: { song: Song }) {
   // Use state to track whether the card is right clicked
   const [isRightClicked, setIsRightClicked] = useState(false);
   // x,y coordinates of where the right click menu should be
@@ -63,27 +74,27 @@ export function SongGridCard() {
             1
           </Text>
           <Image
-            src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
-            alt="Album Cover"
+            src={song.image}
+            alt={song.title}
             w="50px"
             h="50px"
             borderRadius={"5px"}
             mx={"4"}
           />
-          <Text textAlign={"center"} noOfLines={1}>
-            Intro
+          <Text textAlign={"left"} noOfLines={1}>
+            {song.title}
           </Text>
         </Flex>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          Juice WRLD
+          {song.artist}
         </Text>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          Goodbye & Good Riddance
+          {song.album}
         </Text>
         <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
-          1:14
+          {song.duration}
         </Text>
-      
+
         {/* Render right-click menu when a song card is right clicked */}
         {isRightClicked && (
           <SongGridCardRightClick

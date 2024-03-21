@@ -5,39 +5,31 @@ import {
   Box,
   Grid,
   GridItem,
-  Link,
   WrapItem,
   useColorModeValue,
   Text,
   Image,
-  Fade,
 } from "@chakra-ui/react";
+import Link from "next/link";
 
-interface musicObj {
-  id: string;
-  title: string;
-  artist: string;
+interface AlbumObj {
   album: string;
-  "album-artist": string;
-  composer: string;
-  genre: string;
+  artist: string;
   year: number;
-  "track-num": number;
-  "track-total": number;
-  "disc-num": number;
-  "disc-total": number;
-  compilation: boolean;
-  rating: number;
-  bpm: number;
-  artwork: string;
-  "song-duration": number;
+  genre: string;
+  songs: {
+    title: string;
+    duration: string;
+    artist: string;
+    album: string;
+    year: number;
+    genre: string;
+    image: string;
+  }[];
 }
 
-export function AlbumDisplayItem(songData: musicObj) {
-  const album = {
-    imageUrl: songData.artwork,
-    title: songData.album,
-  };
+export function AlbumDisplayItem({ album }: { album: AlbumObj }) {
+  const albumImage = album.songs[0].image;
 
   return (
     <WrapItem>
@@ -59,14 +51,14 @@ export function AlbumDisplayItem(songData: musicObj) {
           rounded="lg"
           p={"1"}
         >
-          <Link href="./album-view" _hover={{ textDecoration: "none" }}>
+          <Link href={`/editor/${encodeURIComponent(album.album)}`} passHref>
             <Grid
               templateRows="repeat(8, 1fr)"
               templateColumns="repeat(6, 1fr)"
             >
               <GridItem rowSpan={6} colSpan={6}>
                 <Image
-                  src={songData.artwork}
+                  src={albumImage}
                   p={2}
                   borderRadius={"15"}
                   alt={"An Image"}
@@ -75,14 +67,14 @@ export function AlbumDisplayItem(songData: musicObj) {
               </GridItem>
               <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                 <Text as="b" align="left" noOfLines={1}>
-                  {songData.album}
+                  {album.album}
                 </Text>
               </GridItem>
               {/* TODO: NOT ENOUGH EMPTY SPACE BELOW JUICE WLRD TEXT */}
               {/* i.e, empty space between contents and border is not even all around */}
               <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                 <Text align="left" noOfLines={1}>
-                  {songData["album-artist"]}
+                  {album.artist}
                 </Text>
               </GridItem>
             </Grid>
