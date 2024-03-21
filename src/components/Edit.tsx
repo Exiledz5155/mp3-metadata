@@ -29,6 +29,7 @@ export const Edit: React.FC<EditComponentProps> = ({ isOpen, onClose }) => {
   // Track if image is hovered or not
   const [isHovering, setIsHovering] = useState(false);
 
+  // TODO: Make this upload actually go to correct blob container
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
