@@ -49,7 +49,25 @@ export function AlbumDisplay() {
       <CardHeader>
         <Heading size="lg">Albums</Heading>
       </CardHeader>
-      <CardBody overflowY={"auto"} pt={"0"}>
+      <CardBody 
+        overflowY={"auto"} 
+        pt={"0"}
+        css={{
+          "&::-webkit-scrollbar": {
+            width: "5px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "transparent",
+            borderRadius: "10px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#888",
+            borderRadius: "10px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#555",
+          },
+        }}>
         <Divider mb={"20px"} p={"0"} />
         <SimpleGrid minChildWidth="150px" spacing="15px">
           <AlbumDisplayItem albumCover="https://upload.wikimedia.org/wikipedia/en/d/df/Gorillaz_Demon_Days.PNG" albumArtist="Gorillaz" albumName="Demon Days"/>

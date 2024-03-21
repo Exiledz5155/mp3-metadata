@@ -20,10 +20,11 @@ interface FileHubAlbumProps {
   albumName: string;
   albumArtist: string; 
   albumCover: string; // a link
+  albumCards: React.ReactNode[];
 }
 
 export function FileHubAlbum(props: FileHubAlbumProps) {
-  const { albumName, albumArtist, albumCover } = props;
+  const { albumName, albumArtist, albumCover, albumCards } = props;
     
   // Use state to track whether the card is clicked
   const [isClicked, setIsClicked] = useState(false);
@@ -49,16 +50,6 @@ export function FileHubAlbum(props: FileHubAlbumProps) {
 
   // State to track hover effect
   const [isHovered, setIsHovered] = useState(false);
-
-  const albumCards = [
-    <FileHubAlbumCard songName="Good Morning" songArtist="Kanye West" songLength="3:15"/>,
-    <FileHubAlbumCard songName="Stronger" songArtist="Kanye West" songLength="5:12"/>,
-    <FileHubAlbumCard songName="I Wonder" songArtist="Kanye West" songLength="4:03"/>,
-    <FileHubAlbumCard songName="Good Life (feat. T-Pain)" songArtist="Kanye West" songLength="3:27"/>,
-    <FileHubAlbumCard songName="Can't Tell Me Nothing" songArtist="Kanye West" songLength="4:31"/>,
-    <FileHubAlbumCard songName="Flashing Lights (feat. Dwele)" songArtist="Kanye West" songLength="3:57"/>,
-    <FileHubAlbumCard songName="Homecoming (feat. Chris Martin)" songArtist="Kanye West" songLength="3:23"/>,
-  ];
 
   return (
     <AccordionItem>
@@ -106,7 +97,7 @@ export function FileHubAlbum(props: FileHubAlbumProps) {
       </AccordionButton>
       <AccordionPanel>
         {albumCards.map((card, index) =>
-          React.cloneElement(card, { isLast: index === albumCards.length - 1 })
+          React.cloneElement(card as React.ReactElement, { isLast: index === albumCards.length - 1 })
         )}
       </AccordionPanel>
     </AccordionItem>
