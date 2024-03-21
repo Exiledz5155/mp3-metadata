@@ -1,15 +1,16 @@
-import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
-import { BlobDownloadResponseModel, BlobServiceClient, BlockBlobUploadOptions } from "@azure/storage-blob";
+import { app, HttpRequest, InvocationContext, HttpResponseInit, } from "@azure/functions";
+import {BlobServiceClient } from "@azure/storage-blob";
 import { PrismaClient } from '@prisma/client';
 import * as nodeID3 from "node-id3";
 import axios from 'axios';
+import * as path from 'path';
 
 async function getImageAsBuffer(imageUrl: string): Promise<Buffer> {
     const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
     return Buffer.from(response.data);
 }
 
-async function updateMP3Metadata(filePath: string, metadata: any): Promise<void> {
+async function updateMP3Metadata(filePath: string, metadata: any): Promise<Buffer> {
     // Split the filePath by '/' to get an array of segments
     const pathSegments = filePath.split('/');
 
@@ -19,7 +20,7 @@ async function updateMP3Metadata(filePath: string, metadata: any): Promise<void>
     const AZURE_STORAGE_CONNECTION_STRING = process.env["AzureWebJobsStorage"];
     if (!AZURE_STORAGE_CONNECTION_STRING) {
       console.log('AzureWebJobsStorage environment variable is not defined.');
-      return;
+      throw new Error('AzureWebJobsStorage environment variable is not defined.');
     }
     const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
     const containerName = "mp3container"; // Replace with your actual container name
@@ -41,34 +42,23 @@ async function updateMP3Metadata(filePath: string, metadata: any): Promise<void>
         };
     }
 
-    try {
-        // Download the MP3 file from Azure Blob Storage
-        const downloadBlockBlobResponse: BlobDownloadResponseModel = await blockBlobClient.download(0);
-        const downloadedContent = await streamToBuffer(downloadBlockBlobResponse.readableStreamBody!);
-
-        //Update the ID3 tags using nodeID3 and get the updated buffer
-        const updatedContent: Buffer = nodeID3.update(metadata, downloadedContent) as Buffer;
-        if (!updatedContent) {
-            throw new Error("Failed to update ID3 tags");
+        try {
+            // Download the original MP3 file
+            const downloadResponse = await blockBlobClient.download(0);
+            const originalMp3Buffer = await streamToBuffer(downloadResponse.readableStreamBody!);
+    
+            // Update the MP3 metadata
+            const success = nodeID3.update(metadata, originalMp3Buffer);
+            if (!success) {
+                throw new Error("Failed to update ID3 tags.");
+            }
+    
+            return success; // Return the updated MP3 buffer
+        } catch (error) {
+            console.error("Error updating MP3 metadata:", error.message);
+            throw error; // Rethrow the error to be handled by the caller
         }
-
-        // Prepare upload options
-        const uploadOptions: BlockBlobUploadOptions = {
-            blobHTTPHeaders: {
-                blobContentType: "audio/mpeg",
-            },
-        };
-
-        // Write the updated MP3 file back to Azure Blob Storage
-        // Note: Using the `upload` method instead of `uploadData`
-        const uploadBlobResponse = await blockBlobClient.upload(updatedContent, updatedContent.length, uploadOptions);
-
-        console.log(`Upload block blob ${filePath} successfully`, uploadBlobResponse.requestId);
-    } catch (error) {
-        console.error("Error updating MP3 metadata:", error.message);
-        throw error;
     }
-}
 
 // Helper function to convert a stream to a buffer
 function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer> {
@@ -121,8 +111,19 @@ export async function EditMetadataHTTP(request: HttpRequest, context: Invocation
             }
         });
         
-        //call function to update metadata of file
-        await updateMP3Metadata(filePath, metadata);
+
+        const updatedMp3Buffer = await updateMP3Metadata(filePath, metadata);
+        console.log(`Buffer length: ${updatedMp3Buffer.length}`)
+
+        // Return the updated MP3 file directly to the user
+        return {
+            status: 200, // OK
+            body: updatedMp3Buffer,
+            headers: {
+                'Content-Type': 'audio/mpeg',
+                'Content-Disposition': `attachment; filename="${path.basename(filePath)}"`
+            }
+        };
         
     } catch (error) {
         context.log(`Database query failed: ${error.message}`);
@@ -139,10 +140,6 @@ export async function EditMetadataHTTP(request: HttpRequest, context: Invocation
 
 
 };
-    return {
-                status: 200,
-                body: 'Success',
-            };
 };
 app.http('EditMetadataHTTP', {
     methods: ['GET', 'POST'],
