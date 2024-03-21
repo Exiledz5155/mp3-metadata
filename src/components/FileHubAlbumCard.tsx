@@ -1,8 +1,25 @@
 "use client";
 import React, { useState } from "react";
-import { Box, HStack, Flex, Image, Text, VStack } from "@chakra-ui/react";
+import { Flex, Text, VStack } from "@chakra-ui/react";
 
-export function FileHubAlbumCard({ isLast = false }) {
+interface Song {
+  id: string;
+  title: string;
+  duration: string;
+  artist: string;
+  album: string;
+  year: number;
+  genre: string;
+  image: string;
+}
+
+export function FileHubAlbumCard({
+  song,
+  isLast = false,
+}: {
+  song: Song;
+  isLast?: boolean;
+}) {
   const [isClicked, setIsClicked] = useState(false);
 
   // Function to handle the click event
@@ -54,10 +71,10 @@ export function FileHubAlbumCard({ isLast = false }) {
         gap={"0px"}
       >
         <Text fontSize={"15px"} noOfLines={1} pt={"2px"}>
-          Wasted (feat. Lil Uzi Vert)
+          {song.title}
         </Text>
         <Text fontSize={"10px"} noOfLines={1} pb={"3px"}>
-          Juice WRLD, Lil Uzi Vert
+          {song.artist}
         </Text>
       </VStack>
       <Flex alignItems={"center"} pr={"15px"} maxWidth={"40%"}>

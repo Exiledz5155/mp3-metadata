@@ -7,36 +7,24 @@ import {
   Card,
   CardBody,
   useColorModeValue,
-  Text,
   Input,
-  Image,
-  Center,
   Box,
   InputGroup,
   InputLeftElement,
-  HStack,
-  Spacer,
   Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuItemOption,
-  MenuGroup,
   MenuOptionGroup,
-  MenuDivider,
   useDisclosure,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
-import React, { useRef, useState } from "react";
+import React from "react";
 import { FileUploadBox } from "./FileUploadBox";
 import { IoCloudUploadOutline } from "react-icons/io5";
-
-// THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
-// DO NOT MODIFY OR DELETE - Danny
+const albumData = require("../../public/albums.json");
 
 export function FileHub() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -163,12 +151,9 @@ export function FileHub() {
               },
             }}
           >
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
-            <FileHubAlbum />
+            {albumData.map((album, index) => (
+              <FileHubAlbum key={index} album={album} />
+            ))}
           </Accordion>
         </Box>
       </CardBody>

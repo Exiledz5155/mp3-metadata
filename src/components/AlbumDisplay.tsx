@@ -11,7 +11,6 @@ import {
   useColorModeValue,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
 import { AlbumDisplayItem } from "./AlbumDisplayItem";
 const albumData = require("../../public/albums.json");
 
