@@ -63,8 +63,6 @@ export function FileHub() {
           <InputGroup
             pb="5"
             w="100%"
-            bg="linear.100"
-            bgClip={"text"}
             sx={{
               caretColor: "white",
             }}
@@ -73,6 +71,7 @@ export function FileHub() {
               <SearchIcon color="linear.100" />
             </InputLeftElement>
             <Input
+              color="linear.100"
               placeholder="Search files"
               borderColor="linear.100"
               _hover={{ borderColor: "linear.100" }}
