@@ -3,6 +3,8 @@
 import { Providers } from "../providers";
 import {
   Box,
+  Button,
+  Center,
   Flex,
   Grid,
   GridItem,
@@ -14,6 +16,8 @@ import { chakra } from "@chakra-ui/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { FileHub } from "../../components/FileHub";
+import { useState } from "react";
+import { DragHandleIcon } from "@chakra-ui/icons";
 
 const LinkButton = chakra<typeof NextLink, NextLinkProps>(NextLink, {
   // ensure that you're forwarding all of the required props for your case
@@ -25,44 +29,76 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+    const [size, setSize] = useState({ x: 350 });
+
+    const handler = (mouseDownEvent) => {
+      const startSize = size;
+      const startPosition = {
+        x: mouseDownEvent.pageX,
+      };
+
+      function onMouseMove(mouseMoveEvent) {
+        let newX = startSize.x - startPosition.x + mouseMoveEvent.pageX;
+        let minX = 350;
+        let maxX = 700;
+        newX = Math.min(Math.max(newX, minX), maxX);
+        setSize((currentSize) => ({
+          x: newX,
+        }));
+      }
+      function onMouseUp() {
+        document.body.removeEventListener("mousemove", onMouseMove);
+        // uncomment the following line if not using `{ once: true }`
+        // document.body.removeEventListener("mouseup", onMouseUp);
+      }
+
+
+      document.body.addEventListener("mousemove", onMouseMove);
+      document.body.addEventListener("mouseup", onMouseUp, { once: true });
+    };
   return (
     <Providers>
-      <Box
+      <Flex
         bg={useColorModeValue("white", "black")}
         h="100vh"
         maxH={"100%"}
         overflow={"hidden"}
+        flexDirection={"column"}
       >
-        <Grid
-          templateAreas={`"header header"
-                  "nav main"`}
-          gridTemplateRows={"50px 1fr"}
-          gridTemplateColumns={"350px 1fr"}
-          h="100vh"
-          maxH={"100%"}
-          gap="1"
-          color="blackAlpha.700"
-        >
-          <GridItem pl="4" pt="4" area={"header"}>
-            <LinkButton
-              href="/"
-              color="white"
-              fontSize={{ base: "md", sm: "lg", md: "lg" }}
-              bgClip="text"
-              fontWeight="extrabold"
-              bgGradient="linear(to-r, linear.100, linear.200)"
-            >
-              MP3 Metadata
-            </LinkButton>
-          </GridItem>
-          <GridItem pl="4" pb="2" pr="1" area={"nav"}>
+        <Box pl="4" pt="4" w="1fr" h="50px">
+          <LinkButton
+            href="/"
+            color="white"
+            fontSize={{ base: "md", sm: "lg", md: "lg" }}
+            bgClip="text"
+            fontWeight="extrabold"
+            bgGradient="linear(to-r, linear.100, linear.200)"
+          >
+            MP3 Metadata
+          </LinkButton>
+        </Box>
+        <Flex pb="4" flex="1">
+          <Box pl="4" pb="2" pr="1" w={size.x}>
             <FileHub />
-          </GridItem>
-          <GridItem pl="1" pr="4" pb="2" area={"main"}>
+          </Box>
+          <Center>
+            <Box
+              id="draghandle"
+              as="button"
+              w="1"
+              h="80%"
+              onMouseDown={handler}
+              borderRadius="lg"
+              _hover={{
+                bg: "grey",
+              }}
+            ></Box>
+          </Center>
+          <Box pr="4" pb="2" pl="1" flex="1">
             {children}
-          </GridItem>
-        </Grid>
-      </Box>
+          </Box>
+        </Flex>
+      </Flex>
       <SpeedInsights />
       <Analytics />
     </Providers>
