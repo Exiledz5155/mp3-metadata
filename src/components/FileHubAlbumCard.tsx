@@ -64,13 +64,7 @@ export function FileHubAlbumCard({
       onMouseOver={handleHover} // Attach the hover event handler
       onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
     >
-      <VStack
-        alignItems={"left"}
-        pl={"15px"}
-        py={"5px"}
-        maxWidth={"60%"}
-        gap={"0px"}
-      >
+      <VStack alignItems={"left"} pl={"15px"} py={"5px"} gap={"0px"}>
         <Text fontSize={"15px"} noOfLines={1} pt={"2px"}>
           {song.title}
         </Text>

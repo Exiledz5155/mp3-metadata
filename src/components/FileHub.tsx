@@ -19,6 +19,7 @@ import {
   MenuItemOption,
   MenuOptionGroup,
   useDisclosure,
+  HStack,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 import React, { useState } from "react";
@@ -63,8 +64,6 @@ export function FileHub() {
           <InputGroup
             pb="5"
             w="100%"
-            bg="linear.100"
-            bgClip={"text"}
             sx={{
               caretColor: "white",
             }}
@@ -73,6 +72,7 @@ export function FileHub() {
               <SearchIcon color="linear.100" />
             </InputLeftElement>
             <Input
+              color="linear.100"
               placeholder="Search files"
               borderColor="linear.100"
               _hover={{ borderColor: "linear.100" }}
@@ -98,51 +98,52 @@ export function FileHub() {
             Upload Files
           </Button>
           <FileUploadBox isOpen={isOpen} onClose={onClose} />
-          <Menu closeOnSelect={false}>
-            <MenuButton
-              as={Button}
-              variant="ghost"
-              h="30px"
-              w="70px"
-              bottom="10px"
-            >
-              Filter
-            </MenuButton>
-            <MenuList bg="brand.100">
-              <MenuOptionGroup type="checkbox">
-                <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
-                  Genre
-                </MenuItemOption>
-                <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
-                  Year
-                </MenuItemOption>
-              </MenuOptionGroup>
-            </MenuList>
-          </Menu>
-          <Menu>
-            <MenuButton
-              as={Button}
-              variant="ghost"
-              h="30px"
-              w="100px"
-              left="120px"
-              bottom="10px"
-            >
-              Sort By:
-              <ChevronDownIcon />
-            </MenuButton>
-            <MenuList bg="brand.100">
-              <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
-                A-Z
-              </MenuItem>
-              <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
-                Artist
-              </MenuItem>
-              <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
-                Recently Added
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          <HStack justifyContent={"space-between"}>
+            <Menu closeOnSelect={false}>
+              <MenuButton
+                as={Button}
+                variant="ghost"
+                h="30px"
+                w="70px"
+                bottom="10px"
+              >
+                Filter
+              </MenuButton>
+              <MenuList bg="brand.100">
+                <MenuOptionGroup type="checkbox">
+                  <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
+                    Genre
+                  </MenuItemOption>
+                  <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
+                    Year
+                  </MenuItemOption>
+                </MenuOptionGroup>
+              </MenuList>
+            </Menu>
+            <Menu>
+              <MenuButton
+                as={Button}
+                variant="ghost"
+                h="30px"
+                w="100px"
+                bottom="10px"
+              >
+                Sort By:
+                <ChevronDownIcon />
+              </MenuButton>
+              <MenuList bg="brand.100">
+                <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
+                  A-Z
+                </MenuItem>
+                <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
+                  Artist
+                </MenuItem>
+                <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
+                  Recently Added
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </HStack>
         </Box>
         <Box
           overflowY={"auto"}
@@ -169,6 +170,7 @@ export function FileHub() {
           <Accordion
             allowMultiple
             sx={{
+              width: "100%",
               ".chakra-accordion__item": {
                 borderTop: "none",
                 borderBottom: "none",
