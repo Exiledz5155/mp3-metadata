@@ -168,6 +168,7 @@ export function FileHub() {
           <Accordion
             allowMultiple
             sx={{
+              width: "100%",
               ".chakra-accordion__item": {
                 borderTop: "none",
                 borderBottom: "none",

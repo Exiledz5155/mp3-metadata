@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Center,
+  Fade,
   Flex,
   Grid,
   GridItem,
@@ -29,33 +30,36 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-    const [size, setSize] = useState({ x: 350 });
+  const [size, setSize] = useState({ x: 350 });
+  const [isDragging, setIsDragging] = useState(false);
 
-    const handler = (mouseDownEvent) => {
-      const startSize = size;
-      const startPosition = {
-        x: mouseDownEvent.pageX,
-      };
+  const handler = (mouseDownEvent) => {
+    setIsDragging(true);
 
-      function onMouseMove(mouseMoveEvent) {
-        let newX = startSize.x - startPosition.x + mouseMoveEvent.pageX;
-        let minX = 350;
-        let maxX = 700;
-        newX = Math.min(Math.max(newX, minX), maxX);
-        setSize((currentSize) => ({
-          x: newX,
-        }));
-      }
-      function onMouseUp() {
-        document.body.removeEventListener("mousemove", onMouseMove);
-        // uncomment the following line if not using `{ once: true }`
-        // document.body.removeEventListener("mouseup", onMouseUp);
-      }
-
-
-      document.body.addEventListener("mousemove", onMouseMove);
-      document.body.addEventListener("mouseup", onMouseUp, { once: true });
+    const startSize = size;
+    const startPosition = {
+      x: mouseDownEvent.pageX,
     };
+
+    function onMouseMove(mouseMoveEvent) {
+      let newX = startSize.x - startPosition.x + mouseMoveEvent.pageX;
+      let minX = 350;
+      let maxX = 700;
+      newX = Math.min(Math.max(newX, minX), maxX);
+      setSize((currentSize) => ({
+        x: newX,
+      }));
+    }
+    function onMouseUp() {
+      setIsDragging(false);
+      document.body.removeEventListener("mousemove", onMouseMove);
+      // uncomment the following line if not using `{ once: true }`
+      // document.body.removeEventListener("mouseup", onMouseUp);
+    }
+
+    document.body.addEventListener("mousemove", onMouseMove);
+    document.body.addEventListener("mouseup", onMouseUp, { once: true });
+  };
   return (
     <Providers>
       <Flex
@@ -89,10 +93,20 @@ export default function RootLayout({
               h="80%"
               onMouseDown={handler}
               borderRadius="lg"
+              bg="gray"
+              opacity={isDragging ? "1" : "0"}
               _hover={{
-                bg: "grey",
+                opacity: "1",
               }}
+              transition="opacity 0.5s ease"
             ></Box>
+            {/* <DragHandleIcon
+              cursor="col-resize"
+              boxSize={6}
+              onMouseDown={handler}
+              _hover={{ color: "grey" }}
+              borderRadius="md"
+            ></DragHandleIcon> */}
           </Center>
           <Box pr="4" pb="2" pl="1" flex="1">
             {children}
