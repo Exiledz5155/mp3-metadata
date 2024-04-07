@@ -2,7 +2,7 @@
 "use client";
 
 import { Providers } from "../../providers";
-import { SongDisplay } from "../../../components/SongDisplay";
+import { SongDisplay } from "../../../components/Album-detail/SongDisplay";
 
 // THIS IS TEMPLATE CODE FOR STARTING A NEW PAGE
 // DO NOT MODIFY OR DELETE - Danny

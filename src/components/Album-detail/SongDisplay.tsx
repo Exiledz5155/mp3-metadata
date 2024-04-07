@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { SongGridCard } from "./SongGridCard";
 import { SongGridLabel } from "./SongGridLabel";
-import { AlbumInfoSection } from "./AlbumInfoSection";
+import { AlbumInfoSection } from "../Albums-main/AlbumInfoSection";
 import React from "react";
 
 interface Song {

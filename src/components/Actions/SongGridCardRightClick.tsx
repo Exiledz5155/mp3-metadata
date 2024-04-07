@@ -1,11 +1,4 @@
-import {
-  Card,
-  Stack,
-  StackDivider,
-  Button,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Card, Stack, Button, Text, useDisclosure } from "@chakra-ui/react";
 
 import { ChangeEvent, useState, useEffect, useRef } from "react";
 import { Edit } from "./Edit";

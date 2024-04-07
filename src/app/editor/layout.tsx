@@ -16,7 +16,7 @@ import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { chakra } from "@chakra-ui/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
-import { FileHub } from "../../components/FileHub";
+import { FileHub } from "../../components/FileHub/FileHub";
 import { useState } from "react";
 import { DragHandleIcon } from "@chakra-ui/icons";
 

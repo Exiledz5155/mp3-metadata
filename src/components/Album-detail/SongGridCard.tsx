@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { HStack, Flex, Image, Text } from "@chakra-ui/react";
-import { SongGridCardRightClick } from "./SongGridCardRightClick";
+import { SongGridCardRightClick } from "../Actions/SongGridCardRightClick";
 
 interface Song {
   trackNumber: number;

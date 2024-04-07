@@ -1,7 +1,7 @@
 "use client";
 
 import UUIDFileUpload from "../../../components/UUIDFileUpload";
-import FileUpload from "../../../components/FileUpload";
+import FileUpload from "../../../components/FileHub/FileHub-Upload/FileUpload";
 import { Button, Link, chakra } from "@chakra-ui/react";
 
 export default function Upload() {

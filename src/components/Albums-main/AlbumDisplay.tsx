@@ -12,7 +12,7 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import { AlbumDisplayItem } from "./AlbumDisplayItem";
-const albumData = require("../../public/albums.json");
+const albumData = require("../../../public/albums.json");
 
 export function AlbumDisplay() {
   return (

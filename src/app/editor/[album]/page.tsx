@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { SongDisplay } from "../../../components/SongDisplay";
+import { SongDisplay } from "../../../components/Album-detail/SongDisplay";
 import { useEffect, useState } from "react";
 
 const AlbumPage = () => {

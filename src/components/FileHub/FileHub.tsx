@@ -23,10 +23,10 @@ import {
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 import React, { useState } from "react";
-import { FileUploadBox } from "./FileUploadBox";
+import { FileUploadBox } from "./FileHub-Upload/FileUploadBox";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { SongGridCardRightClick } from "./SongGridCardRightClick";
-const albumData = require("../../public/albums.json");
+import { SongGridCardRightClick } from "../Actions/SongGridCardRightClick";
+const albumData = require("../../../public/albums.json");
 
 export function FileHub() {
   const { isOpen, onOpen, onClose } = useDisclosure();
