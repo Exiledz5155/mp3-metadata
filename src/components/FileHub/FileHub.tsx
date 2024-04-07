@@ -196,7 +196,6 @@ export function FileHub() {
               <ActionMenu
                 position={rightClickPosition}
                 onClose={() => setIsRightClicked(false)}
-                song={null}
               />
             )}
           </Accordion>
