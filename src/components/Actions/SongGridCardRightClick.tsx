@@ -2,12 +2,34 @@ import { Card, Stack, Button, Text, useDisclosure } from "@chakra-ui/react";
 
 import { ChangeEvent, useState, useEffect, useRef } from "react";
 import { Edit } from "./Edit";
+import Properties from "./Properties";
 
 /**
  * @param position x and y coordinates of the bottom left corner of the menu
  * @param onClose gets called when the menu should dissappear
  **/
-export function SongGridCardRightClick({ position, onClose }) {
+
+interface Song {
+  trackNumber: number;
+  id: string;
+  title: string;
+  duration: string;
+  artist: string;
+  album: string;
+  year: number;
+  genre: string;
+  image: string;
+}
+
+export function SongGridCardRightClick({
+  song,
+  position,
+  onClose,
+}: {
+  song: Song;
+  position: { x: number; y: number };
+  onClose: () => void;
+}) {
   // Creates a reference to the Card component
   const cardRef = useRef<HTMLDivElement>(null);
   // Function that dynamically calculates and sets the top position of the Card component
@@ -22,15 +44,22 @@ export function SongGridCardRightClick({ position, onClose }) {
   //   }
   // }, [position, onClose]);
 
-  //Event handler for when the mouse leaves the right click menue
-  const handleMouseLeave = () => {
-    onClose(); // removes the pop op menue
-  };
-
   // variables to set styles so I don't have to change them in 50 places
   const borderRad = "5px";
   const sizeOfFont = "md";
+
+  const [modalType, setModalType] = useState("");
   const { isOpen, onOpen } = useDisclosure();
+
+  const openModal = (type) => {
+    setModalType(type);
+    onOpen();
+  };
+
+  const handleClose = () => {
+    setModalType("");
+    onClose();
+  };
 
   return (
     <Card
@@ -39,7 +68,7 @@ export function SongGridCardRightClick({ position, onClose }) {
       margin={"auto"}
       height="auto"
       position="fixed"
-      onMouseLeave={handleMouseLeave} // onMouseLeave event handler
+      // onMouseLeave={handleMouseLeave} // onMouseLeave event handler
       top={position.y}
       left={position.x}
       borderRadius={borderRad}
@@ -51,7 +80,7 @@ export function SongGridCardRightClick({ position, onClose }) {
         borderRadius={borderRad}
       >
         <Button
-          onClick={onOpen}
+          onClick={() => openModal("edit")}
           style={{
             display: "flex",
             alignItems: "center",
@@ -94,9 +123,9 @@ export function SongGridCardRightClick({ position, onClose }) {
             ></path>
           </svg>
           <Text fontSize={sizeOfFont}>Edit</Text>
-          <Edit isOpen={isOpen} onClose={onClose} />
         </Button>
         <Button
+          onClick={() => openModal("properties")}
           style={{
             display: "flex",
             alignItems: "center",
@@ -218,6 +247,16 @@ export function SongGridCardRightClick({ position, onClose }) {
           <Text fontSize={sizeOfFont}>Remove</Text>
         </Button>
       </Stack>
+      <Edit
+        isOpen={isOpen && modalType === "edit"}
+        onClose={handleClose}
+        song={song}
+      />
+      <Properties
+        isOpen={isOpen && modalType === "properties"}
+        onClose={handleClose}
+        song={song}
+      />
     </Card>
   );
 }

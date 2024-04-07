@@ -102,6 +102,7 @@ export function SongGridCard({ song }: { song: Song }) {
           <SongGridCardRightClick
             position={rightClickPosition}
             onClose={() => setIsRightClicked(false)}
+            song={song}
           />
         )}
       </HStack>

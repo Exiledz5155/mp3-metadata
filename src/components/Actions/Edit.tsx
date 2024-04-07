@@ -25,7 +25,27 @@ interface EditComponentProps {
   onClose: () => void;
 }
 
-export const Edit: React.FC<EditComponentProps> = ({ isOpen, onClose }) => {
+interface Song {
+  trackNumber: number;
+  id: string;
+  title: string;
+  duration: string;
+  artist: string;
+  album: string;
+  year: number;
+  genre: string;
+  image: string;
+}
+
+export const Edit: React.FC<EditComponentProps> = ({
+  song,
+  isOpen,
+  onClose,
+}: {
+  song: Song;
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   // Track if image is hovered or not
   const [isHovering, setIsHovering] = useState(false);
 
@@ -96,43 +116,64 @@ export const Edit: React.FC<EditComponentProps> = ({ isOpen, onClose }) => {
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Song Title</FormLabel>
-                  <Input focusBorderColor="linear.200" />
+                  <Input
+                    focusBorderColor="linear.200"
+                    placeholder={song.title}
+                  />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Artist(s)</FormLabel>
-                  <Input focusBorderColor="linear.200" />
+                  <Input
+                    focusBorderColor="linear.200"
+                    placeholder={song.artist}
+                  />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
                 <FormControl>
                   <FormLabel>Year</FormLabel>
-                  <Input focusBorderColor="linear.200" />
+                  <Input
+                    focusBorderColor="linear.200"
+                    placeholder={song.year.toString()}
+                  />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Album Title</FormLabel>
-                  <Input focusBorderColor="linear.200" />
+                  <Input
+                    focusBorderColor="linear.200"
+                    placeholder={song.album}
+                  />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
                 <FormControl>
                   <FormLabel>Genre</FormLabel>
-                  <Input focusBorderColor="linear.200" />
+                  <Input
+                    focusBorderColor="linear.200"
+                    placeholder={song.genre}
+                  />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl>
                   <FormLabel>Album Artist(s)</FormLabel>
-                  <Input focusBorderColor="linear.200" />
+                  <Input
+                    focusBorderColor="linear.200"
+                    placeholder={song.artist} // NEEDS TO BE CHANGED TO ALBUM ARTIST
+                  />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
                 <FormControl>
                   <FormLabel>Track</FormLabel>
-                  <Input focusBorderColor="linear.200" />
+                  <Input
+                    focusBorderColor="linear.200"
+                    placeholder={song.trackNumber.toString()}
+                  />
                 </FormControl>
               </GridItem>
             </Grid>
