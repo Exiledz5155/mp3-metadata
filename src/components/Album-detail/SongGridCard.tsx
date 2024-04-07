@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { HStack, Flex, Image, Text } from "@chakra-ui/react";
-import { SongGridCardRightClick } from "../Actions/SongGridCardRightClick";
+import ActionMenu from "../Actions/ActionMenu";
 
 interface Song {
   trackNumber: number;
@@ -99,7 +99,7 @@ export function SongGridCard({ song }: { song: Song }) {
 
         {/* Render right-click menu when a song card is right clicked */}
         {isRightClicked && (
-          <SongGridCardRightClick
+          <ActionMenu
             position={rightClickPosition}
             onClose={() => setIsRightClicked(false)}
             song={song}

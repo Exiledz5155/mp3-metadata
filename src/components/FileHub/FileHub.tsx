@@ -25,7 +25,7 @@ import { FileHubAlbum } from "./FileHubAlbum";
 import React, { useState } from "react";
 import { FileUploadBox } from "./FileHub-Upload/FileUploadBox";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { SongGridCardRightClick } from "../Actions/SongGridCardRightClick";
+import ActionMenu from "../Actions/ActionMenu";
 const albumData = require("../../../public/albums.json");
 
 export function FileHub() {
@@ -60,7 +60,6 @@ export function FileHub() {
         flexDirection={"column"}
       >
         <Box bg="brand.100">
-          {/* BUG FIX CARET NOT UPDATING AFTER TEXT REACHS END OF INPUT BOX */}
           <InputGroup
             pb="5"
             w="100%"
@@ -194,9 +193,10 @@ export function FileHub() {
               <FileHubAlbum key={index} album={album} />
             ))}
             {isRightClicked && (
-              <SongGridCardRightClick
+              <ActionMenu
                 position={rightClickPosition}
                 onClose={() => setIsRightClicked(false)}
+                song={null}
               />
             )}
           </Accordion>

@@ -1,6 +1,6 @@
 import { Card, Stack, Button, Text, useDisclosure } from "@chakra-ui/react";
 
-import { ChangeEvent, useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Edit from "./Edit";
 import Properties from "./Properties";
 
@@ -8,6 +8,12 @@ import Properties from "./Properties";
  * @param position x and y coordinates of the bottom left corner of the menu
  * @param onClose gets called when the menu should dissappear
  **/
+
+interface ActionMenuComponentProps {
+  song: Song;
+  position: { x: number; y: number };
+  onClose: () => void;
+}
 
 interface Song {
   trackNumber: number;
@@ -21,15 +27,11 @@ interface Song {
   image: string;
 }
 
-export function SongGridCardRightClick({
+export default function ActionMenu({
   song,
   position,
   onClose,
-}: {
-  song: Song;
-  position: { x: number; y: number };
-  onClose: () => void;
-}) {
+}: ActionMenuComponentProps) {
   // Creates a reference to the Card component
   const cardRef = useRef<HTMLDivElement>(null);
   // Function that dynamically calculates and sets the top position of the Card component
