@@ -60,7 +60,12 @@ export const Edit: React.FC<EditComponentProps> = ({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+      <Modal
+        closeOnOverlayClick={false}
+        isOpen={isOpen}
+        onClose={onClose}
+        size="xl"
+      >
         <ModalOverlay />
         <ModalContent bg={"brand.200"} pb={25} borderRadius={"xl"}>
           <ModalHeader>Edit</ModalHeader>
