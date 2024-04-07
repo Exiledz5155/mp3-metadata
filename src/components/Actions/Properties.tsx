@@ -1,11 +1,5 @@
-import { CheckIcon, Icon } from "@chakra-ui/icons";
 import {
-  FormControl,
-  FormLabel,
-  Input,
   Button,
-  Grid,
-  GridItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,8 +7,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Image,
-  Box,
   VStack,
   HStack,
   Text,
@@ -24,6 +16,7 @@ import React, { useRef } from "react";
 interface PropertiesComponentProps {
   isOpen: boolean;
   onClose: () => void;
+  song: Song;
 }
 
 interface Song {
@@ -38,15 +31,11 @@ interface Song {
   image: string;
 }
 
-export const Properties: React.FC<PropertiesComponentProps> = ({
+export default function Properties({
   song,
   isOpen,
   onClose,
-}: {
-  song: Song;
-  isOpen: boolean;
-  onClose: () => void;
-}) => {
+}: PropertiesComponentProps) {
   // New tag
   const PropertyRow = ({ label, value }) => (
     <HStack justifyContent="space-between">
@@ -97,6 +86,4 @@ export const Properties: React.FC<PropertiesComponentProps> = ({
       </Modal>
     </>
   );
-};
-
-export default Properties;
+}

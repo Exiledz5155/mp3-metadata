@@ -23,6 +23,7 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 interface EditComponentProps {
   isOpen: boolean;
   onClose: () => void;
+  song: Song;
 }
 
 interface Song {
@@ -37,15 +38,7 @@ interface Song {
   image: string;
 }
 
-export const Edit: React.FC<EditComponentProps> = ({
-  song,
-  isOpen,
-  onClose,
-}: {
-  song: Song;
-  isOpen: boolean;
-  onClose: () => void;
-}) => {
+export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
   // Track if image is hovered or not
   const [isHovering, setIsHovering] = useState(false);
 
@@ -201,6 +194,4 @@ export const Edit: React.FC<EditComponentProps> = ({
       </Modal>
     </>
   );
-};
-
-export default Edit;
+}
