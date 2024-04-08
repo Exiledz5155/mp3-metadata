@@ -26,7 +26,7 @@ export function Home() {
     /*Functions to deal with mouse position */
   }
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
+  //calculates the x and y position of the users cursor
   const handleMouseMove = (event) => {
     setMousePosition({ x: event.clientX, y: event.clientY });
   };
@@ -37,12 +37,14 @@ export function Home() {
   const calculateColor = () => {
     // Check if window object is defined (i.e., we are on the client-side)
     if (typeof window !== "undefined") {
-      const color1 = [0, 255, 255]; // RGBA values for the first color
-      const color2 = [151, 71, 255] // RGBA values for the second color
+      //both of these colors represent spectrums of the window where the cursor color will be a mix of these two
+      //if different colors of cursor blur is wanted this would be what to change
+      const color1 = [0, 255, 255]; // RGBA values for the first color 
+      const color2 = [151, 71, 255]; // RGBA values for the second color
 
       const xRatio = mousePosition.x / window.innerWidth; // Calculate x-axis ratio based on mouse position
       const yRatio = mousePosition.y / window.innerHeight; // Calculate y-axis ratio based on mouse position
-
+      
       const interpolatedColor = color1.map((channel, index) => {
         return Math.round(
           channel +
@@ -54,6 +56,7 @@ export function Home() {
       return `rgba(${interpolatedColor.join()}, 0.5)`; // Construct RGBA color string
     }
   };
+
   //ended up not using in final design but could be useful later on while redesigning
   // const calculateBlurRadius = () => {
   //   if (typeof window !== "undefined") {
@@ -84,8 +87,8 @@ export function Home() {
   {
     /*Constant size of the blurs can change based on what we want*/
   }
-  const blurRadius = 50     //adjust how blury the curor blur is
-  const gradientSize = 250; // Adjust the size of the gradient circle as needed
+  const blurRadius = 50; //adjust how blury the cursor blur is
+  const gradientSize = 250; // Adjust the size of the gradient circle of the cursor as needed
 
   return (
     <>
@@ -99,7 +102,7 @@ export function Home() {
         onMouseMove={handleMouseMove}
         position="relative"
       >
-        {/* Background */}
+        {/* Background Mouse Blur - Uses Functions written above - If one wants to change size or blurryness change(blurRadius and gradientSize*/}
         <Box
           position="absolute"
           top={`${mousePosition.y - gradientSize / 2}px`}
@@ -110,19 +113,19 @@ export function Home() {
           borderRadius="50%"
           background={`radial-gradient(circle, ${calculateColor()} 0%, rgba(0,0,0,0) 100%)`}
           style={{ filter: `blur(${blurRadius}px)` }}
-        />  
+        />
 
-        {/*Github Icon  - need to fix this*/}
+        {/*Github Icon */}
         <Box
-          position={"absolute"}
-          top={"20px"}
+          position="absolute"
+          top="20px"
           left="20px" // Adjust left position as needed
           zIndex="10" // Ensure the icon appears above other content
         >
           <LinkButton
             href="https://github.com/Exiledz5155/mp3-metadata"
             target="_blank" // Open link in a new tab
-            rel="noopener noreferrer" // Security best practice for links opening in a new tab
+            rel="noopener noreferrer" 
           >
             <Center>
               <FaGithub size={24} /> {/* Adjust size of the icon as needed */}
@@ -130,14 +133,17 @@ export function Home() {
           </LinkButton>
         </Box>
 
+        {/* Box containing all the elipses? */}
+
+        {/*All of these elipses use percentages to scale with viewport. This is where one could adjust size and amount of blue of the elipses */}
         {/* Ellipse 1 */}
         <Box
           position="absolute"
-          bottom="50px" // Adjusted bottom position to leave space from the bottom of the viewport
-          right="300px" // Adjusted right position to leave space from the right side of the viewport
-          width={"335px"}
-          height={"326px"}
-          overflow={"visible"}
+          bottom="12%" // Adjusted bottom position to leave space from the bottom of the viewport
+          right="20%" // Adjusted right position to leave space from the right side of the viewport
+          width="30%"
+          height="45%"
+          overflow="visible"
           css={{ filter: "blur(125px)" }}
         >
           <Ellipse1Icon />
@@ -147,10 +153,10 @@ export function Home() {
         <Box
           css={{
             position: "absolute",
-            bottom: "300px", // Adjusted bottom position to leave space from the bottom of the viewport
-            right: "125px", // Adjusted right position to leave space from the right side of the viewport
-            width: "335px",
-            height: "326px",
+            bottom: "45%", // Adjusted bottom position to leave space from the bottom of the viewport
+            right: "9%", // Adjusted right position to leave space from the right side of the viewport
+            width: "30%",
+            height: "45%",
             overflow: "visible",
             filter: "blur(125px)",
           }}
@@ -162,15 +168,14 @@ export function Home() {
         <Box
           css={{
             position: "absolute",
-            bottom: "50px", // Adjusted bottom position to leave space from the bottom of the viewport
-            right: "25px", // Adjusted right position to leave space from the right side of the viewport
-            width: "335px",
-            height: "326px",
+            bottom: "12%", // Adjusted bottom position to leave space from the bottom of the viewport
+            right: "0%", // Adjusted right position to leave space from the right side of the viewport
+            width: "30%",
+            height: "45%",
             overflow: "visible",
             filter: "blur(125px)",
           }}
         >
-          here
           <Ellipse3Icon />
         </Box>
 
