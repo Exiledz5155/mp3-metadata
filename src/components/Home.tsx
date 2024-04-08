@@ -6,6 +6,8 @@ import {
   Heading,
   Stack,
   useColorModeValue,
+  Text,
+  HStack,
 } from "@chakra-ui/react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { chakra } from "@chakra-ui/react";
@@ -39,12 +41,12 @@ export function Home() {
     if (typeof window !== "undefined") {
       //both of these colors represent spectrums of the window where the cursor color will be a mix of these two
       //if different colors of cursor blur is wanted this would be what to change
-      const color1 = [0, 255, 255]; // RGBA values for the first color 
+      const color1 = [0, 255, 255]; // RGBA values for the first color
       const color2 = [151, 71, 255]; // RGBA values for the second color
 
       const xRatio = mousePosition.x / window.innerWidth; // Calculate x-axis ratio based on mouse position
       const yRatio = mousePosition.y / window.innerHeight; // Calculate y-axis ratio based on mouse position
-      
+
       const interpolatedColor = color1.map((channel, index) => {
         return Math.round(
           channel +
@@ -125,7 +127,7 @@ export function Home() {
           <LinkButton
             href="https://github.com/Exiledz5155/mp3-metadata"
             target="_blank" // Open link in a new tab
-            rel="noopener noreferrer" 
+            rel="noopener noreferrer"
           >
             <Center>
               <FaGithub size={24} /> {/* Adjust size of the icon as needed */}
@@ -183,27 +185,51 @@ export function Home() {
           fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
           marginLeft={"20"}
         >
-          MP3 Metadata Editor
+          MP3 Metadata
         </Heading>
-        <LinkButton
-          href="/editor/albums"
-          p={2}
-          color="white"
-          fontSize={{ base: "md", sm: "lg", md: "lg" }}
-          borderRadius="full"
-          bgGradient="linear(to-r, #8795D5, #CF97F4)"
-          _hover={{
-            bgGradient: "linear(to-r, purple.300, cyan.300)",
-          }}
-          h=""
-          w="80"
-          marginLeft={"20"}
-          //icons arent working presubambly because of linked button if we want to add, will have to do something else
-          // leftIcon={<ArrowLeftIcon />}
-          // rightIcon={<ArrowRightIcon />}
-        >
-          <Center>Start Editing</Center>
-        </LinkButton>
+        <Text marginLeft={"20"}>A web-based MP3 metadata editor.</Text>
+        <HStack gap={0}>
+          <LinkButton
+            href="/editor/albums"
+            p={2}
+            color="white"
+            fontSize={{ base: "md", sm: "lg", md: "lg" }}
+            borderRadius="full"
+            bgGradient="linear(to-r, #8795D5, #CF97F4)"
+            _hover={{
+              bgGradient: "linear(to-r, purple.300, cyan.300)",
+            }}
+            h=""
+            w="60"
+            marginLeft={"20"}
+            rounded={"md"}
+            //icons arent working presubambly because of linked button if we want to add, will have to do something else
+            // leftIcon={<ArrowLeftIcon />}
+            // rightIcon={<ArrowRightIcon />}
+          >
+            <Center>Start Editing</Center>
+          </LinkButton>
+          <LinkButton
+            href="/editor/albums"
+            p={2}
+            color="white"
+            fontSize={{ base: "md", sm: "lg", md: "lg" }}
+            borderRadius="full"
+            bgGradient="linear(to-r, #8795D5, #CF97F4)"
+            _hover={{
+              bgGradient: "linear(to-r, purple.300, cyan.300)",
+            }}
+            h=""
+            w="60"
+            marginLeft={"10"}
+            rounded={"md"}
+            //icons arent working presubambly because of linked button if we want to add, will have to do something else
+            // leftIcon={<ArrowLeftIcon />}
+            // rightIcon={<ArrowRightIcon />}
+          >
+            <Center>See a Demo</Center>
+          </LinkButton>
+        </HStack>
       </Stack>
     </>
   );
