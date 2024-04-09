@@ -41,7 +41,7 @@ export function SongDisplay({ album }: { album: AlbumObj }) {
       bg={useColorModeValue("white", "brand.100")}
       h="100%"
       rounded={"xl"}
-      maxH={"93.25vh"}
+      maxHeight="calc(100vh - 86px)"
       overflow={"hidden"}
     >
       {/* UPDATE THIS WITH PROPS */}
@@ -50,9 +50,7 @@ export function SongDisplay({ album }: { album: AlbumObj }) {
       <Divider position={"sticky"} top="6" mb={2} />
       <CardBody
         m={"0"}
-        px={"0"}
-        pb={"0"}
-        pt={"0"}
+        p={"0"}
         display={"flex"}
         flexDirection={"column"}
         overflow={"auto"}

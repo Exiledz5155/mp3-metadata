@@ -49,7 +49,7 @@ export function FileHub() {
     <Card
       bg={useColorModeValue("white", "brand.100")}
       h={"100%"}
-      maxH={"93.25vh"}
+      maxHeight="calc(100vh - 71px)"
       p={"20px"}
       rounded={"xl"}
     >

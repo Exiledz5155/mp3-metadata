@@ -65,6 +65,7 @@ export default function RootLayout({
       <Flex
         bg="black"
         h="100vh"
+        p={3}
         maxH={"100%"}
         overflow={"hidden"}
         flexDirection={"column"}
@@ -73,9 +74,12 @@ export default function RootLayout({
           pl="5"
           w="1fr"
           h="50px"
+          minH={"50px"}
           bg="brand.100"
-          my={2}
-          mx={4}
+          py={"3px"} // fix small height on 1080p
+          my={0} // remove
+          mx={0} // remove
+          mb={3}
           rounded={"xl"}
           display={"flex"}
           alignItems={"center"}
@@ -103,7 +107,12 @@ export default function RootLayout({
           </LinkButton>
         </Box>
         <Flex flex="1">
-          <Box pl="4" pr="1" w={size.x}>
+          <Box
+            pl="0" // remove
+            pr="1"
+            w={size.x}
+            maxHeight="calc(100vh - 71px)"
+          >
             <FileHub />
           </Box>
           <Center>
@@ -121,15 +130,12 @@ export default function RootLayout({
               }}
               transition="opacity 0.5s ease"
             ></Box>
-            {/* <DragHandleIcon
-              cursor="col-resize"
-              boxSize={6}
-              onMouseDown={handler}
-              _hover={{ color: "grey" }}
-              borderRadius="md"
-            ></DragHandleIcon> */}
           </Center>
-          <Box pr="4" pl="1" flex="1">
+          <Box
+            pr="0" // remove
+            pl="1"
+            flex="1"
+          >
             {children}
           </Box>
         </Flex>
