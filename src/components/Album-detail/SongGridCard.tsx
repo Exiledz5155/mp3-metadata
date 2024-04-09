@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { HStack, Flex, Image, Text } from "@chakra-ui/react";
+import { HStack, Flex, Image, Text, Box } from "@chakra-ui/react";
 import ActionMenu from "../Actions/ActionMenu";
 
 interface Song {
@@ -72,16 +72,21 @@ export function SongGridCard({ song }: { song: Song }) {
       >
         {/* TODO: FIX MISALIGNMENT WHEN TRACK NUMBER IS DOUBLE DIGIT */}
         <Flex align={"center"} w="30%">
-          <Text fontSize={"md"} ml={"4"}>
+          <Text fontSize={"md"} mx={"4"}>
             {song.trackNumber}
           </Text>
+          {/* <Box width="30px" mx={"4"} border="1px solid red" textAlign="right">
+            <Text fontSize={"md"} isTruncated>
+              {song.trackNumber}
+            </Text>
+          </Box> */}
           <Image
             src={song.image}
             alt={song.title}
             w="50px"
             h="50px"
             borderRadius={"5px"}
-            mx={"4"}
+            mr={"4"}
           />
           <Text textAlign={"left"} noOfLines={1}>
             {song.title}
