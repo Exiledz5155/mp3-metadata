@@ -24,7 +24,7 @@ generator client {
 datasource db {
   provider          = "sqlserver"
   url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  //shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Session {
@@ -56,4 +56,3 @@ model mp3File {
   album       Album?  @relation(fields: [albumId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   session     Session @relation(fields: [sessionId], references: [id], onUpdate: NoAction)
 }
-
