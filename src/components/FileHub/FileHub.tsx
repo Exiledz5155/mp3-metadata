@@ -192,13 +192,12 @@ export function FileHub() {
             {albumData.map((album, index) => (
               <FileHubAlbum key={index} album={album} />
             ))}
-            {isRightClicked && (
+            {/* {isRightClicked && (
               <ActionMenu
                 position={rightClickPosition}
                 onClose={() => setIsRightClicked(false)}
-                song={null}
               />
-            )}
+            )} */}
           </Accordion>
         </Box>
       </CardBody>
