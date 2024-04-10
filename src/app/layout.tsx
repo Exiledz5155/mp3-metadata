@@ -1,7 +1,7 @@
 // app/layout.tsx
 
 "use client";
-import { DarkModeButton } from "../components/DarkModeButton";
+import { DarkModeButton } from "../components/Testing/DarkModeButton";
 import { Providers } from "./providers";
 
 export default function RootLayout({
