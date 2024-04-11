@@ -12,18 +12,18 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
         });
         const response = albums.map(album => ({
             album: album.title,
-            artist: album.artist ?? 'Unknown Artist', //Add to schema.prisma
+            artist: album.artist ?? 'Unknown Artist',
             session: {
                 id: album.session.id,
             },
             songs: album.mp3Files.map((file) => ({
                 trackNumber: file.trackNumber,
                 title: file.title,
-                duration: file.duration ?? 'Unknown Duration', //Add to schema.prisma
+                duration: file.duration ?? 'Unknown Duration',
                 artist: file.artist ?? 'Unknown Artist',
                 album: file.albumTitle ?? album.title,
                 year: file.year ?? 'Unknown Year',
-                genre: file.genre ?? 'Unknown Genre', //Add to schema.prisma
+                genre: file.genre ?? 'Unknown Genre',
                 image: file.image ?? 'Default Image',
             })),
         }));
