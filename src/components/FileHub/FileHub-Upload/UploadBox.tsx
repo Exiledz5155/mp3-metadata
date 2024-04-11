@@ -18,15 +18,15 @@ import {
 import { MdOutlineFilePresent } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useUUID } from "../../../contexts/UUIDContext";
-import FileUploadCard from "./FileUploadCard";
-import { uploadFile } from "./uploadFile";
+import FileUploadCard from "./UploadCard";
+import { UploadMP3 } from "./UploadFiles";
 
 interface UploadBoxProps {
   isOpen: boolean; // Whether the modal is open or not
   onClose: () => void; // Function to close the modal
 }
 
-export default function FileUploadBox({ isOpen, onClose }: UploadBoxProps) {
+export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
   const { uuid, generateUUID } = useUUID();
   const [files, setFiles] = useState<File[]>([]); // Initialize with an empty array
   const [uploadStatus, setUploadStatus] = useState<{
@@ -58,9 +58,7 @@ export default function FileUploadBox({ isOpen, onClose }: UploadBoxProps) {
 
     try {
       // Attempt to upload the file again
-      // Check security of passing container like this
-      const containerName = "mp3container";
-      const response = await uploadFile(file, uuid, containerName);
+      const response = await UploadMP3(file, uuid);
       if (response.ok) {
         console.log("File re-uploaded successfully");
         setUploadStatus((prevStatus) => ({
@@ -121,9 +119,7 @@ export default function FileUploadBox({ isOpen, onClose }: UploadBoxProps) {
         }));
 
         try {
-          // Check security of passing container like this
-          const containerName = "mp3container";
-          const response = await uploadFile(file, uuid, containerName);
+          const response = await UploadMP3(file, uuid);
           if (response.ok) {
             console.log("File uploaded successfully");
             setUploadStatus((prevStatus) => ({

@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 import React, { useState } from "react";
-import FileUploadBox from "./FileHub-Upload/FileUploadBox";
+import FileUploadBox from "./FileHub-Upload/UploadBox";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import ActionMenu from "../Actions/ActionMenu";
 const albumData = require("../../../public/albums.json");
