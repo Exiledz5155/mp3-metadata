@@ -19,6 +19,8 @@ import {
 import React, { useRef } from "react";
 import { useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
+import { UploadIMG } from "../FileHub/FileHub-Upload/UploadFiles";
+import { useUUID } from "../../contexts/UUIDContext";
 
 interface EditComponentProps {
   isOpen: boolean;
@@ -39,6 +41,7 @@ interface Song {
 }
 
 export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
+  const { uuid, generateUUID } = useUUID();
   // Track if image is hovered or not
   const [isHovering, setIsHovering] = useState(false);
 
@@ -48,6 +51,33 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       console.log(file);
+    }
+  };
+
+  const handleUpload = async () => {
+    let fileName = file.name.toLowerCase();
+
+    const endsWithPNG = fileName.endsWith("png");
+
+    const endsWithJPG = /\.(jpg|jpeg)$/.test(fileName);
+
+    if (endsWithPNG || endsWithJPG) {
+      fileName = file.name;
+      const mockID = 1;
+      try {
+        const response = await UploadIMG(file, uuid, mockID);
+        if (response.ok) {
+          console.log("IMG uploaded successfully");
+        } else {
+          console.error("Failed to upload IMG");
+        }
+      } catch (error) {
+        console.error("Failed to upload IMG file:", error);
+      }
+    } else {
+      console.error(
+        `Error: File ${file.name} is not an image file of type PNG or JPG.`
+      );
     }
   };
 
