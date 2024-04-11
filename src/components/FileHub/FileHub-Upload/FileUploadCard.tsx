@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Box, Flex, Icon, Text, Progress } from "@chakra-ui/react";
 import { FiFileText, FiRotateCcw } from "react-icons/fi";
