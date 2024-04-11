@@ -32,6 +32,7 @@ model Session {
 model Album {
   id        Int       @id @default(autoincrement())
   title     String
+  artist    String?
   sessionId String    @map("session_id")
   session   Session   @relation(fields: [sessionId], references: [id])
   mp3Files  mp3File[]
@@ -42,6 +43,8 @@ model mp3File {
   filePath    String  @unique
   title       String?
   artist      String?
+  duration    String?
+  genre       String?
   year        Int?
   albumTitle  String?
   albumArtist String?
