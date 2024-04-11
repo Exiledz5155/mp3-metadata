@@ -1,19 +1,12 @@
+"use client";
+
 import React from "react";
-import {
-  Box, 
-  Flex, 
-  Icon, 
-  Text, 
-  Progress 
-} from "@chakra-ui/react";
-import { 
-  FiFileText, 
-  FiRotateCcw 
-} from "react-icons/fi";
+import { Box, Flex, Icon, Text, Progress } from "@chakra-ui/react";
+import { FiFileText, FiRotateCcw } from "react-icons/fi";
 import { BsFillTrashFill } from "react-icons/bs";
 
 // Function to format the fileSize string given byte size
-function formatFileSize(bytes: number): string { 
+function formatFileSize(bytes: number): string {
   const units = ["bytes", "kb", "mb", "gb"];
   let unitIndex = 0;
   while (bytes >= 1000 && unitIndex < units.length - 1) {
@@ -25,102 +18,95 @@ function formatFileSize(bytes: number): string {
 
 interface FileUploadCardProps {
   fileName: string;
-  fileType: string; // File extension like .mp3
   fileSizeInBytes: number;
   uploadFailed: boolean;
   inProgress: boolean;
-  progressValue: number; // Value passed in Progress component, takes a number between 0 and 100
-  onDelete: () => void; // Function to delete the card
+  isComplete: boolean;
+  onRetry: () => void; // Callback function for retry
 }
 
-export const FileUploadCard: React.FC<FileUploadCardProps> = ({
+export default function FileUploadCard({
   fileName,
-  fileType,
   fileSizeInBytes,
   uploadFailed,
   inProgress,
-  progressValue,
-  onDelete,
-}) => {
+  isComplete,
+  onRetry,
+}: FileUploadCardProps) {
+  const handleRetryClick = () => {
+    if (onRetry) {
+      onRetry();
+    }
+  };
+
   // Ensure inProgress is always false if uploadFailed is true.
   // This is necessary to display the correct UI state.
   const correctedInProgress = uploadFailed ? false : inProgress;
 
   return (
-    <Box 
-      border="2px" 
-      mb={4} 
-      p={4} 
-      borderRadius="2xl"
-    >
+    <Box border="2px" mb={4} p={4} borderRadius="2xl">
       <Flex align="center">
-        <Icon 
-          as={FiFileText} 
-          boxSize={6} 
-        />
-        <Flex 
-          flex={1} 
-          pl={6} 
-          direction="column"
-        >
-          <Text 
-            mb="-1" 
-            textAlign="left"
-             noOfLines={1}
-          >
-            {fileName}{fileType}
+        <Icon as={FiFileText} boxSize={6} />
+        <Flex flex={1} pl={6} direction="column">
+          <Text mb="-1" textAlign="left" noOfLines={1}>
+            {fileName}
           </Text>
           {uploadFailed ? ( // If upload has failed, display "Upload Failed" in red
-            <Text 
-              fontSize="xs" 
-              textAlign="left" 
-              color="#FF7074"
-            >
+            <Text fontSize="xs" textAlign="left" color="#FF7074">
               Upload Failed
             </Text>
-          ) : ( // Else, check if inProgress and display UI state as needed
+          ) : isComplete ? ( // If upload is complete, display "Upload Success" in green
+            <Text
+              fontSize="xs"
+              textAlign="left"
+              // bgGradient="linear(to-r, linear.100, linear.200)"
+              // bgClip="text"
+              color="linear.200"
+            >
+              Upload Success
+            </Text>
+          ) : (
+            // Else, check if inProgress and display UI state as needed
             <Text
               fontSize="xs"
               textAlign="left"
               color="#8E95A3"
               mb={correctedInProgress ? "-2" : "0"}
             >
-              {correctedInProgress
-                // Computing currently uploaded file size and progress percentage
-                ? `${formatFileSize(fileSizeInBytes * progressValue / 100)} | ${progressValue}%` 
-                : formatFileSize(fileSizeInBytes)} {/* If inProgress is false, display full file size */}
+              {formatFileSize(fileSizeInBytes)}
             </Text>
           )}
         </Flex>
         {uploadFailed ? ( // If upload has failed, display both the retry and delete icons
           <>
-            <Icon 
-              as={BsFillTrashFill} 
-              boxSize={6} 
-              onClick={onDelete} 
-              style={{cursor: "pointer"}} 
-              mr={5} 
+            <Icon
+              as={BsFillTrashFill}
+              boxSize={6}
+              style={{ cursor: "pointer" }}
+              mr={5}
             />
-            <Icon 
-              as={FiRotateCcw} 
-              boxSize={6} 
-              onClick={onDelete} 
-              style={{cursor: "pointer"}}
+            <Icon
+              as={FiRotateCcw}
+              boxSize={6}
+              style={{ cursor: "pointer" }}
+              onClick={handleRetryClick}
             />
           </>
-        ) : ( // If upload is successful or in progress, display delete icon only
-          <Icon 
-            as={BsFillTrashFill} 
-            boxSize={6} 
-            onClick={onDelete} 
-            style={{cursor: "pointer"}} 
-          />
+        ) : (
+          !inProgress &&
+          !isComplete && ( // Display delete icon only if neither in progress nor complete
+            <Icon
+              as={BsFillTrashFill}
+              boxSize={6}
+              style={{ cursor: "pointer" }}
+            />
+          )
         )}
       </Flex>
-      {correctedInProgress && ( // Progress bar component for inProgress state
+      {inProgress && ( // Progress bar component for inProgress state
         <Progress
           mt={4}
-          value={progressValue}
+          isIndeterminate
           size="sm"
           colorScheme="linear"
           borderRadius="md"
@@ -128,6 +114,4 @@ export const FileUploadCard: React.FC<FileUploadCardProps> = ({
       )}
     </Box>
   );
-};
-
-export default FileUploadCard;
+}

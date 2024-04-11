@@ -25,6 +25,7 @@
     "encoding": "^0.1.13",
     "framer-motion": "^10.16.4",
     "micro": "^10.0.1",
+    "music-metadata-browser": "^2.5.10",
     "next": "^13.5.6",
     "node-id3": "^0.2.6",
     "react": "^18",
