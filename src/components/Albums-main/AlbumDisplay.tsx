@@ -17,10 +17,10 @@ const albumData = require("../../../public/albums.json");
 export function AlbumDisplay() {
   return (
     <Card
-      bg={useColorModeValue("white", "brand.100")}
+      bg="brand.100"
       h="100%"
       rounded={"xl"}
-      maxH={"93.25vh"}
+      maxHeight="calc(100vh - 71px)"
       overflow={"hidden"}
     >
       <CardHeader>

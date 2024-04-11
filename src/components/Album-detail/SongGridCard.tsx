@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { HStack, Flex, Image, Text } from "@chakra-ui/react";
+import { HStack, Flex, Image, Text, Box } from "@chakra-ui/react";
 import ActionMenu from "../Actions/ActionMenu";
 
 interface Song {
@@ -72,16 +72,41 @@ export function SongGridCard({ song }: { song: Song }) {
       >
         {/* TODO: FIX MISALIGNMENT WHEN TRACK NUMBER IS DOUBLE DIGIT */}
         <Flex align={"center"} w="30%">
-          <Text fontSize={"md"} ml={"4"}>
+          {/* <Text fontSize={"md"} mx={"4"}>
             {song.trackNumber}
-          </Text>
+          </Text> */}
+          <Box
+            position="relative"
+            height="40px"
+            minWidth="24px"
+            overflow="hidden"
+            mr={4}
+          >
+            <Text
+              position="absolute"
+              right="0" // aligned to the right edge of the parent box
+              top="50%"
+              transform="translateY(-50%)" // centers the text vertically
+              fontSize="md"
+              whiteSpace="nowrap" // ensures the text stays on one line
+              overflow="visible" // allows the text to be visible when it overflows
+            >
+              {song.trackNumber}
+            </Text>
+          </Box>
+
+          {/* <Box width="30px" mx={"4"} border="1px solid red" textAlign="right">
+            <Text fontSize={"md"} isTruncated>
+              {song.trackNumber}
+            </Text>
+          </Box> */}
           <Image
             src={song.image}
             alt={song.title}
             w="50px"
             h="50px"
             borderRadius={"5px"}
-            mx={"4"}
+            mr={"4"}
           />
           <Text textAlign={"left"} noOfLines={1}>
             {song.title}

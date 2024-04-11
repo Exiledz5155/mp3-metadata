@@ -63,13 +63,27 @@ export default function RootLayout({
   return (
     <Providers>
       <Flex
-        bg={useColorModeValue("white", "black")}
+        bg="black"
         h="100vh"
+        p={3}
         maxH={"100%"}
         overflow={"hidden"}
         flexDirection={"column"}
       >
-        <Box pl="4" pt="4" w="1fr" h="50px">
+        <Box
+          pl="5"
+          w="1fr"
+          h="50px"
+          minH={"50px"}
+          bg="brand.100"
+          py={"3px"} // fix small height on 1080p
+          my={0} // remove
+          mx={0} // remove
+          mb={3}
+          rounded={"xl"}
+          display={"flex"}
+          alignItems={"center"}
+        >
           <LinkButton
             href="/"
             color="white"
@@ -80,9 +94,25 @@ export default function RootLayout({
           >
             MP3 Metadata
           </LinkButton>
+          <LinkButton
+            href="/editor/albums"
+            color="white"
+            fontSize={{ base: "md", sm: "lg", md: "lg" }}
+            bgClip="text"
+            fontWeight="extrabold"
+            bgGradient="linear(to-r, linear.100, linear.200)"
+            pl={4}
+          >
+            Albums
+          </LinkButton>
         </Box>
-        <Flex pb="4" flex="1">
-          <Box pl="4" pb="2" pr="1" w={size.x}>
+        <Flex flex="1">
+          <Box
+            pl="0" // remove
+            pr="1"
+            w={size.x}
+            maxHeight="calc(100vh - 71px)"
+          >
             <FileHub />
           </Box>
           <Center>
@@ -100,15 +130,12 @@ export default function RootLayout({
               }}
               transition="opacity 0.5s ease"
             ></Box>
-            {/* <DragHandleIcon
-              cursor="col-resize"
-              boxSize={6}
-              onMouseDown={handler}
-              _hover={{ color: "grey" }}
-              borderRadius="md"
-            ></DragHandleIcon> */}
           </Center>
-          <Box pr="4" pb="2" pl="1" flex="1">
+          <Box
+            pr="0" // remove
+            pl="1"
+            flex="1"
+          >
             {children}
           </Box>
         </Flex>
