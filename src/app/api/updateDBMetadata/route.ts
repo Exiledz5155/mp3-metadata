@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 export async function POST(request: Request) {
     // Parse the request body
     const body = await request.json();
-    const { ids, metadata } = body;
+    const { uuid, ids, metadata } = body;
 
     if (!ids || !metadata) {
       return new Response(JSON.stringify({ error: 'Missing parameters' }), {
@@ -17,15 +17,44 @@ export async function POST(request: Request) {
     // Initialize Prisma
     const prisma = new PrismaClient();
     
-    // Update each item in the database with the provided info
-    const updates = ids.map(id => {
-      return prisma.mp3File.update({
-        where: { id: id },
-        data: metadata,
-      });
-    });
-
     try {
+
+      const updates = ids.map(async (id) => {
+        // Check if albumTitle is being updated and handle album association
+        if (metadata.albumTitle) {
+          // Try to find an existing album with the new title
+          let album = await prisma.album.findFirst({
+            where: {
+              title: metadata.albumTitle,
+              sessionId: uuid,
+            },
+          });
+  
+          // If no existing album is found, create a new one
+          if (!album) {
+            album = await prisma.album.create({
+              data: {
+                title: metadata.albumTitle,
+                // You might need to add additional fields such as session ID or artist here
+                sessionId: uuid, // This needs to be dynamically set based on your requirements
+              },
+            });
+          }
+  
+          // Update the mp3File with the new albumId and other metadata
+          return prisma.mp3File.update({
+            where: { id: id },
+            data: { ...metadata, albumId: album.id },
+          });
+        } else {
+          // If not updating albumTitle, proceed with a standard update
+          return prisma.mp3File.update({
+            where: { id: id },
+            data: metadata,
+          });
+        }
+      });
+  
       await Promise.all(updates);
       return new Response(JSON.stringify({ message: 'Items updated successfully' }), {
         status: 200,
@@ -39,7 +68,7 @@ export async function POST(request: Request) {
         status: 500,
         headers: {
           'Content-Type': 'application/json',
-        } 
+        },
       });
     } finally {
       // Disconnect from Prisma after we are done
