@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import {
   Flex,
@@ -13,117 +15,200 @@ import {
   Text,
   Input,
 } from "@chakra-ui/react";
-import FileCardGenerator from "./FileCardGenerator";
 import { MdOutlineFilePresent } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
+import { useUUID } from "../../../contexts/UUIDContext";
+import FileUploadCard from "./FileUploadCard";
 
 interface UploadBoxProps {
   isOpen: boolean; // Whether the modal is open or not
   onClose: () => void; // Function to close the modal
 }
 
-export const FileUploadBox: React.FC<UploadBoxProps> = ({
-  isOpen,
-  onClose,
-}) => {
-  // Determining if FileCardGenerator component is open
-  const [isGeneratorOpen, setGeneratorOpen] = useState(false); 
+export default function FileUploadBox({ isOpen, onClose }: UploadBoxProps) {
+  const { uuid, generateUUID } = useUUID();
+  const [files, setFiles] = useState<File[]>([]); // Initialize with an empty array
+  const [uploadStatus, setUploadStatus] = useState<{
+    [key: string]: {
+      inProgress: boolean;
+      uploadFailed: boolean;
+      isComplete: boolean;
+    };
+  }>({});
 
-  // Initializing array of generated FileUploadCards
-  const [generatedCards, setGeneratedCards] = useState<JSX.Element[]>([]); 
+  // NO IDEA IF THIS WORKS, NEED TO FIND METHOD TO FORCE ERROR
+  const handleRetry = async (fileName: string) => {
+    // Set upload as in progress before the retry
+    setUploadStatus((prevStatus) => ({
+      ...prevStatus,
+      [fileName]: {
+        inProgress: true,
+        uploadFailed: false,
+        isComplete: false,
+      },
+    }));
 
-  // Function to open the FileCardGenerator component
-  const handleGenerateFiles = () => {
-    setGeneratorOpen(true);
+    // Retrieve the file from the files array based on fileName
+    const file = files.find((f) => f.name === fileName);
+    if (!file) {
+      console.error("File not found for retry:", fileName);
+      return;
+    }
+
+    try {
+      // Attempt to upload the file again
+      const response = await uploadFile(file, uuid);
+      if (response.ok) {
+        console.log("File re-uploaded successfully");
+        setUploadStatus((prevStatus) => ({
+          ...prevStatus,
+          [fileName]: {
+            inProgress: false,
+            uploadFailed: false,
+            isComplete: true,
+          },
+        }));
+      } else {
+        console.error("Failed to re-upload file");
+        setUploadStatus((prevStatus) => ({
+          ...prevStatus,
+          [fileName]: {
+            inProgress: false,
+            uploadFailed: true,
+            isComplete: false,
+          },
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to upload file:", error);
+      setUploadStatus((prevStatus) => ({
+        ...prevStatus,
+        [fileName]: {
+          inProgress: false,
+          uploadFailed: true,
+          isComplete: false,
+        },
+      }));
+    }
   };
 
-  // Function to close the FileCardGenerator component
-  const handleCardClose = () => {
-    setGeneratorOpen(false);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = event.target.files;
+    if (fileList) {
+      setFiles(Array.from(fileList)); // Convert FileList to an array and store in state
+    }
   };
 
-  // Function to add a new generated FileUploadCard to the array
-  const addGeneratedCard = (newCard: JSX.Element) => {
-    setGeneratedCards((prevCards) => [...prevCards, newCard]);
+  const handleUpload = async () => {
+    if (files.length > 0) {
+      for (const file of files) {
+        if (!file.name.endsWith(".mp3")) {
+          console.error(`Error: File ${file.name} is not a .mp3 file.`);
+          continue;
+        }
+
+        const fileName = file.name;
+        setUploadStatus((prevStatus) => ({
+          ...prevStatus,
+          [fileName]: {
+            inProgress: true,
+            uploadFailed: false,
+            isComplete: false,
+          },
+        }));
+
+        try {
+          const response = await uploadFile(file, uuid);
+          if (response.ok) {
+            console.log("File uploaded successfully");
+            setUploadStatus((prevStatus) => ({
+              ...prevStatus,
+              [fileName]: {
+                inProgress: false,
+                uploadFailed: false,
+                isComplete: true,
+              },
+            }));
+          } else {
+            console.error("Failed to upload file");
+            setUploadStatus((prevStatus) => ({
+              ...prevStatus,
+              [fileName]: {
+                inProgress: false,
+                uploadFailed: true,
+                isComplete: false,
+              },
+            }));
+          }
+        } catch (error) {
+          console.error("Failed to upload file:", error);
+          setUploadStatus((prevStatus) => ({
+            ...prevStatus,
+            [fileName]: {
+              inProgress: false,
+              uploadFailed: true,
+              isComplete: false,
+            },
+          }));
+        }
+      }
+    } else {
+      console.log("No files selected.");
+    }
   };
 
-  // Function to delete a generated FileUploadCard from the array
-  const deleteCard = (cardToDelete: React.ReactElement) => {
-    setGeneratedCards((prevCards) => {
-      return prevCards.filter((card) => card !== cardToDelete);
-    });
+  const [resetKey, setResetKey] = useState(0); // Add this state
+
+  const handleCloseModal = () => {
+    setFiles([]);
+    setUploadStatus({});
+    setResetKey((prevKey) => prevKey + 1); // Update the key on close
+    onClose();
   };
 
   return (
     <>
       <Modal
+        key={resetKey} // This forces a re-mount
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={handleCloseModal}
         size="lg"
         // Disabled clicking outside the overlay to close the modal
-        closeOnOverlayClick={false} 
-        closeOnEsc={false}
+        closeOnOverlayClick={false}
       >
-        <ModalOverlay/>
-        <ModalContent 
-          bg={"brand.200"} 
+        <ModalOverlay />
+        <ModalContent
+          bg={"brand.200"}
           py={25}
-          borderRadius={"xl"} 
+          borderRadius={"xl"}
           // Setting lower bound on width to 60% to prevent overflow of content
-          width={["100%", "60%"]}>
+          width={["100%", "60%"]}
+        >
           <ModalHeader pt={0}>
             <Flex alignItems="center">
-              <Icon 
-                as={MdOutlineFilePresent} 
-                boxSize={8} 
-              />
-              <Box 
-                fontSize="2xl" 
-                ml={2}
-              >
+              <Icon as={MdOutlineFilePresent} boxSize={8} />
+              <Box fontSize="2xl" ml={2}>
                 Upload Files
               </Box>
             </Flex>
-            <ModalCloseButton 
-              position="absolute" 
-              top="28px" 
-              right="25px" 
-              size="md" 
+            <ModalCloseButton
+              position="absolute"
+              top="28px"
+              right="25px"
+              size="md"
             />
           </ModalHeader>
           <ModalBody pb={0}>
-            <Box 
-              border="2px dashed" 
-              p={4} 
-              borderRadius="2xl"
-            >
-              <Flex 
-                direction="column" 
-                justifyContent="center" 
+            <Box border="2px dashed" p={4} borderRadius="2xl">
+              <Flex
+                direction="column"
+                justifyContent="center"
                 alignItems="center"
               >
-                <Icon 
-                  as={IoCloudUploadOutline} 
-                  boxSize={12} 
-                  mb={2} 
-                />
+                <Icon as={IoCloudUploadOutline} boxSize={12} mb={2} />
                 <Text fontWeight="bold">Drag and drop files here</Text>
                 <Text color="#8E95A3">or</Text>
-                {/* This button should be removed once a proper backend link has been established */}
                 <Button
-                  as="label"
-                  htmlFor="fileInput"
-                  variant="solid"
-                  mt={2}
-                  bgGradient="linear(to-r, linear.100, linear.200)"
-                  _hover={{ cursor: "pointer", color: "white", bg: "brand.300" }}
-                  rounded={"xl"}
-                  color="brand.200"
-                  onClick={handleGenerateFiles}
-                >
-                  Generate Files
-                </Button>
-                {/* <Button
                   as="label"
                   htmlFor="fileInput"
                   variant="solid"
@@ -139,23 +224,16 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 >
                   Browse Files
                   <Input
-                    type="file"
                     id="fileInput"
+                    type="file"
+                    multiple
+                    onChange={handleFileChange}
                     style={{ display: "none" }}
                   />
-                </Button> */}
-                {/* This component should be removed once a proper backend link has been established */}
-                <FileCardGenerator
-                  isGeneratorOpen={isGeneratorOpen} // Pass in the FileCardGenerator props
-                  onGeneratorClose={handleCardClose}
-                  addGeneratedCard={addGeneratedCard}
-                />
+                </Button>
               </Flex>
             </Box>
-            <Text 
-              color="#8E95A3" 
-              mt={3}
-            >
+            <Text color="#8E95A3" mt={3}>
               Only .mp3 files. Max size 30mb.
             </Text>
 
@@ -185,32 +263,28 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 },
               }}
             >
-              {generatedCards.length === 0 ? ( // Checking if the array is empty
-              <Box 
-                border="2px" 
-                mb={4} 
-                p={4}
-                borderRadius="2xl"
-              >
-              <Flex 
-                align="center" 
-                justifyContent="center"
-              >
-                  <Text // Default display text
-                    as='i'
-                    color="#8E95A3"
-                    noOfLines={1}
-                  >
-                    Uploaded files will appear here
-                  </Text>
-                </Flex>
-                </Box>
-              ) : (
-                generatedCards.map((card) => ( // Display cards/map onDelete function
-                  <React.Fragment key={card.key}>
-                    {React.cloneElement(card, { onDelete: () => deleteCard(card) })}
-                  </React.Fragment>
+              {files.length > 0 ? (
+                files.map((file, index) => (
+                  <FileUploadCard
+                    key={index}
+                    fileName={file.name}
+                    fileSizeInBytes={file.size}
+                    uploadFailed={
+                      uploadStatus[file.name]?.uploadFailed || false
+                    }
+                    inProgress={uploadStatus[file.name]?.inProgress || false}
+                    isComplete={uploadStatus[file.name]?.isComplete || false}
+                    onRetry={() => handleRetry(file.name)}
+                  />
                 ))
+              ) : (
+                <Box border="2px" mb={4} p={4} borderRadius="2xl">
+                  <Flex align="center" justifyContent="center">
+                    <Text as="i" color="#8E95A3" noOfLines={1}>
+                      Uploaded files will appear here
+                    </Text>
+                  </Flex>
+                </Box>
               )}
             </Box>
 
@@ -223,10 +297,10 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 size="lg"
                 variant="solid"
                 rounded={"xl"}
-                onClick={onClose}
+                onClick={handleCloseModal}
                 mr={4}
               >
-                Cancel
+                Close
               </Button>
               <Button
                 flex="1"
@@ -236,9 +310,10 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
                 variant="solid"
                 rounded={"xl"}
                 color="brand.200"
-                onClick={onClose}
+                onClick={handleUpload}
+                disabled={files.length === 0}
               >
-                Confirm
+                Upload
               </Button>
             </Flex>
           </ModalBody>
@@ -246,6 +321,35 @@ export const FileUploadBox: React.FC<UploadBoxProps> = ({
       </Modal>
     </>
   );
-};
+}
 
-export default FileUploadBox;
+async function uploadFile(file: File, userUUID: string): Promise<Response> {
+  // create file path using userUUID and file name
+  const userFilePath = `${userUUID}/${encodeURIComponent(file.name)}`;
+  // Use fetch to call SAS API route with file path as param
+  const response = await fetch(`/api/upload?fileName=${userFilePath}`);
+
+  const { blobUrl, sasToken } = await response.json();
+  // Create full URL
+  const fullBlobUrl = `${blobUrl}?${sasToken}`;
+
+  // Set up request options
+  const requestOptions: RequestInit = {
+    method: "PUT",
+    headers: {
+      "x-ms-blob-type": "BlockBlob",
+      // Add other headers as needed
+    },
+    body: file,
+  };
+
+  // Perform the fetch request
+  const uploadResponse = await fetch(fullBlobUrl, requestOptions);
+
+  // Check if the request was successful
+  if (!uploadResponse.ok) {
+    throw new Error("Failed to upload file");
+  }
+
+  return uploadResponse;
+}

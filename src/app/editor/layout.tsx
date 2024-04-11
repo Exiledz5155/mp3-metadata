@@ -105,6 +105,17 @@ export default function RootLayout({
           >
             Albums
           </LinkButton>
+          <LinkButton
+            href="/editor/upload"
+            color="white"
+            fontSize={{ base: "md", sm: "lg", md: "lg" }}
+            bgClip="text"
+            fontWeight="extrabold"
+            bgGradient="linear(to-r, linear.100, linear.200)"
+            pl={4}
+          >
+            Upload-Test
+          </LinkButton>
         </Box>
         <Flex flex="1">
           <Box

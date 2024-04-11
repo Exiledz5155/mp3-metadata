@@ -47,8 +47,8 @@ export async function GET(request: Request) {
   ).toString();
 
   // Debugging
-  console.log("Generated Blob URL:", blockBlobClient.url); //logging. DELETE ME
-  console.log("Generated SAS Token:", sasToken);
+  // console.log("Generated Blob URL:", blockBlobClient.url); //logging. DELETE ME
+  // console.log("Generated SAS Token:", sasToken);
 
   // Return the SAS token using the Response.json pattern
   return Response.json({ blobUrl: blockBlobClient.url, sasToken });
