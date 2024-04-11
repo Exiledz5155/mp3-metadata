@@ -8,6 +8,8 @@ import {
   useColorModeValue,
   Text,
   HStack,
+  Flex,
+  VStack,
 } from "@chakra-ui/react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { chakra } from "@chakra-ui/react";
@@ -94,10 +96,8 @@ export function Home() {
 
   return (
     <>
-      <Stack
-        as={Box}
-        textAlign={"left"}
-        spacing={{ base: 4, md: 10 }}
+      <Flex
+        direction={{ base: "column", md: "row" }}
         py={{ base: 20, md: 60 }}
         bg={useColorModeValue("white", "black")}
         h="100vh"
@@ -116,121 +116,136 @@ export function Home() {
           background={`radial-gradient(circle, ${calculateColor()} 0%, rgba(0,0,0,0) 100%)`}
           style={{ filter: `blur(${blurRadius}px)` }}
         />
-
-        {/*Github Icon */}
-        <Box
-          position="absolute"
-          top="20px"
-          left="20px" // Adjust left position as needed
-          zIndex="10" // Ensure the icon appears above other content
+        {/*Column flex  includes icon, title,  description and both button */}
+        <VStack
+          padding={8}
+          flex="1" // Take up all available space vertically
+          direction="column"
+          justify="center"
+          alignItems="flex-start"
         >
-          <LinkButton
-            href="https://github.com/Exiledz5155/mp3-metadata"
-            target="_blank" // Open link in a new tab
-            rel="noopener noreferrer"
+          {/*Github Icon */}
+          <Box
+            position="absolute"
+            top="20px"
+            left="20px" // Adjust left position as needed
+            zIndex="10" // Ensure the icon appears above other content
           >
-            <Center>
-              <FaGithub size={24} /> {/* Adjust size of the icon as needed */}
-            </Center>
-          </LinkButton>
-        </Box>
+            <LinkButton
+              href="https://github.com/Exiledz5155/mp3-metadata"
+              target="_blank" // Open link in a new tab
+              rel="noopener noreferrer"
+            >
+              <Center>
+                <FaGithub size={24} /> {/* Adjust size of the icon as needed */}
+              </Center>
+            </LinkButton>
+          </Box>
+
+          <Heading
+            fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
+            marginLeft={"20"}
+          >
+            MP3 Metadata
+          </Heading>
+          <Text marginLeft={"20"}>A web-based MP3 metadata editor.</Text>
+          <HStack gap={0}>
+            <LinkButton
+              href="/editor/albums"
+              p={2}
+              color="white"
+              fontSize={{ base: "md", sm: "lg", md: "lg" }}
+              borderRadius="full"
+              bgGradient="linear(to-r, #8795D5, #CF97F4)"
+              _hover={{
+                bgGradient: "linear(to-r, purple.300, cyan.300)",
+              }}
+              h=""
+              w="60"
+              marginLeft={"20"}
+              rounded={"md"}
+              //icons arent working presubambly because of linked button if we want to add, will have to do something else
+              // leftIcon={<ArrowLeftIcon />}
+              // rightIcon={<ArrowRightIcon />}
+            >
+              <Center>Start Editing</Center>
+            </LinkButton>
+            <LinkButton
+              href="/editor/albums"
+              p={2}
+              color="white"
+              fontSize={{ base: "md", sm: "lg", md: "lg" }}
+              borderRadius="full"
+              bgGradient="linear(to-r, #8795D5, #CF97F4)"
+              _hover={{
+                bgGradient: "linear(to-r, purple.300, cyan.300)",
+              }}
+              h=""
+              w="60"
+              marginLeft={"10"}
+              rounded={"md"}
+              //icons arent working presubambly because of linked button if we want to add, will have to do something else
+              // leftIcon={<ArrowLeftIcon />}
+              // rightIcon={<ArrowRightIcon />}
+            >
+              <Center>See a Demo</Center>
+            </LinkButton>
+          </HStack>
+        </VStack>
 
         {/* Box containing all the elipses? */}
-
-        {/*All of these elipses use percentages to scale with viewport. This is where one could adjust size and amount of blue of the elipses */}
-        {/* Ellipse 1 */}
-        <Box
-          position="absolute"
-          bottom="12%" // Adjusted bottom position to leave space from the bottom of the viewport
-          right="20%" // Adjusted right position to leave space from the right side of the viewport
-          width="30%"
-          height="45%"
-          overflow="visible"
-          css={{ filter: "blur(125px)" }}
+        <Flex
+          flexGrow="1" // Take up all available space vertically
+          direction="column"
+          justify="center"
+          pl={{ base: 0, md: 4 }}
         >
-          <Ellipse1Icon />
-        </Box>
-
-        {/* Ellipse 2 */}
-        <Box
-          css={{
-            position: "absolute",
-            bottom: "45%", // Adjusted bottom position to leave space from the bottom of the viewport
-            right: "9%", // Adjusted right position to leave space from the right side of the viewport
-            width: "30%",
-            height: "45%",
-            overflow: "visible",
-            filter: "blur(125px)",
-          }}
-        >
-          <Ellipse2Icon />
-        </Box>
-
-        {/* Ellipse 3 */}
-        <Box
-          css={{
-            position: "absolute",
-            bottom: "12%", // Adjusted bottom position to leave space from the bottom of the viewport
-            right: "0%", // Adjusted right position to leave space from the right side of the viewport
-            width: "30%",
-            height: "45%",
-            overflow: "visible",
-            filter: "blur(125px)",
-          }}
-        >
-          <Ellipse3Icon />
-        </Box>
-
-        <Heading
-          fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
-          marginLeft={"20"}
-        >
-          MP3 Metadata
-        </Heading>
-        <Text marginLeft={"20"}>A web-based MP3 metadata editor.</Text>
-        <HStack gap={0}>
-          <LinkButton
-            href="/editor/albums"
-            p={2}
-            color="white"
-            fontSize={{ base: "md", sm: "lg", md: "lg" }}
-            borderRadius="full"
-            bgGradient="linear(to-r, #8795D5, #CF97F4)"
-            _hover={{
-              bgGradient: "linear(to-r, purple.300, cyan.300)",
-            }}
-            h=""
-            w="60"
-            marginLeft={"20"}
-            rounded={"md"}
-            //icons arent working presubambly because of linked button if we want to add, will have to do something else
-            // leftIcon={<ArrowLeftIcon />}
-            // rightIcon={<ArrowRightIcon />}
+          {/*All of these elipses use percentages to scale with viewport. This is where one could adjust size and amount of blue of the elipses */}
+          <Box
+            position="relative"
+            flexGrow="1"
           >
-            <Center>Start Editing</Center>
-          </LinkButton>
-          <LinkButton
-            href="/editor/albums"
-            p={2}
-            color="white"
-            fontSize={{ base: "md", sm: "lg", md: "lg" }}
-            borderRadius="full"
-            bgGradient="linear(to-r, #8795D5, #CF97F4)"
-            _hover={{
-              bgGradient: "linear(to-r, purple.300, cyan.300)",
-            }}
-            h=""
-            w="60"
-            marginLeft={"10"}
-            rounded={"md"}
-            //icons arent working presubambly because of linked button if we want to add, will have to do something else
-            // leftIcon={<ArrowLeftIcon />}
-            // rightIcon={<ArrowRightIcon />}
-          >
-            <Center>See a Demo</Center>
-          </LinkButton>
-        </HStack>
-      </Stack>
+            {/* Ellipse 1 */}
+            <Box
+              position="absolute"
+              bottom={0}
+              right="50%"
+              width="40%"
+              height="45%"
+              overflow="visible"
+              css={{ filter: "blur(50px)" }}
+            >
+              <Ellipse1Icon />
+            </Box>
+
+            {/* Ellipse 2 */}
+            <Box
+              position="absolute"
+              bottom={0}
+              right="40%"
+              width="40%"
+              height="75%"
+              overflow="visible"
+              css={{ filter: "blur(50px)" }}
+            >
+              <Ellipse2Icon />
+            </Box>
+
+            {/* Ellipse 3 */}
+            <Box
+              position="absolute"
+              bottom={0}
+              right="31.7%"
+              width="40%"
+              height="45%"
+              overflow="visible"
+              css={{ filter: "blur(50px)" }}
+            >
+              <Ellipse3Icon />
+            </Box>
+          </Box>
+        </Flex>
+      </Flex>
     </>
   );
 }
