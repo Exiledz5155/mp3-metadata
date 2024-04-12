@@ -54,32 +54,32 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
     }
   };
 
-  const handleUpload = async () => {
-    let fileName = file.name.toLowerCase();
+  // const handleUpload = async () => {
+  //   let fileName = file.name.toLowerCase();
 
-    const endsWithPNG = fileName.endsWith("png");
+  //   const endsWithPNG = fileName.endsWith("png");
 
-    const endsWithJPG = /\.(jpg|jpeg)$/.test(fileName);
+  //   const endsWithJPG = /\.(jpg|jpeg)$/.test(fileName);
 
-    if (endsWithPNG || endsWithJPG) {
-      fileName = file.name;
-      const mockID = 1;
-      try {
-        const response = await UploadIMG(file, uuid, mockID);
-        if (response.ok) {
-          console.log("IMG uploaded successfully");
-        } else {
-          console.error("Failed to upload IMG");
-        }
-      } catch (error) {
-        console.error("Failed to upload IMG file:", error);
-      }
-    } else {
-      console.error(
-        `Error: File ${file.name} is not an image file of type PNG or JPG.`
-      );
-    }
-  };
+  //   if (endsWithPNG || endsWithJPG) {
+  //     fileName = file.name;
+  //     const mockID = 1;
+  //     try {
+  //       const response = await UploadIMG(file, uuid, mockID);
+  //       if (response.ok) {
+  //         console.log("IMG uploaded successfully");
+  //       } else {
+  //         console.error("Failed to upload IMG");
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to upload IMG file:", error);
+  //     }
+  //   } else {
+  //     console.error(
+  //       `Error: File ${file.name} is not an image file of type PNG or JPG.`
+  //     );
+  //   }
+  // };
 
   return (
     <>
