@@ -23,7 +23,8 @@ export default function Albums() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/getJSON");
+        const uuid = "53e0d5ab-db12-4012-8153-e6373314073e";
+        const response = await fetch(`/api/getJSON?uuid=${uuid}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
