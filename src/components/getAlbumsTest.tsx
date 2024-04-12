@@ -6,8 +6,14 @@ import { SongGridCard } from "./Album-detail/SongGridCard";
 
 interface Song {
   trackNumber: number;
+  id: string;
   title: string;
   duration: string;
+  artist: string;
+  album: string;
+  year: number;
+  genre: string;
+  image: string;
 }
 
 interface Album {
