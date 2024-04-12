@@ -81,40 +81,6 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
   //   }
   // };
 
-  function HoverableImage({ src, alt }) {
-    const [isHover, setIsHover] = useState(false);
-    return (
-      <Box
-        position="relative"
-        height="100%"
-        width="100%"
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          objectFit="cover"
-          borderRadius={"5px"}
-          fit="cover"
-          boxSize="100%"
-          transition="opacity 0.3s ease-in-out"
-          style={{ opacity: isHover ? 0.3 : 1 }}
-        />
-        <Box
-          position="absolute"
-          top="50%"
-          left="50%"
-          transform="translate(-50%, -50%)"
-          style={{ opacity: isHover ? 1 : 0 }}
-          transition="opacity 0.3s ease-in-out"
-        >
-          <Icon as={IoCloudUploadOutline} w={8} h={8} color="white" />
-        </Box>
-      </Box>
-    );
-  }
-
   return (
     <>
       <Modal
@@ -142,10 +108,36 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
                   hidden
                   ref={fileInputRef}
                 />
-                <HoverableImage
-                  src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
-                  alt="Descriptive Alt Text"
-                />
+                <Box
+                  position="relative"
+                  height="100%"
+                  width="100%"
+                  cursor="pointer"
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
+                  onClick={() => fileInputRef.current?.click()}
+                  transition="background-color 0.2s ease"
+                >
+                  <Image
+                    src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
+                    alt="Album Cover"
+                    borderRadius={"5px"}
+                    fit="cover"
+                    boxSize="100%"
+                    _hover={{ opacity: "50%" }}
+                  />
+                  <Icon
+                    as={IoCloudUploadOutline}
+                    boxSize="24px"
+                    color="white"
+                    position="absolute"
+                    left="50%"
+                    top="50%"
+                    transform="translate(-50%, -50%)"
+                    visibility={isHovering ? "visible" : "hidden"}
+                    transition={"visibility 0.2s ease"}
+                  />
+                </Box>
               </GridItem>
 
               {/*TODO: Change on focus color for input */}
@@ -215,13 +207,12 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
             </Grid>
           </ModalBody>
 
-          <ModalFooter pb={0} pt={6}>
+          <ModalFooter>
             <Button
               leftIcon={<CheckIcon />}
               bgGradient="linear(to-r, linear.100, linear.200)"
               // isLoading
               // loadingText={'Submitting'}
-              w={"63.5%"}
               size="md"
               variant="solid"
               onClick={onClose}
