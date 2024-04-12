@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import type { NextApiRequest, NextApiResponse } from 'next';
+
 
 const prisma = new PrismaClient();
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req) {
     try {
         const albums = await prisma.album.findMany({
             include: {
@@ -16,7 +16,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
             session: {
                 id: album.session.id,
             },
-            songs: album.mp3Files.map((file) => ({
+            songs: album.mp3Files.map(file => ({
                 trackNumber: file.trackNumber,
                 title: file.title,
                 duration: file.duration ?? 'Unknown Duration',
@@ -27,10 +27,10 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
                 image: file.image ?? 'Default Image',
             })),
         }));
-        res.status(200).json(response);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
+        return new Response(JSON.stringify(response), { status: 200, headers: { 'Content-Type': 'application/json' }});
+    } catch (err) {
+        console.error(err);
+        return new Response(JSON.stringify({ message: 'Server error' }), { status: 500, headers: { 'Content-Type': 'application/json' }});
     }
 }
     

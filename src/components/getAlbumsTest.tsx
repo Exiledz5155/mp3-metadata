@@ -3,10 +3,22 @@
 import React, { useState, useEffect } from "react";
 import { Box, Text, VStack, Spinner } from "@chakra-ui/react";
 
+interface Song {
+  trackNumber: number;
+  title: string;
+  duration: string;
+}
+
+interface Album {
+  album: string;
+  artist: string;
+  songs: Song[];
+}
+
 export default function Albums() {
-  const [albums, setAlbums] = useState(null);
+  const [albums, setAlbums] = useState<Album[] | null>(null);
   const [isLoading, setIsLoading] = useState(true); // Start with loading true
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,9 +80,7 @@ export default function Albums() {
       overflow="hidden"
     >
       <VStack spacing="20px" align="stretch">
-        {albums}
-        {/* Once a json object gets displayed uncomment this */}
-        {/* {albums && albums.length > 0 ? (
+      {albums && albums.length > 0 ? (
           albums.map((album, index) => (
             <Box key={index} p="10px" bg="white" rounded="md">
               <Text fontWeight="bold">{album.album}</Text>
@@ -84,7 +94,7 @@ export default function Albums() {
           ))
         ) : (
           <Text>No albums found</Text>
-        )} */}
+        )}
       </VStack>
     </Box>
   );
