@@ -87,7 +87,7 @@ export default function Albums() {
             <Box>
               {album.songs.map((song, index) => (
                 <SongGridCard
-                  key={song.id} // Assuming each song has a unique ID
+                  key={index} // Assuming each song has a unique ID
                   song={song}
                   // isLast={index === album.songs.length - 1}
                 />
