@@ -78,9 +78,9 @@ export default function Albums() {
       h="100%"
       rounded="xl"
       maxHeight="calc(100vh - 86px)"
-      overflow="hidden"
+      overflow="auto"
     >
-      <VStack spacing="20px" align="stretch">
+      <VStack spacing="20px" align="stretch" overflow={"auto"}>
         {albums && albums.length > 0 ? (
           albums.map((album, index) => (
             <Box key={index} p="10px" bg="white" rounded="md">
