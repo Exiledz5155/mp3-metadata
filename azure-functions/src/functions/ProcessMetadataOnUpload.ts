@@ -102,6 +102,8 @@ async function ProcessMetadataOnUpload(
       albumArtist: tags.artist || null,
       trackNumber: tags.trackNumber ? parseInt(tags.trackNumber, 10) : null,
       image: imagePath || null, // Modify as per your logic
+      genre: tags.genre || null,
+      duration: tags.length || null,
       albumId: album.id, // Link to the Album ID
       sessionId: session.id, // Link to the placeholder Session ID
     };

@@ -104,7 +104,7 @@ export async function EditMetadataHTTP(request: HttpRequest, context: Invocation
 
         // Creating a dictionary with keys that have non-null values
         let metadata = {};
-        const keys = ['title', 'artist', 'year', 'albumTitle', 'albumArtist', 'trackNumber', 'image'];
+        const keys = ['title', 'artist', 'year', 'albumTitle', 'albumArtist', 'trackNumber', 'genre', 'duration', 'image'];
         keys.forEach(key => {
             if (mp3File[key] !== null && mp3File[key] !== undefined) {
                 metadata[key] = mp3File[key];
