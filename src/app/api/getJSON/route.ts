@@ -18,19 +18,19 @@ export async function GET(request: Request) {
     });
     const response = albums.map((album) => ({
       album: album.title,
-      artist: album.artist ?? "Unknown Artist",
+      artist: album.artist ?? "",
       session: {
         id: album.session.id,
       },
       songs: album.mp3Files.map((file) => ({
         trackNumber: file.trackNumber,
         title: file.title,
-        duration: file.duration ?? "Unknown Duration",
-        artist: file.artist ?? "Unknown Artist",
+        duration: file.duration ?? "",
+        artist: file.artist ?? "",
         album: file.albumTitle ?? album.title,
-        year: file.year ?? "Unknown Year",
-        genre: file.genre ?? "Unknown Genre",
-        image: file.image ?? "Default Image",
+        year: file.year ?? "",
+        genre: file.genre ?? "",
+        image: file.image ?? "",
       })),
     }));
     return new Response(JSON.stringify(response), {
