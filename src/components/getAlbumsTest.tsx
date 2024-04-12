@@ -80,13 +80,15 @@ export default function Albums() {
       overflow="hidden"
     >
       <VStack spacing="20px" align="stretch">
-      {albums && albums.length > 0 ? (
+        {albums && albums.length > 0 ? (
           albums.map((album, index) => (
             <Box key={index} p="10px" bg="white" rounded="md">
-              <Text fontWeight="bold">{album.album}</Text>
-              <Text>{album.artist}</Text>
+              <Text fontWeight="bold" color={"black"}>
+                {album.album}
+              </Text>
+              <Text color={"black"}>{album.artist}</Text>
               {album.songs.map((song, songIndex) => (
-                <Text key={songIndex}>
+                <Text key={songIndex} color={"black"}>
                   {song.trackNumber}. {song.title} - {song.duration}
                 </Text>
               ))}
