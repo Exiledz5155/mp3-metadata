@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Box, Text, VStack, Spinner } from "@chakra-ui/react";
+import { SongGridCard } from "./Album-detail/SongGridCard";
 
 interface Song {
   trackNumber: number;
@@ -23,7 +24,7 @@ export default function Albums() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const uuid = "53e0d5ab-db12-4012-8153-e6373314073e";
+        const uuid = "763e94d7-c93c-4aad-a8f4-f2c576843f92";
         const response = await fetch(`/api/getJSON?uuid=${uuid}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -83,15 +84,13 @@ export default function Albums() {
       <VStack spacing="20px" align="stretch" overflow={"auto"}>
         {albums && albums.length > 0 ? (
           albums.map((album, index) => (
-            <Box key={index} p="10px" bg="white" rounded="md">
-              <Text fontWeight="bold" color={"black"}>
-                {album.album}
-              </Text>
-              <Text color={"black"}>{album.artist}</Text>
-              {album.songs.map((song, songIndex) => (
-                <Text key={songIndex} color={"black"}>
-                  {song.trackNumber}. {song.title} - {song.duration}
-                </Text>
+            <Box>
+              {album.songs.map((song, index) => (
+                <SongGridCard
+                  key={song.id} // Assuming each song has a unique ID
+                  song={song}
+                  // isLast={index === album.songs.length - 1}
+                />
               ))}
             </Box>
           ))

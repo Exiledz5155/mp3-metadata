@@ -8,9 +8,9 @@ export async function GET(request: Request) {
     const url = new URL(request.url);
     const uuid = url.searchParams.get("uuid") || ""; // search for uuid param
     const albums = await prisma.album.findMany({
-      //   where: {
-      //     sessionId: uuid, // Filter to match only albums with the specified session ID
-      //   },
+      where: {
+        sessionId: uuid, // Filter to match only albums with the specified session ID
+      },
       include: {
         mp3Files: true,
         session: true,
