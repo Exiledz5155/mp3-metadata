@@ -25,7 +25,7 @@ interface FileUploadCardProps {
   onRetry: () => void; // Callback function for retry
 }
 
-export default function FileUploadCard({
+export default function UploadCard({
   fileName,
   fileSizeInBytes,
   uploadFailed,

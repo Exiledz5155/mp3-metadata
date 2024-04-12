@@ -14,7 +14,7 @@ export async function GET(request: Request) {
   // Setup for Azure Storage and SAS token generation
   const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME || "";
   const accountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY || "";
-  const containerName = "mp3container"; //what container file will be uploaded to
+  const containerName = url.searchParams.get("container") || "mp3container"; //what container file will be uploaded to
   // each uuid should get their own folder in the same container
 
   // Authentication to Azure Storage Service

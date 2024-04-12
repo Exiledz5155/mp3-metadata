@@ -18,14 +18,15 @@ import {
 import { MdOutlineFilePresent } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useUUID } from "../../../contexts/UUIDContext";
-import FileUploadCard from "./FileUploadCard";
+import FileUploadCard from "./UploadCard";
+import { UploadMP3 } from "./UploadFiles";
 
 interface UploadBoxProps {
   isOpen: boolean; // Whether the modal is open or not
   onClose: () => void; // Function to close the modal
 }
 
-export default function FileUploadBox({ isOpen, onClose }: UploadBoxProps) {
+export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
   const { uuid, generateUUID } = useUUID();
   const [files, setFiles] = useState<File[]>([]); // Initialize with an empty array
   const [uploadStatus, setUploadStatus] = useState<{
@@ -57,7 +58,7 @@ export default function FileUploadBox({ isOpen, onClose }: UploadBoxProps) {
 
     try {
       // Attempt to upload the file again
-      const response = await uploadFile(file, uuid);
+      const response = await UploadMP3(file, uuid);
       if (response.ok) {
         console.log("File re-uploaded successfully");
         setUploadStatus((prevStatus) => ({
@@ -118,7 +119,7 @@ export default function FileUploadBox({ isOpen, onClose }: UploadBoxProps) {
         }));
 
         try {
-          const response = await uploadFile(file, uuid);
+          const response = await UploadMP3(file, uuid);
           if (response.ok) {
             console.log("File uploaded successfully");
             setUploadStatus((prevStatus) => ({
@@ -321,35 +322,4 @@ export default function FileUploadBox({ isOpen, onClose }: UploadBoxProps) {
       </Modal>
     </>
   );
-}
-
-async function uploadFile(file: File, userUUID: string): Promise<Response> {
-  // create file path using userUUID and file name
-  const userFilePath = `${userUUID}/${encodeURIComponent(file.name)}`;
-  // Use fetch to call SAS API route with file path as param
-  const response = await fetch(`/api/upload?fileName=${userFilePath}`);
-
-  const { blobUrl, sasToken } = await response.json();
-  // Create full URL
-  const fullBlobUrl = `${blobUrl}?${sasToken}`;
-
-  // Set up request options
-  const requestOptions: RequestInit = {
-    method: "PUT",
-    headers: {
-      "x-ms-blob-type": "BlockBlob",
-      // Add other headers as needed
-    },
-    body: file,
-  };
-
-  // Perform the fetch request
-  const uploadResponse = await fetch(fullBlobUrl, requestOptions);
-
-  // Check if the request was successful
-  if (!uploadResponse.ok) {
-    throw new Error("Failed to upload file");
-  }
-
-  return uploadResponse;
 }
