@@ -3,10 +3,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 export async function GET(request: Request) {
   // changed from req because typescript typing
+
   try {
     const url = new URL(request.url);
     const uuid = (await url.searchParams.get("uuid")) || "default"; // search for uuid param
     const albums = await prisma.album.findMany({
+      where: {
+        sessionId: uuid  // Filter to match only albums with the specified session ID
+      },
       include: {
         mp3Files: true,
         session: true,
