@@ -13,6 +13,7 @@ import {
   Button,
   useToast,
   Flex,
+  Input,
 } from "@chakra-ui/react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { UploadIMG } from "../FileHub/FileHub-Upload/UploadFiles";
@@ -163,7 +164,7 @@ export default function ImageUploadBox({
 
   return (
     <>
-      <input
+      <Input
         type="file"
         ref={fileInputRef}
         onChange={handleFileChange}
