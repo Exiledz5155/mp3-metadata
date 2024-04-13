@@ -1,7 +1,24 @@
 import { app, InvocationContext } from "@azure/functions";
 import * as ID3 from "node-id3";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient ,Prisma } from "@prisma/client";
 import { BlobServiceClient } from "@azure/storage-blob";
+
+async function safeDbOperation(operation, retries = 3, delay = 2000) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await operation();
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError || error instanceof Prisma.PrismaClientInitializationError) {
+        console.log(`Attempt ${i + 1}: Retrying operation after error: ${error.message}`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        delay *= 2; // Exponential backoff
+      } else {
+        throw error; // Re-throw error if it's not related to Prisma's operational errors
+      }
+    }
+  }
+  throw new Error('Failed to perform database operation after retries.');
+}
 
 // Handler function to process the uploaded MP3 blob and extract metadata
 async function ProcessMetadataOnUpload(
@@ -27,19 +44,18 @@ async function ProcessMetadataOnUpload(
   const prisma = new PrismaClient();
   
   // check if there is already a session of userUUID
-  let session = await prisma.session.findUnique({
-    where: {
-      id: userUUID
-    },
-  });
+  let session = await safeDbOperation(() => prisma.session.findUnique({
+    where: { id: userUUID }
+  }));
+
   if (!session) {
     // Create a new Session if it doesn't exist
-    session = await prisma.session.create({
+    session = await safeDbOperation(() => prisma.session.create({
       data: {
         id: userUUID || "Unknown ID"
         // Add any required fields for a Session here
       },
-    });
+    }));
   }
 
   // Read MP3 Metadata of file
@@ -74,22 +90,22 @@ async function ProcessMetadataOnUpload(
     }
 
     // Handling Album
-    let album = await prisma.album.findFirst({ //may need to change this for case where users tries to make multiple albums of same name
+    let album = await safeDbOperation(() => prisma.album.findFirst({ //may need to change this for case where users tries to make multiple albums of same name
       where: {
         title: tags.album || "Unknown Album",
         // Here we ensure that the album is also linked to our session
         sessionId: session.id,
       },
-    });
+    }));
 
     if (!album) {
       // Create new Album if it doesn't exist, linked to the placeholder Session
-      album = await prisma.album.create({
+      album = await safeDbOperation (()=> prisma.album.create({
         data: {
           title: tags.album || "Unknown Album",
           sessionId: session.id, // Link to the placeholder Session ID
         },
-      });
+      }));
     }
 
     // Map ID3 tags to mp3File model
@@ -110,14 +126,14 @@ async function ProcessMetadataOnUpload(
 
     // Insert metadata into Azure SQL Database
     try {
-      const mp3File = await prisma.mp3File.upsert({
+      const mp3File = await safeDbOperation(() => prisma.mp3File.upsert({
         //if file already exists update metadata else create new 
         where: {
           filePath: path
         },
         update: mp3Data,
         create: mp3Data,
-      });
+      }));
       context.log(
         `Inserted MP3 file metadata into database: ${JSON.stringify(mp3File)}`
       );
