@@ -47,8 +47,10 @@ export async function UploadIMG(
   const userFilePath = `${userUUID}/${encodeURIComponent(songNameID)}`;
   // Use fetch to call SAS API route with file path as param
   const response = await fetch(
-    `/api/upload?fileName=${userFilePath}&container="imagecontainer"`
+    `/api/upload?fileName=${userFilePath}&container=imagecontainer`
   );
+
+  // console.log(response);
 
   const { blobUrl, sasToken } = await response.json();
   // Create full URL
@@ -66,6 +68,8 @@ export async function UploadIMG(
 
   // Perform the fetch request
   const uploadResponse = await fetch(fullBlobUrl, requestOptions);
+
+  // console.log(uploadResponse);
 
   // Check if the request was successful
   if (!uploadResponse.ok) {

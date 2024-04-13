@@ -21,6 +21,7 @@ import { useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { UploadIMG } from "../FileHub/FileHub-Upload/UploadFiles";
 import { useUUID } from "../../contexts/UUIDContext";
+import ImageUploadBox from "./ImageUploadBox";
 
 interface EditComponentProps {
   isOpen: boolean;
@@ -40,10 +41,44 @@ interface Song {
   image: string;
 }
 
+function HoverableImage({ src, alt, onOpen }) {
+  const [isHover, setIsHover] = useState(false);
+  return (
+    <Box
+      position="relative"
+      height="100%"
+      width="100%"
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      onClick={onOpen}
+      cursor="pointer"
+    >
+      <Image
+        src={src}
+        alt={alt}
+        objectFit="cover"
+        borderRadius={"5px"}
+        fit="cover"
+        boxSize="100%"
+        transition="opacity 0.3s ease-in-out"
+        style={{ opacity: isHover ? 0.3 : 1 }}
+      />
+      <Box
+        position="absolute"
+        top="50%"
+        left="50%"
+        transform="translate(-50%, -50%)"
+        style={{ opacity: isHover ? 1 : 0 }}
+        transition="opacity 0.3s ease-in-out"
+      >
+        <Icon as={IoCloudUploadOutline} w={8} h={8} color="white" />
+      </Box>
+    </Box>
+  );
+}
+
 export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
   const { uuid, generateUUID } = useUUID();
-  // Track if image is hovered or not
-  const [isHovering, setIsHovering] = useState(false);
 
   // TODO: Make this upload actually go to correct blob container
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -52,6 +87,19 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
       const file = event.target.files[0];
       console.log(file);
     }
+  };
+
+  // In your Edit component, manage the ImageUploadBox modal separately
+  const [imageUploadBoxOpen, setImageUploadBoxOpen] = useState(false);
+
+  const handleImageUploadBoxClose = () => {
+    setImageUploadBoxOpen(false);
+    // Do not call onClose here; onClose should only close the Edit modal
+  };
+
+  // When you open the ImageUploadBox from within the Edit modal
+  const handleOpenImageUploadBox = () => {
+    setImageUploadBoxOpen(true);
   };
 
   // const handleUpload = async () => {
@@ -108,36 +156,16 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
                   hidden
                   ref={fileInputRef}
                 />
-                <Box
-                  position="relative"
-                  height="100%"
-                  width="100%"
-                  cursor="pointer"
-                  onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}
-                  onClick={() => fileInputRef.current?.click()}
-                  transition="background-color 0.2s ease"
-                >
-                  <Image
-                    src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
-                    alt="Album Cover"
-                    borderRadius={"5px"}
-                    fit="cover"
-                    boxSize="100%"
-                    _hover={{ opacity: "50%" }}
-                  />
-                  <Icon
-                    as={IoCloudUploadOutline}
-                    boxSize="24px"
-                    color="white"
-                    position="absolute"
-                    left="50%"
-                    top="50%"
-                    transform="translate(-50%, -50%)"
-                    visibility={isHovering ? "visible" : "hidden"}
-                    transition={"visibility 0.2s ease"}
-                  />
-                </Box>
+                <HoverableImage
+                  src="https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
+                  alt="Descriptive Alt Text"
+                  onOpen={handleOpenImageUploadBox}
+                />
+                <ImageUploadBox
+                  song={song}
+                  isOpen={imageUploadBoxOpen}
+                  onClose={handleImageUploadBoxClose}
+                ></ImageUploadBox>
               </GridItem>
 
               {/*TODO: Change on focus color for input */}
@@ -207,12 +235,13 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
             </Grid>
           </ModalBody>
 
-          <ModalFooter>
+          <ModalFooter pb={0} pt={6}>
             <Button
               leftIcon={<CheckIcon />}
               bgGradient="linear(to-r, linear.100, linear.200)"
               // isLoading
               // loadingText={'Submitting'}
+              w={"63.5%"}
               size="md"
               variant="solid"
               onClick={onClose}

@@ -51,6 +51,7 @@ export default function UploadCard({
           <Text mb="-1" textAlign="left" noOfLines={1}>
             {fileName}
           </Text>
+          {/* MAYBE USE BADGE INSTEAD OF TEXT */}
           {uploadFailed ? ( // If upload has failed, display "Upload Failed" in red
             <Text fontSize="xs" textAlign="left" color="#FF7074">
               Upload Failed
