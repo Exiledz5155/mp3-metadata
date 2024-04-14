@@ -1,7 +1,7 @@
 export interface Album {
   album: string;
   artist: string;
-  albumArt: string;
+  albumArt: string; // Note for Aitan: Don't include this in new JSON
   year: number;
   genre: string;
   songs: Song[];

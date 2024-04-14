@@ -24,6 +24,7 @@ export async function GET(request: Request) {
       },
       songs: album.mp3Files.map((file) => ({
         trackNumber: file.trackNumber,
+        // Add id here, refer to types.ts for exact naming
         title: file.title,
         duration: file.duration ?? "",
         artist: file.artist ?? "",
