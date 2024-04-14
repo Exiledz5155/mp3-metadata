@@ -1,28 +1,10 @@
 "use client";
 
 import { HStack, VStack, Text, Image } from "@chakra-ui/react";
+import { Album, Song } from "../../types/types";
 
-interface Song {
-  id: string;
-  title: string;
-  duration: string;
-  artist: string;
-  album: string;
-  year: number;
-  genre: string;
-  image: string;
-}
-
-interface AlbumObj {
-  album: string;
-  artist: string;
-  albumArtURL: string;
-  year: number;
-  genre: string;
-  songs: Song[];
-}
-
-export function AlbumInfoSection({ album }: { album: AlbumObj }) {
+export function AlbumInfoSection({ album }: { album: Album }) {
+  // REFACTOR
   // Function to calculate total duration
   const calculateTotalDuration = (songs: Song[]) => {
     const totalSeconds = songs.reduce((acc, song) => {
@@ -44,7 +26,7 @@ export function AlbumInfoSection({ album }: { album: AlbumObj }) {
     <HStack align={"start"}>
       <Image
         maxW={{ base: "100%", sm: "200px" }}
-        src={album.albumArtURL}
+        src={album.albumArt}
         alt="Album Cover"
         mr={"20px"}
         borderRadius={"10px"}

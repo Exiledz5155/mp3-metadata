@@ -3,6 +3,7 @@ import { Card, Stack, Button, Text, useDisclosure } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import Edit from "./Edit";
 import Properties from "./Properties";
+import { Album, Song } from "../../types/types";
 
 /**
  * @param position x and y coordinates of the bottom left corner of the menu
@@ -13,18 +14,6 @@ interface ActionMenuComponentProps {
   song: Song;
   position: { x: number; y: number };
   onClose: () => void;
-}
-
-interface Song {
-  trackNumber: number;
-  id: string;
-  title: string;
-  duration: string;
-  artist: string;
-  album: string;
-  year: number;
-  genre: string;
-  image: string;
 }
 
 export default function ActionMenu({

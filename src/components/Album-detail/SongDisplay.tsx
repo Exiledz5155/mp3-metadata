@@ -10,31 +10,11 @@ import {
 } from "@chakra-ui/react";
 import { SongGridCard } from "./SongGridCard";
 import { SongGridLabel } from "./SongGridLabel";
-import { AlbumInfoSection } from "../Albums-main/AlbumInfoSection";
+import { AlbumInfoSection } from "./AlbumInfoSection";
 import React from "react";
+import { Album, Song } from "../../types/types";
 
-interface Song {
-  trackNumber: number;
-  id: string;
-  title: string;
-  duration: string;
-  artist: string;
-  album: string;
-  year: number;
-  genre: string;
-  image: string;
-}
-
-interface AlbumObj {
-  album: string;
-  artist: string;
-  albumArtURL: string;
-  year: number;
-  genre: string;
-  songs: Song[];
-}
-
-export function SongDisplay({ album }: { album: AlbumObj }) {
+export function SongDisplay({ album }: { album: Album }) {
   return (
     <Card
       p={"20px"}

@@ -19,7 +19,9 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 import { UploadIMG } from "../FileHub/FileHub-Upload/UploadFiles";
 import { useUUID } from "../../contexts/UUIDContext";
 import { CheckIcon } from "@chakra-ui/icons";
+import { Album, Song } from "../../types/types";
 
+// REFACTOR THIS
 function HoverableImage({ src, alt, onClick }) {
   const [isHover, setIsHover] = useState(false);
   return (
@@ -67,18 +69,6 @@ interface IUBComponentProps {
   isOpen: boolean;
   onClose: () => void;
   song: Song;
-}
-
-interface Song {
-  trackNumber: number;
-  id: string;
-  title: string;
-  duration: string;
-  artist: string;
-  album: string;
-  year: number;
-  genre: string;
-  image: string;
 }
 
 export default function ImageUploadBox({

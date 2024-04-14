@@ -2,7 +2,7 @@
   {
     "album": "Goodbye & Good Riddance",
     "artist": "Juice WRLD",
-    "albumArtURL": "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795",
+    "albumArt": "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795",
     "year": 2018,
     "genre": "Emo Rap",
     "songs": [
@@ -181,7 +181,7 @@
   {
     "album": "Take Care (Deluxe)",
     "artist": "Drake",
-    "albumArtURL": "https://m.media-amazon.com/images/I/71q3s6618yL.jpg",
+    "albumArt": "https://m.media-amazon.com/images/I/71q3s6618yL.jpg",
     "year": 2011,
     "genre": "Hip Hop/R&B",
     "songs": [
@@ -380,7 +380,7 @@
   {
     "album": "Hypochondriac",
     "artist": "brakence",
-    "albumArtURL": "https://wildcatchronicle.org/wp-content/uploads/2022/12/2022-12-29.png",
+    "albumArt": "https://wildcatchronicle.org/wp-content/uploads/2022/12/2022-12-29.png",
     "year": 2022,
     "genre": "Hyper Pop",
     "songs": [
@@ -521,7 +521,7 @@
     "artist": "Lil Uzi Vert",
     "genre": "Hip Hop/Rap",
     "year": 2017,
-    "albumArtURL": "https://m.media-amazon.com/images/I/81TNEeBI11L._UF1000,1000_QL80_.jpg",
+    "albumArt": "https://m.media-amazon.com/images/I/81TNEeBI11L._UF1000,1000_QL80_.jpg",
     "songs": [
       {
         "trackNumber": 1,

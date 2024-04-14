@@ -3,18 +3,7 @@
 import React, { useState } from "react";
 import { HStack, Flex, Image, Text, Box } from "@chakra-ui/react";
 import ActionMenu from "../Actions/ActionMenu";
-
-interface Song {
-  trackNumber: number;
-  id: string;
-  title: string;
-  duration: string;
-  artist: string;
-  album: string;
-  year: number;
-  genre: string;
-  image: string;
-}
+import { Album, Song } from "../../types/types";
 
 export function SongGridCard({ song }: { song: Song }) {
   // Use state to track whether the card is right clicked

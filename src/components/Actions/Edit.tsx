@@ -22,6 +22,7 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 import { UploadIMG } from "../FileHub/FileHub-Upload/UploadFiles";
 import { useUUID } from "../../contexts/UUIDContext";
 import ImageUploadBox from "./ImageUploadBox";
+import { Album, Song } from "../../types/types";
 
 interface EditComponentProps {
   isOpen: boolean;
@@ -29,18 +30,7 @@ interface EditComponentProps {
   song: Song;
 }
 
-interface Song {
-  trackNumber: number;
-  id: string;
-  title: string;
-  duration: string;
-  artist: string;
-  album: string;
-  year: number;
-  genre: string;
-  image: string;
-}
-
+// REFACTOR, THIS IS DIFFERENT FROM IMAGEUPLOADBOX
 function HoverableImage({ src, alt, onOpen }) {
   const [isHover, setIsHover] = useState(false);
   return (

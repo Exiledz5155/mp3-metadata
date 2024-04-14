@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Box, Text, VStack, Spinner } from "@chakra-ui/react";
-import { SongGridCard } from "./Album-detail/SongGridCard";
+import { SongGridCard } from "../Album-detail/SongGridCard";
 
 interface Song {
   trackNumber: number;

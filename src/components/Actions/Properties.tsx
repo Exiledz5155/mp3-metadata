@@ -12,23 +12,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
+import { Album, Song } from "../../types/types";
 
 interface PropertiesComponentProps {
   isOpen: boolean;
   onClose: () => void;
   song: Song;
-}
-
-interface Song {
-  trackNumber: number;
-  id: string;
-  title: string;
-  duration: string;
-  artist: string;
-  album: string;
-  year: number;
-  genre: string;
-  image: string;
 }
 
 export default function Properties({

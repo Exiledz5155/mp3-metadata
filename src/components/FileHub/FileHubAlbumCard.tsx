@@ -1,18 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Flex, Text, VStack } from "@chakra-ui/react";
-
-interface Song {
-  trackNumber: number;
-  id: string;
-  title: string;
-  duration: string;
-  artist: string;
-  album: string;
-  year: number;
-  genre: string;
-  image: string;
-}
+import { Album, Song } from "../../types/types";
 
 export function FileHubAlbumCard({
   song,

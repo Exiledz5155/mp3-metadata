@@ -13,29 +13,9 @@ import {
   AccordionPanel,
 } from "@chakra-ui/react";
 import { FileHubAlbumCard } from "./FileHubAlbumCard";
+import { Album, Song } from "../../types/types";
 
-interface Song {
-  trackNumber: number;
-  id: string;
-  title: string;
-  duration: string;
-  artist: string;
-  album: string;
-  year: number;
-  genre: string;
-  image: string;
-}
-
-interface AlbumObj {
-  album: string;
-  artist: string;
-  albumArtURL: string;
-  year: number;
-  genre: string;
-  songs: Song[];
-}
-
-export function FileHubAlbum({ album }: { album: AlbumObj }) {
+export function FileHubAlbum({ album }: { album: Album }) {
   // Use state to track whether the card is clicked
   const [isClicked, setIsClicked] = useState(false);
   // Function to handle the click event
@@ -93,7 +73,7 @@ export function FileHubAlbum({ album }: { album: AlbumObj }) {
           <HStack spacing="10px">
             <Center w="55px" h="55px">
               <Image
-                src={album.albumArtURL}
+                src={album.albumArt}
                 alt={"Album Image Cover"}
                 borderRadius="base"
                 boxSize="45px"
