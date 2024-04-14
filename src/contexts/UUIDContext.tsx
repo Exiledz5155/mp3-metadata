@@ -22,7 +22,13 @@ interface UUIDProviderProps {
 }
 
 const UUIDProvider: React.FC<UUIDProviderProps> = ({ children }) => {
-  const [uuid, setUUID] = useState<string>(uuidv4());
+  // Fix issues with going back to landing page creating new UUID
+  // const [uuid, setUUID] = useState<string>(uuidv4());
+
+  // hardcode for testing
+  const [uuid, setUUID] = useState<string>(
+    "6554193a-b6d8-45b7-a554-c17650403842"
+  );
 
   const generateUUID = () => {
     const newUUID = uuidv4();
@@ -36,6 +42,4 @@ const UUIDProvider: React.FC<UUIDProviderProps> = ({ children }) => {
   );
 };
 
-
 export default UUIDProvider;
-
