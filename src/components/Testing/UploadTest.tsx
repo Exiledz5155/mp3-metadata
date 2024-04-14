@@ -63,7 +63,7 @@ export default function UploadTest() {
       <CardBody>
         <Button onClick={generateUUID}>Generate new UUID</Button>
         {/* Input for file selection */}
-        <Button as="label" htmlFor="fileInput" cursor="pointer">
+        {/* <Button as="label" htmlFor="fileInput" cursor="pointer">
           Upload Files
           <input
             id="fileInput"
@@ -75,21 +75,21 @@ export default function UploadTest() {
         </Button>
         <Button onClick={handleUpload} disabled={!files}>
           Upload Selected Files
-        </Button>
+        </Button> */}
         {/* Display selected file names */}
-        {files && (
+        {/* {files && (
           <Text>
             Current Files selected:{" "}
             {Array.from(files).map((file) => (
               <Text key={file.name}>{file.name}</Text> // Added key prop
             ))}
           </Text>
-        )}
+        )} */}
       </CardBody>
       <CardFooter>
-        <Link href="/editor/view-uploads">
+        {/* <Link href="/editor/view-uploads">
           <Button>Go to view-uploads</Button>
-        </Link>
+        </Link> */}
       </CardFooter>
     </Card>
   );

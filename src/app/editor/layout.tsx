@@ -106,7 +106,7 @@ export default function RootLayout({
             Albums
           </LinkButton>
           <LinkButton
-            href="/editor/upload"
+            href="/editor/uuid"
             color="white"
             fontSize={{ base: "md", sm: "lg", md: "lg" }}
             bgClip="text"
@@ -114,7 +114,7 @@ export default function RootLayout({
             bgGradient="linear(to-r, linear.100, linear.200)"
             pl={4}
           >
-            Upload-Test
+            UUID
           </LinkButton>
         </Box>
         <Flex flex="1">

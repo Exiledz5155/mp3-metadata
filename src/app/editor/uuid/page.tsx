@@ -5,7 +5,7 @@ import FileUpload from "../../../components/Testing/FileUpload";
 import { Button, Link, chakra } from "@chakra-ui/react";
 import UploadTest from "../../../components/Testing/UploadTest";
 
-export default function Upload() {
+export default function uuid() {
   return (
     <UploadTest></UploadTest>
     // <div>
