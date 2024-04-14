@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Text, VStack, Spinner } from "@chakra-ui/react";
 import { SongGridCard } from "../Album-detail/SongGridCard";
+import { useUUID } from "../../contexts/UUIDContext";
 
 interface Song {
   trackNumber: number;
@@ -23,6 +24,7 @@ interface Album {
 }
 
 export default function Albums() {
+  const { uuid, generateUUID } = useUUID();
   const [albums, setAlbums] = useState<Album[] | null>(null);
   const [isLoading, setIsLoading] = useState(true); // Start with loading true
   const [error, setError] = useState<string | null>(null);
@@ -30,8 +32,7 @@ export default function Albums() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const uuid = "763e94d7-c93c-4aad-a8f4-f2c576843f92";
-        const response = await fetch(`/api/getJSON?uuid=${uuid}`);
+        const response = await fetch(`/api/albums?uuid=${uuid}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
