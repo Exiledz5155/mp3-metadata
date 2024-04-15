@@ -43,7 +43,11 @@ export default function AlbumPage() {
     fetchData();
   }, [albumId]);
 
-  if (!isLoaded) return <SongDisplayLoading />;
+  if (!isLoaded) {
+    return <SongDisplayLoading />;
+  }
 
-  return <SongDisplay album={albumData} />;
+  if (albumData) {
+    return <SongDisplay album={albumData} />;
+  }
 }
