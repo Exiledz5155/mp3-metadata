@@ -37,7 +37,12 @@ export async function getAlbumsHTTP(
     if (!albums || albums.length === 0) {
       return {
         status: 404, // Not Found
-        body: "Failure: No albums found with the specified uuid.",
+        body: JSON.stringify({
+          error: "Failure: No albums found with the specified uuid.",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       };
     }
 
@@ -70,7 +75,12 @@ export async function getAlbumsHTTP(
     context.log(`Database query failed: ${error.message}`);
     return {
       status: 500, // Internal Server Error
-      body: "Failure: An error occurred while querying the database.",
+      body: JSON.stringify({
+        error: "Failure: An error occurred while querying the database.",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
   } finally {
     // Disconnect from Prisma after we are done

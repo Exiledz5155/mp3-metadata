@@ -24,12 +24,28 @@ export async function GET(request: Request) {
 
     if (!azureResponse.ok) {
       // Forward the Azure Function's HTTP status to the client
-      return new Response(await azureResponse.json(), {
-        status: azureResponse.status,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const errorResponse = await azureResponse.text(); // Use text first to avoid JSON parse error
+      try {
+        const errorJson = JSON.parse(errorResponse);
+        return new Response(errorJson, {
+          status: azureResponse.status,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      } catch {
+        return new Response(
+          JSON.stringify({
+            error: "Error parsing JSON response from Azure Function.",
+          }),
+          {
+            status: azureResponse.status,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      }
     }
 
     // Send the response from the Azure Function back to the client
