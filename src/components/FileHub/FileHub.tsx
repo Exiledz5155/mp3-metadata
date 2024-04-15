@@ -53,11 +53,10 @@ export function FileHub() {
         }
         const data = await response.json();
         setAlbums(data);
+        setisLoaded(true);
       } catch (e) {
         setError("Failed to fetch albums: " + e.message);
         console.error(e);
-      } finally {
-        setisLoaded(true);
       }
     };
 
