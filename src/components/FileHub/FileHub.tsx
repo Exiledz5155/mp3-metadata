@@ -251,7 +251,6 @@ export function FileHub() {
                       <Skeleton
                         noOfLines={1}
                         maxW={200}
-                        align="left"
                         startColor="brand.200"
                         endColor="brand.400"
                         fadeDuration={1}
