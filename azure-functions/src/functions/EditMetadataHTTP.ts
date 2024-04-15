@@ -10,6 +10,11 @@ import * as nodeID3 from "node-id3";
 import axios from "axios";
 import * as path from "path";
 
+// REFACTOR INTO DownloadHTTP
+// Takes in song ids, connects to database
+// Downloads songs from blob, updates metadata with database
+// serve to user as zip
+
 async function getImageAsBuffer(imageUrl: string): Promise<Buffer> {
   const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
   return Buffer.from(response.data);
