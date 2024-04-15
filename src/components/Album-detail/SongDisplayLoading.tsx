@@ -157,7 +157,13 @@ export function SongDisplayLoading() {
                     w="50px"
                     h="50px"
                   >
-                    <Square />
+                    <Image
+                      maxW={{ base: "100%", sm: "200px" }}
+                      src={
+                        "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
+                      }
+                      alt="Album Cover"
+                    />
                   </Skeleton>
                   <Skeleton
                     textAlign={"left"}
