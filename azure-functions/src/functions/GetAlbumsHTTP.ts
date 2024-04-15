@@ -1,0 +1,84 @@
+import {
+  app,
+  InvocationContext,
+  HttpRequest,
+  HttpResponseInit,
+} from "@azure/functions";
+import { PrismaClient } from "@prisma/client";
+
+export async function getAlbumsHTTP(
+  request: HttpRequest,
+  context: InvocationContext
+): Promise<HttpResponseInit> {
+  context.log(`Http function processed request for url "${request.url}"`);
+
+  const uuid = request.query.get("uuid");
+
+  if (!uuid) {
+    // 'uuid' is not provided, return a failure response
+    return {
+      status: 400, // Bad Request status code
+      body: "Failure: uuid query parameter is required.",
+    };
+  }
+
+  const prisma = new PrismaClient();
+  try {
+    const albums = await prisma.album.findMany({
+      where: {
+        sessionId: uuid,
+      },
+      include: {
+        mp3Files: true,
+        session: true,
+      },
+    });
+
+    if (!albums || albums.length === 0) {
+      return {
+        status: 404, // Not Found
+        body: "Failure: No albums found with the specified uuid.",
+      };
+    }
+
+    const response = albums.map((album) => ({
+      album: album.title,
+      artist: album.artist ?? "",
+      session: {
+        id: album.session.id,
+      },
+      songs: album.mp3Files.map((file) => ({
+        trackNumber: file.trackNumber,
+        title: file.title,
+        duration: file.duration ?? "",
+        artist: file.artist ?? "",
+        album: file.albumTitle ?? album.title,
+        year: file.year ?? "",
+        genre: file.genre ?? "",
+        image: file.image ?? "",
+      })),
+    }));
+
+    return {
+      status: 200, // OK
+      body: JSON.stringify(response),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+  } catch (error) {
+    context.log(`Database query failed: ${error.message}`);
+    return {
+      status: 500, // Internal Server Error
+      body: "Failure: An error occurred while querying the database.",
+    };
+  } finally {
+    // Disconnect from Prisma after we are done
+    await prisma.$disconnect();
+  }
+}
+app.http("GetAlbumsHTTP", {
+  methods: ["GET", "POST"],
+  authLevel: "anonymous",
+  handler: getAlbumsHTTP,
+});
