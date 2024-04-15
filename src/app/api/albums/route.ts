@@ -1,48 +1,68 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
 export async function GET(request: Request) {
   // changed from req because typescript typing
 
+  const url = new URL(request.url);
+  const uuid = url.searchParams.get("uuid") || ""; // search for uuid param
+
+  if (!uuid) {
+    return new Response(JSON.stringify({ error: "Missing uuid parameter." }), {
+      status: 400,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
   try {
-    const url = new URL(request.url);
-    const uuid = url.searchParams.get("uuid") || ""; // search for uuid param
-    const albums = await prisma.album.findMany({
-      where: {
-        sessionId: uuid, // Filter to match only albums with the specified session ID
-      },
-      include: {
-        mp3Files: true,
-        session: true,
-      },
-    });
-    const response = albums.map((album) => ({
-      album: album.title,
-      artist: album.artist ?? "",
-      session: {
-        id: album.session.id,
-      },
-      songs: album.mp3Files.map((file) => ({
-        trackNumber: file.trackNumber,
-        // Add id here, refer to types.ts for exact naming
-        title: file.title,
-        duration: file.duration ?? "",
-        artist: file.artist ?? "",
-        album: file.albumTitle ?? album.title,
-        year: file.year ?? "",
-        genre: file.genre ?? "",
-        image: file.image ?? "",
-      })),
-    }));
-    return new Response(JSON.stringify(response), {
+    // Forward the request to the Azure Function
+    const azureResponse = await fetch(
+      `https://mp3functions.azurewebsites.net/api/GetAlbumsHTTP?uuid=${uuid}`,
+      {
+        method: "GET", // or 'POST', depending on what your Azure Function expects
+      }
+    );
+
+    if (!azureResponse.ok) {
+      // Forward the Azure Function's HTTP status to the client
+      const errorResponse = await azureResponse.text(); // Use text first to avoid JSON parse error
+      try {
+        const errorJson = JSON.parse(errorResponse);
+        return new Response(errorJson, {
+          status: azureResponse.status,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      } catch {
+        return new Response(
+          JSON.stringify({
+            error: "Error parsing JSON response from Azure Function.",
+          }),
+          {
+            status: azureResponse.status,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      }
+    }
+
+    // Send the response from the Azure Function back to the client
+    const data = await azureResponse.json();
+    return new Response(JSON.stringify(data), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-  } catch (err) {
-    console.error(err);
-    return new Response(JSON.stringify({ message: "Server error" }), {
+  } catch (error) {
+    console.error("Error calling the Azure Function:", error);
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   }
 }
