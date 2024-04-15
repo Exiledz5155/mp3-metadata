@@ -53,6 +53,7 @@ export async function getAlbumsHTTP(
         id: album.session.id,
       },
       songs: album.mp3Files.map((file) => ({
+        id: file.id,
         trackNumber: file.trackNumber,
         title: file.title,
         duration: file.duration ?? "",

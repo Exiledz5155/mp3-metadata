@@ -8,8 +8,8 @@ export interface Album {
 }
 
 export interface Song {
-  trackNumber: number;
   id: string;
+  trackNumber: number;
   title: string;
   duration: string;
   artist: string;

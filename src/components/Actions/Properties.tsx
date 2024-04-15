@@ -55,6 +55,7 @@ export default function Properties({
               <PropertyRow label="Genre" value={song.genre} />
               <PropertyRow label="Track" value={song.trackNumber.toString()} />
               <PropertyRow label="Length" value={song.duration} />
+              <PropertyRow label="dev_id" value={song.id} />
             </VStack>
           </ModalBody>
 
