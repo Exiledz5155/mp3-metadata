@@ -154,8 +154,10 @@ export function SongDisplayLoading() {
                     mr={"4"}
                     startColor="brand.200"
                     endColor="brand.400"
+                    w="50px"
+                    h="50px"
                   >
-                    <Square w="50px" h="50px" />
+                    <Square />
                   </Skeleton>
                   <Skeleton
                     textAlign={"left"}
