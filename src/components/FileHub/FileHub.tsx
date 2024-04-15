@@ -20,15 +20,49 @@ import {
   MenuOptionGroup,
   useDisclosure,
   HStack,
+  Text,
+  Skeleton,
+  AccordionButton,
+  AccordionItem,
+  Image,
+  Center,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FileUploadBox from "./FileHub-Upload/UploadBox";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import ActionMenu from "../Actions/ActionMenu";
-const albumData = require("../../../public/albums.json");
+import { useUUID } from "../../contexts/UUIDContext";
+import { Album, Song } from "../../types/types";
+
+// hardcode data
+// const albumData = require("../../../public/albums.json");
 
 export function FileHub() {
+  const { uuid, generateUUID } = useUUID();
+  const [albums, setAlbums] = useState<Album[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoaded, setisLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`/api/albums?uuid=${uuid}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setAlbums(data);
+        setisLoaded(true);
+      } catch (e) {
+        setError("Failed to fetch albums: " + e.message);
+        console.error(e);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Use state to track whether the card is right clicked
@@ -189,9 +223,53 @@ export function FileHub() {
             }}
             onContextMenu={handleRightClick}
           >
-            {albumData.map((album, index) => (
-              <FileHubAlbum key={index} album={album} />
-            ))}
+            {!isLoaded ? (
+              // "Lets you group elements without a wrapper node"
+              <React.Fragment>
+                {Array.from({ length: 10 }, (_, i) => (
+                  <Box key={i} borderRadius={"lg"} h="55px" overflow="hidden">
+                    <HStack spacing="10px">
+                      <Center w="55px" h="55px">
+                        {/* UPDATE TO KEEP CHECKING FOR FIRST IMAGE */}
+                        <Skeleton
+                          borderRadius="base"
+                          boxSize="45px"
+                          startColor="brand.200"
+                          endColor="brand.400"
+                          fadeDuration={1}
+                        >
+                          <Image
+                            src={
+                              "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
+                            }
+                            borderRadius="base"
+                            boxSize="45px"
+                          />
+                        </Skeleton>
+                      </Center>
+                      <Skeleton
+                        noOfLines={1}
+                        maxW={200}
+                        startColor="brand.200"
+                        endColor="brand.400"
+                        fadeDuration={1}
+                      >
+                        Placeholder Album Title Placeholder Album Title
+                        Placeholder Album Title Placeholder Album Title
+                        Placeholder Album Title
+                      </Skeleton>
+                    </HStack>
+                  </Box>
+                ))}
+              </React.Fragment>
+            ) : (
+              albums &&
+              albums.length > 0 &&
+              albums.map((album, index) => (
+                <FileHubAlbum key={index} album={album} />
+              ))
+            )}
+
             {/* {isRightClicked && (
               <ActionMenu
                 position={rightClickPosition}

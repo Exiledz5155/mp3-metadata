@@ -9,22 +9,22 @@ export function SongGridLabel() {
       align={"left"}
       borderRadius={"10px"}
       position={"sticky"}
-      background="brand.100"
+      bg="brand.100"
       top="0px"
       mt={5}
     >
       <Flex align={"left"} w="30%">
-        <Text fontSize={"md"} mx={"4"}>
+        <Text fontSize={"md"} mx={"4"} color={"white"}>
           #
         </Text>
-        <Text textAlign={"left"} noOfLines={1}>
+        <Text textAlign={"left"} noOfLines={1} color={"white"}>
           Title
         </Text>
       </Flex>
-      <Text textAlign={"left"} noOfLines={1} w="30%">
+      <Text textAlign={"left"} noOfLines={1} w="30%" color={"white"}>
         Artist(s)
       </Text>
-      <Text textAlign={"left"} noOfLines={1} w="30%">
+      <Text textAlign={"left"} noOfLines={1} w="30%" color={"white"}>
         Album
       </Text>
       <Text textAlign={"center"} noOfLines={1} w="10%">
@@ -36,7 +36,7 @@ export function SongGridLabel() {
           bg={"brand.300"}
           color={"white"}
         >
-          <Icon as={TimeIcon} />
+          <Icon as={TimeIcon} color={"white"} />
         </Tooltip>
       </Text>
     </HStack>

@@ -3,34 +3,51 @@
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { SongDisplay } from "../../../components/Album-detail/SongDisplay";
 import { useEffect, useState } from "react";
+import { Album, Song } from "../../../types/types";
+import { useUUID } from "../../../contexts/UUIDContext";
+import { SongDisplayLoading } from "../../../components/Album-detail/SongDisplayLoading";
 
-const AlbumPage = () => {
+export default function AlbumPage() {
+  const { uuid, generateUUID } = useUUID();
+  const [albums, setAlbums] = useState<Album[] | null>(null);
   const [albumData, setAlbumData] = useState(null);
-  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoaded, setisLoaded] = useState(false);
   const pathname = usePathname();
   const albumId = pathname.split("/").pop(); // This assumes 'albumId' is the last segment of the URL.
-  const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (!albumId) return; // Make sure albumId is not null or undefined
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`/api/albums?uuid=${uuid}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setAlbums(data);
 
-    const decodedAlbumId = decodeURIComponent(albumId);
-    fetch("/albums.json")
-      .then((res) => res.json())
-      .then((data) => {
+        if (!albumId) return;
+        const decodedAlbumId = decodeURIComponent(albumId);
+
         const album = data.find((a) => a.album === decodedAlbumId);
         setAlbumData(album);
-      })
-      .catch((error) => {
-        console.error("Failed to load album data:", error);
-        setAlbumData(null); // Handle the error state appropriately
-      });
-  }, [albumId]); // Dependency on albumId
+      } catch (e) {
+        setError("Failed to fetch albums: " + e.message);
+        setAlbumData(null);
+        console.error(e);
+      } finally {
+        setisLoaded(true);
+      }
+    };
 
-  if (!albumData) return <p>Loading...</p>;
-  if (!albumData) return <p>Album not found</p>;
+    fetchData();
+  }, [albumId]);
 
-  return <SongDisplay album={albumData} />;
-};
+  if (!isLoaded) {
+    return <SongDisplayLoading />;
+  }
 
-export default AlbumPage;
+  if (albumData) {
+    return <SongDisplay album={albumData} />;
+  }
+}

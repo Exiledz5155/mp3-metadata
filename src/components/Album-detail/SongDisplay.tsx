@@ -11,14 +11,13 @@ import {
 import { SongGridCard } from "./SongGridCard";
 import { SongGridLabel } from "./SongGridLabel";
 import { AlbumInfoSection } from "./AlbumInfoSection";
-import React from "react";
 import { Album, Song } from "../../types/types";
 
 export function SongDisplay({ album }: { album: Album }) {
   return (
     <Card
       p={"20px"}
-      bg={useColorModeValue("white", "brand.100")}
+      bg="brand.100"
       h="100%"
       rounded={"xl"}
       maxHeight="calc(100vh - 86px)"

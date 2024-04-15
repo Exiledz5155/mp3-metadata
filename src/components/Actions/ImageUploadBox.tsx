@@ -76,9 +76,7 @@ export default function ImageUploadBox({
   isOpen,
   onClose,
 }: IUBComponentProps) {
-  const [imageSrc, setImageSrc] = useState(
-    "https://lastfm.freetls.fastly.net/i/u/770x0/cb8e41ecc96f769575babd440b81e795.jpg#cb8e41ecc96f769575babd440b81e795"
-  ); // update with song.image
+  const [imageSrc, setImageSrc] = useState(song.image); // update with song.image
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const toast = useToast();
