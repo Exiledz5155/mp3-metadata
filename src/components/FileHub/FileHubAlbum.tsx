@@ -11,6 +11,7 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
+  Skeleton,
 } from "@chakra-ui/react";
 import { FileHubAlbumCard } from "./FileHubAlbumCard";
 import { Album, Song } from "../../types/types";
@@ -72,8 +73,9 @@ export function FileHubAlbum({ album }: { album: Album }) {
         >
           <HStack spacing="10px">
             <Center w="55px" h="55px">
+              {/* UPDATE TO KEEP CHECKING FOR FIRST IMAGE */}
               <Image
-                src={album.albumArt}
+                src={album.songs[0].image}
                 alt={"Album Image Cover"}
                 borderRadius="base"
                 boxSize="45px"

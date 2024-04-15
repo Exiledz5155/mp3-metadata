@@ -26,7 +26,7 @@ export function AlbumInfoSection({ album }: { album: Album }) {
     <HStack align={"start"}>
       <Image
         maxW={{ base: "100%", sm: "200px" }}
-        src={album.albumArt}
+        src={album.songs[0].image}
         alt="Album Cover"
         mr={"20px"}
         borderRadius={"10px"}
