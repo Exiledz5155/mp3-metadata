@@ -64,6 +64,8 @@ export async function getAlbumsHTTP(
       })),
     }));
 
+    console.log("processed album:", response);
+
     return {
       status: 200, // OK
       body: JSON.stringify(response),

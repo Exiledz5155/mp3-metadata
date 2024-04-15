@@ -51,7 +51,11 @@ export function FileHub() {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
+        // console.log(response);
+        // const responseText = await response.text();
+        // console.log(responseText);
         const data = await response.json();
+
         setAlbums(data);
         setisLoaded(true);
       } catch (e) {

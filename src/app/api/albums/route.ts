@@ -16,7 +16,7 @@ export async function GET(request: Request) {
   try {
     // Forward the request to the Azure Function
     const azureResponse = await fetch(
-      `https://your-function-app.azurewebsites.net/api/GetAlbumsHTTP?uuid=${uuid}`,
+      `https://mp3functions.azurewebsites.net/api/GetAlbumsHTTP?uuid=${uuid}`,
       {
         method: "GET", // or 'POST', depending on what your Azure Function expects
       }
@@ -50,7 +50,7 @@ export async function GET(request: Request) {
 
     // Send the response from the Azure Function back to the client
     const data = await azureResponse.json();
-    return new Response(data, {
+    return new Response(JSON.stringify(data), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
