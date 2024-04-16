@@ -1,26 +1,32 @@
 export async function POST(request: Request) {
-  if (!request.body) {
-    return new Response(JSON.stringify({ error: "Request body is empty" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
+  // if (!request.body) {
+  //   return new Response(JSON.stringify({ error: "Request body is empty" }), {
+  //     status: 400,
+  //     headers: { "Content-Type": "application/json" },
+  //   });
+  // }
 
   try {
+    console.log("Request body:", JSON.stringify(request.body));
+    console.log("Request body no stringify:", request.body);
+    const requestBody = await request.text();
+    console.log("Request body:", requestBody);
+
     // Forward the request to the Azure Function
     const azureResponse = await fetch(
-      `https://mp3functions.azurewebsites.net/api/GetAlbumsHTTP`,
+      `https://mp3functions.azurewebsites.net/api/UpdateMetadataHTTP?`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(request.body),
+        body: requestBody,
       }
     );
 
     if (!azureResponse.ok) {
       // Forward the Azure Function's HTTP status to the client
+      console.log("pp fail");
       const errorResponse = await azureResponse.text(); // Use text first to avoid JSON parse error
       try {
         const errorJson = JSON.parse(errorResponse);
