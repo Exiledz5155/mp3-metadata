@@ -36,7 +36,7 @@ model Album {
   sessionId String    @map("session_id")
   session   Session   @relation(fields: [sessionId], references: [id])
   mp3Files  mp3File[]
-}
+} 
 
 model mp3File {
   id          Int     @id @default(autoincrement())
