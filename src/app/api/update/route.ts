@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   try {
     // Forward the request to the Azure Function
     const azureResponse = await fetch(
-      `https://mp3functions.azurewebsites.net/api/GetAlbumsHTTP?`,
+      `https://mp3functions.azurewebsites.net/api/GetAlbumsHTTP`,
       {
         method: "POST",
         headers: {
