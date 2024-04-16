@@ -91,7 +91,7 @@ export async function getAlbumsHTTP(
   }
 }
 app.http("GetAlbumsHTTP", {
-  methods: ["GET", "POST"],
+  methods: ["GET"],
   authLevel: "anonymous",
   handler: getAlbumsHTTP,
 });
