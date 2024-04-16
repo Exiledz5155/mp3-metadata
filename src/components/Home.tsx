@@ -98,11 +98,12 @@ export function Home() {
     <>
       <Flex
         direction={{ base: "column", md: "row" }}
-        py={{ base: 20, md: 60 }}
-        bg={useColorModeValue("white", "black")}
+        align="center"
+        justify="center"
         h="100vh"
+        bg={useColorModeValue("white", "black")}
         onMouseMove={handleMouseMove}
-        position="relative"
+        p="4"
       >
         {/* Background Mouse Blur - Uses Functions written above - If one wants to change size or blurryness change(blurRadius and gradientSize*/}
         <Box
@@ -117,12 +118,13 @@ export function Home() {
           style={{ filter: `blur(${blurRadius}px)` }}
         />
         {/*Column flex  includes icon, title,  description and both button */}
-        <VStack
-          padding={8}
-          flex="1" // Take up all available space vertically
+        <Flex
+          padding={{ base: 4, md: 8 }} // Adjusted padding for better responsiveness
+          flex="1" // Adjusted flex value for responsiveness
           direction="column"
           justify="center"
           alignItems="flex-start"
+          paddingRight={{ base: 0, md: 30 }}
         >
           {/*Github Icon */}
           <Box
@@ -141,14 +143,14 @@ export function Home() {
               </Center>
             </LinkButton>
           </Box>
-
+        
           <Heading
             fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
             marginLeft={"20"}
           >
             MP3 Metadata
           </Heading>
-          <Text marginLeft={"20"}>A web-based MP3 metadata editor.</Text>
+          <Text marginLeft={"20"} marginBottom={"0.5em"}>A web-based MP3 metadata editor.</Text>
           <HStack gap={0}>
             <LinkButton
               href="/editor/albums"
@@ -164,9 +166,6 @@ export function Home() {
               w="60"
               marginLeft={"20"}
               rounded={"md"}
-              //icons arent working presubambly because of linked button if we want to add, will have to do something else
-              // leftIcon={<ArrowLeftIcon />}
-              // rightIcon={<ArrowRightIcon />}
             >
               <Center>Start Editing</Center>
             </LinkButton>
@@ -183,67 +182,65 @@ export function Home() {
               h=""
               w="60"
               marginLeft={"10"}
+              marginRight={"10"}
               rounded={"md"}
-              //icons arent working presubambly because of linked button if we want to add, will have to do something else
-              // leftIcon={<ArrowLeftIcon />}
-              // rightIcon={<ArrowRightIcon />}
             >
               <Center>See a Demo</Center>
             </LinkButton>
           </HStack>
-        </VStack>
+        </Flex>
 
         {/* Box containing all the elipses? */}
         <Flex
-          flexGrow="1" // Take up all available space vertically
+          flexGrow={1} 
           direction="column"
           justify="center"
+          align="center"
           pl={{ base: 0, md: 4 }}
+          position="relative"
         >
           {/*All of these elipses use percentages to scale with viewport. This is where one could adjust size and amount of blue of the elipses */}
-          <Box
+          {/* Ellipse 1 */}
+          
+          <Flex
             position="relative"
-            flexGrow="1"
+            
+            width="30em"
+            height="30em"
+            // overflow="visible"
+            css={{ filter: "blur(50px)" }}
+            top="32em"
+            right="6em"
           >
-            {/* Ellipse 1 */}
-            <Box
-              position="absolute"
-              bottom={0}
-              right="50%"
-              width="40%"
-              height="45%"
-              overflow="visible"
-              css={{ filter: "blur(50px)" }}
-            >
-              <Ellipse1Icon />
-            </Box>
+            <Ellipse1Icon />
+          </Flex>
 
-            {/* Ellipse 2 */}
-            <Box
-              position="absolute"
-              bottom={0}
-              right="40%"
-              width="40%"
-              height="75%"
-              overflow="visible"
-              css={{ filter: "blur(50px)" }}
-            >
-              <Ellipse2Icon />
-            </Box>
+          {/* Ellipse 2 */}
+          <Flex
+      
+            position="relative"
+            width="30em"
+            height="30em"
+            // overflow="visible"
+            css={{ filter: "blur(50px)" }}
+            top="-8em"
+            right="-0.25em"
+          >
+            <Ellipse2Icon />
+          </Flex>
 
-            {/* Ellipse 3 */}
-            <Box
-              position="absolute"
-              bottom={0}
-              right="31.7%"
-              width="40%"
-              height="45%"
-              overflow="visible"
-              css={{ filter: "blur(50px)" }}
-            >
-              <Ellipse3Icon />
-            </Box>
-          </Box>
+          {/* Ellipse 3 */}
+          <Flex
+            position="relative"
+            width="30em"
+            height="30em"
+            // overflow="visible"
+            css={{ filter: "blur(50px)" }}
+            top="-27.85em"
+            right="-7em"
+          >
+            <Ellipse3Icon />
+          </Flex>
         </Flex>
       </Flex>
     </>
