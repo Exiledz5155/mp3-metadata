@@ -1,16 +1,16 @@
 export async function POST(request: Request) {
-  // if (!request.body) {
-  //   return new Response(JSON.stringify({ error: "Request body is empty" }), {
-  //     status: 400,
-  //     headers: { "Content-Type": "application/json" },
-  //   });
-  // }
+  if (!request.body) {
+    return new Response(JSON.stringify({ error: "Request body is empty" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 
   try {
-    console.log("Request body:", JSON.stringify(request.body));
-    console.log("Request body no stringify:", request.body);
+    // console.log("Request body:", JSON.stringify(request.body));
+    // console.log("Request body no stringify:", request.body);
     const requestBody = await request.text();
-    console.log("Request body:", requestBody);
+    // console.log("Request body:", requestBody);
 
     // Forward the request to the Azure Function
     const azureResponse = await fetch(
