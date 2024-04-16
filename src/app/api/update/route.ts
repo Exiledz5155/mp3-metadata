@@ -1,10 +1,9 @@
 export async function POST(request: Request) {
   if (!request.body) {
-    return {
+    return new Response(JSON.stringify({ error: "Request body is empty" }), {
       status: 400,
-      body: JSON.stringify({ error: "Request body is empty" }),
       headers: { "Content-Type": "application/json" },
-    };
+    });
   }
 
   try {
