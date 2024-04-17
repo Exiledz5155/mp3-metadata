@@ -1,21 +1,18 @@
 // app/providers.tsx
 "use client";
 
-import {
-  Card,
-  CardBody,
-  Divider,
-  useColorModeValue,
-  Box,
-} from "@chakra-ui/react";
+import { Card, CardBody, Divider, Box } from "@chakra-ui/react";
 import { SongGridCard } from "./SongGridCard";
 import { SongGridLabel } from "./SongGridLabel";
 import { AlbumInfoSection } from "./AlbumInfoSection";
 import { Album, Song } from "../../types/types";
 import { useState } from "react";
+import ActionMenu from "../Actions/ActionMenu";
 
 export function SongDisplay({ album }: { album: Album }) {
   const [selectedSongs, setSelectedSongs] = useState<string[]>([]);
+  const [rightClickedSong, setRightClickedSong] = useState<Song | null>(null);
+  const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
 
   const handleSelectSong = (
     songId: string,
@@ -38,6 +35,22 @@ export function SongDisplay({ album }: { album: Album }) {
     } else {
       setSelectedSongs([songId]);
     }
+  };
+
+  const handleRightClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault(); // Prevents the default right click
+    const song = album.songs.find((song) => song.id === event.currentTarget.id); // Assuming you can assign IDs
+    if (!song) return; // Exit if no song is found (e.g., clicked in empty space)
+
+    if (!selectedSongs.includes(song.id)) {
+      setSelectedSongs([song.id]); // Select the song if not already selected
+    }
+    setRightClickedSong(song);
+    setRightClickPosition({ x: event.clientX, y: event.clientY });
+  };
+
+  const closeMenu = () => {
+    setRightClickedSong(null);
   };
 
   return (
@@ -90,6 +103,13 @@ export function SongDisplay({ album }: { album: Album }) {
           ))}
         </Box>
       </CardBody>
+      {rightClickedSong && (
+        <ActionMenu
+          song={rightClickedSong}
+          position={rightClickPosition}
+          onClose={closeMenu}
+        />
+      )}
     </Card>
   );
 }

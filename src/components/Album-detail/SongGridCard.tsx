@@ -12,36 +12,8 @@ interface SongGridCardProps {
 }
 
 export function SongGridCard({ song, isSelected, onClick }: SongGridCardProps) {
-  // Use state to track whether the card is right clicked
-  const [isRightClicked, setIsRightClicked] = useState(false);
-  // x,y coordinates of where the right click menu should be
-  const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
   // State to track hover effect
   const [isHovered, setIsHovered] = useState(false);
-
-  // Function to handle the right click event
-  const handleRightClick = (event) => {
-    setIsRightClicked(true);
-    event.preventDefault(); // Prevents the default right click
-    var x = event.clientX;
-    var y = event.clientY;
-    setRightClickPosition({ x, y }); // Set state to display right-click menu
-  };
-
-  // Function to handle hover effect
-  const handleHover = () => {
-    // Apply hover effect only if the card is not already selected
-    if (!isRightClicked) {
-      setIsHovered(true);
-    }
-  };
-
-  // Function to handle mouse leave
-  const handleMouseLeave = () => {
-    // Remove hover and right click effects
-    setIsRightClicked(false);
-    setIsHovered(false);
-  };
 
   return (
     <>
@@ -49,12 +21,9 @@ export function SongGridCard({ song, isSelected, onClick }: SongGridCardProps) {
       <HStack
         borderRadius={"10px"}
         transition="background-color 0.2s ease"
-        onContextMenu={handleRightClick} // Right click event handler
         bg={isSelected ? "brand.400" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
         py={"2"}
         cursor={"pointer"}
-        onMouseOver={handleHover} // Attach the hover event handler
-        onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
         onClick={onClick}
         sx={{
           userSelect: "none", // Disable text selection
@@ -111,15 +80,6 @@ export function SongGridCard({ song, isSelected, onClick }: SongGridCardProps) {
         <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
           {song.duration}
         </Text>
-
-        {/* Render right-click menu when a song card is right clicked */}
-        {isRightClicked && (
-          <ActionMenu
-            position={rightClickPosition}
-            onClose={() => setIsRightClicked(false)}
-            song={song}
-          />
-        )}
       </HStack>
     </>
   );
