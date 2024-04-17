@@ -37,14 +37,18 @@ export function SongDisplay({ album }: { album: Album }) {
     }
   };
 
-  const handleRightClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault(); // Prevents the default right click
-    const song = album.songs.find((song) => song.id === event.currentTarget.id); // Assuming you can assign IDs
-    if (!song) return; // Exit if no song is found (e.g., clicked in empty space)
+  const handleRightClick = (
+    songId: string,
+    event: React.MouseEvent<HTMLDivElement>
+  ) => {
+    event.preventDefault();
+    const song = album.songs.find((song) => song.id === songId);
+    if (!song) return;
 
-    if (!selectedSongs.includes(song.id)) {
-      setSelectedSongs([song.id]); // Select the song if not already selected
+    if (!selectedSongs.includes(songId)) {
+      setSelectedSongs([songId]);
     }
+
     setRightClickedSong(song);
     setRightClickPosition({ x: event.clientX, y: event.clientY });
   };
@@ -52,6 +56,11 @@ export function SongDisplay({ album }: { album: Album }) {
   const closeMenu = () => {
     setRightClickedSong(null);
   };
+
+  // Map selected song IDs to Song objects
+  const selectedSongObjects = selectedSongs
+    .map((id) => album.songs.find((song) => song.id === id))
+    .filter((song): song is Song => song !== undefined);
 
   return (
     <Card
@@ -95,9 +104,8 @@ export function SongDisplay({ album }: { album: Album }) {
               key={song.id}
               song={song}
               isSelected={selectedSongs.includes(song.id)}
-              onClick={(event: React.MouseEvent<HTMLDivElement>) =>
-                handleSelectSong(song.id, event)
-              }
+              onClick={handleSelectSong}
+              onRightClick={handleRightClick}
               // isLast={index === album.songs.length - 1}
             />
           ))}
@@ -105,7 +113,7 @@ export function SongDisplay({ album }: { album: Album }) {
       </CardBody>
       {rightClickedSong && (
         <ActionMenu
-          song={rightClickedSong}
+          songs={selectedSongObjects}
           position={rightClickPosition}
           onClose={closeMenu}
         />

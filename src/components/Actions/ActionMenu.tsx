@@ -11,13 +11,13 @@ import { Album, Song } from "../../types/types";
  **/
 
 interface ActionMenuComponentProps {
-  song: Song;
+  songs: Song[];
   position: { x: number; y: number };
   onClose: () => void;
 }
 
 export default function ActionMenu({
-  song,
+  songs,
   position,
   onClose,
 }: ActionMenuComponentProps) {
@@ -42,8 +42,9 @@ export default function ActionMenu({
   const [modalType, setModalType] = useState("");
   const { isOpen, onOpen } = useDisclosure();
 
-  const openModal = (type) => {
+  const openModal = (type, songs) => {
     setModalType(type);
+    setModalSongs(songs); // Assuming you have a state to keep track of songs to edit
     onOpen();
   };
 
@@ -71,7 +72,7 @@ export default function ActionMenu({
         borderRadius={borderRad}
       >
         <Button
-          onClick={() => openModal("edit")}
+          onClick={() => openModal("edit", selectedSongObjects)}
           style={{
             display: "flex",
             alignItems: "center",
@@ -241,12 +242,12 @@ export default function ActionMenu({
       <Edit
         isOpen={isOpen && modalType === "edit"}
         onClose={handleClose}
-        song={song}
+        songs={songs}
       />
       <Properties
         isOpen={isOpen && modalType === "properties"}
         onClose={handleClose}
-        song={song}
+        songs={songs}
       />
     </Card>
   );

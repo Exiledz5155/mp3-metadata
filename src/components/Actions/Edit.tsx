@@ -26,7 +26,18 @@ import { Album, Song } from "../../types/types";
 interface EditComponentProps {
   isOpen: boolean;
   onClose: () => void;
-  song: Song;
+  songs: Song[];
+}
+
+// maybe export this
+interface CommonSongProperties {
+  title: string;
+  artist: string;
+  album: string;
+  year: string;
+  genre: string;
+  albumArtist: string;
+  trackNumber: string;
 }
 
 // REFACTOR, THIS IS DIFFERENT FROM IMAGEUPLOADBOX
@@ -66,7 +77,7 @@ function HoverableImage({ src, alt, onOpen }) {
   );
 }
 
-export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
+export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
   const { uuid, generateUUID } = useUUID();
 
   // TODO: Make this upload actually go to correct blob container
@@ -91,6 +102,52 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
     setImageUploadBoxOpen(true);
   };
 
+  const commonProperties = songs.reduce<CommonSongProperties>(
+    (acc, song, index) => {
+      if (index === 0) {
+        // Initialize with the first song's properties, assuming all songs have the same type of properties
+        return {
+          title: song.title,
+          artist: song.artist,
+          album: song.album,
+          year: song.year.toString(),
+          genre: song.genre,
+          albumArtist: song.artist, // Adjust based on your actual data structure
+          trackNumber: song.trackNumber.toString(),
+        };
+      } else {
+        // Compare and set 'various' if different
+        return {
+          title: acc.title === song.title ? song.title : "Various",
+          artist: acc.artist === song.artist ? song.artist : "Various",
+          album: acc.album === song.album ? song.album : "Various",
+          year:
+            acc.year === song.year.toString()
+              ? song.year.toString()
+              : "Various",
+          genre: acc.genre === song.genre ? song.genre : "Various",
+          albumArtist:
+            acc.albumArtist === song.artist ? song.artist : "Various",
+          trackNumber:
+            acc.trackNumber === song.trackNumber.toString()
+              ? song.trackNumber.toString()
+              : "Various",
+        };
+      }
+    },
+    {
+      title: "Various",
+      artist: "Various",
+      album: "Various",
+      year: "Various",
+      genre: "Various",
+      albumArtist: "Various",
+      trackNumber: "Various",
+    }
+  );
+
+  const multipleSongsSelected = songs.length > 1;
+
   return (
     <>
       <Modal
@@ -101,7 +158,7 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
       >
         <ModalOverlay />
         <ModalContent bg={"brand.200"} pb={25} borderRadius={"xl"}>
-          <ModalHeader>Edit</ModalHeader>
+          <ModalHeader>Edit Song{multipleSongsSelected ? "s" : ""}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Grid
@@ -119,33 +176,33 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
                   ref={fileInputRef}
                 />
                 <HoverableImage
-                  src={song.image}
+                  src={songs[0].image}
                   alt="Cover Art"
                   onOpen={handleOpenImageUploadBox}
                 />
-                <ImageUploadBox
+                {/* <ImageUploadBox
                   song={song}
                   isOpen={imageUploadBoxOpen}
                   onClose={handleImageUploadBoxClose}
-                ></ImageUploadBox>
+                ></ImageUploadBox> */}
               </GridItem>
 
               {/*TODO: Change on focus color for input */}
               <GridItem rowSpan={6} colSpan={22}>
-                <FormControl>
+                <FormControl isDisabled={multipleSongsSelected}>
                   <FormLabel>Song Title</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
-                    placeholder={song.title}
+                    placeholder={commonProperties.title}
                   />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
-                <FormControl>
+                <FormControl isDisabled={multipleSongsSelected}>
                   <FormLabel>Artist(s)</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
-                    placeholder={song.artist}
+                    placeholder={commonProperties.artist}
                   />
                 </FormControl>
               </GridItem>
@@ -154,7 +211,7 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
                   <FormLabel>Year</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
-                    placeholder={song.year.toString()}
+                    placeholder={commonProperties.year}
                   />
                 </FormControl>
               </GridItem>
@@ -163,7 +220,7 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
                   <FormLabel>Album Title</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
-                    placeholder={song.album}
+                    placeholder={commonProperties.album}
                   />
                 </FormControl>
               </GridItem>
@@ -172,7 +229,7 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
                   <FormLabel>Genre</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
-                    placeholder={song.genre}
+                    placeholder={commonProperties.genre}
                   />
                 </FormControl>
               </GridItem>
@@ -181,16 +238,16 @@ export default function Edit({ song, isOpen, onClose }: EditComponentProps) {
                   <FormLabel>Album Artist(s)</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
-                    placeholder={song.artist} // NEEDS TO BE CHANGED TO ALBUM ARTIST
+                    placeholder={commonProperties.albumArtist} // NEEDS TO BE CHANGED TO ALBUM ARTIST
                   />
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
-                <FormControl>
+                <FormControl isDisabled={multipleSongsSelected}>
                   <FormLabel>Track</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
-                    placeholder={song.trackNumber.toString()}
+                    placeholder={commonProperties.trackNumber}
                   />
                 </FormControl>
               </GridItem>

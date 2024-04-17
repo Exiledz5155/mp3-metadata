@@ -8,10 +8,19 @@ import { Album, Song } from "../../types/types";
 interface SongGridCardProps {
   song: Song;
   isSelected: boolean;
-  onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
+  onClick: (songId: string, event: React.MouseEvent<HTMLDivElement>) => void;
+  onRightClick: (
+    songId: string,
+    event: React.MouseEvent<HTMLDivElement>
+  ) => void;
 }
 
-export function SongGridCard({ song, isSelected, onClick }: SongGridCardProps) {
+export function SongGridCard({
+  song,
+  isSelected,
+  onClick,
+  onRightClick,
+}: SongGridCardProps) {
   // State to track hover effect
   const [isHovered, setIsHovered] = useState(false);
 
@@ -19,12 +28,14 @@ export function SongGridCard({ song, isSelected, onClick }: SongGridCardProps) {
     <>
       {" "}
       <HStack
+        id={song.id}
         borderRadius={"10px"}
         transition="background-color 0.2s ease"
         bg={isSelected ? "brand.400" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
         py={"2"}
         cursor={"pointer"}
-        onClick={onClick}
+        onClick={(event) => onClick(song.id, event)}
+        onContextMenu={(event) => onRightClick(song.id, event)}
         sx={{
           userSelect: "none", // Disable text selection
         }}
