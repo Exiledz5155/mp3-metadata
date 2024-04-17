@@ -18,4 +18,5 @@ export interface Song {
   year: number;
   genre: string;
   image: string;
+  // add imageHash: string;
 }
