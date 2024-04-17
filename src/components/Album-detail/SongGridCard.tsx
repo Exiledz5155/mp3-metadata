@@ -5,7 +5,13 @@ import { HStack, Flex, Image, Text, Box } from "@chakra-ui/react";
 import ActionMenu from "../Actions/ActionMenu";
 import { Album, Song } from "../../types/types";
 
-export function SongGridCard({ song }: { song: Song }) {
+interface SongGridCardProps {
+  song: Song;
+  isSelected: boolean;
+  onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
+}
+
+export function SongGridCard({ song, isSelected, onClick }: SongGridCardProps) {
   // Use state to track whether the card is right clicked
   const [isRightClicked, setIsRightClicked] = useState(false);
   // x,y coordinates of where the right click menu should be
@@ -44,20 +50,12 @@ export function SongGridCard({ song }: { song: Song }) {
         borderRadius={"10px"}
         transition="background-color 0.2s ease"
         onContextMenu={handleRightClick} // Right click event handler
-        bg={
-          isRightClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"
-        } // Update the background color based on isClicked state and hover state
-        _dark={{
-          bg: isRightClicked
-            ? "brand.300"
-            : isHovered
-            ? "brand.200"
-            : "transparent",
-        }}
+        bg={isSelected ? "brand.400" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
         py={"2"}
         cursor={"pointer"}
         onMouseOver={handleHover} // Attach the hover event handler
         onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
+        onClick={onClick}
       >
         {/* TODO: FIX MISALIGNMENT WHEN TRACK NUMBER IS DOUBLE DIGIT */}
         <Flex align={"center"} w="30%">
