@@ -15,6 +15,7 @@ import {
   ModalOverlay,
   Image,
   Box,
+  Center,
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { useState } from "react";
@@ -22,6 +23,7 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 import { useUUID } from "../../contexts/UUIDContext";
 import ImageUploadBox from "./ImageUploadBox";
 import { Album, Song } from "../../types/types";
+import { MdOutlineQueueMusic } from "react-icons/md";
 
 interface EditComponentProps {
   isOpen: boolean;
@@ -38,11 +40,14 @@ interface CommonSongProperties {
   genre: string;
   albumArtist: string;
   trackNumber: string;
+  image: string;
 }
 
 // REFACTOR, THIS IS DIFFERENT FROM IMAGEUPLOADBOX
 function HoverableImage({ src, alt, onOpen }) {
   const [isHover, setIsHover] = useState(false);
+  const showPlaceholder = !src || src === "Various";
+
   return (
     <Box
       position="relative"
@@ -52,17 +57,32 @@ function HoverableImage({ src, alt, onOpen }) {
       onMouseLeave={() => setIsHover(false)}
       onClick={onOpen}
       cursor="pointer"
+      backgroundColor={showPlaceholder ? "gray.200" : "transparent"}
+      borderRadius={"5px"}
     >
-      <Image
-        src={src}
-        alt={alt}
-        objectFit="cover"
-        borderRadius={"5px"}
-        fit="cover"
-        boxSize="100%"
-        transition="opacity 0.3s ease-in-out"
-        style={{ opacity: isHover ? 0.3 : 1 }}
-      />
+      {!showPlaceholder ? (
+        <Image
+          src={src}
+          alt={alt}
+          objectFit="cover"
+          borderRadius={"5px"}
+          fit="cover"
+          boxSize="100%"
+          transition="opacity 0.3s ease-in-out"
+          style={{ opacity: isHover ? 0.3 : 1 }}
+        />
+      ) : (
+        <Center height="100%" bg={"brand.200"}>
+          <Icon
+            as={MdOutlineQueueMusic}
+            w={20}
+            h={20}
+            color="brand.400"
+            bg={"brand.200"}
+            borderRadius={"5px"}
+          />
+        </Center>
+      )}
       <Box
         position="absolute"
         top="50%"
@@ -70,6 +90,7 @@ function HoverableImage({ src, alt, onOpen }) {
         transform="translate(-50%, -50%)"
         style={{ opacity: isHover ? 1 : 0 }}
         transition="opacity 0.3s ease-in-out"
+        borderRadius={"5px"}
       >
         <Icon as={IoCloudUploadOutline} w={8} h={8} color="white" />
       </Box>
@@ -114,6 +135,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
           genre: song.genre,
           albumArtist: song.artist, // Adjust based on your actual data structure
           trackNumber: song.trackNumber.toString(),
+          image: song.image,
         };
       } else {
         // Compare and set 'various' if different
@@ -132,6 +154,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
             acc.trackNumber === song.trackNumber.toString()
               ? song.trackNumber.toString()
               : "Various",
+          image: acc.image === song.image ? song.image : "Various",
         };
       }
     },
@@ -143,6 +166,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
       genre: "Various",
       albumArtist: "Various",
       trackNumber: "Various",
+      image: "Various",
     }
   );
 
@@ -176,7 +200,11 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   ref={fileInputRef}
                 />
                 <HoverableImage
-                  src={songs[0].image}
+                  src={
+                    commonProperties.image !== "Various"
+                      ? commonProperties.image
+                      : undefined
+                  }
                   alt="Cover Art"
                   onOpen={handleOpenImageUploadBox}
                 />

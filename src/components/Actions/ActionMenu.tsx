@@ -41,8 +41,9 @@ export default function ActionMenu({
 
   const [modalType, setModalType] = useState("");
   const { isOpen, onOpen } = useDisclosure();
+  const [modalSongs, setModalSongs] = useState<Song[]>([]);
 
-  const openModal = (type, songs) => {
+  const openModal = (type: string) => {
     setModalType(type);
     setModalSongs(songs); // Assuming you have a state to keep track of songs to edit
     onOpen();
@@ -72,7 +73,7 @@ export default function ActionMenu({
         borderRadius={borderRad}
       >
         <Button
-          onClick={() => openModal("edit", selectedSongObjects)}
+          onClick={() => openModal("edit")}
           style={{
             display: "flex",
             alignItems: "center",
@@ -117,7 +118,7 @@ export default function ActionMenu({
           <Text fontSize={sizeOfFont}>Edit</Text>
         </Button>
         <Button
-          onClick={() => openModal("properties")}
+          // onClick={() => openModal("properties")}
           style={{
             display: "flex",
             alignItems: "center",
@@ -242,13 +243,13 @@ export default function ActionMenu({
       <Edit
         isOpen={isOpen && modalType === "edit"}
         onClose={handleClose}
-        songs={songs}
+        songs={modalSongs}
       />
-      <Properties
+      {/* <Properties
         isOpen={isOpen && modalType === "properties"}
         onClose={handleClose}
         songs={songs}
-      />
+      /> */}
     </Card>
   );
 }
