@@ -56,6 +56,9 @@ export function SongGridCard({ song, isSelected, onClick }: SongGridCardProps) {
         onMouseOver={handleHover} // Attach the hover event handler
         onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
         onClick={onClick}
+        sx={{
+          userSelect: "none", // Disable text selection
+        }}
       >
         {/* TODO: FIX MISALIGNMENT WHEN TRACK NUMBER IS DOUBLE DIGIT */}
         <Flex align={"center"} w="30%">
