@@ -28,22 +28,6 @@ export default function ActionMenu({
   const borderRad = "5px";
   const sizeOfFont = "md";
 
-  const [modalType, setModalType] = useState("");
-  const { isOpen, onOpen, onClose: closeDisclosure } = useDisclosure();
-  const [modalSongs, setModalSongs] = useState<Song[]>([]);
-
-  const openModal = (
-    type: string,
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.stopPropagation();
-    event.preventDefault();
-    onClose(); // Close the action menu
-    if (type === "edit") {
-      onEditClick();
-    }
-  };
-
   const handleClose = () => {
     onClose();
   };
@@ -82,7 +66,10 @@ export default function ActionMenu({
       >
         <Button
           onClick={(event) => {
-            openModal("edit", event);
+            event.stopPropagation();
+            event.preventDefault();
+            onClose();
+            onEditClick();
           }}
           style={{
             display: "flex",
@@ -250,12 +237,6 @@ export default function ActionMenu({
           <Text fontSize={sizeOfFont}>Remove</Text>
         </Button>
       </Stack>
-      <Edit isOpen={isOpen && modalType === "edit"} songs={modalSongs} />
-      {/* <Properties
-        isOpen={isOpen && modalType === "properties"}
-        onClose={handleClose}
-        songs={songs}
-      /> */}
     </Card>
   );
 }
