@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 
     if (!azureResponse.ok) {
       // Forward the Azure Function's HTTP status to the client
-      console.log("pp fail");
+      console.log("api fail");
       const errorResponse = await azureResponse.text(); // Use text first to avoid JSON parse error
       try {
         const errorJson = JSON.parse(errorResponse);

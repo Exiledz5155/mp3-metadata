@@ -48,13 +48,13 @@ interface CommonSongProperties {
 }
 
 interface MetadataProps {
-  title: string;
-  artist: string;
-  album: string;
-  year: number;
-  genre: string;
+  albumTitle: string;
   albumArtist: string;
   trackNumber: number;
+  title: string;
+  artist: string;
+  year: number;
+  genre: string;
 }
 
 // REFACTOR, THIS IS DIFFERENT FROM IMAGEUPLOADBOX
@@ -223,7 +223,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
     const metadata = {} as Partial<MetadataProps>;
     if (title) metadata.title = title;
     if (artist) metadata.artist = artist;
-    if (album) metadata.album = album;
+    if (album) metadata.albumTitle = album;
     if (year) metadata.year = parseInt(year, 10);
     if (genre) metadata.genre = genre;
     if (albumArtist) metadata.albumArtist = albumArtist;
@@ -234,6 +234,8 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
       ids: songs.map((song) => song.id),
       metadata,
     };
+
+    console.log(body);
 
     // Expand this error handling
     try {
