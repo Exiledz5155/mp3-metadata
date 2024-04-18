@@ -13,15 +13,12 @@ import {
 import Link from "next/link";
 import { Album, Song } from "../../types/types";
 
+// Remove this and add to func header instead
 interface AlbumDisplayItemProps {
   album: Album;
-  onMetadataEdited: () => void;
 }
 
-export function AlbumDisplayItem({
-  album,
-  onMetadataEdited,
-}: AlbumDisplayItemProps) {
+export function AlbumDisplayItem({ album }: AlbumDisplayItemProps) {
   const albumImage = album.songs[0].image;
 
   return (

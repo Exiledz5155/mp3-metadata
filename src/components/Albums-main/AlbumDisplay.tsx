@@ -111,11 +111,7 @@ export function AlbumDisplay() {
             albums &&
             albums.length > 0 &&
             albums.map((album, index) => (
-              <AlbumDisplayItem
-                key={index}
-                album={album}
-                onMetadataEdited={fetchAlbums}
-              />
+              <AlbumDisplayItem key={index} album={album} />
             ))
           )}
         </SimpleGrid>
