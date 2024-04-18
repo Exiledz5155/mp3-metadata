@@ -1,6 +1,6 @@
 import { Card, Stack, Button, Text, useDisclosure } from "@chakra-ui/react";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Edit from "./Edit";
 import Properties from "./Properties";
 import { Album, Song } from "../../types/types";
@@ -11,46 +11,42 @@ import { Album, Song } from "../../types/types";
  **/
 
 interface ActionMenuComponentProps {
-  song: Song;
+  songs: Song[];
   position: { x: number; y: number };
   onClose: () => void;
+  onEditClick: () => void;
+  onPropertiesClick: () => void;
 }
 
 export default function ActionMenu({
-  song,
+  songs,
   position,
   onClose,
+  onEditClick,
+  onPropertiesClick,
 }: ActionMenuComponentProps) {
   // Creates a reference to the Card component
   const cardRef = useRef<HTMLDivElement>(null);
-  // Function that dynamically calculates and sets the top position of the Card component
-  // based on the cursor position and the height of the Card itself.
-  // useEffect(() => {
-  //   if (cardRef.current) {
-  //     // Check if cardRef.current is not null
-  //     const cardHeight = cardRef.current.clientHeight;
-  //     // Calculate menu height and set the top position
-  //     const topPosition = position.y - cardHeight;
-  //     cardRef.current.style.top = `${topPosition}px`;
-  //   }
-  // }, [position, onClose]);
-
-  // variables to set styles so I don't have to change them in 50 places
   const borderRad = "5px";
   const sizeOfFont = "md";
 
-  const [modalType, setModalType] = useState("");
-  const { isOpen, onOpen } = useDisclosure();
-
-  const openModal = (type) => {
-    setModalType(type);
-    onOpen();
-  };
-
   const handleClose = () => {
-    setModalType("");
     onClose();
   };
+
+  // Close when clicked outside the menu
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (cardRef.current && !cardRef.current.contains(event.target)) {
+        handleClose();
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [handleClose]);
 
   return (
     <Card
@@ -71,7 +67,12 @@ export default function ActionMenu({
         borderRadius={borderRad}
       >
         <Button
-          onClick={() => openModal("edit")}
+          onClick={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            onClose();
+            onEditClick();
+          }}
           style={{
             display: "flex",
             alignItems: "center",
@@ -116,7 +117,12 @@ export default function ActionMenu({
           <Text fontSize={sizeOfFont}>Edit</Text>
         </Button>
         <Button
-          onClick={() => openModal("properties")}
+          onClick={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            onClose();
+            onPropertiesClick();
+          }}
           style={{
             display: "flex",
             alignItems: "center",
@@ -238,16 +244,6 @@ export default function ActionMenu({
           <Text fontSize={sizeOfFont}>Remove</Text>
         </Button>
       </Stack>
-      <Edit
-        isOpen={isOpen && modalType === "edit"}
-        onClose={handleClose}
-        song={song}
-      />
-      <Properties
-        isOpen={isOpen && modalType === "properties"}
-        onClose={handleClose}
-        song={song}
-      />
     </Card>
   );
 }
