@@ -8,11 +8,21 @@ import { AlbumInfoSection } from "./AlbumInfoSection";
 import { Album, Song } from "../../types/types";
 import { useState } from "react";
 import ActionMenu from "../Actions/ActionMenu";
+import Edit from "../Actions/Edit";
 
 export function SongDisplay({ album }: { album: Album }) {
   const [selectedSongs, setSelectedSongs] = useState<string[]>([]);
   const [rightClickedSong, setRightClickedSong] = useState<Song | null>(null);
   const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  };
 
   const handleSelectSong = (
     songId: string,
@@ -116,8 +126,16 @@ export function SongDisplay({ album }: { album: Album }) {
           songs={selectedSongObjects}
           position={rightClickPosition}
           onClose={closeMenu}
+          onEditClick={openEditModal}
         />
       )}
+      {/* I have no idea why this works do not delete it.
+      All hail Claude */}
+      <Edit
+        isOpen={isEditModalOpen}
+        onClose={closeEditModal}
+        songs={selectedSongObjects}
+      />
     </Card>
   );
 }

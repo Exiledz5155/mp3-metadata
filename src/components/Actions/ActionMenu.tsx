@@ -14,12 +14,14 @@ interface ActionMenuComponentProps {
   songs: Song[];
   position: { x: number; y: number };
   onClose: () => void;
+  onEditClick: () => void;
 }
 
 export default function ActionMenu({
   songs,
   position,
   onClose,
+  onEditClick,
 }: ActionMenuComponentProps) {
   // Creates a reference to the Card component
   const cardRef = useRef<HTMLDivElement>(null);
@@ -30,30 +32,32 @@ export default function ActionMenu({
   const { isOpen, onOpen, onClose: closeDisclosure } = useDisclosure();
   const [modalSongs, setModalSongs] = useState<Song[]>([]);
 
-  const openModal = (type: string) => {
-    setModalType(type);
-    setModalSongs(songs); // Assuming you have a state to keep track of songs to edit
-    onOpen();
+  const openModal = (
+    type: string,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.stopPropagation();
+    event.preventDefault();
+    onClose(); // Close the action menu
+    if (type === "edit") {
+      onEditClick();
+    }
   };
 
   const handleClose = () => {
-    setModalType("");
     onClose();
-    closeDisclosure();
   };
 
   // Close when clicked outside the menu
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
+    function handleClickOutside(event) {
+      if (cardRef.current && !cardRef.current.contains(event.target)) {
         handleClose();
       }
-    };
+    }
 
-    // Attach the listener to the document
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      // Clean up the listener
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [handleClose]);
@@ -77,7 +81,9 @@ export default function ActionMenu({
         borderRadius={borderRad}
       >
         <Button
-          onClick={() => openModal("edit")}
+          onClick={(event) => {
+            openModal("edit", event);
+          }}
           style={{
             display: "flex",
             alignItems: "center",
@@ -244,11 +250,7 @@ export default function ActionMenu({
           <Text fontSize={sizeOfFont}>Remove</Text>
         </Button>
       </Stack>
-      <Edit
-        isOpen={isOpen && modalType === "edit"}
-        onClose={handleClose}
-        songs={modalSongs}
-      />
+      <Edit isOpen={isOpen && modalType === "edit"} songs={modalSongs} />
       {/* <Properties
         isOpen={isOpen && modalType === "properties"}
         onClose={handleClose}
