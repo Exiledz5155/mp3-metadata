@@ -136,6 +136,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
     setImageUploadBoxOpen(true);
   };
 
+  // export this or something
   const commonProperties = songs.reduce<CommonSongProperties>(
     (acc, song, index) => {
       if (index === 0) {
