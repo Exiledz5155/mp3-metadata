@@ -16,6 +16,7 @@ import {
   Image,
   Box,
   Center,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { useState } from "react";
@@ -24,6 +25,7 @@ import { useUUID } from "../../contexts/UUIDContext";
 import ImageUploadBox from "./ImageUploadBox";
 import { Album, Song } from "../../types/types";
 import { MdOutlineQueueMusic } from "react-icons/md";
+import axios from "axios";
 
 interface EditComponentProps {
   isOpen: boolean;
@@ -41,6 +43,16 @@ interface CommonSongProperties {
   albumArtist: string;
   trackNumber: string;
   image: string;
+}
+
+interface MetadataProps {
+  title: string;
+  artist: string;
+  album: string;
+  year: number;
+  genre: string;
+  albumArtist: string;
+  trackNumber: number;
 }
 
 // REFACTOR, THIS IS DIFFERENT FROM IMAGEUPLOADBOX
@@ -172,6 +184,75 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
 
   const multipleSongsSelected = songs.length > 1;
 
+  const toast = useToast();
+  const [title, setTitle] = useState("");
+  const [artist, setArtist] = useState("");
+  const [album, setAlbum] = useState("");
+  const [year, setYear] = useState("");
+  const [genre, setGenre] = useState("");
+  const [albumArtist, setAlbumArtist] = useState("");
+  const [trackNumber, setTrackNumber] = useState("");
+
+  const handleSave = async () => {
+    if (year && isNaN(Number(year))) {
+      toast({
+        title: "Validation Error",
+        description: "Year must be a number.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (trackNumber && isNaN(Number(trackNumber))) {
+      toast({
+        title: "Validation Error",
+        description: "Track number must be a number.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    const metadata = {} as Partial<MetadataProps>;
+    if (title) metadata.title = title;
+    if (artist) metadata.artist = artist;
+    if (album) metadata.album = album;
+    if (year) metadata.year = parseInt(year, 10);
+    if (genre) metadata.genre = genre;
+    if (albumArtist) metadata.albumArtist = albumArtist;
+    if (trackNumber) metadata.trackNumber = parseInt(trackNumber, 10);
+
+    const body = {
+      uuid: uuid, // Replace with actual session UUID
+      ids: songs.map((song) => song.id),
+      metadata,
+    };
+
+    // Expand this error handling
+    try {
+      const response = await axios.post("/api/update", body);
+      toast({
+        title: "Success",
+        description: "Metadata updated successfully!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+      // onClose(); // Close the modal after success
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update metadata: " + error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <>
       <Modal
@@ -222,6 +303,8 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   <Input
                     focusBorderColor="linear.200"
                     placeholder={commonProperties.title}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                   />
                 </FormControl>
               </GridItem>
@@ -231,6 +314,8 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   <Input
                     focusBorderColor="linear.200"
                     placeholder={commonProperties.artist}
+                    value={artist}
+                    onChange={(e) => setArtist(e.target.value)}
                   />
                 </FormControl>
               </GridItem>
@@ -240,6 +325,8 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   <Input
                     focusBorderColor="linear.200"
                     placeholder={commonProperties.year}
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
                   />
                 </FormControl>
               </GridItem>
@@ -249,6 +336,8 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   <Input
                     focusBorderColor="linear.200"
                     placeholder={commonProperties.album}
+                    value={album}
+                    onChange={(e) => setAlbum(e.target.value)}
                   />
                 </FormControl>
               </GridItem>
@@ -258,6 +347,8 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   <Input
                     focusBorderColor="linear.200"
                     placeholder={commonProperties.genre}
+                    value={genre}
+                    onChange={(e) => setGenre(e.target.value)}
                   />
                 </FormControl>
               </GridItem>
@@ -267,6 +358,8 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   <Input
                     focusBorderColor="linear.200"
                     placeholder={commonProperties.albumArtist} // NEEDS TO BE CHANGED TO ALBUM ARTIST
+                    // value={albumArtist} onChange={(e) => setAlbumArtist(e.target.value)}
+                    // REACTIVATE THIS ONCE NEW TYPES ARE IN
                   />
                 </FormControl>
               </GridItem>
@@ -276,6 +369,8 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   <Input
                     focusBorderColor="linear.200"
                     placeholder={commonProperties.trackNumber}
+                    value={trackNumber}
+                    onChange={(e) => setTrackNumber(e.target.value)}
                   />
                 </FormControl>
               </GridItem>
@@ -291,10 +386,11 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
               w={"63.5%"}
               size="md"
               variant="solid"
-              onClick={onClose}
+              onClick={handleSave}
             >
               Save
             </Button>
+            {/* <Button variant="ghost" onClick={onClose}>Cancel</Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>

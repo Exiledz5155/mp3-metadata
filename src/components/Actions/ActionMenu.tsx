@@ -1,6 +1,6 @@
 import { Card, Stack, Button, Text, useDisclosure } from "@chakra-ui/react";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Edit from "./Edit";
 import Properties from "./Properties";
 import { Album, Song } from "../../types/types";
@@ -23,24 +23,11 @@ export default function ActionMenu({
 }: ActionMenuComponentProps) {
   // Creates a reference to the Card component
   const cardRef = useRef<HTMLDivElement>(null);
-  // Function that dynamically calculates and sets the top position of the Card component
-  // based on the cursor position and the height of the Card itself.
-  // useEffect(() => {
-  //   if (cardRef.current) {
-  //     // Check if cardRef.current is not null
-  //     const cardHeight = cardRef.current.clientHeight;
-  //     // Calculate menu height and set the top position
-  //     const topPosition = position.y - cardHeight;
-  //     cardRef.current.style.top = `${topPosition}px`;
-  //   }
-  // }, [position, onClose]);
-
-  // variables to set styles so I don't have to change them in 50 places
   const borderRad = "5px";
   const sizeOfFont = "md";
 
   const [modalType, setModalType] = useState("");
-  const { isOpen, onOpen } = useDisclosure();
+  const { isOpen, onOpen, onClose: closeDisclosure } = useDisclosure();
   const [modalSongs, setModalSongs] = useState<Song[]>([]);
 
   const openModal = (type: string) => {
@@ -52,7 +39,24 @@ export default function ActionMenu({
   const handleClose = () => {
     setModalType("");
     onClose();
+    closeDisclosure();
   };
+
+  // Close when clicked outside the menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
+        handleClose();
+      }
+    };
+
+    // Attach the listener to the document
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Clean up the listener
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [handleClose]);
 
   return (
     <Card

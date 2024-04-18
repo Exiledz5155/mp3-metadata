@@ -21,9 +21,6 @@ export function SongGridCard({
   onClick,
   onRightClick,
 }: SongGridCardProps) {
-  // State to track hover effect
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <>
       {" "}
@@ -31,7 +28,8 @@ export function SongGridCard({
         id={song.id}
         borderRadius={"10px"}
         transition="background-color 0.2s ease"
-        bg={isSelected ? "brand.400" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
+        bg={isSelected ? "brand.400" : "transparent"}
+        _hover={{ bg: isSelected ? "brand.400" : "brand.300" }}
         py={"2"}
         cursor={"pointer"}
         onClick={(event) => onClick(song.id, event)}
