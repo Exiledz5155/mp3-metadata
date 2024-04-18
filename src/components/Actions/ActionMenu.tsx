@@ -15,6 +15,7 @@ interface ActionMenuComponentProps {
   position: { x: number; y: number };
   onClose: () => void;
   onEditClick: () => void;
+  onPropertiesClick: () => void;
 }
 
 export default function ActionMenu({
@@ -22,6 +23,7 @@ export default function ActionMenu({
   position,
   onClose,
   onEditClick,
+  onPropertiesClick,
 }: ActionMenuComponentProps) {
   // Creates a reference to the Card component
   const cardRef = useRef<HTMLDivElement>(null);
@@ -115,7 +117,12 @@ export default function ActionMenu({
           <Text fontSize={sizeOfFont}>Edit</Text>
         </Button>
         <Button
-          // onClick={() => openModal("properties")}
+          onClick={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            onClose();
+            onPropertiesClick();
+          }}
           style={{
             display: "flex",
             alignItems: "center",
