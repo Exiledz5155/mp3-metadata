@@ -27,6 +27,7 @@ import ImageUploadBox from "./ImageUploadBox";
 import { Album, Song } from "../../types/types";
 import { MdOutlineQueueMusic } from "react-icons/md";
 import axios from "axios";
+import { useFetch } from "../../contexts/FetchContext";
 
 interface EditComponentProps {
   isOpen: boolean;
@@ -112,6 +113,7 @@ function HoverableImage({ src, alt, onOpen }) {
 }
 
 export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
+  const { refetchData } = useFetch();
   const { uuid, generateUUID } = useUUID();
 
   // TODO: Make this upload actually go to correct blob container
@@ -243,7 +245,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
         duration: 5000,
         isClosable: true,
       });
-      // onClose(); // Close the modal after success
+      refetchData(); // Call back function to reload album data across the app
     } catch (error) {
       toast({
         title: "Error",

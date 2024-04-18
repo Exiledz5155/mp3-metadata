@@ -34,34 +34,33 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 import ActionMenu from "../Actions/ActionMenu";
 import { useUUID } from "../../contexts/UUIDContext";
 import { Album, Song } from "../../types/types";
+import { useFetch } from "../../contexts/FetchContext";
 
 // hardcode data
 // const albumData = require("../../../public/albums.json");
 
 export function FileHub() {
   const { uuid, generateUUID } = useUUID();
+  const { fetchAlbums, refetchData } = useFetch();
   const [albums, setAlbums] = useState<Album[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [isLoaded, setisLoaded] = useState(false);
-
-  const fetchAlbums = async () => {
-    try {
-      const response = await fetch(`/api/albums?uuid=${uuid}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setAlbums(data);
-      setisLoaded(true);
-    } catch (e) {
-      setError("Failed to fetch albums: " + e.message);
-      console.error(e);
-    }
-  };
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    fetchAlbums();
-  }, []);
+    const fetchAlbumsWrapper = async () => {
+      try {
+        const albums = await fetchAlbums(uuid);
+        setAlbums(albums);
+        setIsLoaded(true);
+      } catch (error) {
+        setError("Failed to fetch albums: " + error.message);
+        console.error(error);
+        setIsLoaded(true);
+      }
+    };
+
+    fetchAlbumsWrapper();
+  }, [fetchAlbums, uuid, refetchData]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 

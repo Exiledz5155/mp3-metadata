@@ -13,7 +13,15 @@ import {
 import Link from "next/link";
 import { Album, Song } from "../../types/types";
 
-export function AlbumDisplayItem({ album }: { album: Album }) {
+interface AlbumDisplayItemProps {
+  album: Album;
+  onMetadataEdited: () => void;
+}
+
+export function AlbumDisplayItem({
+  album,
+  onMetadataEdited,
+}: AlbumDisplayItemProps) {
   const albumImage = album.songs[0].image;
 
   return (
