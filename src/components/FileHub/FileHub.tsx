@@ -44,27 +44,23 @@ export function FileHub() {
   const [error, setError] = useState<string | null>(null);
   const [isLoaded, setisLoaded] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/albums?uuid=${uuid}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        // console.log(response);
-        // const responseText = await response.text();
-        // console.log(responseText);
-        const data = await response.json();
-
-        setAlbums(data);
-        setisLoaded(true);
-      } catch (e) {
-        setError("Failed to fetch albums: " + e.message);
-        console.error(e);
+  const fetchAlbums = async () => {
+    try {
+      const response = await fetch(`/api/albums?uuid=${uuid}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
+      const data = await response.json();
+      setAlbums(data);
+      setisLoaded(true);
+    } catch (e) {
+      setError("Failed to fetch albums: " + e.message);
+      console.error(e);
+    }
+  };
 
-    fetchData();
+  useEffect(() => {
+    fetchAlbums();
   }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
