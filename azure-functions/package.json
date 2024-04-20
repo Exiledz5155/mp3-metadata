@@ -16,9 +16,11 @@
     "@azure/storage-blob": "^12.17.0",
     "@prisma/client": "^5.12.1",
     "axios": "^1.6.8",
+    "jszip": "^3.10.1",
     "node-id3": "^0.2.6"
   },
   "devDependencies": {
+    "@types/jszip": "^3.4.1",
     "@types/node": "^18.x",
     "prisma": "^5.12.1",
     "rimraf": "^5.0.0",
