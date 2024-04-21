@@ -1,68 +1,55 @@
 export async function GET(request: Request) {
-  // changed from req because typescript typing
-
   const url = new URL(request.url);
-  const uuid = url.searchParams.get("uuid") || ""; // search for uuid param
+  const uuid = url.searchParams.get("uuid") || "";
+  const ids = url.searchParams.get("ids") || "";
 
-  if (!uuid) {
-    return new Response(JSON.stringify({ error: "Missing uuid parameter." }), {
+  if (!uuid || !ids) {
+    return new Response("Missing parameters.", {
       status: 400,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "text/plain" },
     });
   }
 
   try {
     // Forward the request to the Azure Function
     const azureResponse = await fetch(
-      `https://mp3functions.azurewebsites.net/api/GetAlbumsHTTP?uuid=${uuid}`,
+      `https://mp3functions.azurewebsites.net/api/DownloadHTTP?uuid=${uuid}&ids=${ids}`,
       {
-        method: "GET", // or 'POST', depending on what your Azure Function expects
+        method: "GET",
       }
     );
 
     if (!azureResponse.ok) {
       // Forward the Azure Function's HTTP status to the client
-      const errorResponse = await azureResponse.text(); // Use text first to avoid JSON parse error
-      try {
-        const errorJson = JSON.parse(errorResponse);
-        return new Response(errorJson, {
-          status: azureResponse.status,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      } catch {
-        return new Response(
-          JSON.stringify({
-            error: "Error parsing JSON response from Azure Function.",
-          }),
-          {
-            status: azureResponse.status,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-      }
+      return new Response(await azureResponse.text(), {
+        status: azureResponse.status,
+        headers: {
+          "Content-Type":
+            azureResponse.headers.get("Content-Type") || "text/plain",
+        },
+      });
     }
 
+    // Get the response body as a ReadableStream
+    const body = azureResponse.body;
+
+    // Set the appropriate headers for the response
+    const headers = new Headers();
+    const azureHeaders = Object.fromEntries(azureResponse.headers.entries());
+    Object.entries(azureHeaders).forEach(([key, value]) => {
+      headers.append(key, value);
+    });
+
     // Send the response from the Azure Function back to the client
-    const data = await azureResponse.json();
-    return new Response(JSON.stringify(data), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
+    return new Response(body, {
+      status: azureResponse.status,
+      headers: headers,
     });
   } catch (error) {
     console.error("Error calling the Azure Function:", error);
-    return new Response(JSON.stringify({ error: "Internal server error" }), {
+    return new Response("Internal server error", {
       status: 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "text/plain" },
     });
   }
 }
