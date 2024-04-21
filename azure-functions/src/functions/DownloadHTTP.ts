@@ -26,15 +26,22 @@ async function getImageAsBuffer(imageUrl: string): Promise<Buffer> {
   return Buffer.from(response.data);
 }
 
-async function updateMP3Metadata(filePath: string, metadata: any): Promise<Buffer> {
-  const blobServiceClient = BlobServiceClient.fromConnectionString(process.env["AzureWebJobsStorage"]);
+async function updateMP3Metadata(
+  filePath: string,
+  metadata: any
+): Promise<Buffer> {
+  const blobServiceClient = BlobServiceClient.fromConnectionString(
+    process.env["AzureWebJobsStorage"]!
+  );
 
   // Split the filePath to remove the container name
-  const pathSegments = filePath.split('/');
+  const pathSegments = filePath.split("/");
   const containerName = pathSegments[0]; // The first part is the container name
-  const blobPath = pathSegments.slice(1).join('/'); // Join the rest to form the blob path
+  const blobPath = pathSegments.slice(1).join("/"); // Join the rest to form the blob path
 
-  const blockBlobClient = blobServiceClient.getContainerClient(containerName).getBlockBlobClient(blobPath);
+  const blockBlobClient = blobServiceClient
+    .getContainerClient(containerName)
+    .getBlockBlobClient(blobPath);
 
   if (metadata.image) {
     const imageBuffer = await getImageAsBuffer(metadata.image);
@@ -48,7 +55,9 @@ async function updateMP3Metadata(filePath: string, metadata: any): Promise<Buffe
 
   try {
     const downloadResponse = await blockBlobClient.download(0);
-    const originalMp3Buffer = await streamToBuffer(downloadResponse.readableStreamBody!);
+    const originalMp3Buffer = await streamToBuffer(
+      downloadResponse.readableStreamBody!
+    );
     const success = nodeID3.update(metadata, originalMp3Buffer);
     if (!success) {
       throw new Error("Failed to update ID3 tags.");
@@ -60,7 +69,10 @@ async function updateMP3Metadata(filePath: string, metadata: any): Promise<Buffe
   }
 }
 
-async function DownloadHTTP(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
+async function DownloadHTTP(
+  request: HttpRequest,
+  context: InvocationContext
+): Promise<HttpResponseInit> {
   const uuid = request.query.get("uuid");
   const ids = request.query.get("ids");
 
@@ -71,7 +83,11 @@ async function DownloadHTTP(request: HttpRequest, context: InvocationContext): P
     };
   }
 
-  const fileIds = request.query.get("ids").split(",").map(id => parseInt(id, 10)).filter(id => !isNaN(id));
+  const fileIds = request.query
+    .get("ids")
+    .split(",")
+    .map((id) => parseInt(id, 10))
+    .filter((id) => !isNaN(id));
   const zip = new JSZip();
   const prisma = new PrismaClient();
 
@@ -93,14 +109,17 @@ async function DownloadHTTP(request: HttpRequest, context: InvocationContext): P
         artist: file.artist,
         albumTitle: file.albumTitle,
         year: file.year,
-        image: file.image, 
+        image: file.image,
         albumArtist: file.albumArtist,
         trackNumber: file.trackNumber,
         genre: file.genre,
         duration: file.duration,
-      
       };
-      context.log(`Updating metadata: ${JSON.stringify(metadata, null, 2)} for file ${file.id}`);
+      context.log(
+        `Updating metadata: ${JSON.stringify(metadata, null, 2)} for file ${
+          file.id
+        }`
+      );
       const buffer = await updateMP3Metadata(file.filePath, metadata);
       zip.file(path.basename(file.filePath), buffer);
     }
