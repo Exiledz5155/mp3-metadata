@@ -20,7 +20,6 @@ export function SongDisplay({ album }: { album: Album }) {
   const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
 
   // Action Menu handling
 
@@ -79,60 +78,44 @@ export function SongDisplay({ album }: { album: Album }) {
     setRightClickPosition({ x: event.clientX, y: event.clientY });
   };
 
+  const toast = useToast();
+
   const handleDownload = async () => {
-    const toast = useToast();
     const songIds = selectedSongObjects.map((song) => song.id);
     const downloadUrl = `/api/download?uuid=${uuid}&ids=${songIds.join(",")}`;
 
     try {
-      setIsDownloading(true);
-      toast({
-        title: "Download Started",
-        description: "Please wait while your songs are being downloaded.",
-        status: "info",
-        duration: 3000,
-        isClosable: true,
+      const downloadPromise = fetch(downloadUrl).then(async (response) => {
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "songs.zip");
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        } else {
+          throw new Error("Download failed.");
+        }
       });
 
-      const response = await fetch(downloadUrl);
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", "songs.zip");
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-        toast({
+      toast.promise(downloadPromise, {
+        loading: {
+          title: "Download in Progress",
+          description: "Please wait while your songs are being downloaded.",
+        },
+        success: {
           title: "Download Completed",
           description: "Your songs have been downloaded successfully.",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-      } else {
-        console.error("Download failed.");
-        toast({
+        },
+        error: {
           title: "Download Failed",
           description: "An error occurred while downloading your songs.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      }
+        },
+      });
     } catch (error) {
       console.error("Error during download:", error);
-      toast({
-        title: "Download Failed",
-        description: "An error occurred while downloading your songs.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    } finally {
-      setIsDownloading(false);
     }
   };
 
@@ -181,16 +164,6 @@ export function SongDisplay({ album }: { album: Album }) {
           },
         }}
       >
-        {isDownloading && (
-          <Spinner
-            position="fixed"
-            top="50%"
-            left="50%"
-            transform="translate(-50%, -50%)"
-            size="xl"
-            color="brand.200"
-          />
-        )}
         <Box>
           {album.songs.map((song, index) => (
             <SongGridCard
