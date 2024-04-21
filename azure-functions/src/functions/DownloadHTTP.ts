@@ -9,7 +9,7 @@ import { PrismaClient } from "@prisma/client";
 import * as nodeID3 from "node-id3";
 import axios from "axios";
 import * as path from "path";
-import * as JSZip from "jszip";
+const JSZip = require("jszip");
 
 // Helper function to convert a stream to a buffer
 function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer> {
