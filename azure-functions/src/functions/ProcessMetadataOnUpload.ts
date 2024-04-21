@@ -25,7 +25,7 @@ async function ProcessMetadataOnUpload(
   blob: Buffer,
   context: InvocationContext
 ): Promise<void> {
-  // Ensure triggerMetadata is not undefined
+  // Ensure triggerMetadata is not undefined.
   if (!context.triggerMetadata) {
     context.log('triggerMetadata is undefined.');
     return;
