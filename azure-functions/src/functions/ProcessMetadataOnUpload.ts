@@ -2,6 +2,7 @@ import { app, InvocationContext } from "@azure/functions";
 import * as ID3 from "node-id3";
 import { PrismaClient ,Prisma } from "@prisma/client";
 import { BlobServiceClient } from "@azure/storage-blob";
+import musicMetadata from 'music-metadata'
 
 async function safeDbOperation(operation, retries = 3, delay = 2000) {
   for (let i = 0; i < retries; i++) {
@@ -59,6 +60,9 @@ async function ProcessMetadataOnUpload(
   }
 
   // Read MP3 Metadata of file
+  const metadata = await musicMetadata.parseBuffer(blob);
+  const durationInSeconds = metadata.format.duration;
+  const durationString = durationInSeconds.toString();
   const tags = ID3.read(blob);
 
   if (tags) {
@@ -119,7 +123,7 @@ async function ProcessMetadataOnUpload(
       trackNumber: tags.trackNumber ? parseInt(tags.trackNumber, 10) : null,
       image: imagePath || null, // Modify as per your logic
       genre: tags.genre || null,
-      duration: tags.length || null,
+      duration: durationString || null,
       albumId: album.id, // Link to the Album ID
       sessionId: session.id, // Link to the placeholder Session ID
     };
