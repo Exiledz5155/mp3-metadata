@@ -83,11 +83,13 @@ async function DownloadHTTP(
     };
   }
 
-  const fileIds = request.query
-    .get("ids")
-    .split(",")
-    .map((id) => parseInt(id, 10))
-    .filter((id) => !isNaN(id));
+  const fileIds = ids
+    ? ids
+        .split(",")
+        .map((id) => parseInt(id, 10))
+        .filter((id) => !isNaN(id))
+    : [];
+
   const zip = new JSZip();
   const prisma = new PrismaClient();
 
