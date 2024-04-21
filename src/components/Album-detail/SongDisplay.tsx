@@ -10,13 +10,17 @@ import { useState } from "react";
 import ActionMenu from "../Actions/ActionMenu";
 import Edit from "../Actions/Edit";
 import Properties from "../Actions/Properties";
+import { useUUID } from "../../contexts/UUIDContext";
+import { useToast, Spinner } from "@chakra-ui/react";
 
 export function SongDisplay({ album }: { album: Album }) {
+  const { uuid } = useUUID();
   const [selectedSongs, setSelectedSongs] = useState<string[]>([]);
   const [rightClickedSong, setRightClickedSong] = useState<Song | null>(null);
   const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   // Action Menu handling
 
@@ -75,6 +79,63 @@ export function SongDisplay({ album }: { album: Album }) {
     setRightClickPosition({ x: event.clientX, y: event.clientY });
   };
 
+  const handleDownload = async () => {
+    const toast = useToast();
+    const songIds = selectedSongObjects.map((song) => song.id);
+    const downloadUrl = `/api/download?uuid=${uuid}&ids=${songIds.join(",")}`;
+
+    try {
+      setIsDownloading(true);
+      toast({
+        title: "Download Started",
+        description: "Please wait while your songs are being downloaded.",
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+      });
+
+      const response = await fetch(downloadUrl);
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "songs.zip");
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        toast({
+          title: "Download Completed",
+          description: "Your songs have been downloaded successfully.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        console.error("Download failed.");
+        toast({
+          title: "Download Failed",
+          description: "An error occurred while downloading your songs.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      console.error("Error during download:", error);
+      toast({
+        title: "Download Failed",
+        description: "An error occurred while downloading your songs.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   const closeMenu = () => {
     setRightClickedSong(null);
   };
@@ -120,6 +181,16 @@ export function SongDisplay({ album }: { album: Album }) {
           },
         }}
       >
+        {isDownloading && (
+          <Spinner
+            position="fixed"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)"
+            size="xl"
+            color="brand.200"
+          />
+        )}
         <Box>
           {album.songs.map((song, index) => (
             <SongGridCard
@@ -140,6 +211,7 @@ export function SongDisplay({ album }: { album: Album }) {
           onClose={closeMenu}
           onEditClick={openEditModal}
           onPropertiesClick={openPropertiesModal}
+          onDownloadClick={handleDownload}
         />
       )}
       {/* I have no idea why this works do not delete it.
