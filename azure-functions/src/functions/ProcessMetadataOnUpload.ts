@@ -20,7 +20,7 @@ async function safeDbOperation(operation, retries = 3, delay = 2000) {
   throw new Error('Failed to perform database operation after retries.');
 }
 
-// Handler function to process the uploaded MP3 blob and extract metadata
+// Handler function to process the uploaded MP3 blob and extract metadata.
 async function ProcessMetadataOnUpload(
   blob: Buffer,
   context: InvocationContext
