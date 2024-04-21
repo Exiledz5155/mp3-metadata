@@ -1,41 +1,55 @@
-//NOTE
-//this api is not currently being used. logic has been moved to azure-functions/EditMetadataHTTP
-
-
-import { BlobServiceClient, StorageSharedKeyCredential, generateBlobSASQueryParameters, ContainerSASPermissions, } from "@azure/storage-blob";
-
-
 export async function GET(request: Request) {
-  // Extract fileName and userUUID from the query parameters
   const url = new URL(request.url);
-  const blobName = url.searchParams.get("fileName") || "test3.mp3";
-  const userUUID = url.searchParams.get("userUUID");
-  // Azure Storage setup
-  const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME || "";
-  const accountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY || "";
-  const containerName = "mp3container"; // Container where files are stored
+  const uuid = url.searchParams.get("uuid") || "";
+  const ids = url.searchParams.get("ids") || "";
 
+  if (!uuid || !ids) {
+    return new Response("Missing parameters.", {
+      status: 400,
+      headers: { "Content-Type": "text/plain" },
+    });
+  }
 
-  // Authenticate with Azure Storage
-  const sharedKeyCredential = new StorageSharedKeyCredential(accountName, accountKey);
-  const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_STORAGE_CONNECTION_STRING || "");
-  const containerClient = blobServiceClient.getContainerClient(containerName);
+  try {
+    // Forward the request to the Azure Function
+    const azureResponse = await fetch(
+      `https://mp3functions.azurewebsites.net/api/DownloadHTTP?uuid=${uuid}&ids=${ids}`,
+      {
+        method: "GET",
+      }
+    );
 
-  // Specify the blob to download
-  const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    if (!azureResponse.ok) {
+      // Forward the Azure Function's HTTP status to the client
+      return new Response(await azureResponse.text(), {
+        status: azureResponse.status,
+        headers: {
+          "Content-Type":
+            azureResponse.headers.get("Content-Type") || "text/plain",
+        },
+      });
+    }
 
-  // Generate a SAS token for downloading
-  const sasToken = generateBlobSASQueryParameters({
-    containerName,
-    blobName,
-    permissions: ContainerSASPermissions.parse("racwd"), // "r" means read permission
-    startsOn: new Date(new Date().valueOf() - 5 * 60 * 1000),
-    expiresOn: new Date(new Date().valueOf() + 3600 * 1000), // 1 hour expiration
-  }, sharedKeyCredential).toString();
+    // Get the response body as a ReadableStream
+    const body = azureResponse.body;
 
-  // Construct the download URL with the SAS token
-  // temp removal
+    // Set the appropriate headers for the response
+    const headers = new Headers();
+    const azureHeaders = Object.fromEntries(azureResponse.headers.entries());
+    Object.entries(azureHeaders).forEach(([key, value]) => {
+      headers.append(key, value);
+    });
 
-  // Return the download URL
-  return Response.json({ blobUrl : blockBlobClient.url, sasToken });
+    // Send the response from the Azure Function back to the client
+    return new Response(body, {
+      status: azureResponse.status,
+      headers: headers,
+    });
+  } catch (error) {
+    console.error("Error calling the Azure Function:", error);
+    return new Response("Internal server error", {
+      status: 500,
+      headers: { "Content-Type": "text/plain" },
+    });
+  }
 }
