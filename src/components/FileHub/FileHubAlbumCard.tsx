@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Flex, Text, VStack } from "@chakra-ui/react";
 import { Album, Song } from "../../types/types";
+import { convertTime } from "../../util/duration";
 
 export function FileHubAlbumCard({
   song,
@@ -63,7 +64,7 @@ export function FileHubAlbumCard({
       </VStack>
       <Flex alignItems={"center"} pr={"15px"} maxWidth={"40%"}>
         <Text fontFamily={"mono"} fontSize={"15px"}>
-          {song.duration}
+          {convertTime(song.duration)}
         </Text>
       </Flex>
     </Flex>
