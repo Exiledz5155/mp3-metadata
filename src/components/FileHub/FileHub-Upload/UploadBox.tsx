@@ -63,6 +63,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
       const response = await UploadMP3(file, uuid);
       if (response.ok) {
         console.log("File re-uploaded successfully");
+        refetchData();
         setUploadStatus((prevStatus) => ({
           ...prevStatus,
           [fileName]: {
@@ -71,7 +72,6 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
             isComplete: true,
           },
         }));
-        refetchData();
       } else {
         console.error("Failed to re-upload file");
         setUploadStatus((prevStatus) => ({
@@ -125,6 +125,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
           const response = await UploadMP3(file, uuid);
           if (response.ok) {
             console.log("File uploaded successfully");
+            refetchData();
             setUploadStatus((prevStatus) => ({
               ...prevStatus,
               [fileName]: {
@@ -133,7 +134,6 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
                 isComplete: true,
               },
             }));
-            refetchData();
           } else {
             console.error("Failed to upload file");
             setUploadStatus((prevStatus) => ({
