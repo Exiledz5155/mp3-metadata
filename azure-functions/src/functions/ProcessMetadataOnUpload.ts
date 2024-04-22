@@ -71,8 +71,9 @@ async function ProcessMetadataOnUpload(
   // Read MP3 Metadata of file
   const metadata = await musicMetadata.parseBuffer(blob);
   const durationInSeconds = metadata.format.duration;
-  const roundedDuration = Math.round(durationInSeconds);
-  const durationString = roundedDuration?.toString() ?? "0";
+  const roundedDuration =
+    durationInSeconds !== undefined ? Math.round(durationInSeconds) : 0;
+  const durationString = roundedDuration.toString();
   const tags = ID3.read(blob);
 
   if (tags) {
