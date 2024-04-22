@@ -20,6 +20,7 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 import { useUUID } from "../../../contexts/UUIDContext";
 import FileUploadCard from "./UploadCard";
 import { UploadMP3 } from "./UploadFiles";
+import { useFetch } from "../../../contexts/FetchContext";
 
 interface UploadBoxProps {
   isOpen: boolean; // Whether the modal is open or not
@@ -27,6 +28,7 @@ interface UploadBoxProps {
 }
 
 export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
+  const { refetchData } = useFetch();
   const { uuid, generateUUID } = useUUID();
   const [files, setFiles] = useState<File[]>([]); // Initialize with an empty array
   const [uploadStatus, setUploadStatus] = useState<{
@@ -61,6 +63,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
       const response = await UploadMP3(file, uuid);
       if (response.ok) {
         console.log("File re-uploaded successfully");
+        refetchData();
         setUploadStatus((prevStatus) => ({
           ...prevStatus,
           [fileName]: {
@@ -122,6 +125,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
           const response = await UploadMP3(file, uuid);
           if (response.ok) {
             console.log("File uploaded successfully");
+            refetchData();
             setUploadStatus((prevStatus) => ({
               ...prevStatus,
               [fileName]: {

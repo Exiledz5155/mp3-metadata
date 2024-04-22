@@ -1,23 +1,29 @@
 import { app, InvocationContext } from "@azure/functions";
 import * as ID3 from "node-id3";
-import { PrismaClient ,Prisma } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import { BlobServiceClient } from "@azure/storage-blob";
+import musicMetadata from "music-metadata";
 
 async function safeDbOperation(operation, retries = 3, delay = 2000) {
   for (let i = 0; i < retries; i++) {
     try {
       return await operation();
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError || error instanceof Prisma.PrismaClientInitializationError) {
-        console.log(`Attempt ${i + 1}: Retrying operation after error: ${error.message}`);
-        await new Promise(resolve => setTimeout(resolve, delay));
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError ||
+        error instanceof Prisma.PrismaClientInitializationError
+      ) {
+        console.log(
+          `Attempt ${i + 1}: Retrying operation after error: ${error.message}`
+        );
+        await new Promise((resolve) => setTimeout(resolve, delay));
         delay *= 2; // Exponential backoff
       } else {
         throw error; // Re-throw error if it's not related to Prisma's operational errors
       }
     }
   }
-  throw new Error('Failed to perform database operation after retries.');
+  throw new Error("Failed to perform database operation after retries.");
 }
 
 // Handler function to process the uploaded MP3 blob and extract metadata.
@@ -27,14 +33,14 @@ async function ProcessMetadataOnUpload(
 ): Promise<void> {
   // Ensure triggerMetadata is not undefined.
   if (!context.triggerMetadata) {
-    context.log('triggerMetadata is undefined.');
+    context.log("triggerMetadata is undefined.");
     return;
   }
   //get userUUID and fileName from file path
   const userUUID = context.triggerMetadata.userUUID as string;
   const fileName = context.triggerMetadata.name as string;
   // reconstruct filePath
-  const path = "mp3container/" + userUUID + "/" + fileName
+  const path = "mp3container/" + userUUID + "/" + fileName;
 
   context.log(
     `Storage blob function processed blob with size ${blob.length} bytes`
@@ -42,46 +48,63 @@ async function ProcessMetadataOnUpload(
 
   // Initialize Prisma
   const prisma = new PrismaClient();
-  
+
   // check if there is already a session of userUUID
-  let session = await safeDbOperation(() => prisma.session.findUnique({
-    where: { id: userUUID }
-  }));
+  let session = await safeDbOperation(() =>
+    prisma.session.findUnique({
+      where: { id: userUUID },
+    })
+  );
 
   if (!session) {
     // Create a new Session if it doesn't exist
-    session = await safeDbOperation(() => prisma.session.create({
-      data: {
-        id: userUUID || "Unknown ID"
-        // Add any required fields for a Session here
-      },
-    }));
+    session = await safeDbOperation(() =>
+      prisma.session.create({
+        data: {
+          id: userUUID || "Unknown ID",
+          // Add any required fields for a Session here
+        },
+      })
+    );
   }
 
   // Read MP3 Metadata of file
+  const metadata = await musicMetadata.parseBuffer(blob);
+  const durationInSeconds = metadata.format.duration;
+  const roundedDuration =
+    durationInSeconds !== undefined ? Math.round(durationInSeconds) : 0;
+  const durationString = roundedDuration.toString();
   const tags = ID3.read(blob);
 
   if (tags) {
-
     //Initialize Azure Blob Service Client
     const AZURE_STORAGE_CONNECTION_STRING = process.env["AzureWebJobsStorage"];
     if (!AZURE_STORAGE_CONNECTION_STRING) {
-      context.log('AzureWebJobsStorage environment variable is not defined.');
+      context.log("AzureWebJobsStorage environment variable is not defined.");
       return;
     }
-    const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
-    const containerName = 'imagecontainer'; // Use the same container as MP3 files
+    const blobServiceClient = BlobServiceClient.fromConnectionString(
+      AZURE_STORAGE_CONNECTION_STRING
+    );
+    const containerName = "imagecontainer"; // Use the same container as MP3 files
     const containerClient = blobServiceClient.getContainerClient(containerName);
 
     let imagePath: string | null = null;
 
-    if (tags.image && typeof tags.image !== 'string' && 'imageBuffer' in tags.image) {
+    if (
+      tags.image &&
+      typeof tags.image !== "string" &&
+      "imageBuffer" in tags.image
+    ) {
       // Store the image in a 'images/' directory within the same container
       const imageFileName = `${fileName.replace(/\.[^/.]+$/, "")}-cover.jpg`; // Change file extension to .jpg
       const blobName = `${userUUID}/${imageFileName}`; // Include the userUUID to keep user data separate
       const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-      await blockBlobClient.upload(tags.image.imageBuffer, tags.image.imageBuffer.length);
+      await blockBlobClient.upload(
+        tags.image.imageBuffer,
+        tags.image.imageBuffer.length
+      );
 
       imagePath = blockBlobClient.url; // This is the URL to the uploaded image
     } else {
@@ -90,22 +113,27 @@ async function ProcessMetadataOnUpload(
     }
 
     // Handling Album
-    let album = await safeDbOperation(() => prisma.album.findFirst({ //may need to change this for case where users tries to make multiple albums of same name
-      where: {
-        title: tags.album || "Unknown Album",
-        // Here we ensure that the album is also linked to our session
-        sessionId: session.id,
-      },
-    }));
+    let album = await safeDbOperation(() =>
+      prisma.album.findFirst({
+        //may need to change this for case where users tries to make multiple albums of same name
+        where: {
+          title: tags.album || "Unknown Album",
+          // Here we ensure that the album is also linked to our session
+          sessionId: session.id,
+        },
+      })
+    );
 
     if (!album) {
       // Create new Album if it doesn't exist, linked to the placeholder Session
-      album = await safeDbOperation (()=> prisma.album.create({
-        data: {
-          title: tags.album || "Unknown Album",
-          sessionId: session.id, // Link to the placeholder Session ID
-        },
-      }));
+      album = await safeDbOperation(() =>
+        prisma.album.create({
+          data: {
+            title: tags.album || "Unknown Album",
+            sessionId: session.id, // Link to the placeholder Session ID
+          },
+        })
+      );
     }
 
     // Map ID3 tags to mp3File model
@@ -119,21 +147,23 @@ async function ProcessMetadataOnUpload(
       trackNumber: tags.trackNumber ? parseInt(tags.trackNumber, 10) : null,
       image: imagePath || null, // Modify as per your logic
       genre: tags.genre || null,
-      duration: tags.length || null,
+      duration: durationString || null,
       albumId: album.id, // Link to the Album ID
       sessionId: session.id, // Link to the placeholder Session ID
     };
 
     // Insert metadata into Azure SQL Database
     try {
-      const mp3File = await safeDbOperation(() => prisma.mp3File.upsert({
-        //if file already exists update metadata else create new 
-        where: {
-          filePath: path
-        },
-        update: mp3Data,
-        create: mp3Data,
-      }));
+      const mp3File = await safeDbOperation(() =>
+        prisma.mp3File.upsert({
+          //if file already exists update metadata else create new
+          where: {
+            filePath: path,
+          },
+          update: mp3Data,
+          create: mp3Data,
+        })
+      );
       context.log(
         `Inserted MP3 file metadata into database: ${JSON.stringify(mp3File)}`
       );
