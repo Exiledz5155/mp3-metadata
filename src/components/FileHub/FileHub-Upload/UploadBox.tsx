@@ -28,6 +28,7 @@ interface UploadBoxProps {
 }
 
 export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
+  const { refetchData } = useFetch();
   const { uuid, generateUUID } = useUUID();
   const [files, setFiles] = useState<File[]>([]); // Initialize with an empty array
   const [uploadStatus, setUploadStatus] = useState<{
