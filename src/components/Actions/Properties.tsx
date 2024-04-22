@@ -48,7 +48,7 @@ export default function Properties({
           year: song.year.toString(),
           genre: song.genre,
           albumArtist: song.artist, // Adjust based on your actual data structure
-          trackNumber: song.trackNumber.toString(),
+          trackNumber: song.trackNumber?.toString() || "",
           id: song.id.toString(),
           duration: song.duration.toString(),
         };

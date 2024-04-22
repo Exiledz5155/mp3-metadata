@@ -150,7 +150,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
           year: song.year.toString() || "",
           genre: song.genre,
           albumArtist: song.artist, // Adjust based on your actual data structure
-          trackNumber: song.trackNumber.toString() || "",
+          trackNumber: song.trackNumber?.toString() || "",
           image: song.image,
         };
       } else {
