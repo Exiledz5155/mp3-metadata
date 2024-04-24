@@ -85,7 +85,7 @@ export function SongGridCard({
           {song.artist}
         </Text>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          {song.album}
+          {song.albumTitle}
         </Text>
         <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
           {convertTime(song.duration)}

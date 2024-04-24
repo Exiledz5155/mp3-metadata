@@ -20,3 +20,15 @@ export interface Song {
   image: string;
   // add imageHash: string;
 }
+
+export interface CommonSongProperties {
+  id: string;
+  trackNumber: string;
+  title: string;
+  duration: string;
+  artist: string;
+  albumTitle: string;
+  albumArtist: string;
+  year: string;
+  genre: string;
+}

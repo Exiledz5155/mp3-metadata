@@ -3,9 +3,12 @@
 import { HStack, VStack, Text, Image } from "@chakra-ui/react";
 import { Album, Song } from "../../types/types";
 import { calculateTotalDuration } from "../../util/duration";
+import { calculateCommonProperties } from "../../util/commonprops";
 
 export function AlbumInfoSection({ album }: { album: Album }) {
   const totalDuration = calculateTotalDuration(album.songs);
+
+  const commonProperties = calculateCommonProperties(album.songs);
 
   return (
     <HStack align={"start"}>
@@ -18,13 +21,14 @@ export function AlbumInfoSection({ album }: { album: Album }) {
       />
       <VStack align={"start"} w={"100%"}>
         <Text fontSize={"4xl"} as="b" noOfLines={1}>
-          {album.album}
+          {commonProperties.albumTitle}
+          {/* {album.album} */}
         </Text>
         <Text fontSize={"xl"} as="b" noOfLines={1}>
-          {album.artist}
+          {commonProperties.albumArtist}
         </Text>
         <Text fontSize={"md"} as="b" noOfLines={1}>
-          {album.year} • {album.songs.length} songs • {totalDuration}
+          {commonProperties.year} • {album.songs.length} songs • {totalDuration}
         </Text>
       </VStack>
     </HStack>
