@@ -31,7 +31,7 @@ export async function SessionCleanupHTTP(
 
     try { // START OF TRY BLOCK
         context.log(`Entered Try Block for Prisma Deletion`);
-        await prisma.session.deleteMany({
+        await prisma.session.delete({
             where: {
                 id: uuid,
             },
