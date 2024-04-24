@@ -25,8 +25,8 @@ datasource db {
 
 model Session {
   id       String    @id
-  albums   Album[]
-  mp3Files mp3File[]
+  albums   Album[]  
+  mp3Files mp3File[] 
 }
 
 model Album {
@@ -34,8 +34,8 @@ model Album {
   title     String
   artist    String?
   sessionId String    @map("session_id")
-  session   Session   @relation(fields: [sessionId], references: [id])
-  mp3Files  mp3File[]
+  session   Session   @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  mp3Files  mp3File[] 
 } 
 
 model mp3File {
@@ -52,8 +52,8 @@ model mp3File {
   image       String?
   albumId     Int?
   sessionId   String  @map("session_id")
-  album       Album?  @relation(fields: [albumId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  session     Session @relation(fields: [sessionId], references: [id], onUpdate: NoAction)
+  album       Album?  @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  session     Session @relation(fields: [sessionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 
