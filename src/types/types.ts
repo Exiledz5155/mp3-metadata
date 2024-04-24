@@ -13,8 +13,8 @@ export interface Song {
   title: string;
   duration: string;
   artist: string;
-  album: string; // rename to albumTitle
-  // add albumArtist
+  albumTitle: string; // rename to albumTitle
+  albumArtist: string;
   year: number;
   genre: string;
   image: string;

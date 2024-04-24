@@ -23,7 +23,7 @@ interface PropertiesComponentProps {
 interface CommonSongProperties {
   title: string;
   artist: string;
-  album: string;
+  albumTitle: string;
   year: string;
   genre: string;
   albumArtist: string;
@@ -44,10 +44,10 @@ export default function Properties({
         return {
           title: song.title,
           artist: song.artist,
-          album: song.album,
+          albumTitle: song.albumTitle,
           year: song.year.toString(),
           genre: song.genre,
-          albumArtist: song.artist, // Adjust based on your actual data structure
+          albumArtist: song.albumArtist, // Adjust based on your actual data structure
           trackNumber: song.trackNumber?.toString() || "",
           id: song.id.toString(),
           duration: song.duration.toString(),
@@ -57,14 +57,15 @@ export default function Properties({
         return {
           title: acc.title === song.title ? song.title : "Various",
           artist: acc.artist === song.artist ? song.artist : "Various",
-          album: acc.album === song.album ? song.album : "Various",
+          albumTitle:
+            acc.albumTitle === song.albumTitle ? song.albumTitle : "Various",
           year:
             acc.year === song.year.toString()
               ? song.year.toString()
               : "Various",
           genre: acc.genre === song.genre ? song.genre : "Various",
           albumArtist:
-            acc.albumArtist === song.artist ? song.artist : "Various",
+            acc.albumArtist === song.albumArtist ? song.albumArtist : "Various",
           trackNumber:
             acc.trackNumber === song.trackNumber.toString()
               ? song.trackNumber.toString()
@@ -80,7 +81,7 @@ export default function Properties({
     {
       title: "Various",
       artist: "Various",
-      album: "Various",
+      albumTitle: "Various",
       year: "Various",
       genre: "Various",
       albumArtist: "Various",
@@ -116,10 +117,13 @@ export default function Properties({
                 label="Artist(s)"
                 value={commonProperties.artist || ""}
               />
-              <PropertyRow label="Album" value={commonProperties.album || ""} />
+              <PropertyRow
+                label="Album"
+                value={commonProperties.albumTitle || ""}
+              />
               <PropertyRow
                 label="Album Artist(s)"
-                value={commonProperties.artist || ""}
+                value={commonProperties.albumArtist || ""}
               />
               <PropertyRow
                 label="Year"

@@ -2,8 +2,7 @@ import { Album, Song } from "../types/types";
 
 export function calculateTotalDuration(songs: Song[]): string {
   const totalSeconds = songs.reduce((acc, song) => {
-    const [minutes, seconds] = song.duration.split(":").map(Number);
-    return acc + minutes * 60 + seconds;
+    return acc + parseInt(song.duration);
   }, 0);
 
   const hours = Math.floor(totalSeconds / 3600);

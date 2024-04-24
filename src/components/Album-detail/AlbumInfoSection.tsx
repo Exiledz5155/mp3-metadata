@@ -2,24 +2,9 @@
 
 import { HStack, VStack, Text, Image } from "@chakra-ui/react";
 import { Album, Song } from "../../types/types";
+import { calculateTotalDuration } from "../../util/duration";
 
 export function AlbumInfoSection({ album }: { album: Album }) {
-  // REFACTOR
-  // Function to calculate total duration
-  const calculateTotalDuration = (songs: Song[]) => {
-    const totalSeconds = songs.reduce((acc, song) => {
-      const [minutes, seconds] = song.duration.split(":").map(Number);
-      return acc + minutes * 60 + seconds;
-    }, 0);
-
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    // Format duration string
-    return `${hours > 0 ? `${hours} hr ` : ""}${minutes} min ${seconds} sec`;
-  };
-
   const totalDuration = calculateTotalDuration(album.songs);
 
   return (

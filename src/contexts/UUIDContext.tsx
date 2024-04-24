@@ -27,7 +27,7 @@ const UUIDProvider: React.FC<UUIDProviderProps> = ({ children }) => {
 
   // hardcode for testing
   const [uuid, setUUID] = useState<string>(
-    "6554193a-b6d8-45b7-a554-c17650403842"
+    "b96f1984-fef4-4a42-a624-3b4ec5d5ad11"
   );
 
   const generateUUID = () => {
