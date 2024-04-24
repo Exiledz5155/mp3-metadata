@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { HStack, Flex, Image, Text, Box } from "@chakra-ui/react";
 import ActionMenu from "../Actions/ActionMenu";
 import { Album, Song } from "../../types/types";
+import { convertTime } from "../../util/duration";
 
 interface SongGridCardProps {
   song: Song;
@@ -84,10 +85,10 @@ export function SongGridCard({
           {song.artist}
         </Text>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          {song.album}
+          {song.albumTitle}
         </Text>
         <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
-          {song.duration}
+          {convertTime(song.duration)}
         </Text>
       </HStack>
     </>

@@ -12,7 +12,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
-import { Album, Song } from "../../types/types";
+import { Album, Song, CommonSongProperties } from "../../types/types";
+import { calculateCommonProperties } from "../../util/commonprops";
+import { convertTime } from "../../util/duration";
+import { calculateTotalDuration } from "../../util/duration";
 
 interface PropertiesComponentProps {
   isOpen: boolean;
@@ -20,75 +23,12 @@ interface PropertiesComponentProps {
   songs: Song[];
 }
 
-interface CommonSongProperties {
-  title: string;
-  artist: string;
-  album: string;
-  year: string;
-  genre: string;
-  albumArtist: string;
-  trackNumber: string;
-  id: string;
-  duration: string;
-}
-
 export default function Properties({
   songs,
   isOpen,
   onClose,
 }: PropertiesComponentProps) {
-  const commonProperties = songs.reduce<CommonSongProperties>(
-    (acc, song, index) => {
-      if (index === 0) {
-        // Initialize with the first song's properties, assuming all songs have the same type of properties
-        return {
-          title: song.title,
-          artist: song.artist,
-          album: song.album,
-          year: song.year.toString(),
-          genre: song.genre,
-          albumArtist: song.artist, // Adjust based on your actual data structure
-          trackNumber: song.trackNumber?.toString() || "",
-          id: song.id.toString(),
-          duration: song.duration.toString(),
-        };
-      } else {
-        // Compare and set 'various' if different
-        return {
-          title: acc.title === song.title ? song.title : "Various",
-          artist: acc.artist === song.artist ? song.artist : "Various",
-          album: acc.album === song.album ? song.album : "Various",
-          year:
-            acc.year === song.year.toString()
-              ? song.year.toString()
-              : "Various",
-          genre: acc.genre === song.genre ? song.genre : "Various",
-          albumArtist:
-            acc.albumArtist === song.artist ? song.artist : "Various",
-          trackNumber:
-            acc.trackNumber === song.trackNumber.toString()
-              ? song.trackNumber.toString()
-              : "Various",
-          id: acc.id === song.id.toString() ? song.id.toString() : "Various",
-          duration:
-            acc.duration === song.duration.toString()
-              ? song.duration.toString()
-              : "Various",
-        };
-      }
-    },
-    {
-      title: "Various",
-      artist: "Various",
-      album: "Various",
-      year: "Various",
-      genre: "Various",
-      albumArtist: "Various",
-      trackNumber: "Various",
-      id: "Various",
-      duration: "Various", // SUM UP THE DURATION INSTEAD
-    }
-  );
+  const commonProperties = calculateCommonProperties(songs);
 
   const PropertyRow = ({ label, value }) => (
     <HStack justifyContent="space-between">
@@ -116,10 +56,13 @@ export default function Properties({
                 label="Artist(s)"
                 value={commonProperties.artist || ""}
               />
-              <PropertyRow label="Album" value={commonProperties.album || ""} />
+              <PropertyRow
+                label="Album"
+                value={commonProperties.albumTitle || ""}
+              />
               <PropertyRow
                 label="Album Artist(s)"
-                value={commonProperties.artist || ""}
+                value={commonProperties.albumArtist || ""}
               />
               <PropertyRow
                 label="Year"
@@ -132,7 +75,7 @@ export default function Properties({
               />
               <PropertyRow
                 label="Length"
-                value={commonProperties.duration || ""}
+                value={calculateTotalDuration(songs) || ""}
               />
               <PropertyRow label="dev_id" value={commonProperties.id || ""} />
             </VStack>
