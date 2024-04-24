@@ -28,23 +28,13 @@ import { Album, Song } from "../../types/types";
 import { MdOutlineQueueMusic } from "react-icons/md";
 import axios from "axios";
 import { useFetch } from "../../contexts/FetchContext";
+import { calculateCommonProperties } from "../../util/commonprops";
+import { CommonSongProperties } from "../../types/types";
 
 interface EditComponentProps {
   isOpen: boolean;
   onClose: () => void;
   songs: Song[];
-}
-
-// maybe export this
-interface CommonSongProperties {
-  title: string;
-  artist: string;
-  album: string;
-  year: string;
-  genre: string;
-  albumArtist: string;
-  trackNumber: string;
-  image: string;
 }
 
 interface MetadataProps {
@@ -139,52 +129,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
   };
 
   // export this or something
-  const commonProperties = songs.reduce<CommonSongProperties>(
-    (acc, song, index) => {
-      if (index === 0) {
-        // Initialize with the first song's properties, assuming all songs have the same type of properties
-        return {
-          title: song.title,
-          artist: song.artist,
-          album: song.album,
-          year: song.year.toString() || "",
-          genre: song.genre,
-          albumArtist: song.artist, // Adjust based on your actual data structure
-          trackNumber: song.trackNumber?.toString() || "",
-          image: song.image,
-        };
-      } else {
-        // Compare and set 'various' if different
-        return {
-          title: acc.title === song.title ? song.title : "Various",
-          artist: acc.artist === song.artist ? song.artist : "Various",
-          album: acc.album === song.album ? song.album : "Various",
-          year:
-            acc.year === song.year.toString()
-              ? song.year.toString()
-              : "Various",
-          genre: acc.genre === song.genre ? song.genre : "Various",
-          albumArtist:
-            acc.albumArtist === song.artist ? song.artist : "Various",
-          trackNumber:
-            acc.trackNumber === song.trackNumber.toString()
-              ? song.trackNumber.toString()
-              : "Various",
-          image: acc.image === song.image ? song.image : "Various",
-        };
-      }
-    },
-    {
-      title: "Various",
-      artist: "Various",
-      album: "Various",
-      year: "Various",
-      genre: "Various",
-      albumArtist: "Various",
-      trackNumber: "Various",
-      image: "Various",
-    }
-  );
+  const commonProperties = calculateCommonProperties(songs);
 
   const multipleSongsSelected = songs.length > 1;
 
@@ -288,9 +233,10 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                 />
                 <HoverableImage
                   src={
-                    commonProperties.image !== "Various"
-                      ? commonProperties.image
-                      : undefined
+                    // commonProperties.image !== "Various"
+                    //   ? commonProperties.image
+                    //   :
+                    undefined
                   }
                   alt="Cover Art"
                   onOpen={handleOpenImageUploadBox}
@@ -341,7 +287,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   <FormLabel>Album Title</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
-                    placeholder={commonProperties.album}
+                    placeholder={commonProperties.albumTitle}
                     value={album}
                     onChange={(e) => setAlbum(e.target.value)}
                   />
