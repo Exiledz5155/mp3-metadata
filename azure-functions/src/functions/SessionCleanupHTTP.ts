@@ -1,10 +1,21 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { BlobServiceClient } from "@azure/storage-blob";
 import { PrismaClient } from "@prisma/client";
 
+import {
+  app,
+  InvocationContext,
+  HttpRequest,
+  HttpResponseInit,
+} from "@azure/functions";
+
+
 // Handler function to clean up data for a user based on uuid
-const sessionCleanupHTTP: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-    context.log("Session cleanup function is running.");
+
+export async function SessionCleanupHTTP(
+  request: HttpRequest,
+  context: InvocationContext
+): Promise<HttpResponseInit> {
+  context.log(`Http function processed request for url "${request.url}"`);
 
     // Retrieve uuid from query parameters or body
     const uuid = request.query.get("uuid");
@@ -18,38 +29,58 @@ const sessionCleanupHTTP: AzureFunction = async function (context: Context, req:
 
     const prisma = new PrismaClient();
 
-    try {
-        await prisma.mp3Metadata.deleteMany({
+    try { // START OF TRY BLOCK
+        context.log(`Entered Try Block for Prisma Deletion`);
+        await prisma.session.deleteMany({
             where: {
-                uuid: uuid,
+                id: uuid,
             },
         });
 
         const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AzureWebJobsStorage);
-        const containerClient = blobServiceClient.getContainerClient(uuid);
+        const containerClient = blobServiceClient.getContainerClient("mp3container");
 
-        if (await containerClient.exists()) {
-            for await (const blob of containerClient.listBlobsFlat()) {
+        if (await containerClient.exists()) {  //IF CLIENT EXISTS
+
+          const blobs = containerClient.listBlobsFlat({
+            prefix: `${uuid}/` // Ensure the prefix ends with a '/' to denote a folder
+          });
+
+            for await (const blob of blobs) {
                 const blobClient = containerClient.getBlobClient(blob.name);
-                await blobClient.delete();
-            }
-        }
+                context.log(`ATTEMPTING TO DELETE --> ${blob.name}`);
+                await blobClient.delete(); 
+                context.log(`SUCCESS: TO DELETE --> ${blob.name}`);
 
-        context.res = {
-            status: 200,
-            body: `Cleared all data for user UUID: ${uuid}`
-        };
-    } catch (error) {
+            }
+            return {
+              status: 200,
+              body: `Cleared all data for user UUID: ${uuid}`
+          };
+        } // IF CLIENT DNE
+
+
+        else {
+          return {
+            status: 500,
+            body: `Cannot establish connection to blob/container: ${uuid}`
+        }
+        }
+    } // END OF TRY BLOCK
+     catch (error) {
         context.log(`Error deleting data for user UUID: ${uuid}. Error: ${error}`);
-        context.res = {
+        return {
             status: 500,
             body: `Error processing your request: ${error.message}`
         };
     } finally {
         await prisma.$disconnect();
     }
-
-    context.log("Session cleanup function completed.");
 };
 
-export default sessionCleanupHTTP;
+
+app.http("SessionCleanupHTTP", {
+  methods: ["GET"],
+  authLevel: "anonymous",
+  handler: SessionCleanupHTTP,
+});
