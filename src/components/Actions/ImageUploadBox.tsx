@@ -14,36 +14,53 @@ import {
   useToast,
   Flex,
   Input,
+  Center,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import { IoCloudUploadOutline } from "react-icons/io5";
+import { MdOutlineQueueMusic } from "react-icons/md";
 import { UploadIMG } from "../../util/UploadFiles";
 import { useUUID } from "../../contexts/UUIDContext";
 import { CheckIcon } from "@chakra-ui/icons";
 import { Album, Song } from "../../types/types";
-import * as fileType from "file-type";
 
-// REFACTOR THIS
-function HoverableImage({ src, alt, onClick }) {
+interface HoverableImageProps {
+  songs: Song[];
+  onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  fileInputRef: React.RefObject<HTMLInputElement>;
+}
+
+function HoverableImage({
+  songs,
+  onFileChange,
+  fileInputRef,
+}: HoverableImageProps) {
   const [isHover, setIsHover] = useState(false);
-  return (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      position="relative"
-      onClick={onClick} // Make sure this is calling the correct function
-      cursor="pointer"
-    >
-      <Box
-        position="relative"
-        height="100%"
-        width="100%"
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+
+  const renderImageDisplay = () => {
+    const images = songs.map((song) => song.image).filter((image) => image);
+
+    if (images.length === 0) {
+      return (
+        <Center height="100%" bg={"brand.200"}>
+          <Icon
+            as={MdOutlineQueueMusic}
+            w={20}
+            h={20}
+            color="brand.400"
+            bg={"brand.200"}
+            borderRadius={"5px"}
+          />
+        </Center>
+      );
+    }
+
+    if (images.length < 4) {
+      return (
         <Image
-          src={src}
-          alt={alt}
+          src={images[0]}
+          alt="Song Image"
           objectFit="cover"
           borderRadius="5px"
           fit="cover"
@@ -51,17 +68,63 @@ function HoverableImage({ src, alt, onClick }) {
           transition="opacity 0.3s ease-in-out"
           style={{ opacity: isHover ? 0.3 : 1 }}
         />
-        <Box
-          position="absolute"
-          top="50%"
-          left="50%"
-          transform="translate(-50%, -50%)"
-          style={{ opacity: isHover ? 1 : 0 }}
-          transition="opacity 0.3s ease-in-out"
-        >
-          <Icon as={IoCloudUploadOutline} w={8} h={8} color="white" />
-        </Box>
+      );
+    }
+
+    return (
+      <Grid
+        templateColumns="repeat(2, 1fr)"
+        templateRows="repeat(2, 1fr)"
+        gap={1}
+        height="100%"
+      >
+        {images.slice(0, 4).map((image, index) => (
+          <GridItem key={index}>
+            <Image
+              src={image}
+              alt={`Song Image ${index + 1}`}
+              objectFit="cover"
+              borderRadius="5px"
+              fit="cover"
+              boxSize="100%"
+              transition="opacity 0.3s ease-in-out"
+              style={{ opacity: isHover ? 0.3 : 1 }}
+            />
+          </GridItem>
+        ))}
+      </Grid>
+    );
+  };
+
+  return (
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      position="relative"
+      onClick={() => fileInputRef.current?.click()}
+      cursor="pointer"
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
+      {renderImageDisplay()}
+      <Box
+        position="absolute"
+        top="50%"
+        left="50%"
+        transform="translate(-50%, -50%)"
+        style={{ opacity: isHover ? 1 : 0 }}
+        transition="opacity 0.3s ease-in-out"
+      >
+        <Icon as={IoCloudUploadOutline} w={8} h={8} color="white" />
       </Box>
+      <Input
+        type="file"
+        ref={fileInputRef}
+        onChange={onFileChange}
+        style={{ display: "none" }}
+        accept=".jpg,.jpeg,.png"
+      />
     </Box>
   );
 }
@@ -69,23 +132,18 @@ function HoverableImage({ src, alt, onClick }) {
 interface IUBComponentProps {
   isOpen: boolean;
   onClose: () => void;
-  song: Song;
+  songs: Song[];
 }
 
 export default function ImageUploadBox({
-  song,
+  songs,
   isOpen,
   onClose,
 }: IUBComponentProps) {
-  const [imageSrc, setImageSrc] = useState(song.image); // update with song.image
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const toast = useToast();
   const { uuid } = useUUID();
-
-  const handleFileClick = () => {
-    fileInputRef.current?.click(); // Ensure this is correctly referencing the input
-  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -100,25 +158,15 @@ export default function ImageUploadBox({
         });
         return;
       }
-      const fileUrl = URL.createObjectURL(file); // Create a URL for the file
-      setImageSrc(fileUrl); // Update the image src state
       setSelectedFile(file);
     }
   };
 
-  useEffect(() => {
-    return () => {
-      if (imageSrc) {
-        URL.revokeObjectURL(imageSrc); // Cleanup the object URL
-      }
-    };
-  }, [imageSrc]);
-
   const handleSave = async () => {
-    const songID = 1; // TEMP REMOVE LATER
     if (selectedFile) {
       try {
-        const response = await UploadIMG(selectedFile, uuid, songID); // Assuming song.id is available
+        const songIDs = songs.map((song) => parseInt(song.id, 10));
+        const response = await UploadIMG(selectedFile, uuid, songIDs);
         if (response.ok) {
           toast({
             title: "Success",
@@ -153,13 +201,6 @@ export default function ImageUploadBox({
 
   return (
     <>
-      <Input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        style={{ display: "none" }}
-        accept=".jpg,.jpeg"
-      />
       <Modal
         closeOnOverlayClick={false}
         isOpen={isOpen}
@@ -172,12 +213,11 @@ export default function ImageUploadBox({
           <ModalCloseButton />
           <ModalBody>
             <HoverableImage
-              src={imageSrc}
-              alt="Descriptive Alt Text"
-              onClick={handleFileClick}
+              songs={songs}
+              onFileChange={handleFileChange}
+              fileInputRef={fileInputRef}
             />
           </ModalBody>
-
           <ModalFooter>
             <Flex width="100%" justifyContent="space-between">
               <Button

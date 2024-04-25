@@ -47,35 +47,13 @@ interface MetadataProps {
   genre: string;
 }
 
-// REFACTOR, THIS IS DIFFERENT FROM IMAGEUPLOADBOX
-function HoverableImage({ src, alt, onOpen }) {
+// DIFFERENT FROM HoverableImage in ImageUploadBox
+function HoverableImage({ songs, onOpen }) {
   const [isHover, setIsHover] = useState(false);
-  const showPlaceholder = !src || src === "Various";
 
-  return (
-    <Box
-      position="relative"
-      height="100%"
-      width="100%"
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
-      onClick={onOpen}
-      cursor="pointer"
-      backgroundColor={showPlaceholder ? "gray.200" : "transparent"}
-      borderRadius={"5px"}
-    >
-      {!showPlaceholder ? (
-        <Image
-          src={src}
-          alt={alt}
-          objectFit="cover"
-          borderRadius={"5px"}
-          fit="cover"
-          boxSize="100%"
-          transition="opacity 0.3s ease-in-out"
-          style={{ opacity: isHover ? 0.3 : 1 }}
-        />
-      ) : (
+  const renderImageDisplay = () => {
+    if (!songs || songs.length === 0) {
+      return (
         <Center height="100%" bg={"brand.200"}>
           <Icon
             as={MdOutlineQueueMusic}
@@ -86,7 +64,77 @@ function HoverableImage({ src, alt, onOpen }) {
             borderRadius={"5px"}
           />
         </Center>
-      )}
+      );
+    }
+
+    const images = songs.map((song) => song.image).filter((image) => image);
+
+    if (images.length === 0) {
+      return (
+        <Center height="100%" bg={"brand.200"}>
+          <Icon
+            as={MdOutlineQueueMusic}
+            w={20}
+            h={20}
+            color="brand.400"
+            bg={"brand.200"}
+            borderRadius={"5px"}
+          />
+        </Center>
+      );
+    }
+
+    if (images.length < 4) {
+      return (
+        <Image
+          src={images[0]}
+          alt="Song Image"
+          objectFit="cover"
+          borderRadius="5px"
+          fit="cover"
+          boxSize="100%"
+          transition="opacity 0.3s ease-in-out"
+          style={{ opacity: isHover ? 0.3 : 1 }}
+        />
+      );
+    }
+
+    return (
+      <Grid
+        templateColumns="repeat(2, 1fr)"
+        templateRows="repeat(2, 1fr)"
+        gap={1}
+        height="100%"
+      >
+        {images.slice(0, 4).map((image, index) => (
+          <GridItem key={index}>
+            <Image
+              src={image}
+              alt={`Song Image ${index + 1}`}
+              objectFit="cover"
+              borderRadius="5px"
+              fit="cover"
+              boxSize="100%"
+              transition="opacity 0.3s ease-in-out"
+              style={{ opacity: isHover ? 0.3 : 1 }}
+            />
+          </GridItem>
+        ))}
+      </Grid>
+    );
+  };
+
+  return (
+    <Box
+      position="relative"
+      height="100%"
+      width="100%"
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      onClick={onOpen}
+      cursor="pointer"
+    >
+      {renderImageDisplay()}
       <Box
         position="absolute"
         top="50%"
@@ -232,16 +280,11 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   ref={fileInputRef}
                 />
                 <HoverableImage
-                  src={
-                    commonProperties.image !== "Various"
-                      ? commonProperties.image
-                      : undefined
-                  }
-                  alt="Cover Art"
+                  songs={songs}
                   onOpen={handleOpenImageUploadBox}
                 />
                 <ImageUploadBox
-                  song={song}
+                  songs={songs}
                   isOpen={imageUploadBoxOpen}
                   onClose={handleImageUploadBoxClose}
                 ></ImageUploadBox>
