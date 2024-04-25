@@ -44,7 +44,7 @@ export default function UploadCard({
   const correctedInProgress = uploadFailed ? false : inProgress;
 
   return (
-    <Box border="2px" mb={4} p={4} borderRadius="2xl">
+    <Box border="0px" mb={4} p={4} borderRadius="2xl">
       <Flex align="center">
         <Icon as={FiFileText} boxSize={6} />
         <Flex flex={1} pl={6} direction="column">
