@@ -20,6 +20,7 @@ import { UploadIMG } from "../FileHub/FileHub-Upload/UploadFiles";
 import { useUUID } from "../../contexts/UUIDContext";
 import { CheckIcon } from "@chakra-ui/icons";
 import { Album, Song } from "../../types/types";
+import * as fileType from "file-type";
 
 // REFACTOR THIS
 function HoverableImage({ src, alt, onClick }) {
@@ -89,10 +90,10 @@ export default function ImageUploadBox({
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      if (!/\.(jpg|jpeg)$/i.test(file.name)) {
+      if (!/\.(png|jpe?g)$/i.test(file.name)) {
         toast({
           title: "Error",
-          description: "File is not a JPG image.",
+          description: "File is not a PNG or JPG.",
           status: "error",
           duration: 5000,
           isClosable: true,
