@@ -89,7 +89,12 @@ export async function UploadIMG(
   // Create request body
   const fileBase64 = await new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result as string);
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      // Remove the prefix `data:<type>;base64,` from the result
+      const base64Data = base64String.split(",")[1];
+      resolve(base64Data);
+    };
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
