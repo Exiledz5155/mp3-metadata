@@ -7,17 +7,20 @@ export async function POST(request: Request) {
   const songIDs = requestBody.songIDs;
 
   // Forward the request to the Azure Function
-  const response = await fetch(process.env.UPDATE_IMAGE_FUNCTION_URL || "", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      file: new Uint8Array(file),
-      userUUID: userUUID,
-      songIDs: songIDs,
-    }),
-  });
+  const response = await fetch(
+    "https://mp3functions.azurewebsites.net/api/UpdateImageHTTP?",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        file: new Uint8Array(file),
+        userUUID: userUUID,
+        songIDs: songIDs,
+      }),
+    }
+  );
 
   // Check if the request was successful
   if (!response.ok) {

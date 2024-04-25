@@ -23,24 +23,47 @@ import { MdOutlineQueueMusic } from "react-icons/md";
 import { UploadIMG } from "../../util/UploadFiles";
 import { useUUID } from "../../contexts/UUIDContext";
 import { CheckIcon } from "@chakra-ui/icons";
-import { Album, Song } from "../../types/types";
+import { Album, CommonSongProperties, Song } from "../../types/types";
 import { calculateCommonProperties } from "../../util/commonprops";
 
 interface HoverableImageProps {
   songs: Song[];
   onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   fileInputRef: React.RefObject<HTMLInputElement>;
+  commonProperties: CommonSongProperties;
+  selectedFile: File | null;
 }
 
 function HoverableImage({
   songs,
   onFileChange,
   fileInputRef,
+  commonProperties,
+  selectedFile,
 }: HoverableImageProps) {
   const [isHover, setIsHover] = useState(false);
 
   const renderImageDisplay = () => {
     const images = songs.map((song) => song.image).filter((image) => image);
+
+    const imagePreviewUrl = selectedFile
+      ? URL.createObjectURL(selectedFile)
+      : null;
+
+    if (imagePreviewUrl) {
+      return (
+        <Image
+          src={imagePreviewUrl}
+          alt="Song Image"
+          objectFit="cover"
+          borderRadius="5px"
+          fit="cover"
+          boxSize="100%"
+          transition="opacity 0.3s ease-in-out"
+          style={{ opacity: isHover ? 0.3 : 1 }}
+        />
+      );
+    }
 
     if (images.length === 0) {
       return (
@@ -56,8 +79,6 @@ function HoverableImage({
         </Center>
       );
     }
-
-    const commonProperties = calculateCommonProperties(songs);
 
     if (images.length < 4 || commonProperties.image !== "various") {
       return (
@@ -143,6 +164,12 @@ export default function ImageUploadBox({
   isOpen,
   onClose,
 }: IUBComponentProps) {
+  const [commonProperties, setCommonProperties] =
+    useState<CommonSongProperties>(calculateCommonProperties(songs));
+
+  useEffect(() => {
+    setCommonProperties(calculateCommonProperties(songs));
+  }, [songs]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const toast = useToast();
@@ -219,6 +246,8 @@ export default function ImageUploadBox({
               songs={songs}
               onFileChange={handleFileChange}
               fileInputRef={fileInputRef}
+              commonProperties={commonProperties}
+              selectedFile={selectedFile}
             />
           </ModalBody>
           <ModalFooter>

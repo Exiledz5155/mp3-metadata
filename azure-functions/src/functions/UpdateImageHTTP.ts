@@ -46,7 +46,7 @@ export async function UpdateImageHTTP(
 
   // Initialize Azure Blob Service Client
   const blobServiceClient = BlobServiceClient.fromConnectionString(
-    process.env.AZURE_STORAGE_CONNECTION_STRING || ""
+    process.env["AzureWebJobsStorage"]
   );
   const containerName = "imagecontainer";
   const containerClient = blobServiceClient.getContainerClient(containerName);
