@@ -11,7 +11,7 @@ import {
   HStack,
   Text,
 } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Album, Song, CommonSongProperties } from "../../types/types";
 import { calculateCommonProperties } from "../../util/commonprops";
 import { convertTime } from "../../util/duration";
@@ -28,7 +28,12 @@ export default function Properties({
   isOpen,
   onClose,
 }: PropertiesComponentProps) {
-  const commonProperties = calculateCommonProperties(songs);
+  const [commonProperties, setCommonProperties] =
+    useState<CommonSongProperties>(calculateCommonProperties(songs));
+
+  useEffect(() => {
+    setCommonProperties(calculateCommonProperties(songs));
+  }, [songs]);
 
   const PropertyRow = ({ label, value }) => (
     <HStack justifyContent="space-between">

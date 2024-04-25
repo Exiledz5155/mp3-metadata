@@ -1,7 +1,7 @@
 // app/providers.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Center,
@@ -17,11 +17,17 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { FileHubAlbumCard } from "./FileHubAlbumCard";
-import { Album, Song } from "../../types/types";
+import { Album, CommonSongProperties, Song } from "../../types/types";
 import { MdOutlineQueueMusic } from "react-icons/md";
 import { calculateCommonProperties } from "../../util/commonprops";
 
 export function FileHubAlbum({ album }: { album: Album }) {
+  const [commonProperties, setCommonProperties] =
+    useState<CommonSongProperties>(calculateCommonProperties(album.songs));
+
+  useEffect(() => {
+    setCommonProperties(calculateCommonProperties(album.songs));
+  }, [album]);
   // Use state to track whether the card is clicked
   const [isClicked, setIsClicked] = useState(false);
   // Function to handle the click event
@@ -66,8 +72,6 @@ export function FileHubAlbum({ album }: { album: Album }) {
         </Center>
       );
     }
-
-    const commonProperties = calculateCommonProperties(album.songs);
 
     if (images.length < 4 || commonProperties.image !== "various") {
       return (
@@ -145,7 +149,7 @@ export function FileHubAlbum({ album }: { album: Album }) {
             </Center> */}
             {renderImageDisplay()}
             <Text noOfLines={1} maxW={200} align="left">
-              {album.album}
+              {commonProperties.albumTitle}
             </Text>
           </HStack>
         </Box>

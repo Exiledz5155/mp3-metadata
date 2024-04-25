@@ -19,7 +19,7 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useUUID } from "../../contexts/UUIDContext";
@@ -48,7 +48,7 @@ interface MetadataProps {
 }
 
 // DIFFERENT FROM HoverableImage in ImageUploadBox
-function HoverableImage({ songs, onOpen }) {
+function HoverableImage({ songs, onOpen, commonProperties }) {
   const [isHover, setIsHover] = useState(false);
 
   const renderImageDisplay = () => {
@@ -84,9 +84,7 @@ function HoverableImage({ songs, onOpen }) {
       );
     }
 
-    const commonProperties = calculateCommonProperties(songs);
-
-    if (images.length < 4 || commonProperties.image !== "various") {
+    if (images.length < 4 || commonProperties.image !== "Various") {
       return (
         <Image
           src={images[0]}
@@ -154,6 +152,13 @@ function HoverableImage({ songs, onOpen }) {
 
 export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
   const { refetchData } = useFetch();
+  const [commonProperties, setCommonProperties] =
+    useState<CommonSongProperties>(calculateCommonProperties(songs));
+
+  useEffect(() => {
+    setCommonProperties(calculateCommonProperties(songs));
+  }, [songs]);
+
   const { uuid, generateUUID } = useUUID();
 
   // TODO: Make this upload actually go to correct blob container
@@ -177,9 +182,6 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
   const handleOpenImageUploadBox = () => {
     setImageUploadBoxOpen(true);
   };
-
-  // export this or something
-  const commonProperties = calculateCommonProperties(songs);
 
   const multipleSongsSelected = songs.length > 1;
 
@@ -284,6 +286,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                 <HoverableImage
                   songs={songs}
                   onOpen={handleOpenImageUploadBox}
+                  commonProperties={commonProperties}
                 />
                 <ImageUploadBox
                   songs={songs}

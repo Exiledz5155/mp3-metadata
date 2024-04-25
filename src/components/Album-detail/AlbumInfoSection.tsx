@@ -10,15 +10,21 @@ import {
   GridItem,
   Icon,
 } from "@chakra-ui/react";
-import { Album, Song } from "../../types/types";
+import { Album, CommonSongProperties, Song } from "../../types/types";
 import { calculateTotalDuration } from "../../util/duration";
 import { calculateCommonProperties } from "../../util/commonprops";
 import { MdOutlineQueueMusic } from "react-icons/md";
+import { useState, useEffect } from "react";
 
 export function AlbumInfoSection({ album }: { album: Album }) {
   const totalDuration = calculateTotalDuration(album.songs);
 
-  const commonProperties = calculateCommonProperties(album.songs);
+  const [commonProperties, setCommonProperties] =
+    useState<CommonSongProperties>(calculateCommonProperties(album.songs));
+
+  useEffect(() => {
+    setCommonProperties(calculateCommonProperties(album.songs));
+  }, [album]);
 
   const renderImageDisplay = () => {
     const images = album.songs
@@ -77,13 +83,7 @@ export function AlbumInfoSection({ album }: { album: Album }) {
 
   return (
     <HStack align={"start"}>
-      <Image
-        maxW={{ base: "100%", sm: "200px" }}
-        src={album.songs[0].image}
-        alt="Album Cover"
-        mr={"20px"}
-        borderRadius={"10px"}
-      />
+      {renderImageDisplay()}
       <VStack align={"start"} w={"100%"}>
         <Text fontSize={"4xl"} as="b" noOfLines={1}>
           {commonProperties.albumTitle}

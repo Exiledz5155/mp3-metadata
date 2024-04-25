@@ -112,7 +112,7 @@ async function DownloadHTTP(
         albumTitle: file.albumTitle,
         year: file.year,
         image: file.image,
-        albumArtist: file.albumArtist,
+        performerInfo: file.albumArtist,
         trackNumber: file.trackNumber,
         genre: file.genre,
         duration: file.duration,
