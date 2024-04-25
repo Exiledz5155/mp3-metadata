@@ -119,7 +119,7 @@ export function Home() {
         {/*Column flex  includes icon, title,  description and both button */}
         <Flex
           padding={{ base: 4, md: 8 }} // Adjusted padding for better responsiveness
-          flex={{ base: 1, md: 1 }} // Adjusted flex value for responsiveness
+          flex={1} // Adjusted flex value for responsiveness
           direction="column"
           justify="center"
           alignItems="flex-start"
@@ -219,9 +219,9 @@ export function Home() {
             width="30em"
             height="30em"
             // overflow="visible"
-            css={{ filter: "blur(50px)" }}
+            css={{ filter: "blur(75px)" }}
             top={{ base: "36em", md: "32em" }}
-            right={{ base: "6em", md: "6em" }}
+            right={{ base: "6em", md: "7em" }}
           >
             <Ellipse1Icon />
           </Flex>
@@ -232,7 +232,7 @@ export function Home() {
             width="30em"
             height="30em"
             // overflow="visible"
-            css={{ filter: "blur(50px)" }}
+            css={{ filter: "blur(75px)" }}
             top={{ base: "-3em", md: "-8em" }}
             right={{ base: "-0.25em", md: "-0.25em" }}
           >
@@ -245,7 +245,7 @@ export function Home() {
             width="30em"
             height="30em"
             // overflow="visible"
-            css={{ filter: "blur(50px)" }}
+            css={{ filter: "blur(75px)" }}
             top={{ base: "-22em", md: "-26em" }}
             right={{ base: "-7em", md: "-6em" }}
           >
