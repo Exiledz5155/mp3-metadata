@@ -56,15 +56,15 @@ export function FileHubAlbum({ album }: { album: Album }) {
           _hover={
             isClicked
               ? undefined
-              : { bg: "brand.300", _dark: { bg: "brand.200" } }
+              : { bg: "brand.400", _dark: { bg: "brand.300" } }
           }
           onClick={handleClick} // Attach the click event handler
-          bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
+          bg={isClicked ? "brand.400" : isHovered ? "brand.400" : "transparent"} // Update the background color based on isClicked state and hover state
           _dark={{
             bg: isClicked
-              ? "brand.300"
+              ? "brand.400"
               : isHovered
-              ? "brand.200"
+              ? "brand.300"
               : "transparent",
           }}
           cursor={"pointer"}

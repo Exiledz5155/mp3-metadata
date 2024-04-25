@@ -166,7 +166,7 @@ async function ProcessMetadataOnUpload(
       title: tags.title || null,
       artist: tags.artist || null,
       year: tags.year ? parseInt(tags.year, 10) : null,
-      albumTitle: tags.album || null,
+      albumTitle: tags.album || "Untagged",
       albumArtist: tags.artist || null,
       trackNumber: tags.trackNumber ? parseInt(tags.trackNumber, 10) : null,
       image: imagePath || null, // Modify as per your logic
