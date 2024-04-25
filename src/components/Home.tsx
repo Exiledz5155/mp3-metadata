@@ -18,7 +18,6 @@ import { Ellipse1Icon } from "./Elipse1Icon";
 import { Ellipse2Icon } from "./Elipse2Icon";
 import { Ellipse3Icon } from "./Elipse3Icon";
 import { FaGithub } from "react-icons/fa";
-import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 
 const LinkButton = chakra<typeof NextLink, NextLinkProps>(NextLink, {
   // ensure that you're forwarding all of the required props for your case
@@ -100,7 +99,7 @@ export function Home() {
         direction={{ base: "column", md: "row" }}
         align="center"
         justify="center"
-        h="100vh"
+        height="100vh"
         bg={useColorModeValue("white", "black")}
         onMouseMove={handleMouseMove}
         p="4"
@@ -120,11 +119,13 @@ export function Home() {
         {/*Column flex  includes icon, title,  description and both button */}
         <Flex
           padding={{ base: 4, md: 8 }} // Adjusted padding for better responsiveness
-          flex="1" // Adjusted flex value for responsiveness
+          flex={{ base: 1, md: 1 }} // Adjusted flex value for responsiveness
           direction="column"
           justify="center"
           alignItems="flex-start"
-          paddingRight={{ base: 0, md: 30 }}
+          minWidth={{ base: "100%", md: "auto" }}
+          height="100%"
+          
         >
           {/*Github Icon */}
           <Box
@@ -143,14 +144,23 @@ export function Home() {
               </Center>
             </LinkButton>
           </Box>
-        
-          <Heading
-            fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
-            marginLeft={"20"}
+          <Flex
+            direction="column"
+            alignItems={{ base: "center", md: "flex-start" }}
+            marginTop={{ base: 0, md: 4 }}
+            textAlign={{ base: "center", md: "left" }}
           >
-            MP3 Metadata
-          </Heading>
-          <Text marginLeft={"20"} marginBottom={"0.5em"}>A web-based MP3 metadata editor.</Text>
+            <Heading
+              fontSize={{ base: "4xl", sm: "5xl", md: "6xl" }}
+              marginLeft={"20"}
+              marginBottom={2}
+            >
+              MP3 Metadata
+            </Heading>
+            <Text marginLeft={"20"} marginBottom={"0.5em"}>
+              A web-based MP3 metadata editor.
+            </Text>
+          </Flex>
           <HStack gap={0}>
             <LinkButton
               href="/editor/albums"
@@ -192,39 +202,39 @@ export function Home() {
 
         {/* Box containing all the elipses? */}
         <Flex
-          flexGrow={1} 
+          flex={{ base: "none", md: 1 }}
           direction="column"
           justify="center"
           align="center"
           pl={{ base: 0, md: 4 }}
           position="relative"
+          height="100%"
+
         >
           {/*All of these elipses use percentages to scale with viewport. This is where one could adjust size and amount of blue of the elipses */}
           {/* Ellipse 1 */}
-          
+
           <Flex
             position="relative"
-            
             width="30em"
             height="30em"
             // overflow="visible"
             css={{ filter: "blur(50px)" }}
-            top="32em"
-            right="6em"
+            top={{ base: "36em", md: "32em" }}
+            right={{ base: "6em", md: "6em" }}
           >
             <Ellipse1Icon />
           </Flex>
 
           {/* Ellipse 2 */}
           <Flex
-      
             position="relative"
             width="30em"
             height="30em"
             // overflow="visible"
             css={{ filter: "blur(50px)" }}
-            top="-8em"
-            right="-0.25em"
+            top={{ base: "-3em", md: "-8em" }}
+            right={{ base: "-0.25em", md: "-0.25em" }}
           >
             <Ellipse2Icon />
           </Flex>
@@ -236,8 +246,8 @@ export function Home() {
             height="30em"
             // overflow="visible"
             css={{ filter: "blur(50px)" }}
-            top="-27.85em"
-            right="-7em"
+            top={{ base: "-22em", md: "-26em" }}
+            right={{ base: "-7em", md: "-6em" }}
           >
             <Ellipse3Icon />
           </Flex>

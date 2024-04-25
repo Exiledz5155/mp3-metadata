@@ -7,7 +7,7 @@ const Ellipse1Icon = (props: SVGProps<SVGSVGElement>) => (
     <defs>
       <linearGradient id='paint0_linear_49_156' x1={50.5} y1={279} x2={313.5} y2={99.5} gradientUnits='userSpaceOnUse'>
         {/* old color is #C76408 */}
-        <stop stopColor='#FF00F5' />
+        <stop stopColor='#BD00FF' />
         <stop offset={1} stopColor='#B9B7BA' />
       </linearGradient>
     </defs>
