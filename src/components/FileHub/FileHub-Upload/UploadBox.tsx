@@ -20,7 +20,7 @@ import { MdOutlineFilePresent } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useUUID } from "../../../contexts/UUIDContext";
 import FileUploadCard from "./UploadCard";
-import { UploadMP3 } from "./UploadFiles";
+import { UploadMP3 } from "../../../util/UploadFiles";
 import { useFetch } from "../../../contexts/FetchContext";
 
 interface UploadBoxProps {
