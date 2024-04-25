@@ -76,11 +76,29 @@ export async function UpdateImageHTTP(
   const imageFileName = `${imageHash}${imageExtension}`;
   const blobName = `${userUUID}/${imageFileName}`;
   const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-  const exists = await blockBlobClient.exists();
 
-  if (!exists) {
-    // Upload the image to the container if it doesn't exist
-    await blockBlobClient.upload(file, file.length);
+  try {
+    const exists = await blockBlobClient.exists();
+    context.log(`Image exists: ${exists}`);
+
+    if (!exists) {
+      // Upload the image to the container if it doesn't exist
+      await blockBlobClient.upload(fileBuffer, fileBuffer.length);
+      context.log(`Image uploaded successfully: ${blobName}`);
+    } else {
+      context.log(`Image already exists: ${blobName}`);
+    }
+  } catch (error) {
+    context.log(`Error checking or uploading image: ${error.message}`);
+    return {
+      status: 500,
+      body: JSON.stringify({
+        error: "Failure: An error occurred while uploading the image.",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
   }
 
   // Update the songs in the database

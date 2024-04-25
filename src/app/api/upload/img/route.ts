@@ -6,26 +6,32 @@ export async function POST(request: Request) {
   const userUUID = requestBody.userUUID;
   const songIDs = requestBody.songIDs;
 
-  // Forward the request to the Azure Function
-  const response = await fetch(
-    "https://mp3functions.azurewebsites.net/api/UpdateImageHTTP?",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        file: Array.from(new Uint8Array(file)),
-        userUUID: userUUID,
-        songIDs: songIDs,
-      }),
+  try {
+    const response = await fetch(
+      "https://mp3functions.azurewebsites.net/api/UpdateImageHTTP?",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          file: Array.from(new Uint8Array(file)),
+          userUUID: userUUID,
+          songIDs: songIDs,
+        }),
+      }
+    );
+
+    // Check if the request was successful
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Azure Function error:", errorText);
+      throw new Error("Failed to update image");
     }
-  );
 
-  // Check if the request was successful
-  if (!response.ok) {
-    throw new Error("Failed to update image");
+    return Response.json({ status: "success" });
+  } catch (error) {
+    console.error("Error updating image:", error);
+    return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
-
-  return Response.json({ status: "success" });
 }
