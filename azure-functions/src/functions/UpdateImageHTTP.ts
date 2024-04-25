@@ -10,7 +10,7 @@ import * as fileType from "file-type";
 import { PrismaClient } from "@prisma/client";
 
 interface UIReqBody {
-  file: Buffer;
+  file: string;
   userUUID: string;
   songIDs: number[];
 }
@@ -43,7 +43,7 @@ export async function UpdateImageHTTP(
   }
 
   const { file, userUUID, songIDs } = body;
-  const fileBuffer = new Uint8Array(file);
+  const fileBuffer = Buffer.from(file, "base64");
 
   // Initialize Azure Blob Service Client
   const blobServiceClient = BlobServiceClient.fromConnectionString(
@@ -54,6 +54,7 @@ export async function UpdateImageHTTP(
 
   // Determine the image type (JPEG or PNG)
   const imageType = await fileType.fromBuffer(fileBuffer);
+  context.log(`Detected image type: ${JSON.stringify(imageType)}`);
   let imageExtension = "";
 
   if (imageType?.mime === "image/jpeg") {

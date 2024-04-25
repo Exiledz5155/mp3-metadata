@@ -87,8 +87,16 @@ export async function UploadIMG(
   songIDs: number[]
 ): Promise<Response> {
   // Create request body
+  const fileBase64 = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  // Create request body
   const requestBody = {
-    file: await file.arrayBuffer(),
+    file: fileBase64,
     userUUID: userUUID,
     songIDs: songIDs,
   };
