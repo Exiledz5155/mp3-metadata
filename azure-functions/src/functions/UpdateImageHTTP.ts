@@ -43,6 +43,7 @@ export async function UpdateImageHTTP(
   }
 
   const { file, userUUID, songIDs } = body;
+  const fileBuffer = new Uint8Array(file);
 
   // Initialize Azure Blob Service Client
   const blobServiceClient = BlobServiceClient.fromConnectionString(
@@ -52,7 +53,7 @@ export async function UpdateImageHTTP(
   const containerClient = blobServiceClient.getContainerClient(containerName);
 
   // Determine the image type (JPEG or PNG)
-  const imageType = await fileType.fromBuffer(file);
+  const imageType = await fileType.fromBuffer(fileBuffer);
   let imageExtension = "";
 
   if (imageType?.mime === "image/jpeg") {

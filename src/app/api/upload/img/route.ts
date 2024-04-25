@@ -15,7 +15,7 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        file: new Uint8Array(file),
+        file: Array.from(new Uint8Array(file)),
         userUUID: userUUID,
         songIDs: songIDs,
       }),
