@@ -84,7 +84,9 @@ function HoverableImage({ songs, onOpen }) {
       );
     }
 
-    if (images.length < 4) {
+    const commonProperties = calculateCommonProperties(songs);
+
+    if (images.length < 4 || commonProperties.image !== "various") {
       return (
         <Image
           src={images[0]}

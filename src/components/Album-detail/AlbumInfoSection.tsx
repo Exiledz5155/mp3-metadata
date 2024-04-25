@@ -1,14 +1,79 @@
 "use client";
 
-import { HStack, VStack, Text, Image } from "@chakra-ui/react";
+import {
+  HStack,
+  VStack,
+  Text,
+  Image,
+  Center,
+  Grid,
+  GridItem,
+  Icon,
+} from "@chakra-ui/react";
 import { Album, Song } from "../../types/types";
 import { calculateTotalDuration } from "../../util/duration";
 import { calculateCommonProperties } from "../../util/commonprops";
+import { MdOutlineQueueMusic } from "react-icons/md";
 
 export function AlbumInfoSection({ album }: { album: Album }) {
   const totalDuration = calculateTotalDuration(album.songs);
 
   const commonProperties = calculateCommonProperties(album.songs);
+
+  const renderImageDisplay = () => {
+    const images = album.songs
+      .map((song) => song.image)
+      .filter((image) => image);
+
+    if (images.length === 0) {
+      return (
+        <Center w="200px" h="200px" bg={"brand.200"}>
+          <Icon
+            as={MdOutlineQueueMusic}
+            w={20}
+            h={20}
+            color="brand.400"
+            bg={"brand.200"}
+            borderRadius={"5px"}
+          />
+        </Center>
+      );
+    }
+
+    if (images.length < 4 || commonProperties.image !== "various") {
+      return (
+        <Image
+          maxW={{ base: "100%", sm: "200px" }}
+          src={images[0]}
+          alt="Album Cover"
+          mr={"20px"}
+          borderRadius={"10px"}
+        />
+      );
+    }
+
+    return (
+      <Grid
+        templateColumns="repeat(2, 1fr)"
+        templateRows="repeat(2, 1fr)"
+        gap={2}
+        maxW={{ base: "100%", sm: "200px" }}
+        mr={"20px"}
+      >
+        {images.slice(0, 4).map((image, index) => (
+          <GridItem key={index}>
+            <Image
+              src={image}
+              alt={`Album Cover ${index + 1}`}
+              objectFit="cover"
+              borderRadius="5px"
+              boxSize="100%"
+            />
+          </GridItem>
+        ))}
+      </Grid>
+    );
+  };
 
   return (
     <HStack align={"start"}>

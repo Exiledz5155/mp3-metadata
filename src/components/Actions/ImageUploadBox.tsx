@@ -24,6 +24,7 @@ import { UploadIMG } from "../../util/UploadFiles";
 import { useUUID } from "../../contexts/UUIDContext";
 import { CheckIcon } from "@chakra-ui/icons";
 import { Album, Song } from "../../types/types";
+import { calculateCommonProperties } from "../../util/commonprops";
 
 interface HoverableImageProps {
   songs: Song[];
@@ -56,7 +57,9 @@ function HoverableImage({
       );
     }
 
-    if (images.length < 4) {
+    const commonProperties = calculateCommonProperties(songs);
+
+    if (images.length < 4 || commonProperties.image !== "various") {
       return (
         <Image
           src={images[0]}
