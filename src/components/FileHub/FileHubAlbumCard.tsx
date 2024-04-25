@@ -42,14 +42,14 @@ export function FileHubAlbumCard({
       justifyContent={"space-between"}
       transition="background-color 0.2s ease"
       _hover={
-        isClicked ? undefined : { bg: "brand.300", _dark: { bg: "brand.200" } }
+        isClicked ? undefined : { bg: "brand.400", _dark: { bg: "brand.300" } }
       }
       onClick={handleClick}
       borderRadius={"none"}
       borderBottomRadius={isLast ? "lg" : "none"} // If last time in mapped list, add radius
-      bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
+      bg={isClicked ? "brand.400" : isHovered ? "brand.400" : "transparent"} // Update the background color based on isClicked state and hover state
       _dark={{
-        bg: isClicked ? "brand.300" : isHovered ? "brand.200" : "transparent",
+        bg: isClicked ? "brand.400" : isHovered ? "brand.300" : "transparent",
       }}
       onMouseOver={handleHover} // Attach the hover event handler
       onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler

@@ -15,6 +15,7 @@ export function calculateCommonProperties(songs: Song[]): CommonSongProperties {
           year: song.year.toString(),
           genre: song.genre,
           duration: song.duration.toString(), // Initialize with first song's duration
+          image: song.image,
         };
       } else {
         const currentYear = song.year ? song.year : 0; // Skip invalid year data
@@ -51,6 +52,7 @@ export function calculateCommonProperties(songs: Song[]): CommonSongProperties {
           year: yearRange,
           genre: acc.genre === song.genre ? song.genre : "Various",
           duration: (parseInt(acc.duration) + song.duration).toString(), // Sum durations
+          image: acc.image === song.image ? song.image : "Various",
         };
       }
     },
@@ -65,6 +67,7 @@ export function calculateCommonProperties(songs: Song[]): CommonSongProperties {
       year: "Various",
       genre: "Various",
       duration: "0", // Initialize duration as '0'
+      image: "Various",
     }
   );
 }

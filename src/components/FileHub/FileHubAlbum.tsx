@@ -1,7 +1,7 @@
 // app/providers.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Center,
@@ -12,11 +12,22 @@ import {
   AccordionButton,
   AccordionPanel,
   Skeleton,
+  Grid,
+  GridItem,
+  Icon,
 } from "@chakra-ui/react";
 import { FileHubAlbumCard } from "./FileHubAlbumCard";
-import { Album, Song } from "../../types/types";
+import { Album, CommonSongProperties, Song } from "../../types/types";
+import { MdOutlineQueueMusic } from "react-icons/md";
+import { calculateCommonProperties } from "../../util/commonprops";
 
 export function FileHubAlbum({ album }: { album: Album }) {
+  const [commonProperties, setCommonProperties] =
+    useState<CommonSongProperties>(calculateCommonProperties(album.songs));
+
+  useEffect(() => {
+    setCommonProperties(calculateCommonProperties(album.songs));
+  }, [album]);
   // Use state to track whether the card is clicked
   const [isClicked, setIsClicked] = useState(false);
   // Function to handle the click event
@@ -42,6 +53,62 @@ export function FileHubAlbum({ album }: { album: Album }) {
   // State to track hover effect
   const [isHovered, setIsHovered] = useState(false);
 
+  const renderImageDisplay = () => {
+    const images = album.songs
+      .map((song) => song.image)
+      .filter((image) => image);
+
+    if (images.length === 0) {
+      return (
+        <Center w="55px" h="55px" bg={"brand.200"}>
+          <Icon
+            as={MdOutlineQueueMusic}
+            w={10}
+            h={10}
+            color="brand.400"
+            bg={"brand.200"}
+            borderRadius={"5px"}
+          />
+        </Center>
+      );
+    }
+
+    if (images.length < 4 || commonProperties.image !== "various") {
+      return (
+        <Center w="55px" h="55px">
+          <Image
+            src={images[0]}
+            alt={"Album Image Cover"}
+            borderRadius="base"
+            boxSize="45px"
+          />
+        </Center>
+      );
+    }
+
+    return (
+      <Grid
+        templateColumns="repeat(2, 1fr)"
+        templateRows="repeat(2, 1fr)"
+        gap={1}
+        w="55px"
+        h="55px"
+      >
+        {images.slice(0, 4).map((image, index) => (
+          <GridItem key={index}>
+            <Image
+              src={image}
+              alt={`Album Image Cover ${index + 1}`}
+              objectFit="cover"
+              borderRadius="base"
+              boxSize="100%"
+            />
+          </GridItem>
+        ))}
+      </Grid>
+    );
+  };
+
   return (
     <AccordionItem>
       <AccordionButton>
@@ -56,15 +123,15 @@ export function FileHubAlbum({ album }: { album: Album }) {
           _hover={
             isClicked
               ? undefined
-              : { bg: "brand.300", _dark: { bg: "brand.200" } }
+              : { bg: "brand.400", _dark: { bg: "brand.300" } }
           }
           onClick={handleClick} // Attach the click event handler
-          bg={isClicked ? "brand.300" : isHovered ? "brand.300" : "transparent"} // Update the background color based on isClicked state and hover state
+          bg={isClicked ? "brand.400" : isHovered ? "brand.400" : "transparent"} // Update the background color based on isClicked state and hover state
           _dark={{
             bg: isClicked
-              ? "brand.300"
+              ? "brand.400"
               : isHovered
-              ? "brand.200"
+              ? "brand.300"
               : "transparent",
           }}
           cursor={"pointer"}
@@ -72,17 +139,17 @@ export function FileHubAlbum({ album }: { album: Album }) {
           onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
         >
           <HStack spacing="10px">
-            <Center w="55px" h="55px">
-              {/* UPDATE TO KEEP CHECKING FOR FIRST IMAGE */}
+            {/* <Center w="55px" h="55px">
               <Image
                 src={album.songs[0].image}
                 alt={"Album Image Cover"}
                 borderRadius="base"
                 boxSize="45px"
               />
-            </Center>
+            </Center> */}
+            {renderImageDisplay()}
             <Text noOfLines={1} maxW={200} align="left">
-              {album.album}
+              {commonProperties.albumTitle}
             </Text>
           </HStack>
         </Box>

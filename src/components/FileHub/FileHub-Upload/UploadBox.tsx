@@ -14,12 +14,13 @@ import {
   Box,
   Text,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import { MdOutlineFilePresent } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useUUID } from "../../../contexts/UUIDContext";
 import FileUploadCard from "./UploadCard";
-import { UploadMP3 } from "./UploadFiles";
+import { UploadMP3 } from "../../../util/UploadFiles";
 import { useFetch } from "../../../contexts/FetchContext";
 
 interface UploadBoxProps {
@@ -28,6 +29,7 @@ interface UploadBoxProps {
 }
 
 export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
+  const toast = useToast();
   const { refetchData } = useFetch();
   const { uuid, generateUUID } = useUUID();
   const [files, setFiles] = useState<File[]>([]); // Initialize with an empty array
@@ -54,6 +56,13 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
     // Retrieve the file from the files array based on fileName
     const file = files.find((f) => f.name === fileName);
     if (!file) {
+      toast({
+        title: "Error",
+        description: "File is not an MP3.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
       console.error("File not found for retry:", fileName);
       return;
     }
@@ -107,6 +116,13 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
     if (files.length > 0) {
       for (const file of files) {
         if (!file.name.endsWith(".mp3")) {
+          toast({
+            title: "Error",
+            description: "File is not an MP3.",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+          });
           console.error(`Error: File ${file.name} is not a .mp3 file.`);
           continue;
         }
@@ -204,7 +220,13 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
             />
           </ModalHeader>
           <ModalBody pb={0}>
-            <Box border="2px dashed" p={4} borderRadius="2xl">
+            <Box
+              border="2px dashed"
+              p={4}
+              borderRadius="2xl"
+              borderColor={"whiteAlpha.400"}
+              bg={"whiteAlpha.50"}
+            >
               <Flex
                 direction="column"
                 justifyContent="center"

@@ -3,6 +3,8 @@ import * as ID3 from "node-id3";
 import { PrismaClient, Prisma } from "@prisma/client";
 import { BlobServiceClient } from "@azure/storage-blob";
 import musicMetadata from "music-metadata";
+import * as crypto from "crypto";
+import * as fileType from "file-type";
 
 async function safeDbOperation(operation, retries = 3, delay = 2000) {
   for (let i = 0; i < retries; i++) {
@@ -96,15 +98,37 @@ async function ProcessMetadataOnUpload(
       typeof tags.image !== "string" &&
       "imageBuffer" in tags.image
     ) {
-      // Store the image in a 'images/' directory within the same container
-      const imageFileName = `${fileName.replace(/\.[^/.]+$/, "")}-cover.jpg`; // Change file extension to .jpg
-      const blobName = `${userUUID}/${imageFileName}`; // Include the userUUID to keep user data separate
+      // Determine the image type (JPEG or PNG)
+      const imageType = await fileType.fromBuffer(tags.image.imageBuffer);
+      let imageExtension = "";
+
+      if (imageType?.mime === "image/jpeg") {
+        imageExtension = ".jpg";
+      } else if (imageType?.mime === "image/png") {
+        imageExtension = ".png";
+      } else {
+        context.log("Unsupported image format. Skipping image upload.");
+        return;
+      }
+
+      // Hash the image data
+      const hash = crypto.createHash("sha256");
+      hash.update(tags.image.imageBuffer);
+      const imageHash = hash.digest("hex");
+
+      // Check if an image with the same hash already exists in the container
+      const imageFileName = `${imageHash}${imageExtension}`;
+      const blobName = `${userUUID}/${imageFileName}`;
       const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-      await blockBlobClient.upload(
-        tags.image.imageBuffer,
-        tags.image.imageBuffer.length
-      );
+      const exists = await blockBlobClient.exists();
+      if (!exists) {
+        // If the image doesn't exist, upload it
+        await blockBlobClient.upload(
+          tags.image.imageBuffer,
+          tags.image.imageBuffer.length
+        );
+      }
 
       imagePath = blockBlobClient.url; // This is the URL to the uploaded image
     } else {
@@ -142,8 +166,8 @@ async function ProcessMetadataOnUpload(
       title: tags.title || null,
       artist: tags.artist || null,
       year: tags.year ? parseInt(tags.year, 10) : null,
-      albumTitle: tags.album || null,
-      albumArtist: tags.artist || null,
+      albumTitle: tags.album || "Untagged",
+      albumArtist: tags.performerInfo || null,
       trackNumber: tags.trackNumber ? parseInt(tags.trackNumber, 10) : null,
       image: imagePath || null, // Modify as per your logic
       genre: tags.genre || null,
