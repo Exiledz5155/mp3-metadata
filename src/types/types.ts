@@ -1,9 +1,6 @@
 export interface Album {
   album: string;
   artist: string;
-  albumArt: string; // remove this
-  year: number; // remove this
-  genre: string; // remove this
   songs: Song[];
 }
 
@@ -31,4 +28,5 @@ export interface CommonSongProperties {
   albumArtist: string;
   year: string;
   genre: string;
+  image: string;
 }

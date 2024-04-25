@@ -233,19 +233,18 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                 />
                 <HoverableImage
                   src={
-                    // commonProperties.image !== "Various"
-                    //   ? commonProperties.image
-                    //   :
-                    undefined
+                    commonProperties.image !== "Various"
+                      ? commonProperties.image
+                      : undefined
                   }
                   alt="Cover Art"
                   onOpen={handleOpenImageUploadBox}
                 />
-                {/* <ImageUploadBox
+                <ImageUploadBox
                   song={song}
                   isOpen={imageUploadBoxOpen}
                   onClose={handleImageUploadBoxClose}
-                ></ImageUploadBox> */}
+                ></ImageUploadBox>
               </GridItem>
 
               {/*TODO: Change on focus color for input */}
