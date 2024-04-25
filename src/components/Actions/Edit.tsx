@@ -357,7 +357,8 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   <Input
                     focusBorderColor="linear.200"
                     placeholder={commonProperties.albumArtist} // NEEDS TO BE CHANGED TO ALBUM ARTIST
-                    // value={albumArtist} onChange={(e) => setAlbumArtist(e.target.value)}
+                    value={albumArtist}
+                    onChange={(e) => setAlbumArtist(e.target.value)}
                     // REACTIVATE THIS ONCE NEW TYPES ARE IN
                   />
                 </FormControl>
