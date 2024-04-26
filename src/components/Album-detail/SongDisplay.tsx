@@ -49,17 +49,23 @@ export function SongDisplay({ album }: { album: Album }) {
   // sorting songs
   const getSortedSongs = () => {
     return [...album.songs].sort((a, b) => {
+      const isAsc = sortCriteria.order === "asc";
       let aValue = a[sortCriteria.field];
       let bValue = b[sortCriteria.field];
 
-      // If sorting by duration, convert the string to an integer
       if (sortCriteria.field === "duration") {
         aValue = parseInt(aValue);
         bValue = parseInt(bValue);
+        return isAsc ? aValue - bValue : bValue - aValue;
+      } else {
+        if (a[sortCriteria.field] < b[sortCriteria.field]) {
+          return isAsc ? -1 : 1;
+        }
+        if (a[sortCriteria.field] > b[sortCriteria.field]) {
+          return isAsc ? 1 : -1;
+        }
       }
-
-      const isAsc = sortCriteria.order === "asc";
-      return isAsc ? aValue - bValue : bValue - aValue;
+      return 0;
     });
   };
 
@@ -118,7 +124,7 @@ export function SongDisplay({ album }: { album: Album }) {
     setIsPropertiesModalOpen(false);
   };
 
-  // Selection handling
+  // Selection handling and right click
   const handleSelectSong = (
     songId: string,
     event: React.MouseEvent<HTMLDivElement>
@@ -191,23 +197,6 @@ export function SongDisplay({ album }: { album: Album }) {
         }
       });
 
-      // toast.promise(downloadPromise, {
-      //   loading: {
-      //     title: "Download in Progress",
-      //     description: "Please wait while your songs are being downloaded.",
-      //     containerStyle: {
-
-      //     },
-      //   },
-      //   success: {
-      //     title: "Download Completed",
-      //     description: "Your songs have been downloaded successfully.",
-      //   },
-      //   error: {
-      //     title: "Download Failed",
-      //     description: "An error occurred while downloading your songs.",
-      //   },
-      // });
       toast.promise(downloadPromise, {
         loading: {
           render: () => (
@@ -304,34 +293,35 @@ export function SongDisplay({ album }: { album: Album }) {
         mt={5}
       >
         <Flex align={"center"} w="30%">
+          {/* Work around for duration since it needs to be horizontally centered */}
           <Text
             as={"button"}
             fontSize={"md"}
             mx={"4"}
-            color={"white"}
             onClick={() => handleSortChange("trackNumber")}
             sx={{ userSelect: "none" }} // Disables text selection
+            color={"whiteAlpha.800"}
           >
             #
           </Text>
           <SortButton field="title">
-            <Text textAlign={"left"} noOfLines={1}>
+            <Text textAlign={"left"} noOfLines={1} color={"whiteAlpha.800"}>
               Title
             </Text>
           </SortButton>
         </Flex>
         <SortButton field="artist" w="30%">
-          <Text textAlign={"left"} noOfLines={1}>
+          <Text textAlign={"left"} noOfLines={1} color={"whiteAlpha.800"}>
             Artist(s)
           </Text>
         </SortButton>
         <SortButton field="album" w="30%">
-          <Text textAlign={"left"} noOfLines={1}>
+          <Text textAlign={"left"} noOfLines={1} color={"whiteAlpha.800"}>
             Album
           </Text>
         </SortButton>
         <SortButton field="duration" w="10%" center={true}>
-          <Text textAlign={"center"} noOfLines={1}>
+          <Text textAlign={"center"} noOfLines={1} color={"whiteAlpha.800"}>
             <Tooltip
               hasArrow
               label="Duration"
