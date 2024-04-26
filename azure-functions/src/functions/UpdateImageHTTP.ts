@@ -53,22 +53,22 @@ export async function UpdateImageHTTP(
   const containerClient = blobServiceClient.getContainerClient(containerName);
 
   // Determine the image type (JPEG or PNG)
-  // const imageType = await fileType.fromBuffer(fileBuffer);
-  // context.log(`Detected image type: ${JSON.stringify(imageType)}`);
-  // let imageExtension = "";
+  const imageType = await fileType.fromBuffer(fileBuffer);
+  context.log(`Detected image type: ${JSON.stringify(imageType)}`);
+  let imageExtension = "";
 
-  // if (imageType?.mime === "image/jpeg") {
-  //   imageExtension = ".jpg";
-  // } else if (imageType?.mime === "image/png") {
-  //   imageExtension = ".png";
-  // } else {
-  //   return {
-  //     status: 400,
-  //     body: "Unsupported image format.",
-  //   };
-  // }
+  if (imageType?.mime === "image/jpeg") {
+    imageExtension = ".jpg";
+  } else if (imageType?.mime === "image/png") {
+    imageExtension = ".png";
+  } else {
+    return {
+      status: 400,
+      body: "Unsupported image format.",
+    };
+  }
 
-  let imageExtension = ".jpg";
+  // let imageExtension = ".jpg";
 
   // Hash the image data
   const hash = crypto.createHash("sha256");

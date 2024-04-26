@@ -25,9 +25,11 @@ interface AlbumDisplayItemProps {
 export function AlbumDisplayItem({ album }: AlbumDisplayItemProps) {
   const commonProperties = calculateCommonProperties(album.songs);
   const renderImageDisplay = () => {
-    const images = album.songs
+    const imagesSet = album.songs
       .map((song) => song.image)
       .filter((image) => image);
+
+    const images = Array.from(imagesSet);
 
     if (images.length === 0) {
       return (
@@ -44,7 +46,7 @@ export function AlbumDisplayItem({ album }: AlbumDisplayItemProps) {
       );
     }
 
-    if (images.length < 4 || commonProperties.image !== "various") {
+    if (images.length < 4 || commonProperties.image !== "Various") {
       return (
         <Image
           src={images[0]}
@@ -117,7 +119,7 @@ export function AlbumDisplayItem({ album }: AlbumDisplayItemProps) {
               {/* TODO: NOT ENOUGH EMPTY SPACE BELOW JUICE WLRD TEXT */}
               {/* i.e, empty space between contents and border is not even all around */}
               <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
-                <Text align="left" noOfLines={1}>
+                <Text align="left" noOfLines={1} fontSize={"xs"}>
                   {commonProperties.albumArtist}
                 </Text>
               </GridItem>
