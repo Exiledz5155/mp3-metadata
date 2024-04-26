@@ -74,44 +74,6 @@ export default function ImageUploadBox({
     }
   };
 
-  // const handleSave = async () => {
-  //   if (selectedFile) {
-  //     try {
-  //       const songIDs = songs.map((song) => parseInt(song.id, 10));
-  //       const response = await UploadIMG(selectedFile, uuid, songIDs);
-  //       if (response.ok) {
-  //         toast({
-  //           title: "Success",
-  //           description: "Image uploaded successfully.",
-  //           status: "success",
-  //           duration: 5000,
-  //           isClosable: true,
-  //         });
-  //         refetchData();
-  //         onClose(); // Close the modal after successful upload
-  //       } else {
-  //         throw new Error("Failed to upload image.");
-  //       }
-  //     } catch (error) {
-  //       toast({
-  //         title: "Upload Error",
-  //         description: error.message,
-  //         status: "error",
-  //         duration: 5000,
-  //         isClosable: true,
-  //       });
-  //     }
-  //   } else {
-  //     toast({
-  //       title: "No File",
-  //       description: "No file has been selected.",
-  //       status: "warning",
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //   }
-  // };
-
   const handleSave = async () => {
     if (selectedFile) {
       try {
