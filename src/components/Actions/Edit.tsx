@@ -30,6 +30,7 @@ import axios from "axios";
 import { useFetch } from "../../contexts/FetchContext";
 import { calculateCommonProperties } from "../../util/commonprops";
 import { CommonSongProperties } from "../../types/types";
+import { renderImageFromSongEdit } from "../../util/generateimage";
 
 interface EditComponentProps {
   isOpen: boolean;
@@ -37,150 +38,38 @@ interface EditComponentProps {
   songs: Song[];
 }
 
-interface MetadataProps {
-  albumTitle: string;
-  albumArtist: string;
-  trackNumber: number;
-  title: string;
-  artist: string;
-  year: number;
-  genre: string;
-}
-
-// DIFFERENT FROM HoverableImage in ImageUploadBox
-function HoverableImage({ songs, onOpen, commonProperties }) {
-  const [isHover, setIsHover] = useState(false);
-
-  const renderImageDisplay = () => {
-    if (!songs || songs.length === 0) {
-      return (
-        <Center height="100%" bg={"brand.200"}>
-          <Icon
-            as={MdOutlineQueueMusic}
-            w={20}
-            h={20}
-            color="brand.400"
-            bg={"brand.200"}
-            borderRadius={"5px"}
-          />
-        </Center>
-      );
-    }
-
-    const images = songs.map((song) => song.image).filter((image) => image);
-
-    if (images.length === 0) {
-      return (
-        <Center height="100%" bg={"brand.200"}>
-          <Icon
-            as={MdOutlineQueueMusic}
-            w={20}
-            h={20}
-            color="brand.400"
-            bg={"brand.200"}
-            borderRadius={"5px"}
-          />
-        </Center>
-      );
-    }
-
-    if (images.length < 4 || commonProperties.image !== "Various") {
-      return (
-        <Image
-          src={images[0]}
-          alt="Song Image"
-          objectFit="cover"
-          borderRadius="5px"
-          fit="cover"
-          boxSize="100%"
-          transition="opacity 0.3s ease-in-out"
-          style={{ opacity: isHover ? 0.3 : 1 }}
-        />
-      );
-    }
-
-    return (
-      <Grid
-        templateColumns="repeat(2, 1fr)"
-        templateRows="repeat(2, 1fr)"
-        gap={1}
-        height="100%"
-      >
-        {images.slice(0, 4).map((image, index) => (
-          <GridItem key={index}>
-            <Image
-              src={image}
-              alt={`Song Image ${index + 1}`}
-              objectFit="cover"
-              borderRadius="5px"
-              fit="cover"
-              boxSize="100%"
-              transition="opacity 0.3s ease-in-out"
-              style={{ opacity: isHover ? 0.3 : 1 }}
-            />
-          </GridItem>
-        ))}
-      </Grid>
-    );
-  };
-
-  return (
-    <Box
-      position="relative"
-      height="100%"
-      width="100%"
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
-      onClick={onOpen}
-      cursor="pointer"
-    >
-      {renderImageDisplay()}
-      <Box
-        position="absolute"
-        top="50%"
-        left="50%"
-        transform="translate(-50%, -50%)"
-        style={{ opacity: isHover ? 1 : 0 }}
-        transition="opacity 0.3s ease-in-out"
-        borderRadius={"5px"}
-      >
-        <Icon as={IoCloudUploadOutline} w={8} h={8} color="white" />
-      </Box>
-    </Box>
-  );
-}
-
 export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
   const { refetchData } = useFetch();
+  const [isHover, setIsHover] = useState(false);
+  const [imageDisplay, setImageDisplay] = useState<JSX.Element | null>(null);
+  const [imageUploadBoxOpen, setImageUploadBoxOpen] = useState(false);
   const [commonProperties, setCommonProperties] =
     useState<CommonSongProperties>(calculateCommonProperties(songs));
+
+  const handleImageUploadBoxClose = () => {
+    setImageUploadBoxOpen(false);
+  };
+
+  const handleOpenImageUploadBox = () => {
+    setImageUploadBoxOpen(true);
+  };
 
   useEffect(() => {
     setCommonProperties(calculateCommonProperties(songs));
   }, [songs]);
 
+  useEffect(() => {
+    setImageDisplay(renderImageFromSongEdit(songs, commonProperties, isHover));
+  }, [songs, commonProperties, isHover]);
+
   const { uuid, generateUUID } = useUUID();
 
-  // TODO: Make this upload actually go to correct blob container
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       console.log(file);
     }
-  };
-
-  // In your Edit component, manage the ImageUploadBox modal separately
-  const [imageUploadBoxOpen, setImageUploadBoxOpen] = useState(false);
-
-  const handleImageUploadBoxClose = () => {
-    setImageUploadBoxOpen(false);
-    // Do not call onClose here; onClose should only close the Edit modal
-  };
-
-  // When you open the ImageUploadBox from within the Edit modal
-  const handleOpenImageUploadBox = () => {
-    setImageUploadBoxOpen(true);
   };
 
   const multipleSongsSelected = songs.length > 1;
@@ -193,6 +82,21 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
   const [genre, setGenre] = useState("");
   const [albumArtist, setAlbumArtist] = useState("");
   const [trackNumber, setTrackNumber] = useState("");
+
+  const resetForm = () => {
+    setTitle("");
+    setArtist("");
+    setAlbum("");
+    setYear("");
+    setGenre("");
+    setAlbumArtist("");
+    setTrackNumber("");
+  };
+
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
 
   const handleSave = async () => {
     if (year && isNaN(Number(year))) {
@@ -217,7 +121,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
       return;
     }
 
-    const metadata = {} as Partial<MetadataProps>;
+    const metadata = {} as Partial<Song>;
     if (title) metadata.title = title;
     if (artist) metadata.artist = artist;
     if (album) metadata.albumTitle = album;
@@ -227,12 +131,10 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
     if (trackNumber) metadata.trackNumber = parseInt(trackNumber, 10);
 
     const body = {
-      uuid: uuid, // Replace with actual session UUID
+      uuid: uuid,
       ids: songs.map((song) => song.id),
       metadata,
     };
-
-    console.log(body);
 
     // Expand this error handling
     try {
@@ -261,7 +163,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
       <Modal
         closeOnOverlayClick={false}
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={handleClose}
         size="xl"
       >
         <ModalOverlay />
@@ -283,19 +185,34 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   hidden
                   ref={fileInputRef}
                 />
-                <HoverableImage
-                  songs={songs}
-                  onOpen={handleOpenImageUploadBox}
-                  commonProperties={commonProperties}
-                />
+                <Box
+                  position="relative"
+                  height="100%"
+                  width="100%"
+                  onMouseEnter={() => setIsHover(true)}
+                  onMouseLeave={() => setIsHover(false)}
+                  onClick={handleOpenImageUploadBox}
+                  cursor="pointer"
+                >
+                  {imageDisplay}
+                  <Box
+                    position="absolute"
+                    top="50%"
+                    left="50%"
+                    transform="translate(-50%, -50%)"
+                    style={{ opacity: isHover ? 1 : 0 }}
+                    transition="opacity 0.3s ease-in-out"
+                    borderRadius={"5px"}
+                  >
+                    <Icon as={IoCloudUploadOutline} w={8} h={8} color="white" />
+                  </Box>
+                </Box>
                 <ImageUploadBox
                   songs={songs}
                   isOpen={imageUploadBoxOpen}
                   onClose={handleImageUploadBoxClose}
                 ></ImageUploadBox>
               </GridItem>
-
-              {/*TODO: Change on focus color for input */}
               <GridItem rowSpan={6} colSpan={22}>
                 <FormControl isDisabled={multipleSongsSelected}>
                   <FormLabel>Song Title</FormLabel>

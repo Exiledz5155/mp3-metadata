@@ -10,12 +10,11 @@ export interface Song {
   title: string;
   duration: string;
   artist: string;
-  albumTitle: string; // rename to albumTitle
+  albumTitle: string;
   albumArtist: string;
   year: number;
   genre: string;
   image: string;
-  // add imageHash: string;
 }
 
 export interface CommonSongProperties {
@@ -29,4 +28,12 @@ export interface CommonSongProperties {
   year: string;
   genre: string;
   image: string;
+}
+
+export interface HoverableImageProps {
+  songs: Song[];
+  onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  fileInputRef: React.RefObject<HTMLInputElement>;
+  commonProperties: CommonSongProperties;
+  selectedFile: File | null;
 }

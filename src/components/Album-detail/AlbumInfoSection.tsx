@@ -15,10 +15,11 @@ import { calculateTotalDuration } from "../../util/duration";
 import { calculateCommonProperties } from "../../util/commonprops";
 import { MdOutlineQueueMusic } from "react-icons/md";
 import { useState, useEffect } from "react";
+import { renderImageFromAlbumLarge } from "../../util/generateimage";
 
 export function AlbumInfoSection({ album }: { album: Album }) {
   const totalDuration = calculateTotalDuration(album.songs);
-
+  const [imageDisplay, setImageDisplay] = useState<JSX.Element | null>(null);
   const [commonProperties, setCommonProperties] =
     useState<CommonSongProperties>(calculateCommonProperties(album.songs));
 
@@ -26,64 +27,13 @@ export function AlbumInfoSection({ album }: { album: Album }) {
     setCommonProperties(calculateCommonProperties(album.songs));
   }, [album]);
 
-  const renderImageDisplay = () => {
-    const images = album.songs
-      .map((song) => song.image)
-      .filter((image) => image);
-
-    if (images.length === 0) {
-      return (
-        <Center w="200px" h="200px" bg={"brand.200"}>
-          <Icon
-            as={MdOutlineQueueMusic}
-            w={20}
-            h={20}
-            color="brand.400"
-            bg={"brand.200"}
-            borderRadius={"5px"}
-          />
-        </Center>
-      );
-    }
-
-    if (images.length < 4 || commonProperties.image !== "various") {
-      return (
-        <Image
-          maxW={{ base: "100%", sm: "200px" }}
-          src={images[0]}
-          alt="Album Cover"
-          mr={"20px"}
-          borderRadius={"10px"}
-        />
-      );
-    }
-
-    return (
-      <Grid
-        templateColumns="repeat(2, 1fr)"
-        templateRows="repeat(2, 1fr)"
-        gap={2}
-        maxW={{ base: "100%", sm: "200px" }}
-        mr={"20px"}
-      >
-        {images.slice(0, 4).map((image, index) => (
-          <GridItem key={index}>
-            <Image
-              src={image}
-              alt={`Album Cover ${index + 1}`}
-              objectFit="cover"
-              borderRadius="5px"
-              boxSize="100%"
-            />
-          </GridItem>
-        ))}
-      </Grid>
-    );
-  };
+  useEffect(() => {
+    setImageDisplay(renderImageFromAlbumLarge(album, commonProperties));
+  }, [album, commonProperties]);
 
   return (
     <HStack align={"start"}>
-      {renderImageDisplay()}
+      {imageDisplay}
       <VStack align={"start"} w={"100%"}>
         <Text fontSize={"4xl"} as="b" noOfLines={1}>
           {commonProperties.albumTitle}
