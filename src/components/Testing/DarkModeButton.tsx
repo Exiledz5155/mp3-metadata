@@ -9,9 +9,11 @@ export function DarkModeButton() {
   return (
     <IconButton
       onClick={toggleColorMode}
-      icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+      icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
       aria-label={"toggle"}
-      position='absolute' top={2} right={2}
+      position="absolute"
+      top={2}
+      right={2}
     />
   );
 }

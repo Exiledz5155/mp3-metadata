@@ -23,8 +23,6 @@ import React from "react";
 import { FileHubAlbum } from "../FileHub/FileHubAlbum";
 import { useFetch } from "../../contexts/FetchContext";
 
-// const albumData = require("../../../public/albums.json");
-
 export function AlbumDisplay() {
   const { fetchAlbums } = useFetch();
   const { uuid, generateUUID } = useUUID();

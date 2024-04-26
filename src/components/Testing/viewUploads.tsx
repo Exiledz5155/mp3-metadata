@@ -1,7 +1,7 @@
 // viewUploads.tsx
-"use client"
-import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid'; // Import uuid function
+"use client";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid"; // Import uuid function
 
 interface UploadedFile {
   userId: string; // Unique user UUID
@@ -15,7 +15,7 @@ export default function UploadedFilesList() {
   const [userUUID, setUserUUID] = useState<string | null>(null);
 
   const clearSessionStorage = () => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       console.log("Clearing session storage");
       sessionStorage.clear();
       setUploadedFiles([]); // Clear the state as well
@@ -25,38 +25,40 @@ export default function UploadedFilesList() {
 
   useEffect(() => {
     // Check if window is defined to make sure this runs on the client side
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       console.log("sessionStorage is available");
 
       // Try to retrieve user UUID from session storage
-      const storedUserUUID = sessionStorage.getItem('userUUID');
+      const storedUserUUID = sessionStorage.getItem("userUUID");
 
       if (storedUserUUID) {
         setUserUUID(storedUserUUID);
       } else {
         // If user UUID doesn't exist, generate a new one
         const newUserUUID = uuidv4();
-        sessionStorage.setItem('userUUID', newUserUUID);
+        sessionStorage.setItem("userUUID", newUserUUID);
         setUserUUID(newUserUUID);
       }
 
-      const storedFiles = JSON.parse(sessionStorage.getItem('uploadedFiles') || '[]');
-      
+      const storedFiles = JSON.parse(
+        sessionStorage.getItem("uploadedFiles") || "[]"
+      );
+
       // Add user UUID and unique file UUID to each uploaded file
-      const filesWithUUID = storedFiles.map(file => ({
+      const filesWithUUID = storedFiles.map((file) => ({
         ...file,
-        userId: userUUID || '', // Use the userUUID from state or an empty string if not available
+        userId: userUUID || "", // Use the userUUID from state or an empty string if not available
         fileId: uuidv4(),
       }));
 
       setUploadedFiles(filesWithUUID);
 
       // Add beforeunload event listener
-      window.addEventListener('beforeunload', clearSessionStorage);
+      window.addEventListener("beforeunload", clearSessionStorage);
 
       // Cleanup the event listener when the component unmounts
       return () => {
-        window.removeEventListener('beforeunload', clearSessionStorage);
+        window.removeEventListener("beforeunload", clearSessionStorage);
       };
     } else {
       console.log("session storage is unavailable");
@@ -64,7 +66,7 @@ export default function UploadedFilesList() {
   }, [userUUID]); // Add userUUID as a dependency
 
   return (
-    <div style={{ color: 'white', padding: '20px', backgroundColor: '#333' }}>
+    <div style={{ color: "white", padding: "20px", backgroundColor: "#333" }}>
       <style>
         {`
           /* CSS Styles */
@@ -107,4 +109,4 @@ export default function UploadedFilesList() {
       )}
     </div>
   );
-};
+}
