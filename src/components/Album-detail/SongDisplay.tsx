@@ -226,46 +226,6 @@ export function SongDisplay({ album }: { album: Album }) {
           title: "Download Failed",
           description: "An error occurred while downloading your songs.",
         },
-        // success: {
-        //   render: () => (
-        //     <Box
-        //       display="flex"
-        //       alignItems="center"
-        //       bg="green.200"
-        //       color="black"
-        //       p={3}
-        //       borderRadius="md"
-        //       boxShadow="lg"
-        //     >
-        //       <CheckCircleIcon boxSize={6} mr={3} />
-        //       <Box>
-        //         <strong>Download Completed</strong>
-        //         <br />
-        //         Your songs have been downloaded successfully.
-        //       </Box>
-        //     </Box>
-        //   ),
-        // },
-        // error: {
-        //   render: () => (
-        //     <Box
-        //       display="flex"
-        //       alignItems="center"
-        //       bg="red.300"
-        //       color="black"
-        //       p={3}
-        //       borderRadius="md"
-        //       boxShadow="lg"
-        //     >
-        //       <WarningIcon boxSize={6} mr={3} />
-        //       <Box>
-        //         <strong>Download Failed</strong>
-        //         <br />
-        //         An error occurred while downloading your songs.
-        //       </Box>
-        //     </Box>
-        //   ),
-        // },
       });
     } catch (error) {
       console.error("Error during download:", error);
