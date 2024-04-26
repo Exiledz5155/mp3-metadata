@@ -1,7 +1,16 @@
 // app/providers.tsx
 "use client";
 
-import { Card, CardBody, Divider, Box } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  Divider,
+  Box,
+  Toast,
+  background,
+  Spinner,
+  useToast,
+} from "@chakra-ui/react";
 import { SongGridCard } from "./SongGridCard";
 import { SongGridLabel } from "./SongGridLabel";
 import { AlbumInfoSection } from "./AlbumInfoSection";
@@ -11,7 +20,7 @@ import ActionMenu from "../Actions/ActionMenu";
 import Edit from "../Actions/Edit";
 import Properties from "../Actions/Properties";
 import { useUUID } from "../../contexts/UUIDContext";
-import { useToast, Spinner } from "@chakra-ui/react";
+import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
 
 export function SongDisplay({ album }: { album: Album }) {
   const { uuid } = useUUID();
@@ -100,18 +109,84 @@ export function SongDisplay({ album }: { album: Album }) {
         }
       });
 
+      // toast.promise(downloadPromise, {
+      //   loading: {
+      //     title: "Download in Progress",
+      //     description: "Please wait while your songs are being downloaded.",
+      //     containerStyle: {
+
+      //     },
+      //   },
+      //   success: {
+      //     title: "Download Completed",
+      //     description: "Your songs have been downloaded successfully.",
+      //   },
+      //   error: {
+      //     title: "Download Failed",
+      //     description: "An error occurred while downloading your songs.",
+      //   },
+      // });
       toast.promise(downloadPromise, {
         loading: {
-          title: "Download in Progress",
-          description: "Please wait while your songs are being downloaded.",
+          render: () => (
+            <Box
+              display="flex"
+              alignItems="center"
+              // bg="linear.200"
+              bgGradient="linear(to-r, linear.100, linear.200)"
+              color="black"
+              p={3}
+              borderRadius="md"
+              boxShadow="lg"
+            >
+              <Spinner size="md" mr={3} />
+              <Box>
+                <strong>Download in Progress</strong>
+                <br />
+                Please wait while your songs are being downloaded.
+              </Box>
+            </Box>
+          ),
         },
         success: {
-          title: "Download Completed",
-          description: "Your songs have been downloaded successfully.",
+          render: () => (
+            <Box
+              display="flex"
+              alignItems="center"
+              bg="green.200"
+              color="black"
+              p={3}
+              borderRadius="md"
+              boxShadow="lg"
+            >
+              <CheckCircleIcon boxSize={6} mr={3} />
+              <Box>
+                <strong>Download Completed</strong>
+                <br />
+                Your songs have been downloaded successfully.
+              </Box>
+            </Box>
+          ),
         },
         error: {
-          title: "Download Failed",
-          description: "An error occurred while downloading your songs.",
+          render: () => (
+            <Box
+              display="flex"
+              alignItems="center"
+              bg="red.300"
+              color="black"
+              p={3}
+              borderRadius="md"
+              boxShadow="lg"
+            >
+              <WarningIcon boxSize={6} mr={3} />
+              <Box>
+                <strong>Download Failed</strong>
+                <br />
+                An error occurred while downloading your songs.
+              </Box>
+            </Box>
+          ),
         },
       });
     } catch (error) {
