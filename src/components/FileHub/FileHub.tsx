@@ -29,7 +29,7 @@ import {
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 import React, { useEffect, useState } from "react";
-import FileUploadBox from "./FileHub-Upload/UploadBox";
+import FileUploadBox from "./UploadBox";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import ActionMenu from "../Actions/ActionMenu";
 import { useUUID } from "../../contexts/UUIDContext";
