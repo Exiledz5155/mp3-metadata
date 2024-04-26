@@ -10,6 +10,11 @@ import {
   background,
   Spinner,
   useToast,
+  Flex,
+  HStack,
+  Tooltip,
+  Text,
+  Button,
 } from "@chakra-ui/react";
 import { SongGridCard } from "./SongGridCard";
 import { SongGridLabel } from "./SongGridLabel";
@@ -20,7 +25,14 @@ import ActionMenu from "../Actions/ActionMenu";
 import Edit from "../Actions/Edit";
 import Properties from "../Actions/Properties";
 import { useUUID } from "../../contexts/UUIDContext";
-import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
+import {
+  CheckCircleIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  Icon,
+  TimeIcon,
+  WarningIcon,
+} from "@chakra-ui/icons";
 
 export function SongDisplay({ album }: { album: Album }) {
   const { uuid } = useUUID();
@@ -29,9 +41,73 @@ export function SongDisplay({ album }: { album: Album }) {
   const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
+  const [sortCriteria, setSortCriteria] = useState({
+    field: "trackNumber",
+    order: "asc",
+  });
+
+  // sorting songs
+  const getSortedSongs = () => {
+    return [...album.songs].sort((a, b) => {
+      const isAsc = sortCriteria.order === "asc";
+      let aValue = a[sortCriteria.field];
+      let bValue = b[sortCriteria.field];
+
+      if (sortCriteria.field === "duration") {
+        aValue = parseInt(aValue);
+        bValue = parseInt(bValue);
+        return isAsc ? aValue - bValue : bValue - aValue;
+      } else {
+        if (a[sortCriteria.field] < b[sortCriteria.field]) {
+          return isAsc ? -1 : 1;
+        }
+        if (a[sortCriteria.field] > b[sortCriteria.field]) {
+          return isAsc ? 1 : -1;
+        }
+      }
+      return 0;
+    });
+  };
+
+  const sortedSongs = getSortedSongs();
+
+  const handleSortChange = (field) => {
+    setSortCriteria((prev) => ({
+      field,
+      order: prev.field === field && prev.order === "asc" ? "desc" : "asc",
+    }));
+  };
+
+  const SortButton = ({ field, children, w = "auto", center = false }) => {
+    const isActive = sortCriteria.field === field;
+    const directionIcon =
+      sortCriteria.order === "asc" ? (
+        <ChevronUpIcon color={"green.200"} />
+      ) : (
+        <ChevronDownIcon color={"red.300"} />
+      );
+
+    return (
+      <Button
+        variant="unstyled"
+        onClick={() => handleSortChange(field)}
+        _focus={{ boxShadow: "none" }}
+        w={w}
+      >
+        <Flex
+          align="center"
+          justify={center ? "center" : "start"}
+          color="white"
+          w="100%"
+        >
+          {children}
+          {isActive && directionIcon}
+        </Flex>
+      </Button>
+    );
+  };
 
   // Action Menu handling
-
   const openEditModal = () => {
     setIsEditModalOpen(true);
   };
@@ -48,18 +124,30 @@ export function SongDisplay({ album }: { album: Album }) {
     setIsPropertiesModalOpen(false);
   };
 
+  // Selection handling and right click
   const handleSelectSong = (
     songId: string,
     event: React.MouseEvent<HTMLDivElement>
   ) => {
+    // Get the current sorted order of songs
+    const currentSortedOrder = getSortedSongs();
+
     if (event.shiftKey) {
-      const allSongIds = album.songs.map((song) => song.id);
+      // Find indices in the sorted array
       const lastSelectedId = selectedSongs[selectedSongs.length - 1];
-      const currentIdx = allSongIds.indexOf(songId);
-      const lastIdx = allSongIds.indexOf(lastSelectedId);
-      const start = Math.min(currentIdx, lastIdx);
-      const end = Math.max(currentIdx, lastIdx);
-      setSelectedSongs(allSongIds.slice(start, end + 1));
+      const currentIdx = currentSortedOrder.findIndex(
+        (song) => song.id === songId
+      );
+      const lastIdx = currentSortedOrder.findIndex(
+        (song) => song.id === lastSelectedId
+      );
+      const range = [currentIdx, lastIdx].sort((a, b) => a - b);
+
+      // Select the range of songs based on sorted order
+      const newSelectedSongs = currentSortedOrder
+        .slice(range[0], range[1] + 1)
+        .map((song) => song.id);
+      setSelectedSongs(newSelectedSongs);
     } else if (event.ctrlKey || event.metaKey) {
       setSelectedSongs((prev) =>
         prev.includes(songId)
@@ -87,8 +175,8 @@ export function SongDisplay({ album }: { album: Album }) {
     setRightClickPosition({ x: event.clientX, y: event.clientY });
   };
 
+  // Handle download
   const toast = useToast();
-
   const handleDownload = async () => {
     const songIds = selectedSongObjects.map((song) => song.id);
     const downloadUrl = `/api/download?uuid=${uuid}&ids=${songIds.join(",")}`;
@@ -212,9 +300,58 @@ export function SongDisplay({ album }: { album: Album }) {
       maxHeight="calc(100vh - 90px)"
       overflow={"hidden"}
     >
-      {/* UPDATE THIS WITH PROPS */}
-      <AlbumInfoSection album={album}></AlbumInfoSection>
-      <SongGridLabel></SongGridLabel>
+      <AlbumInfoSection album={album} />
+      <HStack
+        align={"left"}
+        borderRadius={"10px"}
+        position={"sticky"}
+        bg="brand.100"
+        top="0px"
+        mt={5}
+      >
+        <Flex align={"center"} w="30%">
+          {/* Work around for duration since it needs to be horizontally centered */}
+          <Text
+            as={"button"}
+            fontSize={"md"}
+            mx={"4"}
+            onClick={() => handleSortChange("trackNumber")}
+            sx={{ userSelect: "none" }} // Disables text selection
+            color={"whiteAlpha.800"}
+          >
+            #
+          </Text>
+          <SortButton field="title">
+            <Text textAlign={"left"} noOfLines={1} color={"whiteAlpha.800"}>
+              Title
+            </Text>
+          </SortButton>
+        </Flex>
+        <SortButton field="artist" w="30%">
+          <Text textAlign={"left"} noOfLines={1} color={"whiteAlpha.800"}>
+            Artist(s)
+          </Text>
+        </SortButton>
+        <SortButton field="album" w="30%">
+          <Text textAlign={"left"} noOfLines={1} color={"whiteAlpha.800"}>
+            Album
+          </Text>
+        </SortButton>
+        <SortButton field="duration" w="10%" center={true}>
+          <Text textAlign={"center"} noOfLines={1} color={"whiteAlpha.800"}>
+            <Tooltip
+              hasArrow
+              label="Duration"
+              aria-label="Duration"
+              placement="top"
+              bg={"brand.300"}
+              color={"white"}
+            >
+              <Icon as={TimeIcon} />
+            </Tooltip>
+          </Text>
+        </SortButton>
+      </HStack>
       <Divider position={"sticky"} top="6" mb={2} />
       <CardBody
         m={"0"}
@@ -240,14 +377,13 @@ export function SongDisplay({ album }: { album: Album }) {
         }}
       >
         <Box>
-          {album.songs.map((song, index) => (
+          {sortedSongs.map((song, index) => (
             <SongGridCard
               key={song.id}
               song={song}
               isSelected={selectedSongs.includes(song.id)}
               onClick={handleSelectSong}
               onRightClick={handleRightClick}
-              // isLast={index === album.songs.length - 1}
             />
           ))}
         </Box>
@@ -262,8 +398,6 @@ export function SongDisplay({ album }: { album: Album }) {
           onDownloadClick={handleDownload}
         />
       )}
-      {/* I have no idea why this works do not delete it.
-      All hail Claude */}
       <Edit
         isOpen={isEditModalOpen}
         onClose={closeEditModal}

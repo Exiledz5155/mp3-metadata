@@ -39,11 +39,11 @@ export function AlbumInfoSection({ album }: { album: Album }) {
           {commonProperties.albumTitle}
           {/* {album.album} */}
         </Text>
-        <Text fontSize={"xl"} as="b" noOfLines={1}>
+        <Text fontSize={"xl"} noOfLines={1}>
           {commonProperties.albumArtist}
         </Text>
-        <Text fontSize={"md"} as="b" noOfLines={1}>
-          {commonProperties.year} • {album.songs.length} songs • {totalDuration}
+        <Text fontSize={"md"} noOfLines={1}>
+          {commonProperties.year} • {album.songs.length} songs, {totalDuration}
         </Text>
       </VStack>
     </HStack>
