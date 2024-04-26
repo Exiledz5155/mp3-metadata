@@ -196,24 +196,6 @@ export function SongDisplay({ album }: { album: Album }) {
           throw new Error("Download failed.");
         }
       });
-
-      // toast.promise(downloadPromise, {
-      //   loading: {
-      //     title: "Download in Progress",
-      //     description: "Please wait while your songs are being downloaded.",
-      //     containerStyle: {
-
-      //     },
-      //   },
-      //   success: {
-      //     title: "Download Completed",
-      //     description: "Your songs have been downloaded successfully.",
-      //   },
-      //   error: {
-      //     title: "Download Failed",
-      //     description: "An error occurred while downloading your songs.",
-      //   },
-      // });
       toast.promise(downloadPromise, {
         loading: {
           render: () => (
@@ -237,45 +219,53 @@ export function SongDisplay({ album }: { album: Album }) {
           ),
         },
         success: {
-          render: () => (
-            <Box
-              display="flex"
-              alignItems="center"
-              bg="green.200"
-              color="black"
-              p={3}
-              borderRadius="md"
-              boxShadow="lg"
-            >
-              <CheckCircleIcon boxSize={6} mr={3} />
-              <Box>
-                <strong>Download Completed</strong>
-                <br />
-                Your songs have been downloaded successfully.
-              </Box>
-            </Box>
-          ),
+          title: "Download Completed",
+          description: "Your songs have been downloaded successfully.",
         },
         error: {
-          render: () => (
-            <Box
-              display="flex"
-              alignItems="center"
-              bg="red.300"
-              color="black"
-              p={3}
-              borderRadius="md"
-              boxShadow="lg"
-            >
-              <WarningIcon boxSize={6} mr={3} />
-              <Box>
-                <strong>Download Failed</strong>
-                <br />
-                An error occurred while downloading your songs.
-              </Box>
-            </Box>
-          ),
+          title: "Download Failed",
+          description: "An error occurred while downloading your songs.",
         },
+        // success: {
+        //   render: () => (
+        //     <Box
+        //       display="flex"
+        //       alignItems="center"
+        //       bg="green.200"
+        //       color="black"
+        //       p={3}
+        //       borderRadius="md"
+        //       boxShadow="lg"
+        //     >
+        //       <CheckCircleIcon boxSize={6} mr={3} />
+        //       <Box>
+        //         <strong>Download Completed</strong>
+        //         <br />
+        //         Your songs have been downloaded successfully.
+        //       </Box>
+        //     </Box>
+        //   ),
+        // },
+        // error: {
+        //   render: () => (
+        //     <Box
+        //       display="flex"
+        //       alignItems="center"
+        //       bg="red.300"
+        //       color="black"
+        //       p={3}
+        //       borderRadius="md"
+        //       boxShadow="lg"
+        //     >
+        //       <WarningIcon boxSize={6} mr={3} />
+        //       <Box>
+        //         <strong>Download Failed</strong>
+        //         <br />
+        //         An error occurred while downloading your songs.
+        //       </Box>
+        //     </Box>
+        //   ),
+        // },
       });
     } catch (error) {
       console.error("Error during download:", error);

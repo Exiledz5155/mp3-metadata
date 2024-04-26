@@ -1,19 +1,9 @@
 "use client";
 
-import {
-  HStack,
-  VStack,
-  Text,
-  Image,
-  Center,
-  Grid,
-  GridItem,
-  Icon,
-} from "@chakra-ui/react";
+import { HStack, VStack, Text } from "@chakra-ui/react";
 import { Album, CommonSongProperties, Song } from "../../types/types";
 import { calculateTotalDuration } from "../../util/duration";
 import { calculateCommonProperties } from "../../util/commonprops";
-import { MdOutlineQueueMusic } from "react-icons/md";
 import { useState, useEffect } from "react";
 import { renderImageFromAlbumLarge } from "../../util/generateimage";
 
