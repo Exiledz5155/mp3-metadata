@@ -1,6 +1,14 @@
 // imageDisplay.js
 import React, { useState } from "react";
-import { Center, Grid, GridItem, Image, Icon, Box } from "@chakra-ui/react";
+import {
+  Center,
+  Grid,
+  GridItem,
+  Image,
+  Icon,
+  Box,
+  Input,
+} from "@chakra-ui/react";
 import { MdOutlineQueueMusic } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import {
