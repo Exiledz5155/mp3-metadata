@@ -37,7 +37,6 @@ export function AlbumInfoSection({ album }: { album: Album }) {
       <VStack align={"start"} w={"100%"}>
         <Text fontSize={"4xl"} as="b" noOfLines={1}>
           {commonProperties.albumTitle}
-          {/* {album.album} */}
         </Text>
         <Text fontSize={"xl"} noOfLines={1}>
           {commonProperties.albumArtist}
