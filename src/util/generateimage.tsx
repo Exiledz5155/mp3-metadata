@@ -127,7 +127,7 @@ export function renderImageFromAlbumSmall(album, commonProperties) {
               src={image}
               alt={`Album Image Cover ${index + 1}`}
               objectFit="cover"
-              borderRadius="base"
+              borderRadius="sm"
               boxSize="100%"
             />
           </GridItem>
