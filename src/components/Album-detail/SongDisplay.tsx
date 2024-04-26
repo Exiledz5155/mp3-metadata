@@ -391,8 +391,6 @@ export function SongDisplay({ album }: { album: Album }) {
           onDownloadClick={handleDownload}
         />
       )}
-      {/* I have no idea why this works do not delete it.
-      All hail Claude */}
       <Edit
         isOpen={isEditModalOpen}
         onClose={closeEditModal}
