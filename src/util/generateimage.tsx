@@ -13,11 +13,11 @@ import {
 export function renderImageFromAlbumLarge(album, commonProperties) {
   // Map over the songs in the album, add all the unique URLs to a set
   const imagesSet = new Set(
-    album.songs.map((song) => song.image).filter((image) => image)
+    album.songs
+      .map((song) => song.image)
+      .filter((image): image is string => typeof image === "string")
   );
-  const images = Array.from(imagesSet); // Convert set to array
-
-  console.log(images);
+  const images = Array.from(imagesSet) as string[];
 
   if (images.length === 0) {
     return (
@@ -72,9 +72,11 @@ export function renderImageFromAlbumLarge(album, commonProperties) {
 export function renderImageFromAlbumSmall(album, commonProperties) {
   // Map over the songs in the album, add all the unique URLs to a set
   const imagesSet = new Set(
-    album.songs.map((song) => song.image).filter((image) => image)
+    album.songs
+      .map((song) => song.image)
+      .filter((image): image is string => typeof image === "string")
   );
-  const images = Array.from(imagesSet); // Convert set to array
+  const images = Array.from(imagesSet) as string[]; // Convert set to array
 
   if (images.length === 0) {
     return (
@@ -129,9 +131,11 @@ export function renderImageFromAlbumSmall(album, commonProperties) {
 
 export function renderImageFromSongEdit(songs, commonProperties, isHover) {
   const imagesSet = new Set(
-    songs.map((song) => song.image).filter((image) => image)
+    songs
+      .map((song) => song.image)
+      .filter((image): image is string => typeof image === "string")
   );
-  const images = Array.from(imagesSet); // Convert set to array
+  const images = Array.from(imagesSet) as string[];
 
   if (!songs || songs.length === 0) {
     return (
