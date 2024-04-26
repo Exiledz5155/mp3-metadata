@@ -197,6 +197,23 @@ export function SongDisplay({ album }: { album: Album }) {
         }
       });
 
+      // toast.promise(downloadPromise, {
+      //   loading: {
+      //     title: "Download in Progress",
+      //     description: "Please wait while your songs are being downloaded.",
+      //     containerStyle: {
+
+      //     },
+      //   },
+      //   success: {
+      //     title: "Download Completed",
+      //     description: "Your songs have been downloaded successfully.",
+      //   },
+      //   error: {
+      //     title: "Download Failed",
+      //     description: "An error occurred while downloading your songs.",
+      //   },
+      // });
       toast.promise(downloadPromise, {
         loading: {
           render: () => (
