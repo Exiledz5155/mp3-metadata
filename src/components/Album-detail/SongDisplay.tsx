@@ -202,7 +202,6 @@ export function SongDisplay({ album }: { album: Album }) {
             <Box
               display="flex"
               alignItems="center"
-              // bg="linear.200"
               bgGradient="linear(to-r, linear.100, linear.200)"
               color="black"
               p={3}
