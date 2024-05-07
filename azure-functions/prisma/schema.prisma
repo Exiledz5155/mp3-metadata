@@ -27,6 +27,7 @@ model Session {
   id       String    @id
   albums   Album[]  
   mp3Files mp3File[] 
+  createdAt DateTime  @default(now())
 }
 
 model Album {
