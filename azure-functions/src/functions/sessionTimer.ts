@@ -1,4 +1,4 @@
-import { BlobServiceClient } from "@azure/storage-blob";
+import { BlobServiceClient, RestError } from "@azure/storage-blob"; // Added RestError for specific error handling
 import { PrismaClient } from "@prisma/client";
 import { app, Timer, InvocationContext } from "@azure/functions";
 const { subDays } = require("date-fns");
@@ -12,11 +12,11 @@ export async function sessionTimer(
 
   try {
     context.log("Entered Try Block Session Timer");
-    const thirtyDaysAgo = subDays(new Date(), 30);
+    const oneDayOld = subDays(new Date(), 1);
     const expiredSessions = await prisma.session.findMany({
       where: {
         createdAt: {
-          lt: thirtyDaysAgo, // 'lt' stands for 'less than'
+          lt: oneDayOld, // 'lt' stands for 'less than'
         },
       },
       select: {
@@ -41,7 +41,7 @@ export async function sessionTimer(
       const operationPromises = expiredSessions.map(async (session) => {
         const sessionId = session.id;
         const blobs = containerClient.listBlobsFlat({
-          prefix: `${sessionId}/`, // Ensure the prefix ends with a '/' to denote a folder
+          prefix: `${sessionId}/`,
         });
         for await (const blob of blobs) {
           const blobClient = containerClient.getBlobClient(blob.name);
@@ -53,8 +53,16 @@ export async function sessionTimer(
         };
       });
     }
-  } catch {
-    context.log("catch block of session timer");
+  } catch (error) {
+    // Catching specific errors and logging them
+    if (error instanceof RestError) {
+      context.log("Error occurred during Blob deletion:", error.message);
+    } else {
+      context.log("Error occurred:", error);
+    }
+  } finally {
+    // Ensuring proper cleanup of Prisma client
+    await prisma.$disconnect();
   }
 }
 
