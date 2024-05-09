@@ -74,6 +74,7 @@ const editedFile = editMetadata(file, metadata);
 - Uploaded files are stored securely using Azure Blob Storage.
 - API routes to Cloud Operations secured.
 - Session IDs and uploaded files are quickly discarded after use.
+- Handling local optimizations securely.s
 
 For any inquiries, feel free to contact the project maintainers:
 
