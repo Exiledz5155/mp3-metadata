@@ -54,11 +54,11 @@ bun dev
 
 ## Database Schema (SUBJECT TO CHANGE)
 
-mySQL for efficient blob querying, a brief overview of the database schema. This can include tables for user sessions, uploaded files, and any other relevant information.
+mySQL for efficient blob querying, the database is supported by Prisma, providing an Object-Relational-Mapping to simply database operations.
 
 ## API
 
-We might want to add details about how to interact with our system. We wil need to flesh this out later.
+[Working on This]
 
 ## Examples (SUBJECT TO CHANGE)
 
@@ -72,6 +72,7 @@ const editedFile = editMetadata(file, metadata);
 ## Security Considerations
 
 - Uploaded files are stored securely using Azure Blob Storage.
+- API routes to Cloud Operations secured.
 - Session IDs and uploaded files are quickly discarded after use.
 
 For any inquiries, feel free to contact the project maintainers:
