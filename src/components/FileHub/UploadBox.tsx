@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Flex,
   Button,
@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { MdOutlineFilePresent } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
+import { useDropzone } from "react-dropzone";
 import { useUUID } from "../../contexts/UUIDContext";
 import FileUploadCard from "./UploadCard";
 import { UploadMP3 } from "../../util/UploadFiles";
@@ -33,6 +34,10 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
   const { refetchData } = useFetch();
   const { uuid, generateUUID } = useUUID();
   const [files, setFiles] = useState<File[]>([]); // Initialize with an empty array
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setFiles(acceptedFiles);
+  }, []);
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
   const [uploadStatus, setUploadStatus] = useState<{
     [key: string]: {
       inProgress: boolean;
@@ -226,12 +231,14 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
               borderRadius="2xl"
               borderColor={"whiteAlpha.400"}
               bg={"whiteAlpha.50"}
+              {...getRootProps({ className: "dropzone" })}
             >
               <Flex
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
               >
+                <Box {...getInputProps()} />
                 <Icon as={IoCloudUploadOutline} boxSize={12} mb={2} />
                 <Text fontWeight="bold">Drag and drop files here</Text>
                 <Text color="#8E95A3">or</Text>
