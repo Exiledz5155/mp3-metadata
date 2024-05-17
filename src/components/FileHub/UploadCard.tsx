@@ -23,6 +23,7 @@ interface FileUploadCardProps {
   inProgress: boolean;
   isComplete: boolean;
   onRetry: () => void; // Callback function for retry
+  onDelete: () => void;
 }
 
 export default function UploadCard({
@@ -32,10 +33,17 @@ export default function UploadCard({
   inProgress,
   isComplete,
   onRetry,
+  onDelete,
 }: FileUploadCardProps) {
   const handleRetryClick = () => {
     if (onRetry) {
       onRetry();
+    }
+  };
+
+  const handleDeleteClick = () => {
+    if (onDelete) {
+      onDelete();
     }
   };
 
@@ -44,7 +52,7 @@ export default function UploadCard({
   const correctedInProgress = uploadFailed ? false : inProgress;
 
   return (
-    <Box border="0px" mb={4} p={4} borderRadius="2xl">
+    <Box border="0px" p={4} borderRadius="2xl" _hover={{ bg: "brand.300" }}>
       <Flex align="center">
         <Icon as={FiFileText} boxSize={6} />
         <Flex flex={1} pl={6} direction="column">
@@ -85,6 +93,7 @@ export default function UploadCard({
               boxSize={6}
               style={{ cursor: "pointer" }}
               mr={5}
+              onClick={handleDeleteClick}
             />
             <Icon
               as={FiRotateCcw}
@@ -100,6 +109,8 @@ export default function UploadCard({
               as={BsFillTrashFill}
               boxSize={6}
               style={{ cursor: "pointer" }}
+              onClick={handleDeleteClick}
+              _hover={{ color: "linear.100" }}
             />
           )
         )}
