@@ -56,12 +56,17 @@ export default function UploadCard({
       <Flex align="center">
         <Icon as={FiFileText} boxSize={6} />
         <Flex flex={1} pl={6} direction="column">
-          <Text mb="-1" textAlign="left" noOfLines={1}>
+          <Text mb="-1" textAlign="left" noOfLines={1} userSelect="none">
             {fileName}
           </Text>
           {/* MAYBE USE BADGE INSTEAD OF TEXT */}
           {uploadFailed ? ( // If upload has failed, display "Upload Failed" in red
-            <Text fontSize="xs" textAlign="left" color="#FF7074">
+            <Text
+              fontSize="xs"
+              textAlign="left"
+              color="#FF7074"
+              userSelect="none"
+            >
               Upload Failed
             </Text>
           ) : isComplete ? ( // If upload is complete, display "Upload Success" in green
@@ -71,6 +76,7 @@ export default function UploadCard({
               // bgGradient="linear(to-r, linear.100, linear.200)"
               // bgClip="text"
               color="linear.200"
+              userSelect="none"
             >
               Upload Success
             </Text>
@@ -81,6 +87,7 @@ export default function UploadCard({
               textAlign="left"
               color="#8E95A3"
               mb={correctedInProgress ? "-2" : "0"}
+              userSelect="none"
             >
               {formatFileSize(fileSizeInBytes)}
             </Text>

@@ -6,6 +6,7 @@ export interface Album {
 
 export interface Song {
   id: string;
+  filePath: string;
   trackNumber: number;
   title: string;
   duration: string;
@@ -19,13 +20,13 @@ export interface Song {
 
 export interface CommonSongProperties {
   id: string;
-  trackNumber: string;
+  trackNumber: string; // was number
   title: string;
   duration: string;
   artist: string;
   albumTitle: string;
   albumArtist: string;
-  year: string;
+  year: string; // was number
   genre: string;
   image: string;
 }
