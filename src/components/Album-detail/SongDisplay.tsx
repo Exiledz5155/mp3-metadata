@@ -177,6 +177,12 @@ export function SongDisplay({ album }: { album: Album }) {
     setRightClickPosition({ x: event.clientX, y: event.clientY });
   };
 
+  const handleContainerClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      setSelectedSongs([]);
+    }
+  };
+
   // Handle download
   const toast = useToast();
   const handleDownload = async () => {
@@ -250,6 +256,7 @@ export function SongDisplay({ album }: { album: Album }) {
       rounded={"xl"}
       maxHeight="calc(100vh - 90px)"
       overflow={"hidden"}
+      onClick={handleContainerClick} // deselects everything when clicked on container
     >
       <AlbumInfoSection album={album} />
       <HStack
