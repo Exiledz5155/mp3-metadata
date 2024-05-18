@@ -33,10 +33,12 @@ import {
   TimeIcon,
   WarningIcon,
 } from "@chakra-ui/icons";
+import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
 
 export function SongDisplay({ album }: { album: Album }) {
   const { uuid } = useUUID();
-  const [selectedSongs, setSelectedSongs] = useState<string[]>([]);
+  // const [selectedSongs, setSelectedSongs] = useState<string[]>([]);
+  const { selectedSongs, setSelectedSongs } = useSelectedSongs();
   const [rightClickedSong, setRightClickedSong] = useState<Song | null>(null);
   const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
