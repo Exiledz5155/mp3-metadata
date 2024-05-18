@@ -17,7 +17,7 @@ import { chakra } from "@chakra-ui/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { FileHub } from "../../components/FileHub/FileHub";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DragHandleIcon } from "@chakra-ui/icons";
 
 const LinkButton = chakra<typeof NextLink, NextLinkProps>(NextLink, {
@@ -30,8 +30,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [size, setSize] = useState({ x: 350 });
+  const [size, setSize] = useState(() => {
+    const storedSize = localStorage.getItem('sideBarSize');
+    return storedSize ? JSON.parse(storedSize) : { x: 350 };
+  });
   const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("sideBarSize", JSON.stringify(size));
+  }, [size]);
 
   const handler = (mouseDownEvent) => {
     setIsDragging(true);
