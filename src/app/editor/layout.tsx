@@ -30,15 +30,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [size, setSize] = useState(() => {
-    const storedSize = localStorage.getItem('sideBarSize');
-    return storedSize ? JSON.parse(storedSize) : { x: 350 };
-  });
+  const [size, setSize] = useState({ x: 350 });
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("sideBarSize", JSON.stringify(size));
-  }, [size]);
+    let storedSize = localStorage.getItem("sideBarSize");
+    setSize(storedSize ? JSON.parse(storedSize) : { x: 350 });
+  }, []);
 
   const handler = (mouseDownEvent) => {
     setIsDragging(true);
@@ -56,6 +54,7 @@ export default function RootLayout({
       setSize((currentSize) => ({
         x: newX,
       }));
+      localStorage.setItem("sideBarSize", JSON.stringify({ x: newX }));
     }
     function onMouseUp() {
       setIsDragging(false);
