@@ -326,7 +326,12 @@ export function SongDisplay({ album }: { album: Album }) {
         }}
       >
         <Box>
-          {sortedSongs.map((song, index) => (
+          {sortedSongs.length === 0 ? (
+            <Box>
+              Upload files to start
+            </Box>
+          ) : (
+          sortedSongs.map((song, index) => (
             <SongGridCard
               key={song.id}
               song={song}
@@ -334,7 +339,7 @@ export function SongDisplay({ album }: { album: Album }) {
               onClick={handleSelectSong}
               onRightClick={handleRightClick}
             />
-          ))}
+          )))}
         </Box>
       </CardBody>
       {rightClickedSong && (

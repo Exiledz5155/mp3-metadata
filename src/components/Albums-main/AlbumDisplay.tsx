@@ -106,11 +106,13 @@ export function AlbumDisplay() {
               ))}
             </React.Fragment>
           ) : (
-            albums &&
-            albums.length > 0 &&
-            albums.map((album, index) => (
-              <AlbumDisplayItem key={index} album={album} />
-            ))
+            albums ? (
+              albums.length === 0 ? 
+                  (<Box> Upload to start </Box>) : 
+                  (albums.map((album, index) => (
+                    <AlbumDisplayItem key={index} album={album} />
+                  )))
+               ) : (<Box> Albums is NULL </Box>)
           )}
         </SimpleGrid>
       </CardBody>
