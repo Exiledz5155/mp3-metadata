@@ -363,20 +363,10 @@ export function FileHub() {
                 ))}
               </React.Fragment>
             ) : (
-              //   albums &&
-              //   albums.length > 0 &&
-              //   albums.map((album, index) => (
-              //     <FileHubAlbum
-              //       key={index}
-              //       album={album}
-              //       onRightClick={handleRightClick}
-              //     />
-              //   ))
-              // )}
               albums &&
               albums.length > 0 &&
               albums.map((album, index) => {
-                console.log(album.album); // Log the album object here
+                // console.log(album.album); // REMOVE
                 return (
                   <FileHubAlbum
                     key={index}
