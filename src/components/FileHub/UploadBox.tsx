@@ -102,6 +102,17 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
       return;
     }
 
+    if (file.size > 30000000) {
+      toast({
+        title: "File too large",
+        description: "File is larger than 30 MB.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
     try {
       // Attempt to upload the file again
       const response = await UploadMP3(file, uuid);

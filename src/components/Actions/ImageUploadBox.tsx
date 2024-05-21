@@ -70,6 +70,16 @@ export default function ImageUploadBox({
         });
         return;
       }
+      if (file.size > 10000000) {
+        toast({
+          title: "Image too large",
+          description: "Image is larger than 10 MB.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
       setSelectedFile(file);
     }
   };
