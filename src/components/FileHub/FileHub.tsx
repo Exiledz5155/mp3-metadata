@@ -77,8 +77,23 @@ export function FileHub() {
   const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
+  const [toView, setToView] = useState(false);
+  const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
 
-  const handleRightClick = (
+  const handleAlbumRightClick = (
+    album: Album,
+    event: React.MouseEvent<HTMLDivElement>
+  ) => {
+    event.preventDefault();
+    setIsRightClicked(true);
+    setRightClickPosition({ x: event.clientX, y: event.clientY });
+    setToView(true); // Set toView to true for FileHubAlbum right-click
+    setSelectedAlbum(album); // Set selected album
+    const songIds = album.songs.map((song) => song.id); // Extract song IDs
+    setSelectedSongs(songIds); // Set the selected songs
+  };
+
+  const handleCardRightClick = (
     songId: string,
     event: React.MouseEvent<HTMLDivElement>
   ) => {
@@ -88,6 +103,7 @@ export function FileHub() {
     }
     setIsRightClicked(true);
     setRightClickPosition({ x: event.clientX, y: event.clientY });
+    setToView(false);
   };
 
   const closeMenu = () => {
@@ -371,7 +387,8 @@ export function FileHub() {
                   <FileHubAlbum
                     key={index}
                     album={album}
-                    onRightClick={handleRightClick}
+                    onAlbumRightClick={handleAlbumRightClick}
+                    onCardRightClick={handleCardRightClick}
                   />
                 );
               })
@@ -379,12 +396,14 @@ export function FileHub() {
           </Accordion>
           {isRightClicked && (
             <ActionMenu
+              album={selectedAlbum}
               songs={selectedSongObjects}
               position={rightClickPosition}
               onClose={closeMenu}
               onEditClick={openEditModal}
               onPropertiesClick={openPropertiesModal}
-              onDownloadClick={handleDownload} //
+              onDownloadClick={handleDownload}
+              toView={toView}
             />
           )}
           <Edit

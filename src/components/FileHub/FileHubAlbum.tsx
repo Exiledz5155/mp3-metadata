@@ -17,11 +17,16 @@ import { renderImageFromAlbumSmall } from "../../util/generateimage";
 
 export function FileHubAlbum({
   album,
-  onRightClick,
+  onCardRightClick,
+  onAlbumRightClick,
 }: {
   album: Album;
-  onRightClick: (
+  onCardRightClick: (
     songId: string,
+    event: React.MouseEvent<HTMLDivElement>
+  ) => void;
+  onAlbumRightClick: (
+    album: Album,
     event: React.MouseEvent<HTMLDivElement>
   ) => void;
 }) {
@@ -59,48 +64,52 @@ export function FileHubAlbum({
 
   return (
     <AccordionItem>
-      <AccordionButton>
-        <Box
-          as="button"
-          w="100%"
-          borderTopRadius={"lg"}
-          borderBottomRadius={isClicked ? "none" : "lg"}
-          h="55px"
-          overflow="hidden"
-          transition="background-color 0.2s ease"
-          _hover={
-            isClicked
-              ? undefined
-              : { bg: "brand.400", _dark: { bg: "brand.300" } }
-          }
-          onClick={handleClick} // Attach the click event handler
-          bg={isClicked ? "brand.400" : isHovered ? "brand.400" : "transparent"} // Update the background color based on isClicked state and hover state
-          _dark={{
-            bg: isClicked
-              ? "brand.400"
-              : isHovered
-              ? "brand.300"
-              : "transparent",
-          }}
-          cursor={"pointer"}
-          onMouseOver={handleHover} // Attach the hover event handler
-          onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
-        >
-          <HStack spacing="10px">
-            {imageDisplay}
-            <Text noOfLines={1} maxW={200} align="left">
-              {commonProperties.albumTitle}
-            </Text>
-          </HStack>
-        </Box>
-      </AccordionButton>
+      <Box onContextMenu={(e) => onAlbumRightClick(album, e)}>
+        <AccordionButton>
+          <Box
+            as="button"
+            w="100%"
+            borderTopRadius={"lg"}
+            borderBottomRadius={isClicked ? "none" : "lg"}
+            h="55px"
+            overflow="hidden"
+            transition="background-color 0.2s ease"
+            _hover={
+              isClicked
+                ? undefined
+                : { bg: "brand.400", _dark: { bg: "brand.300" } }
+            }
+            onClick={handleClick} // Attach the click event handler
+            bg={
+              isClicked ? "brand.400" : isHovered ? "brand.400" : "transparent"
+            } // Update the background color based on isClicked state and hover state
+            _dark={{
+              bg: isClicked
+                ? "brand.400"
+                : isHovered
+                ? "brand.300"
+                : "transparent",
+            }}
+            cursor={"pointer"}
+            onMouseOver={handleHover} // Attach the hover event handler
+            onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
+          >
+            <HStack spacing="10px">
+              {imageDisplay}
+              <Text noOfLines={1} maxW={200} align="left">
+                {commonProperties.albumTitle}
+              </Text>
+            </HStack>
+          </Box>
+        </AccordionButton>
+      </Box>
       <AccordionPanel>
         {album.songs.map((song, index) => (
           <FileHubAlbumCard
             key={song.id}
             isLast={index === album.songs.length - 1}
             song={song}
-            onRightClick={onRightClick}
+            onRightClick={onCardRightClick}
           />
         ))}
       </AccordionPanel>

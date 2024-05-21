@@ -348,12 +348,12 @@ export function SongDisplay({ album }: { album: Album }) {
       </CardBody>
       {rightClickedSong && (
         <ActionMenu
-          songs={selectedSongObjects}
           position={rightClickPosition}
           onClose={closeMenu}
           onEditClick={openEditModal}
           onPropertiesClick={openPropertiesModal}
           onDownloadClick={handleDownload}
+          toView={false}
         />
       )}
       <Edit
