@@ -321,7 +321,7 @@ export function FileHub() {
                 boxShadow: "none",
               },
             }}
-            onContextMenu={handleRightClick}
+            // onContextMenu={handleRightClick} idk what this is
           >
             {!isLoaded ? (
               // "Lets you group elements without a wrapper node"
