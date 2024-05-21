@@ -80,7 +80,7 @@ export default function ActionMenu({
         bg={"brand.200"}
         borderRadius={borderRad}
       >
-        {toView ? (
+        {toView && album ? (
           <>
             <Link href={`/editor/${encodeURIComponent(album.album)}`} passHref>
               <Button
