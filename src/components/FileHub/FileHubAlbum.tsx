@@ -4,25 +4,27 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  Center,
   HStack,
-  Image,
   Text,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-  Skeleton,
-  Grid,
-  GridItem,
-  Icon,
 } from "@chakra-ui/react";
 import { FileHubAlbumCard } from "./FileHubAlbumCard";
 import { Album, CommonSongProperties, Song } from "../../types/types";
-import { MdOutlineQueueMusic } from "react-icons/md";
 import { calculateCommonProperties } from "../../util/commonprops";
 import { renderImageFromAlbumSmall } from "../../util/generateimage";
 
-export function FileHubAlbum({ album }: { album: Album }) {
+export function FileHubAlbum({
+  album,
+  onRightClick,
+}: {
+  album: Album;
+  onRightClick: (
+    songId: string,
+    event: React.MouseEvent<HTMLDivElement>
+  ) => void;
+}) {
   const [imageDisplay, setImageDisplay] = useState<JSX.Element | null>(null);
   const [commonProperties, setCommonProperties] =
     useState<CommonSongProperties>(calculateCommonProperties(album.songs));
@@ -98,6 +100,7 @@ export function FileHubAlbum({ album }: { album: Album }) {
             key={song.id}
             isLast={index === album.songs.length - 1}
             song={song}
+            onRightClick={onRightClick}
           />
         ))}
       </AccordionPanel>

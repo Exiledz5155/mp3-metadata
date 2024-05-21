@@ -337,3 +337,60 @@ export function HoverableImage({
     </Box>
   );
 }
+
+export function renderImageAlbumItem(album, commonProperties) {
+  const imagesSet = new Set(
+    album.songs
+      .map((song) => song.image)
+      .filter((image): image is string => typeof image === "string")
+  );
+  const images = Array.from(imagesSet) as string[];
+
+  if (images.length === 0) {
+    return (
+      <Center w="100%" h="100%" bg={"brand.200"}>
+        <Icon
+          as={MdOutlineQueueMusic}
+          w={10}
+          h={10}
+          color="brand.400"
+          bg={"brand.200"}
+          borderRadius={"5px"}
+        />
+      </Center>
+    );
+  }
+
+  if (images.length < 4 || commonProperties.image !== "Various") {
+    return (
+      <Image
+        src={images[0]}
+        p={2}
+        borderRadius={"15"}
+        alt={"Album Cover"}
+        w="100%"
+      />
+    );
+  }
+
+  return (
+    <Grid
+      templateColumns="repeat(2, 1fr)"
+      templateRows="repeat(2, 1fr)"
+      gap={1}
+      p={2}
+    >
+      {images.slice(0, 4).map((image, index) => (
+        <GridItem key={index}>
+          <Image
+            src={image}
+            alt={`Album Cover ${index + 1}`}
+            objectFit="cover"
+            borderRadius="5px"
+            boxSize="100%"
+          />
+        </GridItem>
+      ))}
+    </Grid>
+  );
+}

@@ -6,6 +6,7 @@ export interface Album {
 
 export interface Song {
   id: string;
+  filePath: string;
   trackNumber: number;
   title: string;
   duration: string;

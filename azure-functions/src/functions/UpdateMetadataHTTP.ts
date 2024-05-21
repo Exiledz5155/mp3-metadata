@@ -93,6 +93,28 @@ export async function UpdateMetadataHTTP(
 
     await Promise.all(updates);
 
+    // After updates, check and delete any empty albums
+    const albumsToCheck = await prisma.album.findMany({
+      where: {
+        sessionId: uuid,
+      },
+      include: {
+        mp3Files: true,
+      },
+    });
+
+    const emptyAlbums = albumsToCheck.filter(
+      (album) => album.mp3Files.length === 0
+    );
+
+    const deletePromises = emptyAlbums.map((album) =>
+      prisma.album.delete({
+        where: { id: album.id },
+      })
+    );
+
+    await Promise.all(deletePromises);
+
     return {
       status: 200,
       body: JSON.stringify({
