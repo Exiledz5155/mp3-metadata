@@ -53,45 +53,39 @@ export async function UpdateMetadataHTTP(
   // TODO: Prevent total failiure if promise fails
   // i.e partial updates are good
   try {
-    const updates = ids.map(async (id) => {
-      // Check if albumTitle is being updated and handle album association
-      if (metadata.albumTitle) {
-        // Try to find an existing album with the new title
-        let album = await prisma.album.findFirst({
+    // Use a transaction to ensure atomicity
+    await prisma.$transaction(async (prisma) => {
+      const albumTitle = metadata.albumTitle;
+      let album;
+
+      if (albumTitle) {
+        // Try to find or create an album with the new title within the transaction
+        album = await prisma.album.upsert({
           where: {
-            title: metadata.albumTitle,
+            title_sessionId: {
+              title: albumTitle,
+              sessionId: uuid,
+            },
+          },
+          create: {
+            title: albumTitle,
+            artist: metadata.albumArtist,
             sessionId: uuid,
           },
-        });
-
-        // If no existing album is found, create a new one
-        if (!album) {
-          album = await prisma.album.create({
-            data: {
-              title: metadata.albumTitle,
-              artist: metadata.albumArtist,
-              // You might need to add additional fields such as session ID or artist here
-              sessionId: uuid, // This needs to be dynamically set based on your requirements
-            },
-          });
-          console.log("Created new album");
-        }
-
-        // Update the mp3File with the new albumId and other metadata
-        return prisma.mp3File.update({
-          where: { id: id },
-          data: { ...metadata, albumId: album.id },
-        });
-      } else {
-        // If not updating albumTitle, proceed with a standard update
-        return prisma.mp3File.update({
-          where: { id: id },
-          data: metadata,
+          update: {},
         });
       }
-    });
 
-    await Promise.all(updates);
+      // Update the mp3File records
+      await Promise.all(
+        ids.map((id) =>
+          prisma.mp3File.update({
+            where: { id: id },
+            data: album ? { ...metadata, albumId: album.id } : metadata,
+          })
+        )
+      );
+    });
 
     // After updates, check and delete any empty albums
     const albumsToCheck = await prisma.album.findMany({
