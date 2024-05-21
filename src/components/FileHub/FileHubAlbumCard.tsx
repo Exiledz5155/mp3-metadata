@@ -53,15 +53,15 @@ export function FileHubAlbumCard({
       onMouseLeave={() => setIsHovered(false)}
     >
       <VStack alignItems={"left"} pl={"15px"} py={"5px"} gap={"0px"}>
-        <Text fontSize={"15px"} noOfLines={1} pt={"2px"}>
+        <Text fontSize={"15px"} noOfLines={1} pt={"2px"} userSelect="none">
           {song.title}
         </Text>
-        <Text fontSize={"10px"} noOfLines={1} pb={"3px"}>
+        <Text fontSize={"10px"} noOfLines={1} pb={"3px"} userSelect="none">
           {song.artist}
         </Text>
       </VStack>
       <Flex alignItems={"center"} pr={"15px"} maxWidth={"40%"}>
-        <Text fontFamily={"mono"} fontSize={"15px"}>
+        <Text fontFamily={"mono"} fontSize={"15px"} userSelect="none">
           {convertTime(song.duration)}
         </Text>
       </Flex>
