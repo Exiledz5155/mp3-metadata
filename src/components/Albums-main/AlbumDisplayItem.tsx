@@ -13,9 +13,11 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { Album, Song } from "../../types/types";
+import { Album, CommonSongProperties, Song } from "../../types/types";
 import { MdOutlineQueueMusic } from "react-icons/md";
 import { calculateCommonProperties } from "../../util/commonprops";
+import { useState, useEffect } from "react";
+import { renderImageAlbumItem } from "../../util/generateimage";
 
 // Remove this and add to func header instead
 interface AlbumDisplayItemProps {
@@ -23,62 +25,17 @@ interface AlbumDisplayItemProps {
 }
 
 export function AlbumDisplayItem({ album }: AlbumDisplayItemProps) {
-  const commonProperties = calculateCommonProperties(album.songs);
-  const renderImageDisplay = () => {
-    const imagesSet = album.songs
-      .map((song) => song.image)
-      .filter((image) => image);
+  const [commonProperties, setCommonProperties] =
+    useState<CommonSongProperties>(calculateCommonProperties(album.songs));
+  const [imageDisplay, setImageDisplay] = useState<JSX.Element | null>(null);
 
-    const images = Array.from(imagesSet);
+  useEffect(() => {
+    setCommonProperties(calculateCommonProperties(album.songs));
+  }, [album]);
 
-    if (images.length === 0) {
-      return (
-        <Center w="100%" h="100%" bg={"brand.200"}>
-          <Icon
-            as={MdOutlineQueueMusic}
-            w={10}
-            h={10}
-            color="brand.400"
-            bg={"brand.200"}
-            borderRadius={"5px"}
-          />
-        </Center>
-      );
-    }
-
-    if (images.length < 4 || commonProperties.image !== "Various") {
-      return (
-        <Image
-          src={images[0]}
-          p={2}
-          borderRadius={"15"}
-          alt={"Album Cover"}
-          w="100%"
-        />
-      );
-    }
-
-    return (
-      <Grid
-        templateColumns="repeat(2, 1fr)"
-        templateRows="repeat(2, 1fr)"
-        gap={1}
-        p={2}
-      >
-        {images.slice(0, 4).map((image, index) => (
-          <GridItem key={index}>
-            <Image
-              src={image}
-              alt={`Album Cover ${index + 1}`}
-              objectFit="cover"
-              borderRadius="5px"
-              boxSize="100%"
-            />
-          </GridItem>
-        ))}
-      </Grid>
-    );
-  };
+  useEffect(() => {
+    setImageDisplay(renderImageAlbumItem(album, commonProperties));
+  }, [album, commonProperties]);
 
   return (
     <WrapItem>
@@ -109,7 +66,7 @@ export function AlbumDisplayItem({ album }: AlbumDisplayItemProps) {
               templateColumns="repeat(6, 1fr)"
             >
               <GridItem rowSpan={6} colSpan={6}>
-                {renderImageDisplay()}
+                {imageDisplay}
               </GridItem>
               <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                 <Text as="b" align="left" noOfLines={1}>

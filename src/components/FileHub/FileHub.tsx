@@ -26,6 +26,8 @@ import {
   AccordionItem,
   Image,
   Center,
+  useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 import React, { useEffect, useState } from "react";
@@ -35,6 +37,9 @@ import ActionMenu from "../Actions/ActionMenu";
 import { useUUID } from "../../contexts/UUIDContext";
 import { Album, Song } from "../../types/types";
 import { useFetch } from "../../contexts/FetchContext";
+import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
+import Edit from "../Actions/Edit";
+import Properties from "../Actions/Properties";
 
 // hardcode data
 // const albumData = require("../../../public/albums.json");
@@ -64,18 +69,130 @@ export function FileHub() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const { selectedSongs, setSelectedSongs } = useSelectedSongs();
+
   // Use state to track whether the card is right clicked
   const [isRightClicked, setIsRightClicked] = useState(false);
   // x,y coordinates of where the right click menu should be
   const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
+  const [toView, setToView] = useState(false);
+  const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
 
-  // Function to handle the right click event
-  const handleRightClick = (event) => {
+  const handleAlbumRightClick = (
+    album: Album,
+    event: React.MouseEvent<HTMLDivElement>
+  ) => {
+    event.preventDefault();
     setIsRightClicked(true);
-    event.preventDefault(); // Prevents the default right click
-    var x = event.clientX;
-    var y = event.clientY;
-    setRightClickPosition({ x, y }); // Set state to display right-click menu
+    setRightClickPosition({ x: event.clientX, y: event.clientY });
+    setToView(true); // Set toView to true for FileHubAlbum right-click
+    setSelectedAlbum(album); // Set selected album
+    const songIds = album.songs.map((song) => song.id); // Extract song IDs
+    setSelectedSongs(songIds); // Set the selected songs
+  };
+
+  const handleCardRightClick = (
+    songId: string,
+    event: React.MouseEvent<HTMLDivElement>
+  ) => {
+    event.preventDefault();
+    if (!selectedSongs.includes(songId)) {
+      setSelectedSongs([songId]);
+    }
+    setIsRightClicked(true);
+    setRightClickPosition({ x: event.clientX, y: event.clientY });
+    setToView(false);
+  };
+
+  const closeMenu = () => {
+    setIsRightClicked(false);
+  };
+
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const openPropertiesModal = () => {
+    setIsPropertiesModalOpen(true);
+  };
+
+  const closePropertiesModal = () => {
+    setIsPropertiesModalOpen(false);
+  };
+
+  const selectedSongObjects = selectedSongs
+    .map((id) => {
+      let song: Song | undefined;
+      albums?.forEach((album) => {
+        const foundSong = album.songs.find((s) => s.id === id);
+        if (foundSong) {
+          song = foundSong;
+        }
+      });
+      return song;
+    })
+    .filter((song): song is Song => song !== undefined);
+
+  // Handle download
+  const toast = useToast();
+  const handleDownload = async () => {
+    const songIds = selectedSongObjects.map((song) => song.id);
+    const downloadUrl = `/api/download?uuid=${uuid}&ids=${songIds.join(",")}`;
+
+    try {
+      const downloadPromise = fetch(downloadUrl).then(async (response) => {
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "songs.zip");
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        } else {
+          throw new Error("Download failed.");
+        }
+      });
+      toast.promise(downloadPromise, {
+        loading: {
+          render: () => (
+            <Box
+              display="flex"
+              alignItems="center"
+              bgGradient="linear(to-r, linear.100, linear.200)"
+              color="black"
+              p={3}
+              borderRadius="md"
+              boxShadow="lg"
+            >
+              <Spinner size="md" mr={3} />
+              <Box>
+                <strong>Download in Progress</strong>
+                <br />
+                Please wait while your songs are being downloaded.
+              </Box>
+            </Box>
+          ),
+        },
+        success: {
+          title: "Download Completed",
+          description: "Your songs have been downloaded successfully.",
+        },
+        error: {
+          title: "Download Failed",
+          description: "An error occurred while downloading your songs.",
+        },
+      });
+    } catch (error) {
+      console.error("Error during download:", error);
+    }
   };
 
   return (
@@ -220,7 +337,7 @@ export function FileHub() {
                 boxShadow: "none",
               },
             }}
-            onContextMenu={handleRightClick}
+            // onContextMenu={handleRightClick} idk what this is
           >
             {!isLoaded ? (
               // "Lets you group elements without a wrapper node"
@@ -264,18 +381,41 @@ export function FileHub() {
             ) : (
               albums &&
               albums.length > 0 &&
-              albums.map((album, index) => (
-                <FileHubAlbum key={index} album={album} />
-              ))
+              albums.map((album, index) => {
+                // console.log(album.album); // REMOVE
+                return (
+                  <FileHubAlbum
+                    key={index}
+                    album={album}
+                    onAlbumRightClick={handleAlbumRightClick}
+                    onCardRightClick={handleCardRightClick}
+                  />
+                );
+              })
             )}
-
-            {/* {isRightClicked && (
-              <ActionMenu
-                position={rightClickPosition}
-                onClose={() => setIsRightClicked(false)}
-              />
-            )} */}
           </Accordion>
+          {isRightClicked && (
+            <ActionMenu
+              album={selectedAlbum}
+              songs={selectedSongObjects}
+              position={rightClickPosition}
+              onClose={closeMenu}
+              onEditClick={openEditModal}
+              onPropertiesClick={openPropertiesModal}
+              onDownloadClick={handleDownload}
+              toView={toView}
+            />
+          )}
+          <Edit
+            isOpen={isEditModalOpen}
+            onClose={closeEditModal}
+            songs={selectedSongObjects}
+          />
+          <Properties
+            isOpen={isPropertiesModalOpen}
+            onClose={closePropertiesModal}
+            songs={selectedSongObjects}
+          />
         </Box>
       </CardBody>
     </Card>

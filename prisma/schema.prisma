@@ -27,6 +27,7 @@ model Session {
   id       String    @id
   albums   Album[]  
   mp3Files mp3File[] 
+  createdAt DateTime  @default(now())
 }
 
 model Album {
@@ -36,6 +37,8 @@ model Album {
   sessionId String    @map("session_id")
   session   Session   @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   mp3Files  mp3File[] 
+
+  @@unique([title, sessionId]) // ensures unique albums
 } 
 
 model mp3File {

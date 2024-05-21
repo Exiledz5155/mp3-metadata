@@ -33,10 +33,12 @@ import {
   TimeIcon,
   WarningIcon,
 } from "@chakra-ui/icons";
+import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
 
 export function SongDisplay({ album }: { album: Album }) {
   const { uuid } = useUUID();
-  const [selectedSongs, setSelectedSongs] = useState<string[]>([]);
+  // const [selectedSongs, setSelectedSongs] = useState<string[]>([]);
+  const { selectedSongs, setSelectedSongs } = useSelectedSongs();
   const [rightClickedSong, setRightClickedSong] = useState<Song | null>(null);
   const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -175,6 +177,12 @@ export function SongDisplay({ album }: { album: Album }) {
     setRightClickPosition({ x: event.clientX, y: event.clientY });
   };
 
+  const handleContainerClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      setSelectedSongs([]);
+    }
+  };
+
   // Handle download
   const toast = useToast();
   const handleDownload = async () => {
@@ -248,6 +256,7 @@ export function SongDisplay({ album }: { album: Album }) {
       rounded={"xl"}
       maxHeight="calc(100vh - 90px)"
       overflow={"hidden"}
+      onClick={handleContainerClick} // deselects everything when clicked on container
     >
       <AlbumInfoSection album={album} />
       <HStack
@@ -339,12 +348,12 @@ export function SongDisplay({ album }: { album: Album }) {
       </CardBody>
       {rightClickedSong && (
         <ActionMenu
-          songs={selectedSongObjects}
           position={rightClickPosition}
           onClose={closeMenu}
           onEditClick={openEditModal}
           onPropertiesClick={openPropertiesModal}
           onDownloadClick={handleDownload}
+          toView={false}
         />
       )}
       <Edit

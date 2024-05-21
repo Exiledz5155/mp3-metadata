@@ -3,35 +3,32 @@ import React, { useState } from "react";
 import { Flex, Text, VStack } from "@chakra-ui/react";
 import { Album, Song } from "../../types/types";
 import { convertTime } from "../../util/duration";
+import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
 
 export function FileHubAlbumCard({
   song,
   isLast = false,
+  onRightClick,
 }: {
   song: Song;
   isLast?: boolean;
+  onRightClick: (
+    songId: string,
+    event: React.MouseEvent<HTMLDivElement>
+  ) => void;
 }) {
-  const [isClicked, setIsClicked] = useState(false);
+  const { selectedSongs, setSelectedSongs } = useSelectedSongs();
+  const isSelected = selectedSongs.includes(song.id);
 
-  // Function to handle the click event
-  const handleClick = () => {
-    // Toggle the isClicked state when the card is clicked
-    setIsClicked(!isClicked);
-  };
-
-  // Function to handle hover effect
-  const handleHover = () => {
-    // Apply hover effect only if the card is not already selected
-    if (!isClicked) {
-      setIsHovered(true);
-    }
-  };
-
-  // Function to handle mouse leave
-  const handleMouseLeave = () => {
-    // Remove hover effect only if the card is not already selected
-    if (!isClicked) {
-      setIsHovered(false);
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.ctrlKey || event.metaKey) {
+      setSelectedSongs((prev) =>
+        prev.includes(song.id)
+          ? prev.filter((id) => id !== song.id)
+          : [...prev, song.id]
+      );
+    } else {
+      setSelectedSongs([song.id]);
     }
   };
 
@@ -42,28 +39,29 @@ export function FileHubAlbumCard({
       justifyContent={"space-between"}
       transition="background-color 0.2s ease"
       _hover={
-        isClicked ? undefined : { bg: "brand.400", _dark: { bg: "brand.300" } }
+        isSelected ? undefined : { bg: "brand.400", _dark: { bg: "brand.300" } }
       }
       onClick={handleClick}
+      onContextMenu={(event) => onRightClick(song.id, event)}
       borderRadius={"none"}
-      borderBottomRadius={isLast ? "lg" : "none"} // If last time in mapped list, add radius
-      bg={isClicked ? "brand.400" : isHovered ? "brand.400" : "transparent"} // Update the background color based on isClicked state and hover state
+      borderBottomRadius={isLast ? "lg" : "none"}
+      bg={isSelected ? "brand.400" : isHovered ? "brand.400" : "transparent"}
       _dark={{
-        bg: isClicked ? "brand.400" : isHovered ? "brand.300" : "transparent",
+        bg: isSelected ? "brand.400" : isHovered ? "brand.300" : "transparent",
       }}
-      onMouseOver={handleHover} // Attach the hover event handler
-      onMouseLeave={handleMouseLeave} // Attach the mouse leave event handler
+      onMouseOver={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <VStack alignItems={"left"} pl={"15px"} py={"5px"} gap={"0px"}>
-        <Text fontSize={"15px"} noOfLines={1} pt={"2px"}>
+        <Text fontSize={"15px"} noOfLines={1} pt={"2px"} userSelect="none">
           {song.title}
         </Text>
-        <Text fontSize={"10px"} noOfLines={1} pb={"3px"}>
+        <Text fontSize={"10px"} noOfLines={1} pb={"3px"} userSelect="none">
           {song.artist}
         </Text>
       </VStack>
       <Flex alignItems={"center"} pr={"15px"} maxWidth={"40%"}>
-        <Text fontFamily={"mono"} fontSize={"15px"}>
+        <Text fontFamily={"mono"} fontSize={"15px"} userSelect="none">
           {convertTime(song.duration)}
         </Text>
       </Flex>

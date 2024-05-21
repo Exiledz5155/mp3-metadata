@@ -5,15 +5,19 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  FormControl,
+  FormLabel,
   Heading,
+  Input,
   Text,
 } from "@chakra-ui/react";
 import { useUUID } from "../../contexts/UUIDContext";
 import { Link } from "@chakra-ui/next-js";
 
 export default function UploadTest() {
-  const { uuid, generateUUID } = useUUID();
+  const { uuid, generateUUID, setNewUUID } = useUUID();
   const [files, setFiles] = useState<FileList | null>(null);
+  const [newUUID, setNewUUIDValue] = useState<string>("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = event.target.files;
@@ -46,6 +50,12 @@ export default function UploadTest() {
     }
   };
 
+  const handleUUIDSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setNewUUID(newUUID);
+    setNewUUIDValue(""); // Clear the input field
+  };
+
   return (
     <Card
       p={"20px"}
@@ -62,6 +72,20 @@ export default function UploadTest() {
       </CardHeader>
       <CardBody>
         <Button onClick={generateUUID}>Generate new UUID</Button>
+
+        <form onSubmit={handleUUIDSubmit}>
+          <FormControl mt={4}>
+            <FormLabel>Set New UUID</FormLabel>
+            <Input
+              value={newUUID}
+              onChange={(e) => setNewUUIDValue(e.target.value)}
+              placeholder="Enter new UUID"
+            />
+            <Button type="submit" mt={2}>
+              Submit
+            </Button>
+          </FormControl>
+        </form>
         {/* Input for file selection */}
         {/* <Button as="label" htmlFor="fileInput" cursor="pointer">
           Upload Files
