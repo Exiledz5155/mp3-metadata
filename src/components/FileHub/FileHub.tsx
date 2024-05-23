@@ -336,28 +336,35 @@ export function FileHub() {
                 h="30px"
                 w="100px"
                 bottom="10px"
+                color={"whiteAlpha.800"}
               >
                 Sort By:
                 <ChevronDownIcon />
               </MenuButton>
-              <MenuList bg="brand.100">
+              <MenuList bg="brand.200">
                 <MenuItem
-                  bg="brand.100"
-                  _hover={{ bg: "brand.200" }}
+                  bg={sortOrder === "default" ? "brand.400" : "brand.200"}
+                  _hover={{
+                    bg: sortOrder === "default" ? "brand.400" : "brand.300",
+                  }}
                   onClick={() => handleSortOrderChange("default")}
                 >
                   Default
                 </MenuItem>
                 <MenuItem
-                  bg="brand.100"
-                  _hover={{ bg: "brand.200" }}
+                  bg={sortOrder === "asc" ? "brand.400" : "brand.200"}
+                  _hover={{
+                    bg: sortOrder === "asc" ? "brand.400" : "brand.300",
+                  }}
                   onClick={() => handleSortOrderChange("asc")}
                 >
                   A-Z <ChevronUpIcon />
                 </MenuItem>
                 <MenuItem
-                  bg="brand.100"
-                  _hover={{ bg: "brand.200" }}
+                  bg={sortOrder === "desc" ? "brand.400" : "brand.200"}
+                  _hover={{
+                    bg: sortOrder === "desc" ? "brand.400" : "brand.300",
+                  }}
                   onClick={() => handleSortOrderChange("desc")}
                 >
                   Z-A <ChevronDownIcon />
