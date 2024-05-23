@@ -40,6 +40,7 @@ import { useFetch } from "../../contexts/FetchContext";
 import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
 import Edit from "../Actions/Edit";
 import Properties from "../Actions/Properties";
+import { useMemo } from "react";
 
 // hardcode data
 // const albumData = require("../../../public/albums.json");
@@ -87,21 +88,41 @@ export function FileHub() {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   // Searching
-  const filterAlbumsAndSongs = (albums: Album[], query: string) => {
+  // const filterAlbumsAndSongs = (albums: Album[], query: string) => {
+  //   if (!query) return albums;
+  //   const lowercasedQuery = query.toLowerCase();
+  //   return albums.filter(
+  //     (album) =>
+  //       album.album.toLowerCase().includes(lowercasedQuery) ||
+  //       album.songs.some((song) =>
+  //         song.title.toLowerCase().includes(lowercasedQuery)
+  //       )
+  //   );
+  // };
+
+  const filterAlbumsAndSongs = (albums, query) => {
     if (!query) return albums;
     const lowercasedQuery = query.toLowerCase();
     return albums.filter(
       (album) =>
         album.album.toLowerCase().includes(lowercasedQuery) ||
-        album.songs.some((song) =>
-          song.title.toLowerCase().includes(lowercasedQuery)
-        )
+        album.songs.some((song) => {
+          const songTitle = song.title.toLowerCase();
+          if (songTitle.includes(lowercasedQuery)) {
+            console.log(
+              `Match found: "${song.title}" from the album "${album.album}" (matched song title)`
+            );
+            return true;
+          }
+          return false;
+        })
     );
   };
 
   useEffect(() => {
-    if (albums) {
-      let filteredAlbums = filterAlbumsAndSongs(albums, searchQuery);
+    if (initialAlbums) {
+      let filteredAlbums = filterAlbumsAndSongs(initialAlbums, searchQuery);
+
       if (sortOrder === "asc") {
         filteredAlbums = [...filteredAlbums].sort((a, b) =>
           a.album.localeCompare(b.album)
@@ -110,15 +131,20 @@ export function FileHub() {
         filteredAlbums = [...filteredAlbums].sort((a, b) =>
           b.album.localeCompare(a.album)
         );
-      } else if (sortOrder === "default" && initialAlbums) {
-        filteredAlbums = initialAlbums;
       }
+
       setAlbums(filteredAlbums);
     }
-  }, [sortOrder, albums, searchQuery, initialAlbums]);
+  }, [sortOrder, searchQuery, initialAlbums]);
 
   const handleSortOrderChange = (order: "default" | "asc" | "desc") => {
     setSortOrder(order);
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+    setSelectedSongs([]); // Deselect all songs when searching
   };
 
   const handleAlbumRightClick = (
@@ -271,6 +297,8 @@ export function FileHub() {
                 boxShadow: "none",
               }}
               type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
           </InputGroup>
 
