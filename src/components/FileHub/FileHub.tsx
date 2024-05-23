@@ -1,7 +1,12 @@
 // app/providers.tsx
 "use client";
 
-import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from "@chakra-ui/icons";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  Search2Icon,
+  SearchIcon,
+} from "@chakra-ui/icons";
 import {
   Button,
   Card,
@@ -16,14 +21,9 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuOptionGroup,
   useDisclosure,
   HStack,
-  Text,
   Skeleton,
-  AccordionButton,
-  AccordionItem,
   Image,
   Center,
   useToast,
@@ -43,15 +43,28 @@ import Properties from "../Actions/Properties";
 import { useMemo } from "react";
 import Fuse from "fuse.js";
 
-// hardcode data
-// const albumData = require("../../../public/albums.json");
-
 export function FileHub() {
   const { uuid, generateUUID } = useUUID();
   const { fetchAlbums, refetchData } = useFetch();
   const [albums, setAlbums] = useState<Album[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { selectedSongs, setSelectedSongs } = useSelectedSongs();
+
+  const [isRightClicked, setIsRightClicked] = useState(false);
+  const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
+  const [toView, setToView] = useState(false);
+  const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
+  const [sortOrder, setSortOrder] = useState<"default" | "asc" | "desc">(
+    "default"
+  );
+  const [initialAlbums, setInitialAlbums] = useState<Album[] | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [expandedIndices, setExpandedIndices] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchAlbumsWrapper = async () => {
@@ -70,50 +83,34 @@ export function FileHub() {
     fetchAlbumsWrapper();
   }, [fetchAlbums, uuid, refetchData]);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const { selectedSongs, setSelectedSongs } = useSelectedSongs();
-
-  // Use state to track whether the card is right clicked
-  const [isRightClicked, setIsRightClicked] = useState(false);
-  // x,y coordinates of where the right click menu should be
-  const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
-  const [toView, setToView] = useState(false);
-  const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
-  const [sortOrder, setSortOrder] = useState<"default" | "asc" | "desc">(
-    "default"
-  );
-  const [initialAlbums, setInitialAlbums] = useState<Album[] | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [expandedIndices, setExpandedIndices] = useState<number[]>([]);
-
   const fuseOptions = {
     keys: ["album", "songs.title"],
     threshold: 0.4,
     includeMatches: true,
   };
 
-  const fuse = useMemo(() => new Fuse(albums || [], fuseOptions), [albums]);
+  const fuse = useMemo(
+    () => new Fuse(initialAlbums || [], fuseOptions),
+    [initialAlbums]
+  );
 
-  const searchAlbums = (query: string) => {
-    if (!query) return albums;
+  const filterAlbumsAndSongs = useMemo(() => {
+    return (albums: Album[], query: string) => {
+      if (!query) return albums;
+      const result = fuse.search(query);
+      return result.map((res) => ({
+        ...res.item,
+        matches: res.matches,
+        songs: res.item.songs.map((song) => ({
+          ...song,
+          matches: res.matches?.some(
+            (match) => match.key === "songs.title" && match.value === song.title
+          ),
+        })),
+      }));
+    };
+  }, [fuse]);
 
-    const result = fuse.search(query);
-    return result.map((res) => ({
-      ...res.item,
-      matches: res.matches,
-      songs: res.item.songs.map((song) => ({
-        ...song,
-        matches: res.matches?.some(
-          (match) => match.key === "songs.title" && match.value === song.title
-        ),
-      })),
-    }));
-  };
-
-  // updates which accordian (albums) are expanded due to search
   const updateExpandedIndices = (albums: Album[], query: string): void => {
     if (query === "") {
       setExpandedIndices([]);
@@ -135,86 +132,23 @@ export function FileHub() {
   };
 
   useEffect(() => {
-    if (albums) {
-      const filteredAlbums = searchAlbums(searchQuery);
+    if (initialAlbums) {
+      let filteredAlbums = filterAlbumsAndSongs(initialAlbums, searchQuery);
+
+      if (sortOrder === "asc") {
+        filteredAlbums = [...filteredAlbums].sort((a, b) =>
+          a.album.localeCompare(b.album)
+        );
+      } else if (sortOrder === "desc") {
+        filteredAlbums = [...filteredAlbums].sort((a, b) =>
+          b.album.localeCompare(a.album)
+        );
+      }
+
       setAlbums(filteredAlbums);
       updateExpandedIndices(filteredAlbums, searchQuery);
     }
-  }, [searchQuery, albums]);
-
-  // useEffect(() => {
-  //   if (albums) {
-  //     updateExpandedIndices(albums, searchQuery);
-  //   }
-  // }, [searchQuery, albums]);
-
-  // Searching
-  // const filterAlbumsAndSongs = (albums, query) => {
-  //   if (!query) return albums;
-  //   const lowercasedQuery = query.toLowerCase();
-  //   return albums
-  //     .map((album) => {
-  //       const albumMatches = album.album
-  //         .toLowerCase()
-  //         .includes(lowercasedQuery);
-  //       const matchingSongs = album.songs.map((song) => ({
-  //         ...song,
-  //         matches: song.title.toLowerCase().includes(lowercasedQuery),
-  //       }));
-  //       const songMatches = matchingSongs.some((song) => song.matches);
-
-  //       if (albumMatches || songMatches) {
-  //         return {
-  //           ...album,
-  //           matches: albumMatches,
-  //           songs: matchingSongs,
-  //         };
-  //       }
-  //       return null;
-  //     })
-  //     .filter((album) => album !== null);
-  // };
-
-  // useEffect(() => {
-  //   if (initialAlbums) {
-  //     let filteredAlbums = filterAlbumsAndSongs(initialAlbums, searchQuery);
-
-  //     if (sortOrder === "asc") {
-  //       filteredAlbums = [...filteredAlbums].sort((a, b) =>
-  //         a.album.localeCompare(b.album)
-  //       );
-  //     } else if (sortOrder === "desc") {
-  //       filteredAlbums = [...filteredAlbums].sort((a, b) =>
-  //         b.album.localeCompare(a.album)
-  //       );
-  //     }
-
-  //     setAlbums(filteredAlbums);
-  //   }
-  // }, [sortOrder, searchQuery, initialAlbums]);
-
-  useEffect(() => {
-    if (albums) {
-      if (searchQuery === "") {
-        setAlbums(albums);
-        setExpandedIndices([]);
-      } else {
-        const filteredAlbums = searchAlbums(searchQuery);
-        setAlbums(filteredAlbums);
-
-        const expandedIndices: number[] = [];
-        filteredAlbums.forEach((album, index) => {
-          if (
-            album.matches?.some((match) => match.key === "album") ||
-            album.songs.some((song) => song.matches)
-          ) {
-            expandedIndices.push(index);
-          }
-        });
-        setExpandedIndices(expandedIndices);
-      }
-    }
-  }, [searchQuery, albums]);
+  }, [sortOrder, searchQuery, initialAlbums, filterAlbumsAndSongs]);
 
   const handleSortOrderChange = (order: "default" | "asc" | "desc") => {
     setSortOrder(order);
@@ -223,7 +157,7 @@ export function FileHub() {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
     setSearchQuery(query);
-    setSelectedSongs([]); // Deselect all songs when searching
+    setSelectedSongs([]);
   };
 
   const handleAlbumRightClick = (
@@ -233,10 +167,10 @@ export function FileHub() {
     event.preventDefault();
     setIsRightClicked(true);
     setRightClickPosition({ x: event.clientX, y: event.clientY });
-    setToView(true); // Set toView to true for FileHubAlbum right-click
-    setSelectedAlbum(album); // Set selected album
-    const songIds = album.songs.map((song) => song.id); // Extract song IDs
-    setSelectedSongs(songIds); // Set the selected songs
+    setToView(true);
+    setSelectedAlbum(album);
+    const songIds = album.songs.map((song) => song.id);
+    setSelectedSongs(songIds);
   };
 
   const handleCardRightClick = (
@@ -285,7 +219,6 @@ export function FileHub() {
     })
     .filter((song): song is Song => song !== undefined);
 
-  // Handle download
   const toast = useToast();
   const handleDownload = async () => {
     const songIds = selectedSongObjects.map((song) => song.id);
@@ -364,15 +297,15 @@ export function FileHub() {
             }}
           >
             <InputLeftElement pointerEvents="none">
-              <SearchIcon color="linear.100" />
+              <Search2Icon color="whiteAlpha.700" />
             </InputLeftElement>
             <Input
-              color="linear.100"
-              placeholder="Search files"
-              borderColor="linear.100"
-              _hover={{ borderColor: "linear.100" }}
+              color="whiteAlpha.700"
+              placeholder="Search"
+              borderColor="brand.400"
+              _hover={{ borderColor: "brand.400" }}
               _focus={{
-                borderColor: "linear.100",
+                borderColor: "brand.400",
                 boxShadow: "none",
               }}
               type="text"
@@ -436,9 +369,9 @@ export function FileHub() {
         <Box
           overflowY={"auto"}
           css={{
-            display: "flex", // Set display to flex
-            flexDirection: "column", // Arrange children in a column
-            alignItems: "flex-start", // Align children to the start of the flex container
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
             "&::-webkit-scrollbar": {
               width: "5px",
             },
@@ -464,30 +397,27 @@ export function FileHub() {
               ".chakra-accordion__item": {
                 borderTop: "none",
                 borderBottom: "none",
-                borderBottomRadius: "lg", // WORKS BUT DOESN'T AFFECT ALBUMCARD
-                padding: "0", // Remove padding from accordion item
-                margin: "0", // Remove margin from accordion item
+                borderBottomRadius: "lg",
+                padding: "0",
+                margin: "0",
               },
               ".chakra-accordion__button": {
-                padding: "0", // Remove padding from accordion button
+                padding: "0",
               },
               ".chakra-accordion__panel": {
-                padding: "0", // Remove padding from accordion panel
+                padding: "0",
               },
               ".chakra-accordion__button:focus": {
                 boxShadow: "none",
               },
             }}
-            // onContextMenu={handleRightClick} idk what this is
           >
             {!isLoaded ? (
-              // "Lets you group elements without a wrapper node"
               <React.Fragment>
                 {Array.from({ length: 10 }, (_, i) => (
                   <Box key={i} borderRadius={"lg"} h="55px" overflow="hidden">
                     <HStack spacing="10px">
                       <Center w="55px" h="55px">
-                        {/* UPDATE TO KEEP CHECKING FOR FIRST IMAGE */}
                         <Skeleton
                           borderRadius="base"
                           boxSize="45px"
@@ -523,7 +453,6 @@ export function FileHub() {
               albums &&
               albums.length > 0 &&
               albums.map((album, index) => {
-                // console.log(album.album); // REMOVE
                 return (
                   <FileHubAlbum
                     key={index}
