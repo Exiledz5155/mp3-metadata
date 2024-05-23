@@ -101,15 +101,21 @@ export function FileHub() {
 
   useEffect(() => {
     if (albums) {
+      let filteredAlbums = filterAlbumsAndSongs(albums, searchQuery);
       if (sortOrder === "asc") {
-        setAlbums([...albums].sort((a, b) => a.album.localeCompare(b.album)));
+        filteredAlbums = [...filteredAlbums].sort((a, b) =>
+          a.album.localeCompare(b.album)
+        );
       } else if (sortOrder === "desc") {
-        setAlbums([...albums].sort((a, b) => b.album.localeCompare(a.album)));
+        filteredAlbums = [...filteredAlbums].sort((a, b) =>
+          b.album.localeCompare(a.album)
+        );
       } else if (sortOrder === "default" && initialAlbums) {
-        setAlbums(initialAlbums);
+        filteredAlbums = initialAlbums;
       }
+      setAlbums(filteredAlbums);
     }
-  }, [sortOrder, albums]);
+  }, [sortOrder, albums, searchQuery, initialAlbums]);
 
   const handleSortOrderChange = (order: "default" | "asc" | "desc") => {
     setSortOrder(order);
