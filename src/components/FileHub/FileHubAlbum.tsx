@@ -76,17 +76,6 @@ export function FileHubAlbum({
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const highlightText = (text, query) => {
-    const parts = text.split(new RegExp(`(${query})`, "gi"));
-    return parts.map((part, index) =>
-      part.toLowerCase() === query.toLowerCase() ? (
-        <mark key={index}>{part}</mark>
-      ) : (
-        part
-      )
-    );
-  };
-
   return (
     <AccordionItem>
       <Box onContextMenu={(e) => onAlbumRightClick(album, e)}>

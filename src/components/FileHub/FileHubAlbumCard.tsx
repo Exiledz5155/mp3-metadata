@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Flex, Text, VStack } from "@chakra-ui/react";
+import { Flex, Text, VStack, Highlight } from "@chakra-ui/react";
 import { Album, Song } from "../../types/types";
 import { convertTime } from "../../util/duration";
 import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
@@ -36,17 +36,6 @@ export function FileHubAlbumCard({
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const highlightText = (text, query) => {
-    const parts = text.split(new RegExp(`(${query})`, "gi"));
-    return parts.map((part, index) =>
-      part.toLowerCase() === query.toLowerCase() ? (
-        <mark key={index}>{part}</mark>
-      ) : (
-        part
-      )
-    );
-  };
-
   return (
     <Flex
       justifyContent={"space-between"}
@@ -67,7 +56,15 @@ export function FileHubAlbumCard({
     >
       <VStack alignItems={"left"} pl={"15px"} py={"5px"} gap={"0px"}>
         <Text fontSize={"15px"} noOfLines={1} pt={"2px"} userSelect="none">
-          {highlightText(song.title, searchQuery)}
+          <Highlight
+            query={searchQuery}
+            styles={{
+              bgGradient: "linear(to-r, linear.100, linear.200)",
+              fontWeight: "bold",
+            }}
+          >
+            {song.title}
+          </Highlight>
         </Text>
         <Text fontSize={"10px"} noOfLines={1} pb={"3px"} userSelect="none">
           {song.artist}
