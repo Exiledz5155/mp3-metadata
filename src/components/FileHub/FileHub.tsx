@@ -84,6 +84,20 @@ export function FileHub() {
     "default"
   );
   const [initialAlbums, setInitialAlbums] = useState<Album[] | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  // Searching
+  const filterAlbumsAndSongs = (albums: Album[], query: string) => {
+    if (!query) return albums;
+    const lowercasedQuery = query.toLowerCase();
+    return albums.filter(
+      (album) =>
+        album.album.toLowerCase().includes(lowercasedQuery) ||
+        album.songs.some((song) =>
+          song.title.toLowerCase().includes(lowercasedQuery)
+        )
+    );
+  };
 
   useEffect(() => {
     if (albums) {
