@@ -48,10 +48,5 @@ export async function GET(request: Request) {
 
   // return Response.json({ blobUrl: blockBlobClient.url, sasToken });
 
-  return new Response("Successfully uploaded MP3", {
-    status: 200,
-    headers: {
-      "Content-Type": "text/plain",
-    },
-  });
+  return Response.json({ status: "success" });
 }

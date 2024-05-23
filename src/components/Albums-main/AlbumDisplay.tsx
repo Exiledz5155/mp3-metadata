@@ -114,7 +114,12 @@ export function AlbumDisplay() {
               ))
             )
           ) : (
-            <Box> Upload files to start </Box>
+            <Box>
+              {" "}
+              An error occurred while fetching albums. This could be due to a
+              cloud function cold start. Please be patient and reload the app in
+              a few minutes.{" "}
+            </Box>
           )}
         </SimpleGrid>
       </CardBody>
