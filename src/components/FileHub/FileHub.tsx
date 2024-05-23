@@ -41,6 +41,7 @@ import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
 import Edit from "../Actions/Edit";
 import Properties from "../Actions/Properties";
 import { useMemo } from "react";
+import Fuse from "fuse.js";
 
 // hardcode data
 // const albumData = require("../../../public/albums.json");
@@ -88,8 +89,32 @@ export function FileHub() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [expandedIndices, setExpandedIndices] = useState<number[]>([]);
 
+  const fuseOptions = {
+    keys: ["album", "songs.title"],
+    threshold: 0.4,
+    includeMatches: true,
+  };
+
+  const fuse = useMemo(() => new Fuse(albums || [], fuseOptions), [albums]);
+
+  const searchAlbums = (query: string) => {
+    if (!query) return albums;
+
+    const result = fuse.search(query);
+    return result.map((res) => ({
+      ...res.item,
+      matches: res.matches,
+      songs: res.item.songs.map((song) => ({
+        ...song,
+        matches: res.matches?.some(
+          (match) => match.key === "songs.title" && match.value === song.title
+        ),
+      })),
+    }));
+  };
+
   // updates which accordian (albums) are expanded due to search
-  const updateExpandedIndices = (albums: Album[], query: string) => {
+  const updateExpandedIndices = (albums: Album[], query: string): void => {
     if (query === "") {
       setExpandedIndices([]);
       return;
@@ -98,6 +123,7 @@ export function FileHub() {
     const indices: number[] = [];
     albums.forEach((album, index) => {
       if (
+        album.album.toLowerCase().includes(query.toLowerCase()) ||
         album.songs.some((song) =>
           song.title.toLowerCase().includes(query.toLowerCase())
         )
@@ -110,54 +136,85 @@ export function FileHub() {
 
   useEffect(() => {
     if (albums) {
-      updateExpandedIndices(albums, searchQuery);
+      const filteredAlbums = searchAlbums(searchQuery);
+      setAlbums(filteredAlbums);
+      updateExpandedIndices(filteredAlbums, searchQuery);
     }
   }, [searchQuery, albums]);
 
-  // Searching
-  const filterAlbumsAndSongs = (albums, query) => {
-    if (!query) return albums;
-    const lowercasedQuery = query.toLowerCase();
-    return albums
-      .map((album) => {
-        const albumMatches = album.album
-          .toLowerCase()
-          .includes(lowercasedQuery);
-        const matchingSongs = album.songs.map((song) => ({
-          ...song,
-          matches: song.title.toLowerCase().includes(lowercasedQuery),
-        }));
-        const songMatches = matchingSongs.some((song) => song.matches);
+  // useEffect(() => {
+  //   if (albums) {
+  //     updateExpandedIndices(albums, searchQuery);
+  //   }
+  // }, [searchQuery, albums]);
 
-        if (albumMatches || songMatches) {
-          return {
-            ...album,
-            matches: albumMatches,
-            songs: matchingSongs,
-          };
-        }
-        return null;
-      })
-      .filter((album) => album !== null);
-  };
+  // Searching
+  // const filterAlbumsAndSongs = (albums, query) => {
+  //   if (!query) return albums;
+  //   const lowercasedQuery = query.toLowerCase();
+  //   return albums
+  //     .map((album) => {
+  //       const albumMatches = album.album
+  //         .toLowerCase()
+  //         .includes(lowercasedQuery);
+  //       const matchingSongs = album.songs.map((song) => ({
+  //         ...song,
+  //         matches: song.title.toLowerCase().includes(lowercasedQuery),
+  //       }));
+  //       const songMatches = matchingSongs.some((song) => song.matches);
+
+  //       if (albumMatches || songMatches) {
+  //         return {
+  //           ...album,
+  //           matches: albumMatches,
+  //           songs: matchingSongs,
+  //         };
+  //       }
+  //       return null;
+  //     })
+  //     .filter((album) => album !== null);
+  // };
+
+  // useEffect(() => {
+  //   if (initialAlbums) {
+  //     let filteredAlbums = filterAlbumsAndSongs(initialAlbums, searchQuery);
+
+  //     if (sortOrder === "asc") {
+  //       filteredAlbums = [...filteredAlbums].sort((a, b) =>
+  //         a.album.localeCompare(b.album)
+  //       );
+  //     } else if (sortOrder === "desc") {
+  //       filteredAlbums = [...filteredAlbums].sort((a, b) =>
+  //         b.album.localeCompare(a.album)
+  //       );
+  //     }
+
+  //     setAlbums(filteredAlbums);
+  //   }
+  // }, [sortOrder, searchQuery, initialAlbums]);
 
   useEffect(() => {
-    if (initialAlbums) {
-      let filteredAlbums = filterAlbumsAndSongs(initialAlbums, searchQuery);
+    if (albums) {
+      if (searchQuery === "") {
+        setAlbums(albums);
+        setExpandedIndices([]);
+      } else {
+        const filteredAlbums = searchAlbums(searchQuery);
+        setAlbums(filteredAlbums);
 
-      if (sortOrder === "asc") {
-        filteredAlbums = [...filteredAlbums].sort((a, b) =>
-          a.album.localeCompare(b.album)
-        );
-      } else if (sortOrder === "desc") {
-        filteredAlbums = [...filteredAlbums].sort((a, b) =>
-          b.album.localeCompare(a.album)
-        );
+        const expandedIndices: number[] = [];
+        filteredAlbums.forEach((album, index) => {
+          if (
+            album.matches?.some((match) => match.key === "album") ||
+            album.songs.some((song) => song.matches)
+          ) {
+            expandedIndices.push(index);
+          }
+        });
+        setExpandedIndices(expandedIndices);
       }
-
-      setAlbums(filteredAlbums);
     }
-  }, [sortOrder, searchQuery, initialAlbums]);
+  }, [searchQuery, albums]);
 
   const handleSortOrderChange = (order: "default" | "asc" | "desc") => {
     setSortOrder(order);
