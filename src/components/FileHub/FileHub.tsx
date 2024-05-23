@@ -1,7 +1,7 @@
 // app/providers.tsx
 "use client";
 
-import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Button,
   Card,
@@ -56,6 +56,7 @@ export function FileHub() {
       try {
         const albums = await fetchAlbums(uuid);
         setAlbums(albums);
+        setInitialAlbums(albums);
         setIsLoaded(true);
       } catch (error) {
         setError("Failed to fetch albums: " + error.message);
@@ -79,6 +80,26 @@ export function FileHub() {
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
   const [toView, setToView] = useState(false);
   const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
+  const [sortOrder, setSortOrder] = useState<"default" | "asc" | "desc">(
+    "default"
+  );
+  const [initialAlbums, setInitialAlbums] = useState<Album[] | null>(null);
+
+  useEffect(() => {
+    if (albums) {
+      if (sortOrder === "asc") {
+        setAlbums([...albums].sort((a, b) => a.album.localeCompare(b.album)));
+      } else if (sortOrder === "desc") {
+        setAlbums([...albums].sort((a, b) => b.album.localeCompare(a.album)));
+      } else if (sortOrder === "default" && initialAlbums) {
+        setAlbums(initialAlbums);
+      }
+    }
+  }, [sortOrder, albums]);
+
+  const handleSortOrderChange = (order: "default" | "asc" | "desc") => {
+    setSortOrder(order);
+  };
 
   const handleAlbumRightClick = (
     album: Album,
@@ -247,28 +268,7 @@ export function FileHub() {
             Upload Files
           </Button>
           <FileUploadBox isOpen={isOpen} onClose={onClose} />
-          <HStack justifyContent={"space-between"}>
-            <Menu closeOnSelect={false}>
-              <MenuButton
-                as={Button}
-                variant="ghost"
-                h="30px"
-                w="70px"
-                bottom="10px"
-              >
-                Filter
-              </MenuButton>
-              <MenuList bg="brand.100">
-                <MenuOptionGroup type="checkbox">
-                  <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
-                    Genre
-                  </MenuItemOption>
-                  <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
-                    Year
-                  </MenuItemOption>
-                </MenuOptionGroup>
-              </MenuList>
-            </Menu>
+          <HStack justifyContent={"right"}>
             <Menu>
               <MenuButton
                 as={Button}
@@ -281,14 +281,26 @@ export function FileHub() {
                 <ChevronDownIcon />
               </MenuButton>
               <MenuList bg="brand.100">
-                <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
-                  A-Z
+                <MenuItem
+                  bg="brand.100"
+                  _hover={{ bg: "brand.200" }}
+                  onClick={() => handleSortOrderChange("default")}
+                >
+                  Default
                 </MenuItem>
-                <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
-                  Artist
+                <MenuItem
+                  bg="brand.100"
+                  _hover={{ bg: "brand.200" }}
+                  onClick={() => handleSortOrderChange("asc")}
+                >
+                  A-Z <ChevronUpIcon />
                 </MenuItem>
-                <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
-                  Recently Added
+                <MenuItem
+                  bg="brand.100"
+                  _hover={{ bg: "brand.200" }}
+                  onClick={() => handleSortOrderChange("desc")}
+                >
+                  Z-A <ChevronDownIcon />
                 </MenuItem>
               </MenuList>
             </Menu>
