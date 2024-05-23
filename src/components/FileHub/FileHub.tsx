@@ -86,37 +86,59 @@ export function FileHub() {
   );
   const [initialAlbums, setInitialAlbums] = useState<Album[] | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [expandedIndices, setExpandedIndices] = useState<number[]>([]);
+
+  // updates which accordian (albums) are expanded due to search
+  const updateExpandedIndices = (albums: Album[], query: string) => {
+    if (query === "") {
+      setExpandedIndices([]);
+      return;
+    }
+
+    const indices: number[] = [];
+    albums.forEach((album, index) => {
+      if (
+        album.songs.some((song) =>
+          song.title.toLowerCase().includes(query.toLowerCase())
+        )
+      ) {
+        indices.push(index);
+      }
+    });
+    setExpandedIndices(indices);
+  };
+
+  useEffect(() => {
+    if (albums) {
+      updateExpandedIndices(albums, searchQuery);
+    }
+  }, [searchQuery, albums]);
 
   // Searching
-  // const filterAlbumsAndSongs = (albums: Album[], query: string) => {
-  //   if (!query) return albums;
-  //   const lowercasedQuery = query.toLowerCase();
-  //   return albums.filter(
-  //     (album) =>
-  //       album.album.toLowerCase().includes(lowercasedQuery) ||
-  //       album.songs.some((song) =>
-  //         song.title.toLowerCase().includes(lowercasedQuery)
-  //       )
-  //   );
-  // };
-
   const filterAlbumsAndSongs = (albums, query) => {
     if (!query) return albums;
     const lowercasedQuery = query.toLowerCase();
-    return albums.filter(
-      (album) =>
-        album.album.toLowerCase().includes(lowercasedQuery) ||
-        album.songs.some((song) => {
-          const songTitle = song.title.toLowerCase();
-          if (songTitle.includes(lowercasedQuery)) {
-            console.log(
-              `Match found: "${song.title}" from the album "${album.album}" (matched song title)`
-            );
-            return true;
-          }
-          return false;
-        })
-    );
+    return albums
+      .map((album) => {
+        const albumMatches = album.album
+          .toLowerCase()
+          .includes(lowercasedQuery);
+        const matchingSongs = album.songs.map((song) => ({
+          ...song,
+          matches: song.title.toLowerCase().includes(lowercasedQuery),
+        }));
+        const songMatches = matchingSongs.some((song) => song.matches);
+
+        if (albumMatches || songMatches) {
+          return {
+            ...album,
+            matches: albumMatches,
+            songs: matchingSongs,
+          };
+        }
+        return null;
+      })
+      .filter((album) => album !== null);
   };
 
   useEffect(() => {
@@ -377,6 +399,8 @@ export function FileHub() {
           }}
         >
           <Accordion
+            index={expandedIndices}
+            onChange={(indices) => setExpandedIndices(indices as number[])}
             allowMultiple
             sx={{
               width: "100%",
@@ -449,6 +473,9 @@ export function FileHub() {
                     album={album}
                     onAlbumRightClick={handleAlbumRightClick}
                     onCardRightClick={handleCardRightClick}
+                    searchQuery={searchQuery}
+                    expandedIndices={expandedIndices}
+                    setExpandedIndices={setExpandedIndices}
                   />
                 );
               })

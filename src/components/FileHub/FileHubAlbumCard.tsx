@@ -9,6 +9,7 @@ export function FileHubAlbumCard({
   song,
   isLast = false,
   onRightClick,
+  searchQuery,
 }: {
   song: Song;
   isLast?: boolean;
@@ -16,6 +17,7 @@ export function FileHubAlbumCard({
     songId: string,
     event: React.MouseEvent<HTMLDivElement>
   ) => void;
+  searchQuery: string;
 }) {
   const { selectedSongs, setSelectedSongs } = useSelectedSongs();
   const isSelected = selectedSongs.includes(song.id);
@@ -33,6 +35,17 @@ export function FileHubAlbumCard({
   };
 
   const [isHovered, setIsHovered] = useState(false);
+
+  const highlightText = (text, query) => {
+    const parts = text.split(new RegExp(`(${query})`, "gi"));
+    return parts.map((part, index) =>
+      part.toLowerCase() === query.toLowerCase() ? (
+        <mark key={index}>{part}</mark>
+      ) : (
+        part
+      )
+    );
+  };
 
   return (
     <Flex
@@ -54,7 +67,7 @@ export function FileHubAlbumCard({
     >
       <VStack alignItems={"left"} pl={"15px"} py={"5px"} gap={"0px"}>
         <Text fontSize={"15px"} noOfLines={1} pt={"2px"} userSelect="none">
-          {song.title}
+          {highlightText(song.title, searchQuery)}
         </Text>
         <Text fontSize={"10px"} noOfLines={1} pb={"3px"} userSelect="none">
           {song.artist}
