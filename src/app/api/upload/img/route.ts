@@ -5,22 +5,20 @@ export async function POST(request: Request) {
   const file = requestBody.file;
   const userUUID = requestBody.userUUID;
   const songIDs = requestBody.songIDs;
+  const azureAPI = process.env.AZURE_UPLOAD_IMG_API || "";
 
   try {
-    const response = await fetch(
-      "https://mp3functions.azurewebsites.net/api/UpdateImageHTTP?",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          file: file,
-          userUUID: userUUID,
-          songIDs: songIDs,
-        }),
-      }
-    );
+    const response = await fetch(azureAPI, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        file: file,
+        userUUID: userUUID,
+        songIDs: songIDs,
+      }),
+    });
 
     // Check if the request was successful
     if (!response.ok) {

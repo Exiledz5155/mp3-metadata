@@ -39,17 +39,19 @@ export async function GET(request: Request) {
     {
       containerName,
       blobName,
-      permissions: ContainerSASPermissions.parse("racwd"), // Permissions as needed
+      permissions: ContainerSASPermissions.parse("rcw"), // read, create, write
       startsOn: new Date(),
-      expiresOn: new Date(new Date().valueOf() + 3600 * 1000), // Token expiration
+      expiresOn: new Date(new Date().valueOf() + 1800 * 1000), // Token expiration in ms
     },
     sharedKeyCredential
   ).toString();
 
-  // Debugging
-  // console.log("Generated Blob URL:", blockBlobClient.url); //logging. DELETE ME
-  // console.log("Generated SAS Token:", sasToken);
+  // return Response.json({ blobUrl: blockBlobClient.url, sasToken });
 
-  // Return the SAS token using the Response.json pattern
-  return Response.json({ blobUrl: blockBlobClient.url, sasToken });
+  return new Response("Successfully uploaded MP3", {
+    status: 200,
+    headers: {
+      "Content-Type": "text/plain",
+    },
+  });
 }

@@ -1,4 +1,6 @@
 export async function POST(request: Request) {
+  const azureAPI = process.env.AZURE_UPDATE_API || "";
+
   if (!request.body) {
     return new Response(JSON.stringify({ error: "Request body is empty" }), {
       status: 400,
@@ -13,16 +15,13 @@ export async function POST(request: Request) {
     // console.log("Request body:", requestBody);
 
     // Forward the request to the Azure Function
-    const azureResponse = await fetch(
-      `https://mp3functions.azurewebsites.net/api/UpdateMetadataHTTP?`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: requestBody,
-      }
-    );
+    const azureResponse = await fetch(azureAPI, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: requestBody,
+    });
 
     if (!azureResponse.ok) {
       // Forward the Azure Function's HTTP status to the client

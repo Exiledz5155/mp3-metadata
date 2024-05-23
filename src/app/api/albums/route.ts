@@ -3,6 +3,7 @@ export async function GET(request: Request) {
 
   const url = new URL(request.url);
   const uuid = url.searchParams.get("uuid") || ""; // search for uuid param
+  const azureAPI = process.env.AZURE_ALBUMS_API || "";
 
   if (!uuid) {
     return new Response(JSON.stringify({ error: "Missing uuid parameter." }), {
@@ -15,12 +16,9 @@ export async function GET(request: Request) {
 
   try {
     // Forward the request to the Azure Function
-    const azureResponse = await fetch(
-      `https://mp3functions.azurewebsites.net/api/GetAlbumsHTTP?uuid=${uuid}`,
-      {
-        method: "GET", // or 'POST', depending on what your Azure Function expects
-      }
-    );
+    const azureResponse = await fetch(`${azureAPI}uuid=${uuid}`, {
+      method: "GET", // or 'POST', depending on what your Azure Function expects
+    });
 
     if (!azureResponse.ok) {
       // Forward the Azure Function's HTTP status to the client
