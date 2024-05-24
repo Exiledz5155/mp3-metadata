@@ -6,7 +6,6 @@ import {
   ChevronUpIcon,
   Icon,
   Search2Icon,
-  SearchIcon,
 } from "@chakra-ui/icons";
 import {
   Button,
@@ -29,6 +28,7 @@ import {
   Center,
   useToast,
   Spinner,
+  Tooltip,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 import React, { useEffect, useState } from "react";
@@ -346,10 +346,10 @@ export function FileHub() {
                 borderColor={"brand.400"}
                 bg={"brand.100"}
               >
-                All Songs
+                View all
               </Button>
             </Link>
-            <Link href="/editor/albums" style={{ flex: 1 }}>
+            {/* <Link href="/editor/albums" style={{ flex: 1 }}>
               <Button
                 variant="outline"
                 w="100%"
@@ -360,7 +360,7 @@ export function FileHub() {
               >
                 Albums
               </Button>
-            </Link>
+            </Link> */}
           </HStack>
 
           <FileUploadBox isOpen={isOpen} onClose={onClose} />
@@ -393,14 +393,22 @@ export function FileHub() {
             alignItems="center"
             mb={3}
           >
-            <Link href="/">
-              <Button h="30px" variant={"ghost"} w="20px">
-                <Icon
-                  color={"whiteAlpha.800"}
-                  boxSize={5}
-                  as={MdHomeFilled}
-                ></Icon>
-              </Button>
+            <Link href="/editor/albums">
+              <Tooltip
+                hasArrow
+                label="View Albums"
+                placement="right"
+                bg={"brand.300"}
+                color={"white"}
+              >
+                <Button h="30px" variant={"ghost"} w="20px">
+                  <Icon
+                    color={"whiteAlpha.800"}
+                    boxSize={5}
+                    as={MdHomeFilled}
+                  ></Icon>
+                </Button>
+              </Tooltip>
             </Link>
             <Menu>
               <MenuButton

@@ -57,7 +57,8 @@ export default function RootLayout({
   };
 
   return (
-    <Providers>
+    // <Providers>
+    <>
       <Flex
         bg="black"
         h="100vh"
@@ -149,6 +150,6 @@ export default function RootLayout({
       </Flex>
       <SpeedInsights />
       <Analytics />
-    </Providers>
+    </>
   );
 }
