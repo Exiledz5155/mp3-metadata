@@ -4,6 +4,7 @@
 import {
   ChevronDownIcon,
   ChevronUpIcon,
+  Icon,
   Search2Icon,
   SearchIcon,
 } from "@chakra-ui/icons";
@@ -43,6 +44,7 @@ import Properties from "../Actions/Properties";
 import { useMemo } from "react";
 import Fuse from "fuse.js";
 import Link from "next/link";
+import { MdHomeFilled } from "react-icons/md";
 
 export function FileHub() {
   const { uuid, generateUUID } = useUUID();
@@ -291,7 +293,7 @@ export function FileHub() {
       >
         <Box bg="brand.100">
           <InputGroup
-            pb="5"
+            pb="3"
             w="100%"
             sx={{
               caretColor: "white",
@@ -321,7 +323,7 @@ export function FileHub() {
             bgGradient="linear(to-r, linear.100, linear.200)"
             _hover={{ color: "white", bg: "brand.300" }}
             color={"brand.200"}
-            mb={5}
+            mb={3}
             onClick={() => {
               onOpen();
             }}
@@ -333,16 +335,16 @@ export function FileHub() {
             w={"100%"}
             justifyContent={"space-between"}
             borderColor={"brand.400"}
-            mb={2}
+            mb={3}
           >
             <Link href="/editor/songs" style={{ flex: 1 }}>
               <Button
                 variant="outline"
                 w="100%"
-                bottom="10px"
                 color={"whiteAlpha.800"}
                 _hover={{ bg: "brand.300" }}
                 borderColor={"brand.400"}
+                bg={"brand.100"}
               >
                 All Songs
               </Button>
@@ -351,10 +353,10 @@ export function FileHub() {
               <Button
                 variant="outline"
                 w="100%"
-                bottom="10px"
                 color={"whiteAlpha.800"}
                 _hover={{ bg: "brand.300" }}
                 borderColor={"brand.400"}
+                bg={"brand.100"}
               >
                 Albums
               </Button>
@@ -362,18 +364,54 @@ export function FileHub() {
           </HStack>
 
           <FileUploadBox isOpen={isOpen} onClose={onClose} />
-          <HStack justifyContent={"right"}>
+        </Box>
+        <Box
+          overflowY={"auto"}
+          css={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            "&::-webkit-scrollbar": {
+              width: "5px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "transparent",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "#888",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              background: "#555",
+            },
+          }}
+        >
+          <HStack
+            w={"100%"}
+            justifyContent={"space-between"}
+            alignItems="center"
+            mb={3}
+          >
+            <Link href="/">
+              <Button h="30px" variant={"ghost"} w="20px">
+                <Icon
+                  color={"whiteAlpha.800"}
+                  boxSize={5}
+                  as={MdHomeFilled}
+                ></Icon>
+              </Button>
+            </Link>
             <Menu>
               <MenuButton
                 as={Button}
                 variant="ghost"
                 h="30px"
                 w="100px"
-                bottom="10px"
                 color={"whiteAlpha.800"}
               >
                 Sort By:
-                <ChevronDownIcon />
+                <ChevronDownIcon ml={1} />
               </MenuButton>
               <MenuList bg="brand.200">
                 <MenuItem
@@ -406,29 +444,6 @@ export function FileHub() {
               </MenuList>
             </Menu>
           </HStack>
-        </Box>
-        <Box
-          overflowY={"auto"}
-          css={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            "&::-webkit-scrollbar": {
-              width: "5px",
-            },
-            "&::-webkit-scrollbar-track": {
-              background: "transparent",
-              borderRadius: "10px",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              background: "#888",
-              borderRadius: "10px",
-            },
-            "&::-webkit-scrollbar-thumb:hover": {
-              background: "#555",
-            },
-          }}
-        >
           <Accordion
             index={expandedIndices}
             onChange={(indices) => setExpandedIndices(indices as number[])}
