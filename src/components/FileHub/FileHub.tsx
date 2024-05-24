@@ -42,6 +42,7 @@ import Edit from "../Actions/Edit";
 import Properties from "../Actions/Properties";
 import { useMemo } from "react";
 import Fuse from "fuse.js";
+import Link from "next/link";
 
 export function FileHub() {
   const { uuid, generateUUID } = useUUID();
@@ -327,6 +328,39 @@ export function FileHub() {
           >
             Upload Files
           </Button>
+
+          <HStack
+            w={"100%"}
+            justifyContent={"space-between"}
+            borderColor={"brand.400"}
+            mb={2}
+          >
+            <Link href="/editor/songs" style={{ flex: 1 }}>
+              <Button
+                variant="outline"
+                w="100%"
+                bottom="10px"
+                color={"whiteAlpha.800"}
+                _hover={{ bg: "brand.300" }}
+                borderColor={"brand.400"}
+              >
+                All Songs
+              </Button>
+            </Link>
+            <Link href="/editor/albums" style={{ flex: 1 }}>
+              <Button
+                variant="outline"
+                w="100%"
+                bottom="10px"
+                color={"whiteAlpha.800"}
+                _hover={{ bg: "brand.300" }}
+                borderColor={"brand.400"}
+              >
+                Albums
+              </Button>
+            </Link>
+          </HStack>
+
           <FileUploadBox isOpen={isOpen} onClose={onClose} />
           <HStack justifyContent={"right"}>
             <Menu>

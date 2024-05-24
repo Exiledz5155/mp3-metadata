@@ -1,24 +1,13 @@
 "use client";
 
 import { Providers } from "../providers";
-import {
-  Box,
-  Button,
-  Center,
-  Fade,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Center, Flex } from "@chakra-ui/react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { chakra } from "@chakra-ui/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { FileHub } from "../../components/FileHub/FileHub";
 import { useState, useEffect } from "react";
-import { DragHandleIcon } from "@chakra-ui/icons";
 
 const LinkButton = chakra<typeof NextLink, NextLinkProps>(NextLink, {
   // ensure that you're forwarding all of the required props for your case
@@ -66,6 +55,7 @@ export default function RootLayout({
     document.body.addEventListener("mousemove", onMouseMove);
     document.body.addEventListener("mouseup", onMouseUp, { once: true });
   };
+
   return (
     <Providers>
       <Flex
