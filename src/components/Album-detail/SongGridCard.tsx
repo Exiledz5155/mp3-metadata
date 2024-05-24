@@ -22,6 +22,13 @@ export function SongGridCard({
   onClick,
   onRightClick,
 }: SongGridCardProps) {
+  const extractFileName = (filePath: string) => {
+    const parts = filePath.split("/");
+    const fileNameWithExtension = parts[parts.length - 1];
+    const fileName = fileNameWithExtension.split(".")[0];
+    return fileName;
+  };
+
   return (
     <>
       {" "}
@@ -64,11 +71,6 @@ export function SongGridCard({
             </Text>
           </Box>
 
-          {/* <Box width="30px" mx={"4"} border="1px solid red" textAlign="right">
-            <Text fontSize={"md"} isTruncated>
-              {song.trackNumber}
-            </Text>
-          </Box> */}
           <Image
             src={song.image}
             alt={song.title}
@@ -78,17 +80,17 @@ export function SongGridCard({
             mr={"4"}
           />
           <Text textAlign={"left"} noOfLines={1}>
-            {song.title}
+            {song.title ? song.title : extractFileName(song.filePath)}
           </Text>
         </Flex>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          {song.artist}
+          {song.artist ? song.artist : "Unknown artist"}
         </Text>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          {song.albumTitle}
+          {song.albumTitle ? song.albumTitle : "Unknown album"}
         </Text>
         <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
-          {convertTime(song.duration)}
+          {song.duration ? convertTime(song.duration) : "N/A"}
         </Text>
       </HStack>
     </>

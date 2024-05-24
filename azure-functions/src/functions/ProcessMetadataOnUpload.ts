@@ -141,7 +141,7 @@ async function ProcessMetadataOnUpload(
       prisma.album.findFirst({
         //may need to change this for case where users tries to make multiple albums of same name
         where: {
-          title: tags.album || "Unknown Album",
+          title: tags.album || "Untagged",
           // Here we ensure that the album is also linked to our session
           sessionId: session.id,
         },
@@ -153,7 +153,7 @@ async function ProcessMetadataOnUpload(
       album = await safeDbOperation(() =>
         prisma.album.create({
           data: {
-            title: tags.album || "Unknown Album",
+            title: tags.album || "Untagged",
             sessionId: session.id, // Link to the placeholder Session ID
           },
         })
