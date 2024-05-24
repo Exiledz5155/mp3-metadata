@@ -49,25 +49,38 @@ export function SongDisplay({ album }: { album: Album }) {
   });
 
   // sorting songs
+  // sorting songs
+  // sorting songs
   const getSortedSongs = () => {
     return [...album.songs].sort((a, b) => {
       const isAsc = sortCriteria.order === "asc";
-      let aValue = a[sortCriteria.field];
-      let bValue = b[sortCriteria.field];
+      let aValue, bValue;
 
       if (sortCriteria.field === "duration") {
-        aValue = parseInt(aValue);
-        bValue = parseInt(bValue);
+        aValue = parseInt(a.duration);
+        bValue = parseInt(b.duration);
+      } else if (sortCriteria.field === "album") {
+        aValue = a.albumTitle.toLowerCase();
+        bValue = b.albumTitle.toLowerCase();
+      } else if (sortCriteria.field === "trackNumber") {
+        aValue = a.trackNumber;
+        bValue = b.trackNumber;
+      } else {
+        aValue = a[sortCriteria.field].toLowerCase();
+        bValue = b[sortCriteria.field].toLowerCase();
+      }
+
+      if (sortCriteria.field === "trackNumber") {
         return isAsc ? aValue - bValue : bValue - aValue;
       } else {
-        if (a[sortCriteria.field] < b[sortCriteria.field]) {
+        if (aValue < bValue) {
           return isAsc ? -1 : 1;
         }
-        if (a[sortCriteria.field] > b[sortCriteria.field]) {
+        if (aValue > bValue) {
           return isAsc ? 1 : -1;
         }
+        return 0;
       }
-      return 0;
     });
   };
 
@@ -336,19 +349,18 @@ export function SongDisplay({ album }: { album: Album }) {
       >
         <Box>
           {sortedSongs.length === 0 ? (
-            <Box>
-              Upload files to start
-            </Box>
+            <Box>Upload files to start</Box>
           ) : (
-          sortedSongs.map((song, index) => (
-            <SongGridCard
-              key={song.id}
-              song={song}
-              isSelected={selectedSongs.includes(song.id)}
-              onClick={handleSelectSong}
-              onRightClick={handleRightClick}
-            />
-          )))}
+            sortedSongs.map((song, index) => (
+              <SongGridCard
+                key={song.id}
+                song={song}
+                isSelected={selectedSongs.includes(song.id)}
+                onClick={handleSelectSong}
+                onRightClick={handleRightClick}
+              />
+            ))
+          )}
         </Box>
       </CardBody>
       {rightClickedSong && (

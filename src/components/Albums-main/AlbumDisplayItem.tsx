@@ -77,7 +77,11 @@ export function AlbumDisplayItem({ album }: AlbumDisplayItemProps) {
               {/* i.e, empty space between contents and border is not even all around */}
               <GridItem colSpan={6} rowSpan={1} pl={2} pr={2}>
                 <Text align="left" noOfLines={1} fontSize={"xs"}>
-                  {commonProperties.albumArtist}
+                  {commonProperties?.albumArtist
+                    ? commonProperties.albumArtist
+                    : album.songs.length > 0 && album.songs[0].artist
+                    ? album.songs[0].artist
+                    : ""}
                 </Text>
               </GridItem>
             </Grid>

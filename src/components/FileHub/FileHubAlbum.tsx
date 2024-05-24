@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
+  Highlight,
 } from "@chakra-ui/react";
 import { FileHubAlbumCard } from "./FileHubAlbumCard";
 import { Album, CommonSongProperties, Song } from "../../types/types";
@@ -16,10 +17,15 @@ import { calculateCommonProperties } from "../../util/commonprops";
 import { renderImageFromAlbumSmall } from "../../util/generateimage";
 
 export function FileHubAlbum({
+  key,
   album,
   onCardRightClick,
   onAlbumRightClick,
+  searchQuery,
+  expandedIndices,
+  setExpandedIndices,
 }: {
+  key: number;
   album: Album;
   onCardRightClick: (
     songId: string,
@@ -29,6 +35,9 @@ export function FileHubAlbum({
     album: Album,
     event: React.MouseEvent<HTMLDivElement>
   ) => void;
+  searchQuery: string;
+  expandedIndices: number[];
+  setExpandedIndices: React.Dispatch<React.SetStateAction<number[]>>;
 }) {
   const [imageDisplay, setImageDisplay] = useState<JSX.Element | null>(null);
   const [commonProperties, setCommonProperties] =
@@ -46,6 +55,11 @@ export function FileHubAlbum({
 
   const handleClick = () => {
     setIsClicked(!isClicked);
+    if (!isClicked) {
+      setExpandedIndices((prevIndices) => [...prevIndices, key]);
+    } else {
+      setExpandedIndices((prevIndices) => prevIndices.filter((i) => i !== key));
+    }
   };
 
   const handleHover = () => {
@@ -81,14 +95,15 @@ export function FileHubAlbum({
             }
             onClick={handleClick} // Attach the click event handler
             bg={
-              isClicked ? "brand.400" : isHovered ? "brand.400" : "transparent"
-            } // Update the background color based on isClicked state and hover state
-            _dark={{
-              bg: isClicked
+              expandedIndices.includes(key) || isHovered
                 ? "brand.400"
-                : isHovered
-                ? "brand.300"
-                : "transparent",
+                : "transparent"
+            }
+            _dark={{
+              bg:
+                expandedIndices.includes(key) || isHovered
+                  ? "brand.300"
+                  : "transparent",
             }}
             cursor={"pointer"}
             onMouseOver={handleHover} // Attach the hover event handler
@@ -97,7 +112,15 @@ export function FileHubAlbum({
             <HStack spacing="10px">
               {imageDisplay}
               <Text noOfLines={1} maxW={200} align="left">
-                {commonProperties.albumTitle}
+                <Highlight
+                  query={searchQuery}
+                  styles={{
+                    bgGradient: "linear(to-r, linear.100, linear.200)",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {commonProperties.albumTitle}
+                </Highlight>
               </Text>
             </HStack>
           </Box>
@@ -110,6 +133,7 @@ export function FileHubAlbum({
             isLast={index === album.songs.length - 1}
             song={song}
             onRightClick={onCardRightClick}
+            searchQuery={searchQuery}
           />
         ))}
       </AccordionPanel>

@@ -1,7 +1,12 @@
 // app/providers.tsx
 "use client";
 
-import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  Icon,
+  Search2Icon,
+} from "@chakra-ui/icons";
 import {
   Button,
   Card,
@@ -16,18 +21,14 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuOptionGroup,
   useDisclosure,
   HStack,
-  Text,
   Skeleton,
-  AccordionButton,
-  AccordionItem,
   Image,
   Center,
   useToast,
   Spinner,
+  Tooltip,
 } from "@chakra-ui/react";
 import { FileHubAlbum } from "./FileHubAlbum";
 import React, { useEffect, useState } from "react";
@@ -40,9 +41,10 @@ import { useFetch } from "../../contexts/FetchContext";
 import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
 import Edit from "../Actions/Edit";
 import Properties from "../Actions/Properties";
-
-// hardcode data
-// const albumData = require("../../../public/albums.json");
+import { useMemo } from "react";
+import Fuse from "fuse.js";
+import Link from "next/link";
+import { MdHomeFilled } from "react-icons/md";
 
 export function FileHub() {
   const { uuid, generateUUID } = useUUID();
@@ -50,12 +52,29 @@ export function FileHub() {
   const [albums, setAlbums] = useState<Album[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { selectedSongs, setSelectedSongs } = useSelectedSongs();
+
+  const [isRightClicked, setIsRightClicked] = useState(false);
+  const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
+  const [toView, setToView] = useState(false);
+  const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
+  const [sortOrder, setSortOrder] = useState<"default" | "asc" | "desc">(
+    "default"
+  );
+  const [initialAlbums, setInitialAlbums] = useState<Album[] | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [expandedIndices, setExpandedIndices] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchAlbumsWrapper = async () => {
       try {
         const albums = await fetchAlbums(uuid);
         setAlbums(albums);
+        setInitialAlbums(albums);
         setIsLoaded(true);
       } catch (error) {
         setError("Failed to fetch albums: " + error.message);
@@ -67,18 +86,82 @@ export function FileHub() {
     fetchAlbumsWrapper();
   }, [fetchAlbums, uuid, refetchData]);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const fuseOptions = {
+    keys: ["album", "songs.title"],
+    threshold: 0.4,
+    includeMatches: true,
+  };
 
-  const { selectedSongs, setSelectedSongs } = useSelectedSongs();
+  const fuse = useMemo(
+    () => new Fuse(initialAlbums || [], fuseOptions),
+    [initialAlbums]
+  );
 
-  // Use state to track whether the card is right clicked
-  const [isRightClicked, setIsRightClicked] = useState(false);
-  // x,y coordinates of where the right click menu should be
-  const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
-  const [toView, setToView] = useState(false);
-  const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
+  const filterAlbumsAndSongs = useMemo(() => {
+    return (albums: Album[], query: string) => {
+      if (!query) return albums;
+      const result = fuse.search(query);
+      return result.map((res) => ({
+        ...res.item,
+        matches: res.matches,
+        songs: res.item.songs.map((song) => ({
+          ...song,
+          matches: res.matches?.some(
+            (match) => match.key === "songs.title" && match.value === song.title
+          ),
+        })),
+      }));
+    };
+  }, [fuse]);
+
+  const updateExpandedIndices = (albums: Album[], query: string): void => {
+    if (query === "") {
+      setExpandedIndices([]);
+      return;
+    }
+
+    const indices: number[] = [];
+    albums.forEach((album, index) => {
+      if (
+        album.album.toLowerCase().includes(query.toLowerCase()) ||
+        album.songs.some((song) =>
+          song.title.toLowerCase().includes(query.toLowerCase())
+        )
+      ) {
+        indices.push(index);
+      }
+    });
+    setExpandedIndices(indices);
+  };
+
+  useEffect(() => {
+    if (initialAlbums) {
+      let filteredAlbums = filterAlbumsAndSongs(initialAlbums, searchQuery);
+
+      if (sortOrder === "asc") {
+        filteredAlbums = [...filteredAlbums].sort((a, b) =>
+          a.album.localeCompare(b.album)
+        );
+      } else if (sortOrder === "desc") {
+        filteredAlbums = [...filteredAlbums].sort((a, b) =>
+          b.album.localeCompare(a.album)
+        );
+      }
+
+      setAlbums(filteredAlbums);
+      updateExpandedIndices(filteredAlbums, searchQuery);
+    }
+  }, [sortOrder, searchQuery, initialAlbums, filterAlbumsAndSongs]);
+
+  const handleSortOrderChange = (order: "default" | "asc" | "desc") => {
+    setSortOrder(order);
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+    setSelectedSongs([]);
+  };
 
   const handleAlbumRightClick = (
     album: Album,
@@ -87,10 +170,10 @@ export function FileHub() {
     event.preventDefault();
     setIsRightClicked(true);
     setRightClickPosition({ x: event.clientX, y: event.clientY });
-    setToView(true); // Set toView to true for FileHubAlbum right-click
-    setSelectedAlbum(album); // Set selected album
-    const songIds = album.songs.map((song) => song.id); // Extract song IDs
-    setSelectedSongs(songIds); // Set the selected songs
+    setToView(true);
+    setSelectedAlbum(album);
+    const songIds = album.songs.map((song) => song.id);
+    setSelectedSongs(songIds);
   };
 
   const handleCardRightClick = (
@@ -139,7 +222,6 @@ export function FileHub() {
     })
     .filter((song): song is Song => song !== undefined);
 
-  // Handle download
   const toast = useToast();
   const handleDownload = async () => {
     const songIds = selectedSongObjects.map((song) => song.id);
@@ -211,25 +293,27 @@ export function FileHub() {
       >
         <Box bg="brand.100">
           <InputGroup
-            pb="5"
+            pb="3"
             w="100%"
             sx={{
               caretColor: "white",
             }}
           >
             <InputLeftElement pointerEvents="none">
-              <SearchIcon color="linear.100" />
+              <Search2Icon color="whiteAlpha.700" />
             </InputLeftElement>
             <Input
-              color="linear.100"
-              placeholder="Search files"
-              borderColor="linear.100"
-              _hover={{ borderColor: "linear.100" }}
+              color="whiteAlpha.700"
+              placeholder="Search"
+              borderColor="brand.400"
+              _hover={{ borderColor: "brand.400" }}
               _focus={{
-                borderColor: "linear.100",
+                borderColor: "brand.400",
                 boxShadow: "none",
               }}
               type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
           </InputGroup>
 
@@ -239,67 +323,54 @@ export function FileHub() {
             bgGradient="linear(to-r, linear.100, linear.200)"
             _hover={{ color: "white", bg: "brand.300" }}
             color={"brand.200"}
-            mb={5}
+            mb={3}
             onClick={() => {
               onOpen();
             }}
           >
             Upload Files
           </Button>
-          <FileUploadBox isOpen={isOpen} onClose={onClose} />
-          <HStack justifyContent={"space-between"}>
-            <Menu closeOnSelect={false}>
-              <MenuButton
-                as={Button}
-                variant="ghost"
-                h="30px"
-                w="70px"
-                bottom="10px"
+
+          <HStack
+            w={"100%"}
+            justifyContent={"space-between"}
+            borderColor={"brand.400"}
+            mb={3}
+          >
+            <Link href="/editor/songs" style={{ flex: 1 }}>
+              <Button
+                variant="outline"
+                w="100%"
+                color={"whiteAlpha.800"}
+                _hover={{ bg: "brand.300" }}
+                borderColor={"brand.400"}
+                bg={"brand.100"}
               >
-                Filter
-              </MenuButton>
-              <MenuList bg="brand.100">
-                <MenuOptionGroup type="checkbox">
-                  <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
-                    Genre
-                  </MenuItemOption>
-                  <MenuItemOption bg="brand.100" _hover={{ bg: "brand.200" }}>
-                    Year
-                  </MenuItemOption>
-                </MenuOptionGroup>
-              </MenuList>
-            </Menu>
-            <Menu>
-              <MenuButton
-                as={Button}
-                variant="ghost"
-                h="30px"
-                w="100px"
-                bottom="10px"
+                View all
+              </Button>
+            </Link>
+            {/* <Link href="/editor/albums" style={{ flex: 1 }}>
+              <Button
+                variant="outline"
+                w="100%"
+                color={"whiteAlpha.800"}
+                _hover={{ bg: "brand.300" }}
+                borderColor={"brand.400"}
+                bg={"brand.100"}
               >
-                Sort By:
-                <ChevronDownIcon />
-              </MenuButton>
-              <MenuList bg="brand.100">
-                <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
-                  A-Z
-                </MenuItem>
-                <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
-                  Artist
-                </MenuItem>
-                <MenuItem bg="brand.100" _hover={{ bg: "brand.200" }}>
-                  Recently Added
-                </MenuItem>
-              </MenuList>
-            </Menu>
+                Albums
+              </Button>
+            </Link> */}
           </HStack>
+
+          <FileUploadBox isOpen={isOpen} onClose={onClose} />
         </Box>
         <Box
           overflowY={"auto"}
           css={{
-            display: "flex", // Set display to flex
-            flexDirection: "column", // Arrange children in a column
-            alignItems: "flex-start", // Align children to the start of the flex container
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
             "&::-webkit-scrollbar": {
               width: "5px",
             },
@@ -316,37 +387,101 @@ export function FileHub() {
             },
           }}
         >
+          <HStack
+            w={"100%"}
+            justifyContent={"space-between"}
+            alignItems="center"
+            mb={3}
+          >
+            <Link href="/editor/albums">
+              <Tooltip
+                hasArrow
+                label="View Albums"
+                placement="right"
+                bg={"brand.300"}
+                color={"white"}
+              >
+                <Button h="30px" variant={"ghost"} w="20px">
+                  <Icon
+                    color={"whiteAlpha.800"}
+                    boxSize={5}
+                    as={MdHomeFilled}
+                  ></Icon>
+                </Button>
+              </Tooltip>
+            </Link>
+            <Menu>
+              <MenuButton
+                as={Button}
+                variant="ghost"
+                h="30px"
+                w="100px"
+                color={"whiteAlpha.800"}
+              >
+                Sort By:
+                <ChevronDownIcon ml={1} />
+              </MenuButton>
+              <MenuList bg="brand.200">
+                <MenuItem
+                  bg={sortOrder === "default" ? "brand.400" : "brand.200"}
+                  _hover={{
+                    bg: sortOrder === "default" ? "brand.400" : "brand.300",
+                  }}
+                  onClick={() => handleSortOrderChange("default")}
+                >
+                  Default
+                </MenuItem>
+                <MenuItem
+                  bg={sortOrder === "asc" ? "brand.400" : "brand.200"}
+                  _hover={{
+                    bg: sortOrder === "asc" ? "brand.400" : "brand.300",
+                  }}
+                  onClick={() => handleSortOrderChange("asc")}
+                >
+                  A-Z <ChevronUpIcon />
+                </MenuItem>
+                <MenuItem
+                  bg={sortOrder === "desc" ? "brand.400" : "brand.200"}
+                  _hover={{
+                    bg: sortOrder === "desc" ? "brand.400" : "brand.300",
+                  }}
+                  onClick={() => handleSortOrderChange("desc")}
+                >
+                  Z-A <ChevronDownIcon />
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </HStack>
           <Accordion
+            index={expandedIndices}
+            onChange={(indices) => setExpandedIndices(indices as number[])}
             allowMultiple
             sx={{
               width: "100%",
               ".chakra-accordion__item": {
                 borderTop: "none",
                 borderBottom: "none",
-                borderBottomRadius: "lg", // WORKS BUT DOESN'T AFFECT ALBUMCARD
-                padding: "0", // Remove padding from accordion item
-                margin: "0", // Remove margin from accordion item
+                borderBottomRadius: "lg",
+                padding: "0",
+                margin: "0",
               },
               ".chakra-accordion__button": {
-                padding: "0", // Remove padding from accordion button
+                padding: "0",
               },
               ".chakra-accordion__panel": {
-                padding: "0", // Remove padding from accordion panel
+                padding: "0",
               },
               ".chakra-accordion__button:focus": {
                 boxShadow: "none",
               },
             }}
-            // onContextMenu={handleRightClick} idk what this is
           >
             {!isLoaded ? (
-              // "Lets you group elements without a wrapper node"
               <React.Fragment>
                 {Array.from({ length: 10 }, (_, i) => (
                   <Box key={i} borderRadius={"lg"} h="55px" overflow="hidden">
                     <HStack spacing="10px">
                       <Center w="55px" h="55px">
-                        {/* UPDATE TO KEEP CHECKING FOR FIRST IMAGE */}
                         <Skeleton
                           borderRadius="base"
                           boxSize="45px"
@@ -382,13 +517,15 @@ export function FileHub() {
               albums &&
               albums.length > 0 &&
               albums.map((album, index) => {
-                // console.log(album.album); // REMOVE
                 return (
                   <FileHubAlbum
                     key={index}
                     album={album}
                     onAlbumRightClick={handleAlbumRightClick}
                     onCardRightClick={handleCardRightClick}
+                    searchQuery={searchQuery}
+                    expandedIndices={expandedIndices}
+                    setExpandedIndices={setExpandedIndices}
                   />
                 );
               })

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Flex, Text, VStack } from "@chakra-ui/react";
+import { Flex, Text, VStack, Highlight } from "@chakra-ui/react";
 import { Album, Song } from "../../types/types";
 import { convertTime } from "../../util/duration";
 import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
@@ -9,6 +9,7 @@ export function FileHubAlbumCard({
   song,
   isLast = false,
   onRightClick,
+  searchQuery,
 }: {
   song: Song;
   isLast?: boolean;
@@ -16,6 +17,7 @@ export function FileHubAlbumCard({
     songId: string,
     event: React.MouseEvent<HTMLDivElement>
   ) => void;
+  searchQuery: string;
 }) {
   const { selectedSongs, setSelectedSongs } = useSelectedSongs();
   const isSelected = selectedSongs.includes(song.id);
@@ -54,7 +56,15 @@ export function FileHubAlbumCard({
     >
       <VStack alignItems={"left"} pl={"15px"} py={"5px"} gap={"0px"}>
         <Text fontSize={"15px"} noOfLines={1} pt={"2px"} userSelect="none">
-          {song.title}
+          <Highlight
+            query={searchQuery}
+            styles={{
+              bgGradient: "linear(to-r, linear.100, linear.200)",
+              fontWeight: "bold",
+            }}
+          >
+            {song.title}
+          </Highlight>
         </Text>
         <Text fontSize={"10px"} noOfLines={1} pb={"3px"} userSelect="none">
           {song.artist}
