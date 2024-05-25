@@ -1,30 +1,62 @@
+// // Assumes file type handling prior to function call
+// export async function UploadMP3(
+//   file: File,
+//   userUUID: string,
+//   onProgress: (progress: number) => void
+// ): Promise<Response> {
+//   // create file path using userUUID and file name
+//   const userFilePath = `${userUUID}/${encodeURIComponent(file.name)}`;
+
+//   const formData = new FormData();
+//   formData.append("file", file);
+//   formData.append("userFilePath", userFilePath);
+
+//   const response = await fetch(`/api/upload/mp3?fileName=${userFilePath}`, {
+//     method: "POST",
+//     body: formData,
+//   });
+
+//   if (!response.ok) {
+//     throw new Error("Failed to upload file");
+//   }
+
+//   return response;
+// }
+
+// Assumes file type handling prior to function call
 // Assumes file type handling prior to function call
 export async function UploadMP3(
   file: File,
-  userUUID: string
+  userUUID: string,
   onProgress: (progress: number) => void
 ): Promise<Response> {
-  // create file path using userUUID and file name
-  const userFilePath = `${userUUID}/${encodeURIComponent(file.name)}`;
+  return new Promise<Response>((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const userFilePath = `${userUUID}/${encodeURIComponent(file.name)}`;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("userFilePath", userFilePath);
 
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("userFilePath", userFilePath);
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percentComplete = (event.loaded / event.total) * 100;
+        onProgress(percentComplete);
+      }
+    };
 
-  const controller = new AbortController();
-  const signal = controller.signal;
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve(new Response(xhr.responseText, { status: xhr.status }));
+      } else {
+        reject(new Error("Failed to upload file"));
+      }
+    };
 
-  const response = await fetch(`/api/upload/mp3?fileName=${userFilePath}`, {
-    method: "POST",
-    body: formData,
-    signal: signal,
+    xhr.onerror = () => reject(new Error("Failed to upload file"));
+
+    xhr.open("POST", `/api/upload/mp3?fileName=${userFilePath}`);
+    xhr.send(formData);
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to upload file");
-  }
-
-  return response;
 }
 
 // Assumes file type handling prior to function call

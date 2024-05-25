@@ -37,19 +37,15 @@ interface UploadBoxProps {
 export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
   const toast = useToast();
   const { refetchData } = useFetch();
-  const { uuid, generateUUID } = useUUID();
+  const { uuid } = useUUID();
   const [files, setFiles] = useState<File[]>([]); // Initialize with an empty array
   const [modalSize, setModalSize] = useState<"xl" | "full">("xl");
-  // const onDrop = useCallback((acceptedFiles: File[]) => {
-  //   setFiles(acceptedFiles);
-  // }, []);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    // just like handleDeleteFile below, we just add and filter the collection of files
     setFiles((prevFiles) => {
       const allFiles = [...prevFiles, ...acceptedFiles];
 
-      // remove duplicates
+      // Remove duplicates
       const uniqueFiles = allFiles.filter(
         (file, index, self) =>
           index === self.findIndex((f) => f.name === file.name)
@@ -65,6 +61,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
       inProgress: boolean;
       uploadFailed: boolean;
       isComplete: boolean;
+      progress: number;
     };
   }>({});
 
@@ -76,92 +73,17 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
     });
   };
 
-  // const handleRetry = async (fileName: string) => {
-  //   // Set upload as in progress before the retry
-  //   setUploadStatus((prevStatus) => ({
-  //     ...prevStatus,
-  //     [fileName]: {
-  //       inProgress: true,
-  //       uploadFailed: false,
-  //       isComplete: false,
-  //     },
-  //   }));
-
-  //   // Retrieve the file from the files array based on fileName
-  //   const file = files.find((f) => f.name === fileName);
-  //   if (!file) {
-  //     toast({
-  //       title: "Error",
-  //       description: "File is not an MP3.",
-  //       status: "error",
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //     console.error("File not found for retry:", fileName);
-  //     return;
-  //   }
-
-  //   if (file.size > 30000000) {
-  //     toast({
-  //       title: "File too large",
-  //       description: "File is larger than 30 MB.",
-  //       status: "error",
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //     return;
-  //   }
-
-  //   try {
-  //     // Attempt to upload the file again
-  //     const response = await UploadMP3(file, uuid);
-  //     if (response.ok) {
-  //       console.log("File re-uploaded successfully");
-  //       refetchData();
-  //       setUploadStatus((prevStatus) => ({
-  //         ...prevStatus,
-  //         [fileName]: {
-  //           inProgress: false,
-  //           uploadFailed: false,
-  //           isComplete: true,
-  //         },
-  //       }));
-  //     } else {
-  //       console.error("Failed to re-upload file");
-  //       setUploadStatus((prevStatus) => ({
-  //         ...prevStatus,
-  //         [fileName]: {
-  //           inProgress: false,
-  //           uploadFailed: true,
-  //           isComplete: false,
-  //         },
-  //       }));
-  //     }
-  //   } catch (error) {
-  //     console.error("Failed to upload file:", error);
-  //     setUploadStatus((prevStatus) => ({
-  //       ...prevStatus,
-  //       [fileName]: {
-  //         inProgress: false,
-  //         uploadFailed: true,
-  //         isComplete: false,
-  //       },
-  //     }));
-  //   }
-  // };
-
   const handleRetry = async (fileName: string) => {
-    // Set upload as in progress before the retry
     setUploadStatus((prevStatus) => ({
       ...prevStatus,
       [fileName]: {
         inProgress: true,
         uploadFailed: false,
         isComplete: false,
+        progress: 0,
       },
     }));
 
-    // Retrieve the file from the files array based on fileName
     const file = files.find((f) => f.name === fileName);
     if (!file) {
       toast({
@@ -187,8 +109,15 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
     }
 
     try {
-      // Attempt to upload the file again
-      const response = await UploadMP3(file, uuid);
+      const response = await UploadMP3(file, uuid, (progress) => {
+        setUploadStatus((prevStatus) => ({
+          ...prevStatus,
+          [fileName]: {
+            ...prevStatus[fileName],
+            progress,
+          },
+        }));
+      });
       if (response.ok) {
         console.log("File re-uploaded successfully");
         refetchData();
@@ -198,6 +127,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
             inProgress: false,
             uploadFailed: false,
             isComplete: true,
+            progress: 100,
           },
         }));
       } else {
@@ -208,6 +138,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
             inProgress: false,
             uploadFailed: true,
             isComplete: false,
+            progress: 0,
           },
         }));
       }
@@ -219,6 +150,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
           inProgress: false,
           uploadFailed: true,
           isComplete: false,
+          progress: 0,
         },
       }));
     }
@@ -230,72 +162,6 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
       setFiles(Array.from(fileList)); // Convert FileList to an array and store in state
     }
   };
-
-  // const handleUpload = async () => {
-  //   if (files.length > 0) {
-  //     for (const file of files) {
-  //       if (!file.name.endsWith(".mp3")) {
-  //         toast({
-  //           title: "Error",
-  //           description: "File is not an MP3.",
-  //           status: "error",
-  //           duration: 5000,
-  //           isClosable: true,
-  //         });
-  //         console.error(`Error: File ${file.name} is not a .mp3 file.`);
-  //         continue;
-  //       }
-
-  //       const fileName = file.name;
-  //       setUploadStatus((prevStatus) => ({
-  //         ...prevStatus,
-  //         [fileName]: {
-  //           inProgress: true,
-  //           uploadFailed: false,
-  //           isComplete: false,
-  //         },
-  //       }));
-
-  //       try {
-  //         const response = await UploadMP3(file, uuid);
-  //         if (response.ok) {
-  //           console.log("File uploaded successfully");
-  //           refetchData();
-  //           setUploadStatus((prevStatus) => ({
-  //             ...prevStatus,
-  //             [fileName]: {
-  //               inProgress: false,
-  //               uploadFailed: false,
-  //               isComplete: true,
-  //             },
-  //           }));
-  //         } else {
-  //           console.error("Failed to upload file");
-  //           setUploadStatus((prevStatus) => ({
-  //             ...prevStatus,
-  //             [fileName]: {
-  //               inProgress: false,
-  //               uploadFailed: true,
-  //               isComplete: false,
-  //             },
-  //           }));
-  //         }
-  //       } catch (error) {
-  //         console.error("Failed to upload file:", error);
-  //         setUploadStatus((prevStatus) => ({
-  //           ...prevStatus,
-  //           [fileName]: {
-  //             inProgress: false,
-  //             uploadFailed: true,
-  //             isComplete: false,
-  //           },
-  //         }));
-  //       }
-  //     }
-  //   } else {
-  //     console.log("No files selected.");
-  //   }
-  // };
 
   const handleUpload = async () => {
     if (files.length > 0) {
@@ -315,6 +181,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
             inProgress: true,
             uploadFailed: false,
             isComplete: false,
+            progress: 0,
           },
         }));
 
@@ -361,6 +228,8 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
               inProgress: false,
               uploadFailed: status === "error",
               isComplete: status === "success",
+              progress:
+                status === "success" ? 100 : prevStatus[fileName].progress,
             },
           }));
           if (status === "success") {
@@ -382,6 +251,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
               inProgress: false,
               uploadFailed: true,
               isComplete: false,
+              progress: 0,
             },
           }));
           toast({
@@ -556,6 +426,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
                     isComplete={uploadStatus[file.name]?.isComplete || false}
                     onRetry={() => handleRetry(file.name)}
                     onDelete={() => handleDeleteFile(file.name)}
+                    progress={uploadStatus[file.name]?.progress || 0}
                   />
                 ))
               ) : (

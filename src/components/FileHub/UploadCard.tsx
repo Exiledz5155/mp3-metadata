@@ -52,6 +52,7 @@ export default function UploadCard({
   // Ensure inProgress is always false if uploadFailed is true.
   // This is necessary to display the correct UI state.
   const correctedInProgress = uploadFailed ? false : inProgress;
+  // const correctedInProgress = true;
 
   return (
     <Box border="0px" p={4} borderRadius="2xl" _hover={{ bg: "brand.300" }}>
@@ -61,7 +62,6 @@ export default function UploadCard({
           <Text mb="-1" textAlign="left" noOfLines={1} userSelect="none">
             {fileName}
           </Text>
-          {/* MAYBE USE BADGE INSTEAD OF TEXT */}
           {uploadFailed ? ( // If upload has failed, display "Upload Failed" in red
             <Text
               fontSize="xs"
@@ -75,15 +75,12 @@ export default function UploadCard({
             <Text
               fontSize="xs"
               textAlign="left"
-              // bgGradient="linear(to-r, linear.100, linear.200)"
-              // bgClip="text"
               color="linear.200"
               userSelect="none"
             >
               Upload Success
             </Text>
           ) : (
-            // Else, check if inProgress and display UI state as needed
             <Text
               fontSize="xs"
               textAlign="left"
@@ -91,7 +88,7 @@ export default function UploadCard({
               mb={correctedInProgress ? "-2" : "0"}
               userSelect="none"
             >
-              {formatFileSize(fileSizeInBytes)}
+              {`${formatFileSize(fileSizeInBytes)} | ${progress}%`}
             </Text>
           )}
         </Flex>
@@ -124,13 +121,17 @@ export default function UploadCard({
           )
         )}
       </Flex>
-      {inProgress && ( // Progress bar component for inProgress state
+      {correctedInProgress && ( // Progress bar component for inProgress state
         <Progress
           mt={4}
           value={progress}
+          aria-valuenow={progress}
           size="sm"
           colorScheme="linear"
           borderRadius="md"
+          transition="all 0.6s ease"
+          hasStripe
+          isAnimated
         />
       )}
     </Box>
