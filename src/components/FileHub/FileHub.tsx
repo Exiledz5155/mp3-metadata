@@ -124,44 +124,83 @@ export function FileHub() {
     };
   }, [fuse]);
 
-  const updateExpandedIndices = (albums: Album[], query: string): void => {
+  const updateExpandedIndices = (
+    filteredAlbums: Album[],
+    query: string
+  ): void => {
     if (query === "") {
       setExpandedIndices([]);
-      return;
-    }
+    } else {
+      const indices: number[] = filteredAlbums.reduce(
+        (acc: number[], album, index) => {
+          const albumMatches = album.album
+            .toLowerCase()
+            .includes(query.toLowerCase());
+          const songMatches = album.songs.some((song) =>
+            song.title.toLowerCase().includes(query.toLowerCase())
+          );
 
-    const indices: number[] = [];
-    albums.forEach((album, index) => {
-      if (
-        album.album.toLowerCase().includes(query.toLowerCase()) ||
-        album.songs.some((song) => {
-          song.title.toLowerCase().includes(query.toLowerCase());
-        })
-      ) {
-        indices.push(index);
-      }
-    });
-    setExpandedIndices(indices);
+          if (albumMatches || songMatches) {
+            acc.push(index);
+          }
+          return acc;
+        },
+        []
+      );
+
+      setExpandedIndices(indices);
+    }
   };
+
+  //   if (query === "") {
+  //     setExpandedIndices([]);
+  //     return;
+  //   }
+
+  //   const indices: number[] = [];
+  //   albums.forEach((album, index) => {
+  //     const albumMatches = album.album
+  //       .toLowerCase()
+  //       .includes(query.toLowerCase());
+  //     const songMatches = album.songs.some((song) => {
+  //       song.title.toLowerCase().includes(query.toLowerCase());
+  //     });
+
+  //     if (albumMatches || songMatches) {
+  //       indices.push(index);
+  //     }
+  //   });
+  //   setExpandedIndices(indices);
+  // };
 
   useEffect(() => {
     if (initialAlbums) {
       let filteredAlbums = filterAlbumsAndSongs(initialAlbums, searchQuery);
 
+      // if (sortOrder === "asc") {
+      //   filteredAlbums = [...filteredAlbums].sort((a, b) =>
+      //     a.album.localeCompare(b.album)
+      //   );
+      // } else if (sortOrder === "desc") {
+      //   filteredAlbums = [...filteredAlbums].sort((a, b) =>
+      //     b.album.localeCompare(a.album)
+      //   );
+      // }
+
       if (sortOrder === "asc") {
-        filteredAlbums = [...filteredAlbums].sort((a, b) =>
-          a.album.localeCompare(b.album)
-        );
+        filteredAlbums.sort((a, b) => a.album.localeCompare(b.album));
       } else if (sortOrder === "desc") {
-        filteredAlbums = [...filteredAlbums].sort((a, b) =>
-          b.album.localeCompare(a.album)
-        );
+        filteredAlbums.sort((a, b) => b.album.localeCompare(a.album));
       }
 
       setAlbums(filteredAlbums);
       updateExpandedIndices(filteredAlbums, searchQuery);
     }
   }, [sortOrder, searchQuery, initialAlbums, filterAlbumsAndSongs]);
+
+  useEffect(() => {
+    console.log("Current Expanded Indices: ", expandedIndices);
+  }, [expandedIndices]);
 
   const handleSortOrderChange = (order: "default" | "asc" | "desc") => {
     setSortOrder(order);
@@ -359,18 +398,6 @@ export function FileHub() {
                 View all
               </Button>
             </Link>
-            {/* <Link href="/editor/albums" style={{ flex: 1 }}>
-              <Button
-                variant="outline"
-                w="100%"
-                color={"whiteAlpha.800"}
-                _hover={{ bg: "brand.300" }}
-                borderColor={"brand.400"}
-                bg={"brand.100"}
-              >
-                Albums
-              </Button>
-            </Link> */}
           </HStack>
 
           <FileUploadBox isOpen={isOpen} onClose={onClose} />
