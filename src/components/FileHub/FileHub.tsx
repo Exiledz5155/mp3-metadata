@@ -167,10 +167,6 @@ export function FileHub() {
     }
   }, [sortOrder, searchQuery, initialAlbums, filterAlbumsAndSongs]);
 
-  useEffect(() => {
-    console.log("Current Expanded Indices: ", expandedIndices);
-  }, [expandedIndices]);
-
   const handleSortOrderChange = (order: "default" | "asc" | "desc") => {
     setSortOrder(order);
   };
