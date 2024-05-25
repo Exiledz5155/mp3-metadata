@@ -76,7 +76,80 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
     });
   };
 
-  // NO IDEA IF THIS WORKS, NEED TO FIND METHOD TO FORCE ERROR
+  // const handleRetry = async (fileName: string) => {
+  //   // Set upload as in progress before the retry
+  //   setUploadStatus((prevStatus) => ({
+  //     ...prevStatus,
+  //     [fileName]: {
+  //       inProgress: true,
+  //       uploadFailed: false,
+  //       isComplete: false,
+  //     },
+  //   }));
+
+  //   // Retrieve the file from the files array based on fileName
+  //   const file = files.find((f) => f.name === fileName);
+  //   if (!file) {
+  //     toast({
+  //       title: "Error",
+  //       description: "File is not an MP3.",
+  //       status: "error",
+  //       duration: 5000,
+  //       isClosable: true,
+  //     });
+  //     console.error("File not found for retry:", fileName);
+  //     return;
+  //   }
+
+  //   if (file.size > 30000000) {
+  //     toast({
+  //       title: "File too large",
+  //       description: "File is larger than 30 MB.",
+  //       status: "error",
+  //       duration: 5000,
+  //       isClosable: true,
+  //     });
+  //     return;
+  //   }
+
+  //   try {
+  //     // Attempt to upload the file again
+  //     const response = await UploadMP3(file, uuid);
+  //     if (response.ok) {
+  //       console.log("File re-uploaded successfully");
+  //       refetchData();
+  //       setUploadStatus((prevStatus) => ({
+  //         ...prevStatus,
+  //         [fileName]: {
+  //           inProgress: false,
+  //           uploadFailed: false,
+  //           isComplete: true,
+  //         },
+  //       }));
+  //     } else {
+  //       console.error("Failed to re-upload file");
+  //       setUploadStatus((prevStatus) => ({
+  //         ...prevStatus,
+  //         [fileName]: {
+  //           inProgress: false,
+  //           uploadFailed: true,
+  //           isComplete: false,
+  //         },
+  //       }));
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to upload file:", error);
+  //     setUploadStatus((prevStatus) => ({
+  //       ...prevStatus,
+  //       [fileName]: {
+  //         inProgress: false,
+  //         uploadFailed: true,
+  //         isComplete: false,
+  //       },
+  //     }));
+  //   }
+  // };
+
   const handleRetry = async (fileName: string) => {
     // Set upload as in progress before the retry
     setUploadStatus((prevStatus) => ({
@@ -93,7 +166,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
     if (!file) {
       toast({
         title: "Error",
-        description: "File is not an MP3.",
+        description: "File not found for retry",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -158,19 +231,81 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
     }
   };
 
+  // const handleUpload = async () => {
+  //   if (files.length > 0) {
+  //     for (const file of files) {
+  //       if (!file.name.endsWith(".mp3")) {
+  //         toast({
+  //           title: "Error",
+  //           description: "File is not an MP3.",
+  //           status: "error",
+  //           duration: 5000,
+  //           isClosable: true,
+  //         });
+  //         console.error(`Error: File ${file.name} is not a .mp3 file.`);
+  //         continue;
+  //       }
+
+  //       const fileName = file.name;
+  //       setUploadStatus((prevStatus) => ({
+  //         ...prevStatus,
+  //         [fileName]: {
+  //           inProgress: true,
+  //           uploadFailed: false,
+  //           isComplete: false,
+  //         },
+  //       }));
+
+  //       try {
+  //         const response = await UploadMP3(file, uuid);
+  //         if (response.ok) {
+  //           console.log("File uploaded successfully");
+  //           refetchData();
+  //           setUploadStatus((prevStatus) => ({
+  //             ...prevStatus,
+  //             [fileName]: {
+  //               inProgress: false,
+  //               uploadFailed: false,
+  //               isComplete: true,
+  //             },
+  //           }));
+  //         } else {
+  //           console.error("Failed to upload file");
+  //           setUploadStatus((prevStatus) => ({
+  //             ...prevStatus,
+  //             [fileName]: {
+  //               inProgress: false,
+  //               uploadFailed: true,
+  //               isComplete: false,
+  //             },
+  //           }));
+  //         }
+  //       } catch (error) {
+  //         console.error("Failed to upload file:", error);
+  //         setUploadStatus((prevStatus) => ({
+  //           ...prevStatus,
+  //           [fileName]: {
+  //             inProgress: false,
+  //             uploadFailed: true,
+  //             isComplete: false,
+  //           },
+  //         }));
+  //       }
+  //     }
+  //   } else {
+  //     console.log("No files selected.");
+  //   }
+  // };
+
   const handleUpload = async () => {
     if (files.length > 0) {
-      for (const file of files) {
+      const uploadPromises = files.map(async (file) => {
         if (!file.name.endsWith(".mp3")) {
-          toast({
-            title: "Error",
-            description: "File is not an MP3.",
+          return {
+            fileName: file.name,
             status: "error",
-            duration: 5000,
-            isClosable: true,
-          });
-          console.error(`Error: File ${file.name} is not a .mp3 file.`);
-          continue;
+            message: "File is not an MP3.",
+          };
         }
 
         const fileName = file.name;
@@ -186,29 +321,53 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
         try {
           const response = await UploadMP3(file, uuid);
           if (response.ok) {
-            console.log("File uploaded successfully");
-            refetchData();
-            setUploadStatus((prevStatus) => ({
-              ...prevStatus,
-              [fileName]: {
-                inProgress: false,
-                uploadFailed: false,
-                isComplete: true,
-              },
-            }));
+            return {
+              fileName,
+              status: "success",
+              message: "File uploaded successfully",
+            };
           } else {
-            console.error("Failed to upload file");
-            setUploadStatus((prevStatus) => ({
-              ...prevStatus,
-              [fileName]: {
-                inProgress: false,
-                uploadFailed: true,
-                isComplete: false,
-              },
-            }));
+            return {
+              fileName,
+              status: "error",
+              message: "Failed to upload file",
+            };
           }
         } catch (error) {
-          console.error("Failed to upload file:", error);
+          return {
+            fileName,
+            status: "error",
+            message: "Failed to upload file",
+          };
+        }
+      });
+
+      const uploadResults = await Promise.allSettled(uploadPromises);
+
+      uploadResults.forEach((result) => {
+        if (result.status === "fulfilled") {
+          const { fileName, status, message } = result.value;
+          setUploadStatus((prevStatus) => ({
+            ...prevStatus,
+            [fileName]: {
+              inProgress: false,
+              uploadFailed: status === "error",
+              isComplete: status === "success",
+            },
+          }));
+          if (status === "success") {
+            refetchData();
+          } else {
+            toast({
+              title: "Error",
+              description: message,
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+            });
+          }
+        } else {
+          const fileName = result.reason.fileName;
           setUploadStatus((prevStatus) => ({
             ...prevStatus,
             [fileName]: {
@@ -217,8 +376,15 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
               isComplete: false,
             },
           }));
+          toast({
+            title: "Error",
+            description: "Failed to upload file",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+          });
         }
-      }
+      });
     } else {
       console.log("No files selected.");
     }
