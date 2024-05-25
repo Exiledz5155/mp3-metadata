@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { HStack, Flex, Image, Text, Box } from "@chakra-ui/react";
+import { HStack, Flex, Image, Text, Box, Center, Icon } from "@chakra-ui/react";
 import ActionMenu from "../Actions/ActionMenu";
 import { Album, Song } from "../../types/types";
 import { convertTime } from "../../util/duration";
+import { MdOutlineQueueMusic } from "react-icons/md";
 
 interface SongGridCardProps {
   song: Song;
@@ -70,15 +71,32 @@ export function SongGridCard({
               {song.trackNumber}
             </Text>
           </Box>
+          {song.image ? (
+            <Image
+              src={song.image}
+              alt={song.title}
+              w="50px"
+              h="50px"
+              borderRadius={"5px"}
+              mr={"4"}
+            />
+          ) : (
+            <Center
+              w="50px"
+              h="50px"
+              bg={"transparent"}
+              borderRadius={"5px"}
+              mr={"4"}
+            >
+              <Icon
+                as={MdOutlineQueueMusic}
+                boxSize={8}
+                color="brand.500"
+                bg={"transparent"}
+              />
+            </Center>
+          )}
 
-          <Image
-            src={song.image}
-            alt={song.title}
-            w="50px"
-            h="50px"
-            borderRadius={"5px"}
-            mr={"4"}
-          />
           <Text textAlign={"left"} noOfLines={1}>
             {song.title ? song.title : extractFileName(song.filePath)}
           </Text>
@@ -87,7 +105,9 @@ export function SongGridCard({
           {song.artist ? song.artist : "Unknown artist"}
         </Text>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          {song.albumTitle ? song.albumTitle : "Unknown album"}
+          {song.albumTitle === "Unknown Album"
+            ? song.albumTitle
+            : "Unknown album"}
         </Text>
         <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
           {song.duration ? convertTime(song.duration) : "N/A"}
