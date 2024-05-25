@@ -261,25 +261,6 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
                 Upload Files
               </Box>
             </Flex>
-            {/* Add fullscreen icon here */}
-            {/* <Button
-              onClick={() => setModalSize(modalSize === "lg" ? "full" : "lg")}
-              variant="ghost"
-              position="absolute"
-              width="32px" // Set the width to match the close button size
-              height="32px" // Set the height to match the close button size
-              display="flex" // Ensure the icon is centered
-              alignItems="center"
-              justifyContent="center"
-              borderRadius="md"
-              top="28px"
-              right="70px"
-            >
-              <Icon
-                as={modalSize === "lg" ? MdFullscreen : MdFullscreenExit}
-                boxSize={5}
-              />
-            </Button> */}
             <Box
               as="button"
               onClick={() => setModalSize(modalSize === "xl" ? "full" : "xl")}
@@ -371,9 +352,6 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
               mb={5}
               overflowY="auto"
               flex="1"
-              // maxH="100%"
-              // paddingRight="10px"
-              // Customizing scrollbar
               css={{
                 "&::-webkit-scrollbar": {
                   width: "5px",
