@@ -24,6 +24,7 @@ interface FileUploadCardProps {
   isComplete: boolean;
   onRetry: () => void; // Callback function for retry
   onDelete: () => void;
+  progress: number;
 }
 
 export default function UploadCard({
@@ -34,6 +35,7 @@ export default function UploadCard({
   isComplete,
   onRetry,
   onDelete,
+  progress,
 }: FileUploadCardProps) {
   const handleRetryClick = () => {
     if (onRetry) {
@@ -125,7 +127,7 @@ export default function UploadCard({
       {inProgress && ( // Progress bar component for inProgress state
         <Progress
           mt={4}
-          isIndeterminate
+          value={progress}
           size="sm"
           colorScheme="linear"
           borderRadius="md"

@@ -52,23 +52,42 @@ export async function POST(request: Request) {
     // Create full URL
     const fullBlobUrl = `${blockBlobClient.url}?${sasToken}`;
 
-    // Set up request options
-    const requestOptions: RequestInit = {
-      method: "PUT",
-      headers: {
-        "x-ms-blob-type": "BlockBlob",
-        // Add other headers as needed
+    // // Set up request options
+    // const requestOptions: RequestInit = {
+    //   method: "PUT",
+    //   headers: {
+    //     "x-ms-blob-type": "BlockBlob",
+    //   },
+    //   body: file,
+    // };
+
+    // // Perform the fetch request
+    // const uploadResponse = await fetch(fullBlobUrl, requestOptions);
+
+    // Upload the file using BlockBlobClient.uploadData
+    const uploadResponse = await blockBlobClient.uploadData(file, {
+      onProgress: (progress) => {
+        if (progress.loadedBytes) {
+          const percentCompleted = Math.round(
+            (progress.loadedBytes * 100) / file.size
+          );
+          // Send progress to the frontend using Server-Sent Events (SSE)
+          // Note: You need to implement the SSE mechanism in your frontend
+          // to receive and handle these progress events
+          request.emit("progress", `data: ${percentCompleted}\n\n`);
+        }
       },
-      body: file,
-    };
+    });
 
-    // Perform the fetch request
-    const uploadResponse = await fetch(fullBlobUrl, requestOptions);
-
-    // Check if the request was successful
-    if (!uploadResponse.ok) {
+    // Check if the upload was successful
+    if (uploadResponse._response.status !== 201) {
       throw new Error("Failed to upload file");
     }
+
+    // // Check if the request was successful
+    // if (!uploadResponse.ok) {
+    //   throw new Error("Failed to upload file");
+    // }
 
     return new Response(JSON.stringify({ status: "success" }), {
       status: 200,

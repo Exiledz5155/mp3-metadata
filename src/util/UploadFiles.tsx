@@ -27,26 +27,6 @@ export async function UploadMP3(
   return response;
 }
 
-export async function UploadMP3(
-  file: File,
-  userUUID: string,
-  onProgress: (progress: number) => void
-): Promise<Response> {
-  const userFilePath = `${userUUID}/${encodeURIComponent(file.name)}`;
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("userFilePath", userFilePath);
-  const response = await fetch(`/api/upload/mp3?fileName=${userFilePath}`, {
-    method: "POST",
-    body: formData,
-    signal: abortController.signal,
-  });
-  if (!response.ok) {
-    throw new Error("Failed to upload file");
-  }
-  return response;
-}
-
 // Assumes file type handling prior to function call
 export async function UploadIMG(
   file: File,

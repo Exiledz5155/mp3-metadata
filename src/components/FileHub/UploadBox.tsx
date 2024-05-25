@@ -319,7 +319,15 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
         }));
 
         try {
-          const response = await UploadMP3(file, uuid);
+          const response = await UploadMP3(file, uuid, (progress) => {
+            setUploadStatus((prevStatus) => ({
+              ...prevStatus,
+              [fileName]: {
+                ...prevStatus[fileName],
+                progress,
+              },
+            }));
+          });
           if (response.ok) {
             return {
               fileName,
