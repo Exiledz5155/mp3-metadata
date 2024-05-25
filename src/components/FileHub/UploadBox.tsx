@@ -37,19 +37,16 @@ interface UploadBoxProps {
 export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
   const toast = useToast();
   const { refetchData } = useFetch();
-  const { uuid, generateUUID } = useUUID();
+  const { uuid } = useUUID();
   const [files, setFiles] = useState<File[]>([]); // Initialize with an empty array
   const [modalSize, setModalSize] = useState<"xl" | "full">("xl");
-  // const onDrop = useCallback((acceptedFiles: File[]) => {
-  //   setFiles(acceptedFiles);
-  // }, []);
+  const [isUploading, setIsUploading] = useState(false);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    // just like handleDeleteFile below, we just add and filter the collection of files
     setFiles((prevFiles) => {
       const allFiles = [...prevFiles, ...acceptedFiles];
 
-      // remove duplicates
+      // Remove duplicates
       const uniqueFiles = allFiles.filter(
         (file, index, self) =>
           index === self.findIndex((f) => f.name === file.name)
@@ -65,6 +62,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
       inProgress: boolean;
       uploadFailed: boolean;
       isComplete: boolean;
+      progress: number;
     };
   }>({});
 
@@ -76,24 +74,23 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
     });
   };
 
-  // NO IDEA IF THIS WORKS, NEED TO FIND METHOD TO FORCE ERROR
   const handleRetry = async (fileName: string) => {
-    // Set upload as in progress before the retry
+    setIsUploading(true);
     setUploadStatus((prevStatus) => ({
       ...prevStatus,
       [fileName]: {
         inProgress: true,
         uploadFailed: false,
         isComplete: false,
+        progress: 0,
       },
     }));
 
-    // Retrieve the file from the files array based on fileName
     const file = files.find((f) => f.name === fileName);
     if (!file) {
       toast({
         title: "Error",
-        description: "File is not an MP3.",
+        description: "File not found for retry",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -114,8 +111,15 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
     }
 
     try {
-      // Attempt to upload the file again
-      const response = await UploadMP3(file, uuid);
+      const response = await UploadMP3(file, uuid, (progress) => {
+        setUploadStatus((prevStatus) => ({
+          ...prevStatus,
+          [fileName]: {
+            ...prevStatus[fileName],
+            progress,
+          },
+        }));
+      });
       if (response.ok) {
         console.log("File re-uploaded successfully");
         refetchData();
@@ -125,6 +129,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
             inProgress: false,
             uploadFailed: false,
             isComplete: true,
+            progress: 100,
           },
         }));
       } else {
@@ -135,6 +140,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
             inProgress: false,
             uploadFailed: true,
             isComplete: false,
+            progress: 0,
           },
         }));
       }
@@ -146,9 +152,11 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
           inProgress: false,
           uploadFailed: true,
           isComplete: false,
+          progress: 0,
         },
       }));
     }
+    setIsUploading(false);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -159,18 +167,15 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
   };
 
   const handleUpload = async () => {
+    setIsUploading(true);
     if (files.length > 0) {
-      for (const file of files) {
+      const uploadPromises = files.map(async (file) => {
         if (!file.name.endsWith(".mp3")) {
-          toast({
-            title: "Error",
-            description: "File is not an MP3.",
+          return {
+            fileName: file.name,
             status: "error",
-            duration: 5000,
-            isClosable: true,
-          });
-          console.error(`Error: File ${file.name} is not a .mp3 file.`);
-          continue;
+            message: "File is not an MP3.",
+          };
         }
 
         const fileName = file.name;
@@ -180,48 +185,92 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
             inProgress: true,
             uploadFailed: false,
             isComplete: false,
+            progress: 0,
           },
         }));
 
         try {
-          const response = await UploadMP3(file, uuid);
+          const response = await UploadMP3(file, uuid, (progress) => {
+            setUploadStatus((prevStatus) => ({
+              ...prevStatus,
+              [fileName]: {
+                ...prevStatus[fileName],
+                progress,
+              },
+            }));
+          });
           if (response.ok) {
-            console.log("File uploaded successfully");
-            refetchData();
-            setUploadStatus((prevStatus) => ({
-              ...prevStatus,
-              [fileName]: {
-                inProgress: false,
-                uploadFailed: false,
-                isComplete: true,
-              },
-            }));
+            return {
+              fileName,
+              status: "success",
+              message: "File uploaded successfully",
+            };
           } else {
-            console.error("Failed to upload file");
-            setUploadStatus((prevStatus) => ({
-              ...prevStatus,
-              [fileName]: {
-                inProgress: false,
-                uploadFailed: true,
-                isComplete: false,
-              },
-            }));
+            return {
+              fileName,
+              status: "error",
+              message: "Failed to upload file",
+            };
           }
         } catch (error) {
-          console.error("Failed to upload file:", error);
+          return {
+            fileName,
+            status: "error",
+            message: "Failed to upload file",
+          };
+        }
+      });
+
+      const uploadResults = await Promise.allSettled(uploadPromises);
+
+      uploadResults.forEach((result) => {
+        if (result.status === "fulfilled") {
+          const { fileName, status, message } = result.value;
+          setUploadStatus((prevStatus) => ({
+            ...prevStatus,
+            [fileName]: {
+              inProgress: false,
+              uploadFailed: status === "error",
+              isComplete: status === "success",
+              progress:
+                status === "success" ? 100 : prevStatus[fileName].progress,
+            },
+          }));
+          if (status === "success") {
+            refetchData();
+          } else {
+            toast({
+              title: "Error",
+              description: message,
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+            });
+          }
+        } else {
+          const fileName = result.reason.fileName;
           setUploadStatus((prevStatus) => ({
             ...prevStatus,
             [fileName]: {
               inProgress: false,
               uploadFailed: true,
               isComplete: false,
+              progress: 0,
             },
           }));
+          toast({
+            title: "Error",
+            description: "Failed to upload file",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+          });
         }
-      }
+      });
     } else {
       console.log("No files selected.");
     }
+    setIsUploading(false);
   };
 
   const [resetKey, setResetKey] = useState(0); // Add this state
@@ -242,6 +291,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
         size={modalSize}
         // Disabled clicking outside the overlay to close the modal
         closeOnOverlayClick={false}
+        closeOnEsc={isUploading ? false : true}
       >
         <ModalOverlay />
         <ModalContent
@@ -261,25 +311,6 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
                 Upload Files
               </Box>
             </Flex>
-            {/* Add fullscreen icon here */}
-            {/* <Button
-              onClick={() => setModalSize(modalSize === "lg" ? "full" : "lg")}
-              variant="ghost"
-              position="absolute"
-              width="32px" // Set the width to match the close button size
-              height="32px" // Set the height to match the close button size
-              display="flex" // Ensure the icon is centered
-              alignItems="center"
-              justifyContent="center"
-              borderRadius="md"
-              top="28px"
-              right="70px"
-            >
-              <Icon
-                as={modalSize === "lg" ? MdFullscreen : MdFullscreenExit}
-                boxSize={5}
-              />
-            </Button> */}
             <Box
               as="button"
               onClick={() => setModalSize(modalSize === "xl" ? "full" : "xl")}
@@ -307,6 +338,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
               right="25px"
               size="md"
               _hover={{ bg: "brand.400" }}
+              isDisabled={isUploading ? true : false}
             />
           </ModalHeader>
           <ModalBody
@@ -341,13 +373,17 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
                   variant="solid"
                   mt={2}
                   bgGradient="linear(to-r, linear.100, linear.200)"
-                  _hover={{
-                    cursor: "pointer",
-                    color: "white",
-                    bg: "brand.300",
-                  }}
+                  _hover={
+                    isUploading
+                      ? {
+                          color: "brand.200",
+                          bgGradient: "linear(to-r, linear.100, linear.200)",
+                        }
+                      : { cursor: "pointer", color: "white", bg: "brand.300" }
+                  }
                   rounded={"xl"}
                   color="brand.200"
+                  disabled={isUploading ? true : false}
                 >
                   Browse Files
                   <Input
@@ -371,9 +407,6 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
               mb={5}
               overflowY="auto"
               flex="1"
-              // maxH="100%"
-              // paddingRight="10px"
-              // Customizing scrollbar
               css={{
                 "&::-webkit-scrollbar": {
                   width: "5px",
@@ -404,6 +437,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
                     isComplete={uploadStatus[file.name]?.isComplete || false}
                     onRetry={() => handleRetry(file.name)}
                     onDelete={() => handleDeleteFile(file.name)}
+                    progress={uploadStatus[file.name]?.progress || 0}
                   />
                 ))
               ) : (
@@ -429,25 +463,42 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
               flex="1"
               bg="#F7FAFC"
               color={"black"}
-              _hover={{ color: "white", bg: "brand.300" }}
+              _hover={
+                isUploading
+                  ? { color: "black", bg: "#F7FAFC" }
+                  : { color: "white", bg: "brand.300" }
+              }
               size="lg"
               variant="solid"
               rounded={"xl"}
               onClick={handleCloseModal}
               mr={4}
+              isDisabled={isUploading ? true : false}
             >
               Close
             </Button>
+
+            {/* DIsplay this variant if in progress */}
+
             <Button
               flex="1"
               bgGradient="linear(to-r, linear.100, linear.200)"
-              _hover={{ color: "white", bg: "brand.300" }}
+              _hover={
+                isUploading
+                  ? {
+                      color: "brand.200",
+                      bgGradient: "linear(to-r, linear.100, linear.200)",
+                    }
+                  : { color: "white", bg: "brand.300" }
+              }
               size="lg"
               variant="solid"
               rounded={"xl"}
               color="brand.200"
               onClick={handleUpload}
-              disabled={files.length === 0}
+              disabled={files.length === 0 || isUploading}
+              loadingText="Uploading"
+              isLoading={isUploading ? true : false}
             >
               Upload
             </Button>

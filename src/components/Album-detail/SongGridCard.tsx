@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { HStack, Flex, Image, Text, Box, Center, Icon } from "@chakra-ui/react";
+import {
+  HStack,
+  Flex,
+  Image,
+  Text,
+  Box,
+  Center,
+  Icon,
+  Square,
+} from "@chakra-ui/react";
 import ActionMenu from "../Actions/ActionMenu";
 import { Album, Song } from "../../types/types";
 import { convertTime } from "../../util/duration";
@@ -81,20 +90,22 @@ export function SongGridCard({
               mr={"4"}
             />
           ) : (
-            <Center
-              w="50px"
-              h="50px"
-              bg={"transparent"}
-              borderRadius={"5px"}
-              mr={"4"}
-            >
-              <Icon
-                as={MdOutlineQueueMusic}
-                boxSize={8}
-                color="brand.500"
+            <Square>
+              <Center
+                w="50px"
+                h="50px"
                 bg={"transparent"}
-              />
-            </Center>
+                borderRadius={"5px"}
+                mr={"4"}
+              >
+                <Icon
+                  as={MdOutlineQueueMusic}
+                  boxSize={8}
+                  color="brand.500"
+                  bg={"transparent"}
+                />
+              </Center>
+            </Square>
           )}
 
           <Text textAlign={"left"} noOfLines={1}>
