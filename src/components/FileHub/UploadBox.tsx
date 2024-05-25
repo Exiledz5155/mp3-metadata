@@ -40,6 +40,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
   const { uuid } = useUUID();
   const [files, setFiles] = useState<File[]>([]); // Initialize with an empty array
   const [modalSize, setModalSize] = useState<"xl" | "full">("xl");
+  const [isUploading, setIsUploading] = useState(false);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles((prevFiles) => {
@@ -74,6 +75,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
   };
 
   const handleRetry = async (fileName: string) => {
+    setIsUploading(true);
     setUploadStatus((prevStatus) => ({
       ...prevStatus,
       [fileName]: {
@@ -154,6 +156,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
         },
       }));
     }
+    setIsUploading(false);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -164,6 +167,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
   };
 
   const handleUpload = async () => {
+    setIsUploading(true);
     if (files.length > 0) {
       const uploadPromises = files.map(async (file) => {
         if (!file.name.endsWith(".mp3")) {
@@ -266,6 +270,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
     } else {
       console.log("No files selected.");
     }
+    setIsUploading(false);
   };
 
   const [resetKey, setResetKey] = useState(0); // Add this state
@@ -286,6 +291,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
         size={modalSize}
         // Disabled clicking outside the overlay to close the modal
         closeOnOverlayClick={false}
+        closeOnEsc={isUploading ? false : true}
       >
         <ModalOverlay />
         <ModalContent
@@ -332,6 +338,7 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
               right="25px"
               size="md"
               _hover={{ bg: "brand.400" }}
+              isDisabled={isUploading ? true : false}
             />
           </ModalHeader>
           <ModalBody
@@ -366,13 +373,17 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
                   variant="solid"
                   mt={2}
                   bgGradient="linear(to-r, linear.100, linear.200)"
-                  _hover={{
-                    cursor: "pointer",
-                    color: "white",
-                    bg: "brand.300",
-                  }}
+                  _hover={
+                    isUploading
+                      ? {
+                          color: "brand.200",
+                          bgGradient: "linear(to-r, linear.100, linear.200)",
+                        }
+                      : { cursor: "pointer", color: "white", bg: "brand.300" }
+                  }
                   rounded={"xl"}
                   color="brand.200"
+                  disabled={isUploading ? true : false}
                 >
                   Browse Files
                   <Input
@@ -452,25 +463,42 @@ export default function UploadBox({ isOpen, onClose }: UploadBoxProps) {
               flex="1"
               bg="#F7FAFC"
               color={"black"}
-              _hover={{ color: "white", bg: "brand.300" }}
+              _hover={
+                isUploading
+                  ? { color: "black", bg: "#F7FAFC" }
+                  : { color: "white", bg: "brand.300" }
+              }
               size="lg"
               variant="solid"
               rounded={"xl"}
               onClick={handleCloseModal}
               mr={4}
+              isDisabled={isUploading ? true : false}
             >
               Close
             </Button>
+
+            {/* DIsplay this variant if in progress */}
+
             <Button
               flex="1"
               bgGradient="linear(to-r, linear.100, linear.200)"
-              _hover={{ color: "white", bg: "brand.300" }}
+              _hover={
+                isUploading
+                  ? {
+                      color: "brand.200",
+                      bgGradient: "linear(to-r, linear.100, linear.200)",
+                    }
+                  : { color: "white", bg: "brand.300" }
+              }
               size="lg"
               variant="solid"
               rounded={"xl"}
               color="brand.200"
               onClick={handleUpload}
-              disabled={files.length === 0}
+              disabled={files.length === 0 || isUploading}
+              loadingText="Uploading"
+              isLoading={isUploading ? true : false}
             >
               Upload
             </Button>
