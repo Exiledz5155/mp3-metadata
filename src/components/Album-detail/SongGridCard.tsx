@@ -105,9 +105,7 @@ export function SongGridCard({
           {song.artist ? song.artist : "Unknown artist"}
         </Text>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          {song.albumTitle === "Unknown Album"
-            ? song.albumTitle
-            : "Unknown album"}
+          {song.albumTitle !== "Untagged" ? song.albumTitle : "Unknown album"}
         </Text>
         <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
           {song.duration ? convertTime(song.duration) : "N/A"}

@@ -125,14 +125,7 @@ export function FileHub() {
       if (
         album.album.toLowerCase().includes(query.toLowerCase()) ||
         album.songs.some((song) => {
-          if (song.title) {
-            song.title.toLowerCase().includes(query.toLowerCase());
-          } else {
-            const parts = song.filePath.split("/");
-            const fileNameWithExtension = parts[parts.length - 1];
-            const fileName = fileNameWithExtension.split(".")[0];
-            fileName.toLowerCase().includes(query.toLowerCase());
-          }
+          song.title.toLowerCase().includes(query.toLowerCase());
         })
       ) {
         indices.push(index);

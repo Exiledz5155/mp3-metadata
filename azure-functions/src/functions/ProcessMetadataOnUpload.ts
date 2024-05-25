@@ -160,10 +160,14 @@ async function ProcessMetadataOnUpload(
       );
     }
 
+    const parts = path.split("/");
+    const fileNameWithExtension = parts[parts.length - 1];
+    const fileName = fileNameWithExtension.split(".")[0];
+
     // Map ID3 tags to mp3File model
     const mp3Data = {
       filePath: path,
-      title: tags.title || null,
+      title: tags.title || fileName,
       artist: tags.artist || null,
       year: tags.year ? parseInt(tags.year, 10) : null,
       albumTitle: tags.album || "Untagged",
