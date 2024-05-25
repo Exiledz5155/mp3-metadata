@@ -152,40 +152,9 @@ export function FileHub() {
     }
   };
 
-  //   if (query === "") {
-  //     setExpandedIndices([]);
-  //     return;
-  //   }
-
-  //   const indices: number[] = [];
-  //   albums.forEach((album, index) => {
-  //     const albumMatches = album.album
-  //       .toLowerCase()
-  //       .includes(query.toLowerCase());
-  //     const songMatches = album.songs.some((song) => {
-  //       song.title.toLowerCase().includes(query.toLowerCase());
-  //     });
-
-  //     if (albumMatches || songMatches) {
-  //       indices.push(index);
-  //     }
-  //   });
-  //   setExpandedIndices(indices);
-  // };
-
   useEffect(() => {
     if (initialAlbums) {
       let filteredAlbums = filterAlbumsAndSongs(initialAlbums, searchQuery);
-
-      // if (sortOrder === "asc") {
-      //   filteredAlbums = [...filteredAlbums].sort((a, b) =>
-      //     a.album.localeCompare(b.album)
-      //   );
-      // } else if (sortOrder === "desc") {
-      //   filteredAlbums = [...filteredAlbums].sort((a, b) =>
-      //     b.album.localeCompare(a.album)
-      //   );
-      // }
 
       if (sortOrder === "asc") {
         filteredAlbums.sort((a, b) => a.album.localeCompare(b.album));
