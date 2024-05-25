@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { HStack, Flex, Image, Text, Box } from "@chakra-ui/react";
+import { HStack, Flex, Image, Text, Box, Center, Icon } from "@chakra-ui/react";
 import ActionMenu from "../Actions/ActionMenu";
 import { Album, Song } from "../../types/types";
 import { convertTime } from "../../util/duration";
+import { MdOutlineQueueMusic } from "react-icons/md";
 
 interface SongGridCardProps {
   song: Song;
@@ -22,6 +23,13 @@ export function SongGridCard({
   onClick,
   onRightClick,
 }: SongGridCardProps) {
+  const extractFileName = (filePath: string) => {
+    const parts = filePath.split("/");
+    const fileNameWithExtension = parts[parts.length - 1];
+    const fileName = fileNameWithExtension.split(".")[0];
+    return fileName;
+  };
+
   return (
     <>
       {" "}
@@ -63,32 +71,44 @@ export function SongGridCard({
               {song.trackNumber}
             </Text>
           </Box>
+          {song.image ? (
+            <Image
+              src={song.image}
+              alt={song.title}
+              w="50px"
+              h="50px"
+              borderRadius={"5px"}
+              mr={"4"}
+            />
+          ) : (
+            <Center
+              w="50px"
+              h="50px"
+              bg={"transparent"}
+              borderRadius={"5px"}
+              mr={"4"}
+            >
+              <Icon
+                as={MdOutlineQueueMusic}
+                boxSize={8}
+                color="brand.500"
+                bg={"transparent"}
+              />
+            </Center>
+          )}
 
-          {/* <Box width="30px" mx={"4"} border="1px solid red" textAlign="right">
-            <Text fontSize={"md"} isTruncated>
-              {song.trackNumber}
-            </Text>
-          </Box> */}
-          <Image
-            src={song.image}
-            alt={song.title}
-            w="50px"
-            h="50px"
-            borderRadius={"5px"}
-            mr={"4"}
-          />
           <Text textAlign={"left"} noOfLines={1}>
-            {song.title}
+            {song.title ? song.title : extractFileName(song.filePath)}
           </Text>
         </Flex>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          {song.artist}
+          {song.artist ? song.artist : "Unknown artist"}
         </Text>
         <Text textAlign={"left"} noOfLines={1} w="30%">
-          {song.albumTitle}
+          {song.albumTitle !== "Untagged" ? song.albumTitle : "Unknown album"}
         </Text>
         <Text textAlign={"center"} noOfLines={1} fontFamily={"mono"} w="10%">
-          {convertTime(song.duration)}
+          {song.duration ? convertTime(song.duration) : "N/A"}
         </Text>
       </HStack>
     </>

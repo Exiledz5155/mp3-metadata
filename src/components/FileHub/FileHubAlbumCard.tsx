@@ -36,6 +36,13 @@ export function FileHubAlbumCard({
 
   const [isHovered, setIsHovered] = useState(false);
 
+  const extractFileName = (filePath: string) => {
+    const parts = filePath.split("/");
+    const fileNameWithExtension = parts[parts.length - 1];
+    const fileName = fileNameWithExtension.split(".")[0];
+    return fileName;
+  };
+
   return (
     <Flex
       justifyContent={"space-between"}
@@ -63,16 +70,16 @@ export function FileHubAlbumCard({
               fontWeight: "bold",
             }}
           >
-            {song.title}
+            {song.title ? song.title : extractFileName(song.filePath)}
           </Highlight>
         </Text>
         <Text fontSize={"10px"} noOfLines={1} pb={"3px"} userSelect="none">
-          {song.artist}
+          {song.artist ? song.artist : "Unknown artist"}
         </Text>
       </VStack>
       <Flex alignItems={"center"} pr={"15px"} maxWidth={"40%"}>
         <Text fontFamily={"mono"} fontSize={"15px"} userSelect="none">
-          {convertTime(song.duration)}
+          {song.duration ? convertTime(song.duration) : "N/A"}
         </Text>
       </Flex>
     </Flex>

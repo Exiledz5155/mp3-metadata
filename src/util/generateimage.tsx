@@ -8,6 +8,7 @@ import {
   Icon,
   Box,
   Input,
+  Square,
 } from "@chakra-ui/react";
 import { MdOutlineQueueMusic } from "react-icons/md";
 import { IoCloudUploadOutline } from "react-icons/io5";
@@ -27,22 +28,26 @@ export function renderImageFromAlbumLarge(album, commonProperties) {
   );
   const images = Array.from(imagesSet) as string[];
 
-  if (images.length === 0) {
+  if (images.length === 0 || (images.length === 1 && images[0] === "")) {
     return (
-      <Center w="200px" h="200px" bg={"brand.200"}>
+      // not square lol
+      <Center w="200px" h="150px" bg={"transparent"}>
         <Icon
           as={MdOutlineQueueMusic}
           w={20}
           h={20}
-          color="brand.400"
-          bg={"brand.200"}
+          color="brand.500"
+          bg={"transparent"}
           borderRadius={"5px"}
         />
       </Center>
     );
   }
 
-  if (images.length < 4 || commonProperties.image !== "Various") {
+  if (
+    (images.length < 4 && images.length > 1) ||
+    commonProperties.image !== "Various"
+  ) {
     return (
       <Image
         maxW={{ base: "100%", sm: "200px" }}
@@ -86,22 +91,25 @@ export function renderImageFromAlbumSmall(album, commonProperties) {
   );
   const images = Array.from(imagesSet) as string[]; // Convert set to array
 
-  if (images.length === 0) {
+  if (images.length === 0 || (images.length === 1 && images[0] === "")) {
     return (
-      <Center w="55px" h="55px" bg={"brand.200"}>
+      <Center w="55px" h="55px" bg={"transparent"}>
         <Icon
           as={MdOutlineQueueMusic}
           w={10}
           h={10}
-          color="brand.400"
-          bg={"brand.200"}
+          color="brand.500"
+          bg={"transparent"}
           borderRadius={"5px"}
         />
       </Center>
     );
   }
 
-  if (images.length < 4 || commonProperties.image !== "Various") {
+  if (
+    (images.length < 4 && images.length > 1) ||
+    commonProperties.image !== "Various"
+  ) {
     return (
       <Center w="55px" h="55px">
         <Image
@@ -160,7 +168,7 @@ export function renderImageFromSongEdit(songs, commonProperties, isHover) {
     );
   }
 
-  if (images.length === 0) {
+  if (images.length === 0 || (images.length === 1 && images[0] === "")) {
     return (
       <Center height="100%" bg={"brand.200"}>
         <Icon
@@ -175,7 +183,10 @@ export function renderImageFromSongEdit(songs, commonProperties, isHover) {
     );
   }
 
-  if (images.length < 4 || commonProperties.image !== "Various") {
+  if (
+    (images.length < 4 && images.length > 1) ||
+    commonProperties.image !== "Various"
+  ) {
     return (
       <Image
         src={images[0]}
@@ -250,7 +261,7 @@ export function HoverableImage({
       );
     }
 
-    if (images.length === 0) {
+    if (images.length === 0 || (images.length === 1 && images[0] === "")) {
       return (
         <Center height="100%" bg={"brand.200"}>
           <Icon
@@ -265,7 +276,10 @@ export function HoverableImage({
       );
     }
 
-    if (images.length < 4 || commonProperties.image !== "Various") {
+    if (
+      (images.length < 4 && images.length > 1) ||
+      commonProperties.image !== "Various"
+    ) {
       return (
         <Image
           src={images[0]}
@@ -346,22 +360,24 @@ export function renderImageAlbumItem(album, commonProperties) {
   );
   const images = Array.from(imagesSet) as string[];
 
-  if (images.length === 0) {
+  if (images.length === 0 || (images.length === 1 && images[0] === "")) {
     return (
-      <Center w="100%" h="100%" bg={"brand.200"}>
+      <Center w="100%" h="100%" bg={"transparent"}>
         <Icon
           as={MdOutlineQueueMusic}
-          w={10}
-          h={10}
-          color="brand.400"
-          bg={"brand.200"}
+          boxSize={10}
+          color="brand.500"
+          bg={"transparent"}
           borderRadius={"5px"}
         />
       </Center>
     );
   }
 
-  if (images.length < 4 || commonProperties.image !== "Various") {
+  if (
+    (images.length < 4 && images.length > 1) ||
+    commonProperties.image !== "Various"
+  ) {
     return (
       <Image
         src={images[0]}

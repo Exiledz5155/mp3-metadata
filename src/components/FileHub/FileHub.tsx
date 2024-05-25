@@ -72,7 +72,17 @@ export function FileHub() {
   useEffect(() => {
     const fetchAlbumsWrapper = async () => {
       try {
-        const albums = await fetchAlbums(uuid);
+        let albums = await fetchAlbums(uuid);
+        if (albums) {
+          const untaggedIndex = albums.findIndex(
+            (album) => album.album === "Untagged"
+          ) as number;
+          if (untaggedIndex !== 1) {
+            const [untaggedAlbum] = albums.splice(untaggedIndex, 1);
+            albums.unshift(untaggedAlbum);
+          }
+        }
+
         setAlbums(albums);
         setInitialAlbums(albums);
         setIsLoaded(true);
@@ -114,24 +124,32 @@ export function FileHub() {
     };
   }, [fuse]);
 
-  const updateExpandedIndices = (albums: Album[], query: string): void => {
+  const updateExpandedIndices = (
+    filteredAlbums: Album[],
+    query: string
+  ): void => {
     if (query === "") {
       setExpandedIndices([]);
-      return;
-    }
+    } else {
+      const indices: number[] = filteredAlbums.reduce(
+        (acc: number[], album, index) => {
+          const albumMatches = album.album
+            .toLowerCase()
+            .includes(query.toLowerCase());
+          const songMatches = album.songs.some((song) =>
+            song.title.toLowerCase().includes(query.toLowerCase())
+          );
 
-    const indices: number[] = [];
-    albums.forEach((album, index) => {
-      if (
-        album.album.toLowerCase().includes(query.toLowerCase()) ||
-        album.songs.some((song) =>
-          song.title.toLowerCase().includes(query.toLowerCase())
-        )
-      ) {
-        indices.push(index);
-      }
-    });
-    setExpandedIndices(indices);
+          if (albumMatches || songMatches) {
+            acc.push(index);
+          }
+          return acc;
+        },
+        []
+      );
+
+      setExpandedIndices(indices);
+    }
   };
 
   useEffect(() => {
@@ -139,13 +157,9 @@ export function FileHub() {
       let filteredAlbums = filterAlbumsAndSongs(initialAlbums, searchQuery);
 
       if (sortOrder === "asc") {
-        filteredAlbums = [...filteredAlbums].sort((a, b) =>
-          a.album.localeCompare(b.album)
-        );
+        filteredAlbums.sort((a, b) => a.album.localeCompare(b.album));
       } else if (sortOrder === "desc") {
-        filteredAlbums = [...filteredAlbums].sort((a, b) =>
-          b.album.localeCompare(a.album)
-        );
+        filteredAlbums.sort((a, b) => b.album.localeCompare(a.album));
       }
 
       setAlbums(filteredAlbums);
@@ -349,18 +363,6 @@ export function FileHub() {
                 View all
               </Button>
             </Link>
-            {/* <Link href="/editor/albums" style={{ flex: 1 }}>
-              <Button
-                variant="outline"
-                w="100%"
-                color={"whiteAlpha.800"}
-                _hover={{ bg: "brand.300" }}
-                borderColor={"brand.400"}
-                bg={"brand.100"}
-              >
-                Albums
-              </Button>
-            </Link> */}
           </HStack>
 
           <FileUploadBox isOpen={isOpen} onClose={onClose} />

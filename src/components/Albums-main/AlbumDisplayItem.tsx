@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { Album, CommonSongProperties, Song } from "../../types/types";
-import { MdOutlineQueueMusic } from "react-icons/md";
+import { MdOutlineLibraryMusic, MdOutlineQueueMusic } from "react-icons/md";
 import { calculateCommonProperties } from "../../util/commonprops";
 import { useState, useEffect } from "react";
 import { renderImageAlbumItem } from "../../util/generateimage";

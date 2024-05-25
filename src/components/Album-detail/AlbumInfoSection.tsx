@@ -1,6 +1,6 @@
 "use client";
 
-import { HStack, VStack, Text } from "@chakra-ui/react";
+import { HStack, VStack, Text, Icon } from "@chakra-ui/react";
 import { Album, CommonSongProperties, Song } from "../../types/types";
 import { calculateTotalDuration } from "../../util/duration";
 import { calculateCommonProperties } from "../../util/commonprops";
