@@ -72,7 +72,17 @@ export function FileHub() {
   useEffect(() => {
     const fetchAlbumsWrapper = async () => {
       try {
-        const albums = await fetchAlbums(uuid);
+        let albums = await fetchAlbums(uuid);
+        if (albums) {
+          const untaggedIndex = albums.findIndex(
+            (album) => album.album === "Untagged"
+          ) as number;
+          if (untaggedIndex !== 1) {
+            const [untaggedAlbum] = albums.splice(untaggedIndex, 1);
+            albums.unshift(untaggedAlbum);
+          }
+        }
+
         setAlbums(albums);
         setInitialAlbums(albums);
         setIsLoaded(true);

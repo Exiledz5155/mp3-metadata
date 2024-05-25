@@ -30,13 +30,14 @@ export function renderImageFromAlbumLarge(album, commonProperties) {
 
   if (images.length === 0 || (images.length === 1 && images[0] === "")) {
     return (
-      <Center w="200px" h="200px" bg={"brand.200"}>
+      // not square lol
+      <Center w="200px" h="150px" bg={"transparent"}>
         <Icon
           as={MdOutlineQueueMusic}
           w={20}
           h={20}
-          color="brand.400"
-          bg={"brand.200"}
+          color="brand.500"
+          bg={"transparent"}
           borderRadius={"5px"}
         />
       </Center>
@@ -97,7 +98,7 @@ export function renderImageFromAlbumSmall(album, commonProperties) {
           as={MdOutlineQueueMusic}
           w={10}
           h={10}
-          color="brand.400"
+          color="brand.500"
           bg={"transparent"}
           borderRadius={"5px"}
         />
