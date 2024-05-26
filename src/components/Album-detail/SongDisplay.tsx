@@ -34,6 +34,7 @@ import {
   WarningIcon,
 } from "@chakra-ui/icons";
 import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
+import Remove from "../Actions/Delete";
 
 export function SongDisplay({ album }: { album: Album }) {
   const { uuid } = useUUID();
@@ -43,6 +44,7 @@ export function SongDisplay({ album }: { album: Album }) {
   const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
+  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [sortCriteria, setSortCriteria] = useState({
     field: "trackNumber",
     order: "asc",
@@ -137,6 +139,14 @@ export function SongDisplay({ album }: { album: Album }) {
 
   const closePropertiesModal = () => {
     setIsPropertiesModalOpen(false);
+  };
+
+  const openDeleteAlerts = () => {
+    setIsDeleteAlertOpen(true);
+  };
+
+  const closeDeleteAlerts = () => {
+    setIsDeleteAlertOpen(false);
   };
 
   // Selection handling and right click
@@ -370,6 +380,7 @@ export function SongDisplay({ album }: { album: Album }) {
           onEditClick={openEditModal}
           onPropertiesClick={openPropertiesModal}
           onDownloadClick={handleDownload}
+          onDeleteClick={openDeleteAlerts}
           toView={false}
         />
       )}
@@ -381,6 +392,11 @@ export function SongDisplay({ album }: { album: Album }) {
       <Properties
         isOpen={isPropertiesModalOpen}
         onClose={closePropertiesModal}
+        songs={selectedSongObjects}
+      />
+      <Remove
+        isOpen={isDeleteAlertOpen}
+        onClose={closeDeleteAlerts}
         songs={selectedSongObjects}
       />
     </Card>

@@ -32,7 +32,7 @@ export function SongDisplayLoading() {
       bg="brand.100"
       h="100%"
       rounded={"xl"}
-      maxHeight="calc(100vh - 86px)"
+      maxHeight="calc(100vh - 90px)"
       overflow={"hidden"}
     >
       <HStack align={"start"}>

@@ -45,6 +45,7 @@ import { useMemo } from "react";
 import Fuse from "fuse.js";
 import Link from "next/link";
 import { MdHomeFilled } from "react-icons/md";
+import Remove from "../Actions/Delete";
 
 export function FileHub() {
   const { uuid, generateUUID } = useUUID();
@@ -60,6 +61,8 @@ export function FileHub() {
   const [rightClickPosition, setRightClickPosition] = useState({ x: 0, y: 0 });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isPropertiesModalOpen, setIsPropertiesModalOpen] = useState(false);
+  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+
   const [toView, setToView] = useState(false);
   const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
   const [sortOrder, setSortOrder] = useState<"default" | "asc" | "desc">(
@@ -221,6 +224,14 @@ export function FileHub() {
 
   const closePropertiesModal = () => {
     setIsPropertiesModalOpen(false);
+  };
+
+  const openDeleteAlerts = () => {
+    setIsDeleteAlertOpen(true);
+  };
+
+  const closeDeleteAlerts = () => {
+    setIsDeleteAlertOpen(false);
   };
 
   const selectedSongObjects = selectedSongs
@@ -542,6 +553,7 @@ export function FileHub() {
               onEditClick={openEditModal}
               onPropertiesClick={openPropertiesModal}
               onDownloadClick={handleDownload}
+              onDeleteClick={openDeleteAlerts}
               toView={toView}
             />
           )}
@@ -553,6 +565,11 @@ export function FileHub() {
           <Properties
             isOpen={isPropertiesModalOpen}
             onClose={closePropertiesModal}
+            songs={selectedSongObjects}
+          />
+          <Remove
+            isOpen={isDeleteAlertOpen}
+            onClose={closeDeleteAlerts}
             songs={selectedSongObjects}
           />
         </Box>

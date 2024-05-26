@@ -5,7 +5,6 @@ import { Album, Song } from "../../types/types";
 import {
   DownloadIcon,
   EditIcon,
-  InfoIcon,
   InfoOutlineIcon,
   MinusIcon,
   ViewIcon,
@@ -26,6 +25,7 @@ interface ActionMenuComponentProps {
   onEditClick: () => void;
   onPropertiesClick: () => void;
   onDownloadClick: () => void;
+  onDeleteClick: () => void;
   toView: boolean;
 }
 
@@ -37,6 +37,7 @@ export default function ActionMenu({
   onEditClick,
   onPropertiesClick,
   onDownloadClick,
+  onDeleteClick,
   toView,
 }: ActionMenuComponentProps) {
   // Creates a reference to the Card component
@@ -173,6 +174,12 @@ export default function ActionMenu({
           <Text fontSize={sizeOfFont}>Download</Text>
         </Button>
         <Button
+          onClick={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            onClose();
+            onDeleteClick();
+          }}
           style={{
             display: "flex",
             alignItems: "center",
@@ -183,7 +190,7 @@ export default function ActionMenu({
           }}
         >
           <Icon as={MinusIcon} mr="0.5rem" ml="-0.5em" />
-          <Text fontSize={sizeOfFont}>Remove</Text>
+          <Text fontSize={sizeOfFont}>Delete</Text>
         </Button>
       </Stack>
     </Card>

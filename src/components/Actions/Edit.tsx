@@ -45,6 +45,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
   const [imageUploadBoxOpen, setImageUploadBoxOpen] = useState(false);
   const [commonProperties, setCommonProperties] =
     useState<CommonSongProperties>(calculateCommonProperties(songs));
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleImageUploadBoxClose = () => {
     setImageUploadBoxOpen(false);
@@ -138,6 +139,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
 
     // Expand this error handling
     try {
+      setIsLoading(true);
       const response = await axios.post("/api/update", body);
       toast({
         title: "Success",
@@ -147,6 +149,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
         isClosable: true,
       });
       refetchData(); // Call back function to reload album data across the app
+      setIsLoading(false);
     } catch (error) {
       toast({
         title: "Error",
@@ -165,11 +168,12 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
         isOpen={isOpen}
         onClose={handleClose}
         size="xl"
+        closeOnEsc={isLoading ? false : true}
       >
         <ModalOverlay />
         <ModalContent bg={"brand.200"} pb={25} borderRadius={"xl"}>
           <ModalHeader>Edit Song{multipleSongsSelected ? "s" : ""}</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton disabled={isLoading} />
           <ModalBody>
             <Grid
               h="sm"
@@ -191,7 +195,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                   width="100%"
                   onMouseEnter={() => setIsHover(true)}
                   onMouseLeave={() => setIsHover(false)}
-                  onClick={handleOpenImageUploadBox}
+                  onClick={isLoading ? () => {} : handleOpenImageUploadBox}
                   cursor="pointer"
                 >
                   {imageDisplay}
@@ -214,7 +218,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                 ></ImageUploadBox>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
-                <FormControl isDisabled={multipleSongsSelected}>
+                <FormControl isDisabled={multipleSongsSelected || isLoading}>
                   <FormLabel>Song Title</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
@@ -225,7 +229,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
-                <FormControl isDisabled={multipleSongsSelected}>
+                <FormControl isDisabled={multipleSongsSelected || isLoading}>
                   <FormLabel>Artist(s)</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
@@ -236,7 +240,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
-                <FormControl>
+                <FormControl isDisabled={isLoading}>
                   <FormLabel>Year</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
@@ -247,7 +251,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
-                <FormControl>
+                <FormControl isDisabled={isLoading}>
                   <FormLabel>Album Title</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
@@ -258,7 +262,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
-                <FormControl>
+                <FormControl isDisabled={isLoading}>
                   <FormLabel>Genre</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
@@ -269,7 +273,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={22}>
-                <FormControl>
+                <FormControl isDisabled={isLoading}>
                   <FormLabel>Album Artist(s)</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
@@ -281,7 +285,7 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
                 </FormControl>
               </GridItem>
               <GridItem rowSpan={6} colSpan={12}>
-                <FormControl isDisabled={multipleSongsSelected}>
+                <FormControl isDisabled={multipleSongsSelected || isLoading}>
                   <FormLabel>Track</FormLabel>
                   <Input
                     focusBorderColor="linear.200"
@@ -298,12 +302,13 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
             <Button
               leftIcon={<CheckIcon />}
               bgGradient="linear(to-r, linear.100, linear.200)"
-              // isLoading
-              // loadingText={'Submitting'}
+              isLoading={isLoading}
+              loadingText={"Saving"}
               w={"63.5%"}
               size="md"
               variant="solid"
               onClick={handleSave}
+              disabled={isLoading}
             >
               Save
             </Button>
