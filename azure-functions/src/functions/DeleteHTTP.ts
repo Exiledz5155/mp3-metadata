@@ -95,7 +95,7 @@ async function DeleteHTTP(
 }
 
 app.http("DeleteHTTP", {
-  methods: ["POST"],
+  methods: ["GET"],
   authLevel: "anonymous",
   handler: DeleteHTTP,
 });

@@ -1,4 +1,4 @@
-export async function POST(request: Request) {
+export async function GET(request: Request) {
   const url = new URL(request.url);
   const uuid = url.searchParams.get("uuid") || "";
   const ids = url.searchParams.get("ids") || "";

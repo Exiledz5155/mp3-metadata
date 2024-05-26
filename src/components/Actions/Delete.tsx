@@ -17,6 +17,7 @@ import {
 import React, { useState } from "react";
 import { Song } from "../../types/types";
 import { useUUID } from "../../contexts/UUIDContext";
+import { useFetch } from "../../contexts/FetchContext";
 
 interface DeleteComponentProps {
   isOpen: boolean;
@@ -32,6 +33,7 @@ export default function Delete({
   const { uuid } = useUUID();
   const cancelRef = React.useRef<HTMLButtonElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { refetchData } = useFetch();
 
   const toast = useToast();
   const handleDelete = async () => {
@@ -71,6 +73,7 @@ export default function Delete({
           description: "An error occurred while deleting your songs.",
         },
       });
+      refetchData();
       setIsLoading(false);
     } catch (error) {
       console.error("Error during delete:", error);
