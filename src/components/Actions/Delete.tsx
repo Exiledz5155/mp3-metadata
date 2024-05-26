@@ -75,6 +75,7 @@ export default function Delete({
       });
       refetchData();
       setIsLoading(false);
+      onClose();
     } catch (error) {
       console.error("Error during delete:", error);
     }

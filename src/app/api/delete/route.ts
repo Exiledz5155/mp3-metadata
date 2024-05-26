@@ -13,9 +13,7 @@ export async function GET(request: Request) {
 
   try {
     // Forward the request to the Azure Function
-    const azureResponse = await fetch(`${azureAPI}uuid=${uuid}&ids=${ids}`, {
-      method: "POST",
-    });
+    const azureResponse = await fetch(`${azureAPI}uuid=${uuid}&ids=${ids}`);
 
     if (!azureResponse.ok) {
       // Forward the Azure Function's HTTP status to the client
