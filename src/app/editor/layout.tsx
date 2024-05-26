@@ -1,7 +1,7 @@
 "use client";
 
 import { Providers } from "../providers";
-import { Box, Center, Flex } from "@chakra-ui/react";
+import { Box, Center, Fade, Flex } from "@chakra-ui/react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { chakra } from "@chakra-ui/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -92,23 +92,14 @@ export default function RootLayout({
             MP3 Metadata
           </LinkButton>
           <LinkButton
-            href="/editor/albums"
-            color="white"
-            fontSize={{ base: "md", sm: "lg", md: "lg" }}
-            bgClip="text"
-            fontWeight="extrabold"
-            bgGradient="linear(to-r, linear.100, linear.200)"
-            pl={4}
-          >
-            Albums
-          </LinkButton>
-          <LinkButton
             href="/editor/uuid"
             color="white"
             fontSize={{ base: "md", sm: "lg", md: "lg" }}
             bgClip="text"
             fontWeight="extrabold"
-            bgGradient="linear(to-r, linear.100, linear.200)"
+            _hover={{
+              bgGradient: "linear(to-r, linear.100, linear.200)",
+            }}
             pl={4}
           >
             UUID
