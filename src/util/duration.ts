@@ -1,16 +1,21 @@
 import { Album, Song } from "../types/types";
 
 export function calculateTotalDuration(songs: Song[]): string {
-  const totalSeconds = songs.reduce((acc, song) => {
-    return acc + parseInt(song.duration);
-  }, 0);
+  try {
+    const totalSeconds = songs.reduce((acc, song) => {
+      return acc + parseInt(song.duration);
+    }, 0);
 
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
 
-  // Format duration string
-  return `${hours > 0 ? `${hours} hr ` : ""}${minutes} min ${seconds} sec`;
+    // Format duration string
+    return `${hours > 0 ? `${hours} hr ` : ""}${minutes} min ${seconds} sec`;
+  } catch (error) {
+    console.error("Error calculating total duration:", error);
+    return "";
+  }
 }
 
 export function convertTime(songDuration: string): string {
