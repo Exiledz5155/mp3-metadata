@@ -104,6 +104,7 @@ import axios from "axios";
 
 interface ContributorCardProps {
   username: string;
+  role: string;
 }
 
 interface Profile {
@@ -117,10 +118,6 @@ interface Stats {
   totalCommits: number;
   totalInsertions: number;
   totalDeletions: number;
-}
-
-interface Repo {
-  name: string;
 }
 
 interface WeekStats {
@@ -137,7 +134,10 @@ interface ContributorStats {
   };
 }
 
-export default function ContributorCard({ username }: ContributorCardProps) {
+export default function ContributorCard({
+  username,
+  role,
+}: ContributorCardProps) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -151,37 +151,35 @@ export default function ContributorCard({ username }: ContributorCardProps) {
         );
         setProfile(profileResponse.data);
 
-        // Fetch repositories
-        const repoResponse = await axios.get<Repo[]>(
-          `https://api.github.com/users/${username}/repos`
-        );
-
         let totalInsertions = 0;
         let totalDeletions = 0;
         let totalCommits = 0;
 
-        await Promise.all(
-          repoResponse.data.map(async (repo) => {
-            const commitResponse = await axios.get<ContributorStats[]>(
-              `https://api.github.com/repos/${username}/${repo.name}/stats/contributors`
-            );
-
-            // Check if commitResponse.data is an array
-            if (Array.isArray(commitResponse.data)) {
-              const userStats = commitResponse.data.find(
-                (contributor) => contributor.author.login === username
-              );
-
-              if (userStats) {
-                totalCommits += userStats.total;
-                userStats.weeks.forEach((week) => {
-                  totalInsertions += week.a;
-                  totalDeletions += week.d;
-                });
-              }
-            }
-          })
+        // Fetch commit stats for the specific repository
+        const commitResponse = await axios.get<ContributorStats[]>(
+          `https://api.github.com/repos/Exiledz5155/mp3-metadata/stats/contributors`
         );
+
+        // Log the response to see its structure
+        console.log("Commit Response Data:", commitResponse.data);
+
+        // Check if commitResponse.data is an array
+        if (Array.isArray(commitResponse.data)) {
+          const userStats = commitResponse.data.find(
+            (contributor) => contributor.author.login === username
+          );
+
+          // Log the user stats to see what we get
+          console.log("User Stats:", userStats);
+
+          if (userStats) {
+            totalCommits = userStats.total;
+            userStats.weeks.forEach((week) => {
+              totalInsertions += week.a;
+              totalDeletions += week.d;
+            });
+          }
+        }
 
         setStats({
           totalCommits,
@@ -206,14 +204,13 @@ export default function ContributorCard({ username }: ContributorCardProps) {
   if (!profile || !stats) {
     return <Text>Failed to load data.</Text>;
   }
-
   return (
     <Card maxW="xs" borderRadius={10} bg={"brand.200"}>
       <CardBody pb={0}>
         <VStack>
           <Avatar size="xl" src={profile.avatar_url} />
           <Heading size="md">{profile.name}</Heading>
-          <Text>{profile.bio}</Text>
+          <Text>{role}</Text>
           <HStack>
             <Link href={profile.html_url} isExternal>
               <IconButton

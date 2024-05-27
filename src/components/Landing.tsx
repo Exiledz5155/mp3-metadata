@@ -409,7 +409,10 @@ export function Landing() {
                   </Tooltip>
                 </CardFooter>
               </Card>
-              <ContributorCard username="octocat" />
+              <ContributorCard
+                username="Exiledz5155"
+                role="Fullstack/Team Lead"
+              />
             </SimpleGrid>
           </Box>
         </Box>
