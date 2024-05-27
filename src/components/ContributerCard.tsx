@@ -19,6 +19,7 @@ import Link from "next/link";
 
 interface Contributor {
   login: string;
+  name: string;
   avatar_url: string;
   html_url: string;
   contributions: number;
