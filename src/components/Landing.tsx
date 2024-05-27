@@ -410,223 +410,360 @@ export function Landing() {
           </Box>
           <Box maxW="container.lg" mx="auto" pt={150}>
             <HStack alignItems={"center"} spacing={"50px"}>
-              <Box>
-                <Heading size="xl" mb={5}>
-                  Search, Sort, Select
-                </Heading>
-                <Text fontSize={"lg"} mb={5}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </Text>
-                <Link href="/*">
-                  <HStack>
-                    <Button
-                      variant={"ghost"}
-                      px={"45px"}
-                      rounded={"md"}
-                      textAlign={"center"}
-                      w={"150px"}
-                      _hover={{
-                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                      bgClip={"text"}
-                      bgGradient={"linear(to-r, linear.100, linear.200)"}
-                      fontWeight={"bold"}
-                      fontSize="xl"
-                      rightIcon={<ArrowForwardIcon color={"white"} />}
-                    >
-                      Try it now
-                    </Button>
-                  </HStack>
-                </Link>
-              </Box>
-              <Image
-                maxH={"400px"}
-                src="https://i.imgur.com/amcyT9X.png"
-                alt="app img"
-                borderRadius={15}
-                boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
-                animation={`${glow} 4s infinite alternate ease-in-out`}
-              ></Image>
+              <VStack alignItems={"left"}>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.2,
+                      },
+                    },
+                  }}
+                >
+                  <Heading size="xl" mb={5}>
+                    Search, Sort, Select
+                  </Heading>
+                </motion.div>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.3,
+                      },
+                    },
+                  }}
+                >
+                  <Text fontSize={"lg"} mb={5}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </Text>
+                  <Link href="/*">
+                    <HStack>
+                      <Button
+                        variant={"ghost"}
+                        px={"45px"}
+                        rounded={"md"}
+                        textAlign={"center"}
+                        w={"150px"}
+                        _hover={{
+                          boxShadow:
+                            "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                          transition: "all 0.3s ease-in-out",
+                        }}
+                        bgClip={"text"}
+                        bgGradient={"linear(to-r, linear.100, linear.200)"}
+                        fontWeight={"bold"}
+                        fontSize="xl"
+                        rightIcon={<ArrowForwardIcon color={"white"} />}
+                      >
+                        Try it now
+                      </Button>
+                    </HStack>
+                  </Link>
+                </motion.div>
+              </VStack>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInVariants}
+              >
+                <Image
+                  maxH={"1000px"}
+                  src="https://i.imgur.com/amcyT9X.png"
+                  alt="app img"
+                  borderRadius={15}
+                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                  animation={`${glow} 4s infinite alternate ease-in-out`}
+                />
+              </motion.div>
             </HStack>
           </Box>
           <Box maxW="container.lg" mx="auto" pt={150}>
             <HStack alignItems={"center"} spacing={"50px"}>
-              <Image
-                maxH={"400px"}
-                src="https://i.imgur.com/amcyT9X.png"
-                alt="app img"
-                borderRadius={15}
-                boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
-                animation={`${glow} 4s infinite alternate ease-in-out`}
-              ></Image>
-              <Box>
-                <Heading size="xl" mb={5}>
-                  View Properties
-                </Heading>
-                <Text fontSize={"lg"} mb={5}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </Text>
-                <Link href="/*">
-                  <HStack>
-                    <Button
-                      variant={"ghost"}
-                      px={"45px"}
-                      rounded={"md"}
-                      textAlign={"center"}
-                      w={"150px"}
-                      _hover={{
-                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                      bgClip={"text"}
-                      bgGradient={"linear(to-r, linear.100, linear.200)"}
-                      fontWeight={"bold"}
-                      fontSize="xl"
-                      rightIcon={<ArrowForwardIcon color={"white"} />}
-                    >
-                      Try it now
-                    </Button>
-                  </HStack>
-                </Link>
-              </Box>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInVariants}
+              >
+                <Image
+                  maxH={"1000px"}
+                  src="https://i.imgur.com/amcyT9X.png"
+                  alt="app img"
+                  borderRadius={15}
+                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                  animation={`${glow} 4s infinite alternate ease-in-out`}
+                />
+              </motion.div>
+              <VStack alignItems={"left"}>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.2,
+                      },
+                    },
+                  }}
+                >
+                  <Heading size="xl" mb={5}>
+                    View Properties
+                  </Heading>
+                </motion.div>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.3,
+                      },
+                    },
+                  }}
+                >
+                  <Text fontSize={"lg"} mb={5}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </Text>
+                  <Link href="/*">
+                    <HStack>
+                      <Button
+                        variant={"ghost"}
+                        px={"45px"}
+                        rounded={"md"}
+                        textAlign={"center"}
+                        w={"150px"}
+                        _hover={{
+                          boxShadow:
+                            "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                          transition: "all 0.3s ease-in-out",
+                        }}
+                        bgClip={"text"}
+                        bgGradient={"linear(to-r, linear.100, linear.200)"}
+                        fontWeight={"bold"}
+                        fontSize="xl"
+                        rightIcon={<ArrowForwardIcon color={"white"} />}
+                      >
+                        Try it now
+                      </Button>
+                    </HStack>
+                  </Link>
+                </motion.div>
+              </VStack>
             </HStack>
           </Box>
           <Box maxW="container.lg" mx="auto" pt={150}>
             <HStack alignItems={"center"} spacing={"50px"}>
-              <Box>
-                <Heading size="xl" mb={5}>
-                  Edit!
-                </Heading>
-                <Text fontSize={"lg"} mb={5}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </Text>
-                <Link href="/*">
-                  <HStack>
-                    <Button
-                      variant={"ghost"}
-                      px={"45px"}
-                      rounded={"md"}
-                      textAlign={"center"}
-                      w={"150px"}
-                      _hover={{
-                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                      bgClip={"text"}
-                      bgGradient={"linear(to-r, linear.100, linear.200)"}
-                      fontWeight={"bold"}
-                      fontSize="xl"
-                      rightIcon={<ArrowForwardIcon color={"white"} />}
-                    >
-                      Try it now
-                    </Button>
-                  </HStack>
-                </Link>
-              </Box>
-              <Image
-                maxH={"400px"}
-                src="https://i.imgur.com/amcyT9X.png"
-                alt="app img"
-                borderRadius={15}
-                boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
-                animation={`${glow} 4s infinite alternate ease-in-out`}
-              ></Image>
+              <VStack alignItems={"left"}>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.2,
+                      },
+                    },
+                  }}
+                >
+                  <Heading size="xl" mb={5}>
+                    Edit
+                  </Heading>
+                </motion.div>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.3,
+                      },
+                    },
+                  }}
+                >
+                  <Text fontSize={"lg"} mb={5}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </Text>
+                  <Link href="/*">
+                    <HStack>
+                      <Button
+                        variant={"ghost"}
+                        px={"45px"}
+                        rounded={"md"}
+                        textAlign={"center"}
+                        w={"150px"}
+                        _hover={{
+                          boxShadow:
+                            "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                          transition: "all 0.3s ease-in-out",
+                        }}
+                        bgClip={"text"}
+                        bgGradient={"linear(to-r, linear.100, linear.200)"}
+                        fontWeight={"bold"}
+                        fontSize="xl"
+                        rightIcon={<ArrowForwardIcon color={"white"} />}
+                      >
+                        Try it now
+                      </Button>
+                    </HStack>
+                  </Link>
+                </motion.div>
+              </VStack>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInVariants}
+              >
+                <Image
+                  maxH={"1000px"}
+                  src="https://i.imgur.com/amcyT9X.png"
+                  alt="app img"
+                  borderRadius={15}
+                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                  animation={`${glow} 4s infinite alternate ease-in-out`}
+                />
+              </motion.div>
             </HStack>
           </Box>
           <Box maxW="container.lg" mx="auto" pt={150}>
             <HStack alignItems={"center"} spacing={"50px"}>
-              <Image
-                maxH={"400px"}
-                src="https://i.imgur.com/amcyT9X.png"
-                alt="app img"
-                borderRadius={15}
-                boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
-                animation={`${glow} 4s infinite alternate ease-in-out`}
-              ></Image>
-              <Box>
-                <Heading size="xl" mb={5}>
-                  Download
-                </Heading>
-                <Text fontSize={"lg"} mb={5}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </Text>
-                <Link href="/*">
-                  <HStack>
-                    <Button
-                      variant={"ghost"}
-                      px={"45px"}
-                      rounded={"md"}
-                      textAlign={"center"}
-                      w={"150px"}
-                      _hover={{
-                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                      bgClip={"text"}
-                      bgGradient={"linear(to-r, linear.100, linear.200)"}
-                      fontWeight={"bold"}
-                      fontSize="xl"
-                      rightIcon={<ArrowForwardIcon color={"white"} />}
-                    >
-                      Try it now
-                    </Button>
-                  </HStack>
-                </Link>
-              </Box>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInVariants}
+              >
+                <Image
+                  maxH={"1000px"}
+                  src="https://i.imgur.com/amcyT9X.png"
+                  alt="app img"
+                  borderRadius={15}
+                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                  animation={`${glow} 4s infinite alternate ease-in-out`}
+                />
+              </motion.div>
+              <VStack alignItems={"left"}>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.2,
+                      },
+                    },
+                  }}
+                >
+                  <Heading size="xl" mb={5}>
+                    Download
+                  </Heading>
+                </motion.div>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.3,
+                      },
+                    },
+                  }}
+                >
+                  <Text fontSize={"lg"} mb={5}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </Text>
+                  <Link href="/*">
+                    <HStack>
+                      <Button
+                        variant={"ghost"}
+                        px={"45px"}
+                        rounded={"md"}
+                        textAlign={"center"}
+                        w={"150px"}
+                        _hover={{
+                          boxShadow:
+                            "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                          transition: "all 0.3s ease-in-out",
+                        }}
+                        bgClip={"text"}
+                        bgGradient={"linear(to-r, linear.100, linear.200)"}
+                        fontWeight={"bold"}
+                        fontSize="xl"
+                        rightIcon={<ArrowForwardIcon color={"white"} />}
+                      >
+                        Try it now
+                      </Button>
+                    </HStack>
+                  </Link>
+                </motion.div>
+              </VStack>
             </HStack>
           </Box>
-          <Box maxW="container.lg" mx="auto" pt={150}>
-            <HStack alignItems={"center"} spacing={"50px"}>
-              <Box>
-                <Heading size="xl" mb={5}>
-                  Enjoy!
-                </Heading>
-                <Text fontSize={"lg"} mb={5}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </Text>
-                <Link href="/*">
-                  <HStack>
-                    <Button
-                      variant={"ghost"}
-                      px={"45px"}
-                      rounded={"md"}
-                      textAlign={"center"}
-                      w={"150px"}
-                      _hover={{
-                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                      bgClip={"text"}
-                      bgGradient={"linear(to-r, linear.100, linear.200)"}
-                      fontWeight={"bold"}
-                      fontSize="xl"
-                      rightIcon={<ArrowForwardIcon color={"white"} />}
-                    >
-                      Try it now
-                    </Button>
-                  </HStack>
-                </Link>
-              </Box>
-              <Image
-                maxH={"400px"}
-                src="https://i.imgur.com/amcyT9X.png"
-                alt="app img"
-                borderRadius={15}
-                boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
-                animation={`${glow} 4s infinite alternate ease-in-out`}
-              ></Image>
-            </HStack>
+        </Box>
+        {/* Design */}
+        <Box p={20}>
+          <Box maxW="container.lg" mx="auto">
+            <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
+              Built with
+            </Heading>
+            <Button
+              w={"150px"}
+              h={"50px"}
+              bgGradient={"linear(to-r, linear.100, linear.200)"}
+              _hover={{
+                color: "white",
+                bg: "brand.300",
+                transition: "all 0.3s ease-in-out",
+              }}
+              color={"brand.100"}
+            >
+              Design Doc
+            </Button>
           </Box>
         </Box>
         {/* Team */}
