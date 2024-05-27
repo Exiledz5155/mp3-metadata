@@ -35,6 +35,8 @@ import Link from "next/link";
 import { MdMusicNote } from "react-icons/md";
 import { GithubOutlined, LinkedinOutlined } from "@ant-design/icons";
 import ContributorCard from "./ContributerCard";
+import { Octokit } from "@octokit/rest";
+import { useState, useEffect } from "react";
 
 // const glow = keyframes`
 //   0% {
@@ -47,6 +49,20 @@ import ContributorCard from "./ContributerCard";
 //     box-shadow: 0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4;
 //   }
 // `;
+
+interface Contributor {
+  login: string;
+  avatar_url: string;
+  html_url: string;
+  contributions: number;
+  stats: {
+    totalCommits: number;
+    totalInsertions: number;
+    totalDeletions: number;
+  };
+  role: string;
+  social: string;
+}
 
 const glow = keyframes`
   0% {
@@ -66,8 +82,74 @@ const glow = keyframes`
   }
 `;
 
+const contributorRoles: Record<string, string> = {
+  Exiledz5155: "Fullstack/Team Lead",
+  ducttri: "Frontend",
+  "marcus-gustafson": "Backend",
+  nicholashinds: "Frontend",
+  "Ethan-Harris07": "Frontend/UI Design",
+  "Aidan-R-1032": "Frontend",
+  AitanSingh: "Backend",
+  CalvinDudd: "Backend",
+  DanielTran24: "Frontend",
+};
+
+const contributorSocial: Record<string, string> = {
+  Exiledz5155: "https://www.linkedin.com/in/dannybui51/",
+  ducttri: "https://www.linkedin.com/in/ducttrinh/",
+  "marcus-gustafson": "https://www.linkedin.com/in/marcus-gustafson/",
+  nicholashinds: "https://www.linkedin.com/in/nicholashinds/",
+  "Ethan-Harris07": "https://www.linkedin.com/in/ethan-harris-920b91271/",
+  "Aidan-R-1032": "https://www.linkedin.com/in/aidan-ruiz-6ba9b0238/",
+  AitanSingh: "https://www.linkedin.com/in/aitan-singh/",
+  CalvinDudd: "https://www.linkedin.com/in/calvinduddingston/",
+  DanielTran24: "https://www.linkedin.com/in/daniel-tran-54ab85216/",
+};
+
 export function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [contributors, setContributors] = useState<Contributor[]>([]);
+  const exclude = process.env.NEXT_PUBLIC_EXCLUDE;
+
+  useEffect(() => {
+    const fetchContributors = async () => {
+      try {
+        const response = await fetch("/api/contributors");
+        const data = await response.json();
+
+        const contributorsData = data
+          .filter((contributor: any) => contributor.login !== exclude)
+          .map((contributor: any) => {
+            const role = contributorRoles[contributor.login] || "Contributor";
+            const social =
+              contributorSocial[contributor.login] ||
+              "https://www.linkedin.com/";
+
+            return {
+              login: contributor.login,
+              name: contributor.name || contributor.login,
+              avatar_url: contributor.avatar_url,
+              html_url: contributor.html_url,
+              contributions: contributor.contributions,
+              stats: contributor.stats,
+              role,
+              social,
+            };
+          });
+
+        // Sort contributors by contributions in descending order
+        const sortedContributors = contributorsData.sort(
+          (a, b) => b.contributions - a.contributions
+        );
+
+        setContributors(sortedContributors);
+      } catch (error) {
+        console.error("Failed to fetch contributors:", error);
+      }
+    };
+
+    fetchContributors();
+  }, [exclude]);
 
   return (
     <>
@@ -345,74 +427,13 @@ export function Landing() {
             <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
               Contributors
             </Heading>
-            <SimpleGrid>
-              <Card maxW="xs" borderRadius={10} bg={"brand.200"}>
-                <CardBody pb={0}>
-                  <VStack>
-                    <Avatar
-                      size="xl"
-                      src="https://i.imgur.com/amcyT9X.png"
-                    ></Avatar>
-                    <Heading size="md">Danny Bui</Heading>
-                    <Text>Fullstack/Team Lead</Text>
-                    <HStack>
-                      <Link href={"/*"}>
-                        <IconButton
-                          aria-label="Github"
-                          icon={<GithubOutlined style={{ fontSize: "24px" }} />}
-                        />
-                      </Link>
-                      <Link href={"/*"}>
-                        <IconButton
-                          aria-label="Github"
-                          icon={
-                            <LinkedinOutlined style={{ fontSize: "24px" }} />
-                          }
-                        />
-                      </Link>
-                    </HStack>
-                    <Box
-                      bg={"brand.300"}
-                      px={10}
-                      py={2}
-                      borderRadius={7}
-                      fontWeight={"bold"}
-                      mt={3}
-                    >
-                      400 Contirbutions
-                    </Box>
-                  </VStack>
-                </CardBody>
-
-                <CardFooter justifyContent={"center"} gap={10}>
-                  <Tooltip
-                    label="Insertions"
-                    bg={"brand.300"}
-                    color={"white"}
-                    borderRadius={5}
-                    hasArrow
-                    placement="left"
-                  >
-                    <Text color={"green.400"}>32,882++</Text>
-                  </Tooltip>
-
-                  <Divider orientation="vertical" color={"white"} />
-                  <Tooltip
-                    label="Deletions"
-                    bg={"brand.300"}
-                    color={"white"}
-                    borderRadius={5}
-                    hasArrow
-                    placement="right"
-                  >
-                    <Text color={"red.400"}>69,424--</Text>
-                  </Tooltip>
-                </CardFooter>
-              </Card>
-              <ContributorCard
-                username="Exiledz5155"
-                role="Fullstack/Team Lead"
-              />
+            <SimpleGrid columns={3} spacing={"40px"}>
+              {contributors.map((contributor) => (
+                <ContributorCard
+                  key={contributor.login}
+                  contributor={contributor}
+                />
+              ))}
             </SimpleGrid>
           </Box>
         </Box>
