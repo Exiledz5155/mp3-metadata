@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@azure/functions": "^4.2.0",
@@ -17,17 +18,22 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto-mono": "^5.0.16",
-    "@prisma/client": "^5.9.1",
+    "@prisma/client": "^5.10.2",
     "@vercel/analytics": "^1.1.2",
     "@vercel/blob": "^0.0.2",
     "@vercel/speed-insights": "^1.0.5",
+    "axios": "^1.6.8",
     "encoding": "^0.1.13",
     "framer-motion": "^10.16.4",
+    "fuse.js": "^7.0.0",
+    "jszip": "^3.10.1",
     "micro": "^10.0.1",
+    "music-metadata-browser": "^2.5.10",
     "next": "^13.5.6",
     "node-id3": "^0.2.6",
     "react": "^18",
     "react-dom": "^18",
+    "react-dropzone": "^14.2.3",
     "react-icons": "^5.0.1"
   },
   "devDependencies": {
@@ -38,7 +44,7 @@
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "postcss": "^8",
-    "prisma": "^5.9.1",
+    "prisma": "^5.12.1",
     "tailwindcss": "^3",
     "typescript": "5.3.3"
   }

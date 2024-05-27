@@ -2,7 +2,7 @@
 
 import { Button } from "@chakra-ui/react";
 import Link from "next/link";
-import UploadedFilesList from "../../../components/viewUploads"; // Adjust the path based on your file structure
+import UploadedFilesList from "../../../components/Testing/viewUploads"; // Adjust the path based on your file structure
 
 export default function viewUploads() {
   // Bug for frontend to fix:
