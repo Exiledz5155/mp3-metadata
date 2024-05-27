@@ -88,7 +88,13 @@ export default function Properties({
 
           <ModalFooter pb={0}>
             <Button
-              bgGradient="linear(to-r, linear.100, linear.200)"
+              bgGradient={"linear(to-r, linear.100, linear.200)"}
+              _hover={{
+                color: "white",
+                bg: "brand.300",
+                transition: "all 0.3s ease-in-out",
+              }}
+              color={"brand.100"}
               size="md"
               w={"100%"}
               variant="solid"

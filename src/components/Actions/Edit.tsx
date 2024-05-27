@@ -301,7 +301,13 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
           <ModalFooter pb={0} pt={6}>
             <Button
               leftIcon={<CheckIcon />}
-              bgGradient="linear(to-r, linear.100, linear.200)"
+              bgGradient={"linear(to-r, linear.100, linear.200)"}
+              _hover={{
+                color: "white",
+                bg: "brand.300",
+                transition: "all 0.3s ease-in-out",
+              }}
+              color={"brand.100"}
               isLoading={isLoading}
               loadingText={"Saving"}
               w={"63.5%"}

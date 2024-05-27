@@ -1,7 +1,7 @@
 // components/Landing.js
 "use client";
 
-import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -20,9 +20,19 @@ import {
   useDisclosure,
   Square,
   keyframes,
+  SimpleGrid,
+  Card,
+  ButtonGroup,
+  CardBody,
+  CardFooter,
+  Divider,
+  Circle,
+  Avatar,
+  VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { MdMusicNote } from "react-icons/md";
+import { AiFillGithub } from "@ant-design/icons";
 
 // const glow = keyframes`
 //   0% {
@@ -98,15 +108,18 @@ export function Landing() {
               <Link href={"#"}>
                 <Button
                   variant={"ghost"}
-                  px={2}
-                  py={1}
+                  px={"45px"}
                   rounded={"md"}
                   w={"80px"}
                   textAlign={"center"}
                   _hover={{
                     boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                    bg: "brand.100",
+                    transition: "all 0.3s ease-in-out",
                   }}
+                  bgClip={"text"}
+                  bgGradient={"linear(to-r, linear.100, linear.200)"}
+                  fontWeight={"bold"}
+                  fontSize="xl"
                 >
                   Home
                 </Button>
@@ -114,31 +127,37 @@ export function Landing() {
               <Link href={"#"}>
                 <Button
                   variant={"ghost"}
-                  px={2}
-                  py={1}
+                  px={"45px"}
                   rounded={"md"}
                   w={"80px"}
                   textAlign={"center"}
                   _hover={{
                     boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                    bg: "brand.100",
+                    transition: "all 0.3s ease-in-out",
                   }}
+                  bgClip={"text"}
+                  bgGradient={"linear(to-r, linear.100, linear.200)"}
+                  fontWeight={"bold"}
+                  fontSize="xl"
                 >
-                  Features
+                  About
                 </Button>
               </Link>
               <Link href={"#"}>
                 <Button
                   variant={"ghost"}
-                  px={2}
-                  py={1}
+                  px={"45px"}
                   rounded={"md"}
                   w={"80px"}
                   textAlign={"center"}
                   _hover={{
                     boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                    bg: "brand.100",
+                    transition: "all 0.3s ease-in-out",
                   }}
+                  bgClip={"text"}
+                  bgGradient={"linear(to-r, linear.100, linear.200)"}
+                  fontWeight={"bold"}
+                  fontSize="xl"
                 >
                   Design
                 </Button>
@@ -146,16 +165,18 @@ export function Landing() {
               <Link href={"#"}>
                 <Button
                   variant={"ghost"}
-                  px={2}
-                  py={1}
                   rounded={"md"}
+                  px={"45px"}
                   w={"80px"}
                   textAlign={"center"}
                   _hover={{
                     boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                    bg: "brand.100",
                     transition: "all 0.3s ease-in-out",
                   }}
+                  bgClip={"text"}
+                  bgGradient={"linear(to-r, linear.100, linear.200)"}
+                  fontWeight={"bold"}
+                  fontSize="xl"
                 >
                   Contact
                 </Button>
@@ -196,7 +217,7 @@ export function Landing() {
                   bg: "brand.300",
                   transition: "all 0.3s ease-in-out",
                 }}
-                color={"brand.200"}
+                color={"brand.100"}
               >
                 Try the demo
               </Button>
@@ -209,7 +230,7 @@ export function Landing() {
                   bg: "brand.300",
                   transition: "all 0.3s ease-in-out",
                 }}
-                color={"brand.200"}
+                color={"brand.100"}
               >
                 Features
               </Button>
@@ -226,6 +247,142 @@ export function Landing() {
             // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
             animation={`${glow} 4s infinite alternate ease-in-out`}
           ></Image>
+        </Box>
+        <Box p={20}>
+          <Box maxW="container.lg" mx="auto" pt={50}>
+            <HStack alignItems={"center"} spacing={"50px"}>
+              <Image
+                maxH={"400px"}
+                src="https://i.imgur.com/amcyT9X.png"
+                alt="app img"
+                borderRadius={15}
+                boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
+                animation={`${glow} 4s infinite alternate ease-in-out`}
+              ></Image>
+              <Box>
+                <Heading size="xl" mb={5}>
+                  Lorem ipsum dolor sit amet
+                </Heading>
+                <Text fontSize={"lg"} mb={5}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+                <Link href="/*">
+                  <HStack>
+                    <Button
+                      variant={"ghost"}
+                      px={"45px"}
+                      rounded={"md"}
+                      textAlign={"center"}
+                      w={"150px"}
+                      _hover={{
+                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                      bgClip={"text"}
+                      bgGradient={"linear(to-r, linear.100, linear.200)"}
+                      fontWeight={"bold"}
+                      fontSize="xl"
+                      rightIcon={<ArrowForwardIcon color={"white"} />}
+                    >
+                      Try it now
+                    </Button>
+                  </HStack>
+                </Link>
+              </Box>
+            </HStack>
+          </Box>
+          <Box maxW="container.lg" mx="auto" pt={150}>
+            <HStack alignItems={"center"} spacing={"50px"}>
+              <Box>
+                <Heading size="xl" mb={5}>
+                  Lorem ipsum dolor sit amet
+                </Heading>
+                <Text fontSize={"lg"} mb={5}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+                <Link href="/*">
+                  <HStack>
+                    <Button
+                      variant={"ghost"}
+                      px={"45px"}
+                      rounded={"md"}
+                      textAlign={"center"}
+                      w={"150px"}
+                      _hover={{
+                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                      bgClip={"text"}
+                      bgGradient={"linear(to-r, linear.100, linear.200)"}
+                      fontWeight={"bold"}
+                      fontSize="xl"
+                      rightIcon={<ArrowForwardIcon color={"white"} />}
+                    >
+                      Try it now
+                    </Button>
+                  </HStack>
+                </Link>
+              </Box>
+              <Image
+                maxH={"400px"}
+                src="https://i.imgur.com/amcyT9X.png"
+                alt="app img"
+                borderRadius={15}
+                boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
+                animation={`${glow} 4s infinite alternate ease-in-out`}
+              ></Image>
+            </HStack>
+          </Box>
+        </Box>
+        <Box p={20}>
+          <Box maxW="container.lg" mx="auto">
+            <Heading size={"xl"} textAlign={"center"}>
+              Contributors
+            </Heading>
+            <SimpleGrid>
+              <Card maxW="sm" borderRadius={10}>
+                <CardBody>
+                  <VStack>
+                    <Avatar
+                      size="xl"
+                      src="https://i.imgur.com/amcyT9X.png"
+                    ></Avatar>
+                    <Heading size="md">Danny Bui</Heading>
+                    <Text>Fullstack/Team Lead</Text>
+                    <HStack>
+                      <Icon as={AiFillGithub}></Icon>
+                    </HStack>
+                  </VStack>
+
+                  <Stack mt="6" spacing="3">
+                    <Text>
+                      This sofa is perfect for modern tropical spaces, baroque
+                      inspired spaces, earthy toned spaces and for people who
+                      love a chic design with a sprinkle of vintage design.
+                    </Text>
+                    <Text color="blue.600" fontSize="2xl">
+                      $450
+                    </Text>
+                  </Stack>
+                </CardBody>
+                <Divider />
+                <CardFooter>
+                  <ButtonGroup spacing="2">
+                    <Button variant="solid" colorScheme="blue">
+                      Buy now
+                    </Button>
+                    <Button variant="ghost" colorScheme="blue">
+                      Add to cart
+                    </Button>
+                  </ButtonGroup>
+                </CardFooter>
+              </Card>
+            </SimpleGrid>
+          </Box>
         </Box>
       </Box>
     </>
