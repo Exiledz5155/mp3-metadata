@@ -34,6 +34,7 @@ import {
 import Link from "next/link";
 import { MdMusicNote } from "react-icons/md";
 import { GithubOutlined, LinkedinOutlined } from "@ant-design/icons";
+import ContributorCard from "./ContributerCard";
 
 // const glow = keyframes`
 //   0% {
@@ -408,6 +409,7 @@ export function Landing() {
                   </Tooltip>
                 </CardFooter>
               </Card>
+              <ContributorCard username="octocat" />
             </SimpleGrid>
           </Box>
         </Box>
