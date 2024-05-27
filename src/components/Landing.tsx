@@ -1,42 +1,26 @@
 // components/Landing.js
 "use client";
 
-import { ArrowForwardIcon, CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  Center,
-  Grid,
-  GridItem,
   Heading,
-  Input,
-  Stack,
   Text,
   Image,
   Flex,
   HStack,
   Icon,
-  IconButton,
   useDisclosure,
-  Square,
   keyframes,
   SimpleGrid,
-  Card,
-  ButtonGroup,
-  CardBody,
-  CardFooter,
-  Divider,
-  Circle,
-  Avatar,
   VStack,
-  Tooltip,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { MdMusicNote } from "react-icons/md";
-import { GithubOutlined, LinkedinOutlined } from "@ant-design/icons";
 import ContributorCard from "./ContributerCard";
-import { Octokit } from "@octokit/rest";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 // const glow = keyframes`
 //   0% {
@@ -105,6 +89,11 @@ const contributorSocial: Record<string, string> = {
   AitanSingh: "https://www.linkedin.com/in/aitan-singh/",
   CalvinDudd: "https://www.linkedin.com/in/calvinduddingston/",
   DanielTran24: "https://www.linkedin.com/in/daniel-tran-54ab85216/",
+};
+
+const fadeInVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 export function Landing() {
@@ -263,7 +252,7 @@ export function Landing() {
                   fontWeight={"bold"}
                   fontSize="xl"
                 >
-                  Contact
+                  Team
                 </Button>
               </Link>
             </HStack>
@@ -334,7 +323,136 @@ export function Landing() {
           ></Image>
         </Box>
         <Box p={20}>
+          {/* About */}
           <Box maxW="container.lg" mx="auto" pt={50}>
+            <HStack alignItems={"center"} spacing={"50px"}>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInVariants}
+              >
+                <Image
+                  maxH={"1000px"}
+                  src="https://i.imgur.com/amcyT9X.png"
+                  alt="app img"
+                  borderRadius={15}
+                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                  animation={`${glow} 4s infinite alternate ease-in-out`}
+                />
+              </motion.div>
+              <VStack alignItems={"left"}>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.2,
+                      },
+                    },
+                  }}
+                >
+                  <Heading size="xl" mb={5}>
+                    Upload
+                  </Heading>
+                </motion.div>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.3,
+                      },
+                    },
+                  }}
+                >
+                  <Text fontSize={"lg"} mb={5}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </Text>
+                  <Link href="/*">
+                    <HStack>
+                      <Button
+                        variant={"ghost"}
+                        px={"45px"}
+                        rounded={"md"}
+                        textAlign={"center"}
+                        w={"150px"}
+                        _hover={{
+                          boxShadow:
+                            "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                          transition: "all 0.3s ease-in-out",
+                        }}
+                        bgClip={"text"}
+                        bgGradient={"linear(to-r, linear.100, linear.200)"}
+                        fontWeight={"bold"}
+                        fontSize="xl"
+                        rightIcon={<ArrowForwardIcon color={"white"} />}
+                      >
+                        Try it now
+                      </Button>
+                    </HStack>
+                  </Link>
+                </motion.div>
+              </VStack>
+            </HStack>
+          </Box>
+          <Box maxW="container.lg" mx="auto" pt={150}>
+            <HStack alignItems={"center"} spacing={"50px"}>
+              <Box>
+                <Heading size="xl" mb={5}>
+                  Search, Sort, Select
+                </Heading>
+                <Text fontSize={"lg"} mb={5}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+                <Link href="/*">
+                  <HStack>
+                    <Button
+                      variant={"ghost"}
+                      px={"45px"}
+                      rounded={"md"}
+                      textAlign={"center"}
+                      w={"150px"}
+                      _hover={{
+                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                      bgClip={"text"}
+                      bgGradient={"linear(to-r, linear.100, linear.200)"}
+                      fontWeight={"bold"}
+                      fontSize="xl"
+                      rightIcon={<ArrowForwardIcon color={"white"} />}
+                    >
+                      Try it now
+                    </Button>
+                  </HStack>
+                </Link>
+              </Box>
+              <Image
+                maxH={"400px"}
+                src="https://i.imgur.com/amcyT9X.png"
+                alt="app img"
+                borderRadius={15}
+                boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
+                animation={`${glow} 4s infinite alternate ease-in-out`}
+              ></Image>
+            </HStack>
+          </Box>
+          <Box maxW="container.lg" mx="auto" pt={150}>
             <HStack alignItems={"center"} spacing={"50px"}>
               <Image
                 maxH={"400px"}
@@ -347,7 +465,7 @@ export function Landing() {
               ></Image>
               <Box>
                 <Heading size="xl" mb={5}>
-                  Lorem ipsum dolor sit amet
+                  View Properties
                 </Heading>
                 <Text fontSize={"lg"} mb={5}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -382,7 +500,95 @@ export function Landing() {
             <HStack alignItems={"center"} spacing={"50px"}>
               <Box>
                 <Heading size="xl" mb={5}>
-                  Lorem ipsum dolor sit amet
+                  Edit!
+                </Heading>
+                <Text fontSize={"lg"} mb={5}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+                <Link href="/*">
+                  <HStack>
+                    <Button
+                      variant={"ghost"}
+                      px={"45px"}
+                      rounded={"md"}
+                      textAlign={"center"}
+                      w={"150px"}
+                      _hover={{
+                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                      bgClip={"text"}
+                      bgGradient={"linear(to-r, linear.100, linear.200)"}
+                      fontWeight={"bold"}
+                      fontSize="xl"
+                      rightIcon={<ArrowForwardIcon color={"white"} />}
+                    >
+                      Try it now
+                    </Button>
+                  </HStack>
+                </Link>
+              </Box>
+              <Image
+                maxH={"400px"}
+                src="https://i.imgur.com/amcyT9X.png"
+                alt="app img"
+                borderRadius={15}
+                boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
+                animation={`${glow} 4s infinite alternate ease-in-out`}
+              ></Image>
+            </HStack>
+          </Box>
+          <Box maxW="container.lg" mx="auto" pt={150}>
+            <HStack alignItems={"center"} spacing={"50px"}>
+              <Image
+                maxH={"400px"}
+                src="https://i.imgur.com/amcyT9X.png"
+                alt="app img"
+                borderRadius={15}
+                boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
+                animation={`${glow} 4s infinite alternate ease-in-out`}
+              ></Image>
+              <Box>
+                <Heading size="xl" mb={5}>
+                  Download
+                </Heading>
+                <Text fontSize={"lg"} mb={5}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+                <Link href="/*">
+                  <HStack>
+                    <Button
+                      variant={"ghost"}
+                      px={"45px"}
+                      rounded={"md"}
+                      textAlign={"center"}
+                      w={"150px"}
+                      _hover={{
+                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                      bgClip={"text"}
+                      bgGradient={"linear(to-r, linear.100, linear.200)"}
+                      fontWeight={"bold"}
+                      fontSize="xl"
+                      rightIcon={<ArrowForwardIcon color={"white"} />}
+                    >
+                      Try it now
+                    </Button>
+                  </HStack>
+                </Link>
+              </Box>
+            </HStack>
+          </Box>
+          <Box maxW="container.lg" mx="auto" pt={150}>
+            <HStack alignItems={"center"} spacing={"50px"}>
+              <Box>
+                <Heading size="xl" mb={5}>
+                  Enjoy!
                 </Heading>
                 <Text fontSize={"lg"} mb={5}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -423,6 +629,7 @@ export function Landing() {
             </HStack>
           </Box>
         </Box>
+        {/* Team */}
         <Box p={20}>
           <Box maxW="container.lg" mx="auto">
             <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
