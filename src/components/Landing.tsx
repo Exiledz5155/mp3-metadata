@@ -29,10 +29,11 @@ import {
   Circle,
   Avatar,
   VStack,
+  Tooltip,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { MdMusicNote } from "react-icons/md";
-import { AiFillGithub } from "@ant-design/icons";
+import { GithubOutlined, LinkedinOutlined } from "@ant-design/icons";
 
 // const glow = keyframes`
 //   0% {
@@ -340,12 +341,12 @@ export function Landing() {
         </Box>
         <Box p={20}>
           <Box maxW="container.lg" mx="auto">
-            <Heading size={"xl"} textAlign={"center"}>
+            <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
               Contributors
             </Heading>
             <SimpleGrid>
-              <Card maxW="sm" borderRadius={10}>
-                <CardBody>
+              <Card maxW="xs" borderRadius={10} bg={"brand.200"}>
+                <CardBody pb={0}>
                   <VStack>
                     <Avatar
                       size="xl"
@@ -354,31 +355,57 @@ export function Landing() {
                     <Heading size="md">Danny Bui</Heading>
                     <Text>Fullstack/Team Lead</Text>
                     <HStack>
-                      <Icon as={AiFillGithub}></Icon>
+                      <Link href={"/*"}>
+                        <IconButton
+                          aria-label="Github"
+                          icon={<GithubOutlined style={{ fontSize: "24px" }} />}
+                        />
+                      </Link>
+                      <Link href={"/*"}>
+                        <IconButton
+                          aria-label="Github"
+                          icon={
+                            <LinkedinOutlined style={{ fontSize: "24px" }} />
+                          }
+                        />
+                      </Link>
                     </HStack>
+                    <Box
+                      bg={"brand.300"}
+                      px={10}
+                      py={2}
+                      borderRadius={7}
+                      fontWeight={"bold"}
+                      mt={3}
+                    >
+                      400 Contirbutions
+                    </Box>
                   </VStack>
-
-                  <Stack mt="6" spacing="3">
-                    <Text>
-                      This sofa is perfect for modern tropical spaces, baroque
-                      inspired spaces, earthy toned spaces and for people who
-                      love a chic design with a sprinkle of vintage design.
-                    </Text>
-                    <Text color="blue.600" fontSize="2xl">
-                      $450
-                    </Text>
-                  </Stack>
                 </CardBody>
-                <Divider />
-                <CardFooter>
-                  <ButtonGroup spacing="2">
-                    <Button variant="solid" colorScheme="blue">
-                      Buy now
-                    </Button>
-                    <Button variant="ghost" colorScheme="blue">
-                      Add to cart
-                    </Button>
-                  </ButtonGroup>
+
+                <CardFooter justifyContent={"center"} gap={10}>
+                  <Tooltip
+                    label="Insertions"
+                    bg={"brand.300"}
+                    color={"white"}
+                    borderRadius={5}
+                    hasArrow
+                    placement="left"
+                  >
+                    <Text color={"green.400"}>32,882++</Text>
+                  </Tooltip>
+
+                  <Divider orientation="vertical" color={"white"} />
+                  <Tooltip
+                    label="Deletions"
+                    bg={"brand.300"}
+                    color={"white"}
+                    borderRadius={5}
+                    hasArrow
+                    placement="right"
+                  >
+                    <Text color={"red.400"}>69,424--</Text>
+                  </Tooltip>
                 </CardFooter>
               </Card>
             </SimpleGrid>

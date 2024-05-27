@@ -10,6 +10,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.7",
     "@azure/functions": "^4.2.0",
     "@azure/storage-blob": "^12.17.0",
     "@chakra-ui/icons": "^2.1.1",
