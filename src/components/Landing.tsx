@@ -1,7 +1,13 @@
 // components/Landing.js
 "use client";
 
-import { ArrowForwardIcon } from "@chakra-ui/icons";
+import {
+  ArrowForwardIcon,
+  DownloadIcon,
+  EditIcon,
+  InfoOutlineIcon,
+  Search2Icon,
+} from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -17,10 +23,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { MdMusicNote } from "react-icons/md";
+import { MdMusicNote, MdOutlineFilePresent } from "react-icons/md";
 import ContributorCard from "./ContributerCard";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { IoCloudUploadOutline } from "react-icons/io5";
 
 // const glow = keyframes`
 //   0% {
@@ -95,6 +102,30 @@ const fadeInVariants = {
   hidden: { opacity: 0, y: 50 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
+
+const technologies = [
+  "Next.js",
+  "React",
+  "Chakra UI",
+  "Azure Blob",
+  "Azure MySQL",
+  "Prisma",
+  "Figma",
+];
+
+function Technology({ name }: { name: string }) {
+  return (
+    <Button
+      h={"60px"}
+      fontWeight={"bold"}
+      fontSize={"2xl"}
+      bg={"brand.200"}
+      w={"100%"}
+    >
+      {name}
+    </Button>
+  );
+}
 
 export function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -201,7 +232,7 @@ export function Landing() {
               <Link href={"#"}>
                 <Button
                   variant={"ghost"}
-                  px={"45px"}
+                  px={"55px"}
                   rounded={"md"}
                   w={"80px"}
                   textAlign={"center"}
@@ -214,7 +245,7 @@ export function Landing() {
                   fontWeight={"bold"}
                   fontSize="xl"
                 >
-                  About
+                  Features
                 </Button>
               </Link>
               <Link href={"#"}>
@@ -325,6 +356,16 @@ export function Landing() {
         <Box p={20}>
           {/* About */}
           <Box maxW="container.lg" mx="auto" pt={50}>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInVariants}
+            >
+              <Heading size={"2xl"} textAlign={"center"} mb={150}>
+                Features
+              </Heading>
+            </motion.div>
             <HStack alignItems={"center"} spacing={"50px"}>
               <motion.div
                 initial="hidden"
@@ -357,9 +398,10 @@ export function Landing() {
                     },
                   }}
                 >
-                  <Heading size="xl" mb={5}>
-                    Upload
-                  </Heading>
+                  <HStack alignItems="center" mb={5}>
+                    <Icon as={MdOutlineFilePresent} boxSize={7} />
+                    <Heading size="xl">Upload</Heading>
+                  </HStack>
                 </motion.div>
                 <motion.div
                   initial="hidden"
@@ -426,177 +468,10 @@ export function Landing() {
                     },
                   }}
                 >
-                  <Heading size="xl" mb={5}>
-                    Search, Sort, Select
-                  </Heading>
-                </motion.div>
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={{
-                    ...fadeInVariants,
-                    visible: {
-                      ...fadeInVariants.visible,
-                      transition: {
-                        ...fadeInVariants.visible.transition,
-                        delay: 0.3,
-                      },
-                    },
-                  }}
-                >
-                  <Text fontSize={"lg"} mb={5}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </Text>
-                  <Link href="/*">
-                    <HStack>
-                      <Button
-                        variant={"ghost"}
-                        px={"45px"}
-                        rounded={"md"}
-                        textAlign={"center"}
-                        w={"150px"}
-                        _hover={{
-                          boxShadow:
-                            "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                          transition: "all 0.3s ease-in-out",
-                        }}
-                        bgClip={"text"}
-                        bgGradient={"linear(to-r, linear.100, linear.200)"}
-                        fontWeight={"bold"}
-                        fontSize="xl"
-                        rightIcon={<ArrowForwardIcon color={"white"} />}
-                      >
-                        Try it now
-                      </Button>
-                    </HStack>
-                  </Link>
-                </motion.div>
-              </VStack>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeInVariants}
-              >
-                <Image
-                  maxH={"1000px"}
-                  src="https://i.imgur.com/amcyT9X.png"
-                  alt="app img"
-                  borderRadius={15}
-                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                  animation={`${glow} 4s infinite alternate ease-in-out`}
-                />
-              </motion.div>
-            </HStack>
-          </Box>
-          <Box maxW="container.lg" mx="auto" pt={150}>
-            <HStack alignItems={"center"} spacing={"50px"}>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeInVariants}
-              >
-                <Image
-                  maxH={"1000px"}
-                  src="https://i.imgur.com/amcyT9X.png"
-                  alt="app img"
-                  borderRadius={15}
-                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                  animation={`${glow} 4s infinite alternate ease-in-out`}
-                />
-              </motion.div>
-              <VStack alignItems={"left"}>
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={{
-                    ...fadeInVariants,
-                    visible: {
-                      ...fadeInVariants.visible,
-                      transition: {
-                        ...fadeInVariants.visible.transition,
-                        delay: 0.2,
-                      },
-                    },
-                  }}
-                >
-                  <Heading size="xl" mb={5}>
-                    View Properties
-                  </Heading>
-                </motion.div>
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={{
-                    ...fadeInVariants,
-                    visible: {
-                      ...fadeInVariants.visible,
-                      transition: {
-                        ...fadeInVariants.visible.transition,
-                        delay: 0.3,
-                      },
-                    },
-                  }}
-                >
-                  <Text fontSize={"lg"} mb={5}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </Text>
-                  <Link href="/*">
-                    <HStack>
-                      <Button
-                        variant={"ghost"}
-                        px={"45px"}
-                        rounded={"md"}
-                        textAlign={"center"}
-                        w={"150px"}
-                        _hover={{
-                          boxShadow:
-                            "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                          transition: "all 0.3s ease-in-out",
-                        }}
-                        bgClip={"text"}
-                        bgGradient={"linear(to-r, linear.100, linear.200)"}
-                        fontWeight={"bold"}
-                        fontSize="xl"
-                        rightIcon={<ArrowForwardIcon color={"white"} />}
-                      >
-                        Try it now
-                      </Button>
-                    </HStack>
-                  </Link>
-                </motion.div>
-              </VStack>
-            </HStack>
-          </Box>
-          <Box maxW="container.lg" mx="auto" pt={150}>
-            <HStack alignItems={"center"} spacing={"50px"}>
-              <VStack alignItems={"left"}>
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={{
-                    ...fadeInVariants,
-                    visible: {
-                      ...fadeInVariants.visible,
-                      transition: {
-                        ...fadeInVariants.visible.transition,
-                        delay: 0.2,
-                      },
-                    },
-                  }}
-                >
-                  <Heading size="xl" mb={5}>
-                    Edit
-                  </Heading>
+                  <HStack alignItems="center" mb={5}>
+                    <Icon as={Search2Icon} boxSize={6} />
+                    <Heading size="xl">Search, Sort, Select</Heading>
+                  </HStack>
                 </motion.div>
                 <motion.div
                   initial="hidden"
@@ -693,9 +568,180 @@ export function Landing() {
                     },
                   }}
                 >
-                  <Heading size="xl" mb={5}>
-                    Download
-                  </Heading>
+                  <HStack alignItems="center" mb={5}>
+                    <Icon as={InfoOutlineIcon} boxSize={6}></Icon>
+                    <Heading size="xl">View Properties</Heading>
+                  </HStack>
+                </motion.div>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.3,
+                      },
+                    },
+                  }}
+                >
+                  <Text fontSize={"lg"} mb={5}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </Text>
+                  <Link href="/*">
+                    <HStack>
+                      <Button
+                        variant={"ghost"}
+                        px={"45px"}
+                        rounded={"md"}
+                        textAlign={"center"}
+                        w={"150px"}
+                        _hover={{
+                          boxShadow:
+                            "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                          transition: "all 0.3s ease-in-out",
+                        }}
+                        bgClip={"text"}
+                        bgGradient={"linear(to-r, linear.100, linear.200)"}
+                        fontWeight={"bold"}
+                        fontSize="xl"
+                        rightIcon={<ArrowForwardIcon color={"white"} />}
+                      >
+                        Try it now
+                      </Button>
+                    </HStack>
+                  </Link>
+                </motion.div>
+              </VStack>
+            </HStack>
+          </Box>
+          <Box maxW="container.lg" mx="auto" pt={150}>
+            <HStack alignItems={"center"} spacing={"50px"}>
+              <VStack alignItems={"left"}>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.2,
+                      },
+                    },
+                  }}
+                >
+                  <HStack alignItems="center" mb={5}>
+                    <Icon as={EditIcon} boxSize={6}></Icon>
+                    <Heading size="xl">Edit</Heading>
+                  </HStack>
+                </motion.div>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.3,
+                      },
+                    },
+                  }}
+                >
+                  <Text fontSize={"lg"} mb={5}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </Text>
+                  <Link href="/*">
+                    <HStack>
+                      <Button
+                        variant={"ghost"}
+                        px={"45px"}
+                        rounded={"md"}
+                        textAlign={"center"}
+                        w={"150px"}
+                        _hover={{
+                          boxShadow:
+                            "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                          transition: "all 0.3s ease-in-out",
+                        }}
+                        bgClip={"text"}
+                        bgGradient={"linear(to-r, linear.100, linear.200)"}
+                        fontWeight={"bold"}
+                        fontSize="xl"
+                        rightIcon={<ArrowForwardIcon color={"white"} />}
+                      >
+                        Try it now
+                      </Button>
+                    </HStack>
+                  </Link>
+                </motion.div>
+              </VStack>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInVariants}
+              >
+                <Image
+                  maxH={"1000px"}
+                  src="https://i.imgur.com/amcyT9X.png"
+                  alt="app img"
+                  borderRadius={15}
+                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                  animation={`${glow} 4s infinite alternate ease-in-out`}
+                />
+              </motion.div>
+            </HStack>
+          </Box>
+          <Box maxW="container.lg" mx="auto" pt={150}>
+            <HStack alignItems={"center"} spacing={"50px"}>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInVariants}
+              >
+                <Image
+                  maxH={"1000px"}
+                  src="https://i.imgur.com/amcyT9X.png"
+                  alt="app img"
+                  borderRadius={15}
+                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                  animation={`${glow} 4s infinite alternate ease-in-out`}
+                />
+              </motion.div>
+              <VStack alignItems={"left"}>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.2,
+                      },
+                    },
+                  }}
+                >
+                  <HStack alignItems="center" mb={5}>
+                    <Icon as={DownloadIcon} boxSize={6}></Icon>
+                    <Heading size="xl">Download</Heading>
+                  </HStack>
                 </motion.div>
                 <motion.div
                   initial="hidden"
@@ -748,36 +794,102 @@ export function Landing() {
         {/* Design */}
         <Box p={20}>
           <Box maxW="container.lg" mx="auto">
-            <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
-              Built with
-            </Heading>
-            <Button
-              w={"150px"}
-              h={"50px"}
-              bgGradient={"linear(to-r, linear.100, linear.200)"}
-              _hover={{
-                color: "white",
-                bg: "brand.300",
-                transition: "all 0.3s ease-in-out",
-              }}
-              color={"brand.100"}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInVariants}
             >
-              Design Doc
-            </Button>
+              <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
+                Built with
+              </Heading>
+            </motion.div>
+            <SimpleGrid columns={5} mb={20} spacing={"35px"}>
+              {technologies.map((technology, index) => (
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.2 + index * 0.05,
+                      },
+                    },
+                  }}
+                >
+                  <Technology name={technology} />
+                </motion.div>
+              ))}
+            </SimpleGrid>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInVariants}
+            >
+              <Box display="flex" justifyContent="center">
+                <Link
+                  href={
+                    "https://docs.google.com/document/d/1bkD40GM4VroXaYY5UScWF6WjU58Q6NS_1-z4f8bT9y4/edit?usp=sharing"
+                  }
+                >
+                  <Button
+                    w={"200px"}
+                    h={"50px"}
+                    bgGradient={"linear(to-r, linear.100, linear.200)"}
+                    _hover={{
+                      color: "white",
+                      bg: "brand.300",
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                    color={"brand.100"}
+                  >
+                    Design Doc
+                  </Button>
+                </Link>
+              </Box>
+            </motion.div>
           </Box>
         </Box>
         {/* Team */}
         <Box p={20}>
           <Box maxW="container.lg" mx="auto">
-            <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
-              Contributors
-            </Heading>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInVariants}
+            >
+              <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
+                Contributors
+              </Heading>
+            </motion.div>
             <SimpleGrid columns={3} spacing={"40px"}>
-              {contributors.map((contributor) => (
-                <ContributorCard
-                  key={contributor.login}
-                  contributor={contributor}
-                />
+              {contributors.map((contributor, index) => (
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    ...fadeInVariants,
+                    visible: {
+                      ...fadeInVariants.visible,
+                      transition: {
+                        ...fadeInVariants.visible.transition,
+                        delay: 0.2 + index * 0.05,
+                      },
+                    },
+                  }}
+                >
+                  <ContributorCard
+                    key={contributor.login}
+                    contributor={contributor}
+                  />
+                </motion.div>
               ))}
             </SimpleGrid>
           </Box>
