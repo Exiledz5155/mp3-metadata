@@ -21,6 +21,7 @@ import {
   keyframes,
   SimpleGrid,
   VStack,
+  Stack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { MdMusicNote, MdOutlineFilePresent } from "react-icons/md";
@@ -176,13 +177,8 @@ export function Landing() {
     <>
       <Box bg="brand.50" color="white" minH="100vh">
         {/* NAV BAR */}
-        <Box bg="brand.50" px={600}>
-          <Flex
-            h={16}
-            alignItems={"center"}
-            justifyContent={"space-between"}
-            px={10}
-          >
+        <Box bg="brand.50" maxW="container.xl" mx="auto">
+          <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
             <Flex alignItems={"center"}>
               <Box
                 bgGradient={"linear(to-r, linear.100, linear.200)"}
@@ -342,7 +338,7 @@ export function Landing() {
             </HStack>
           </Box>
         </Box>
-        <Box display={"flex"} justifyContent={"center"} py={"70px"}>
+        <Box display={"flex"} justifyContent={"center"} py={"70px"} px={"20px"}>
           <Image
             maxH={"700px"}
             src="https://i.imgur.com/amcyT9X.png"
@@ -366,23 +362,29 @@ export function Landing() {
                 Features
               </Heading>
             </motion.div>
-            <HStack alignItems={"center"} spacing={"50px"}>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeInVariants}
-              >
-                <Image
-                  maxH={"1000px"}
-                  src="https://i.imgur.com/amcyT9X.png"
-                  alt="app img"
-                  borderRadius={15}
-                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                  animation={`${glow} 4s infinite alternate ease-in-out`}
-                />
-              </motion.div>
-              <VStack alignItems={"left"}>
+            <Stack
+              direction={["column", "column", "column", "row"]}
+              alignItems={"center"}
+              spacing={"50px"}
+            >
+              <Box order={[2, 2, 2, 1]} w="100%">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeInVariants}
+                >
+                  <Image
+                    maxH={"1000px"}
+                    src="https://i.imgur.com/amcyT9X.png"
+                    alt="app img"
+                    borderRadius={15}
+                    boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                    animation={`${glow} 4s infinite alternate ease-in-out`}
+                  />
+                </motion.div>
+              </Box>
+              <VStack alignItems={"left"} order={[1, 1, 1, 2]}>
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -448,11 +450,15 @@ export function Landing() {
                   </Link>
                 </motion.div>
               </VStack>
-            </HStack>
+            </Stack>
           </Box>
           <Box maxW="container.lg" mx="auto" pt={150}>
-            <HStack alignItems={"center"} spacing={"50px"}>
-              <VStack alignItems={"left"}>
+            <Stack
+              direction={["column", "column", "column", "row"]}
+              alignItems={"center"}
+              spacing={"50px"}
+            >
+              <VStack alignItems={"left"} order={[1, 1, 1, 2]}>
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -518,41 +524,49 @@ export function Landing() {
                   </Link>
                 </motion.div>
               </VStack>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeInVariants}
-              >
-                <Image
-                  maxH={"1000px"}
-                  src="https://i.imgur.com/amcyT9X.png"
-                  alt="app img"
-                  borderRadius={15}
-                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                  animation={`${glow} 4s infinite alternate ease-in-out`}
-                />
-              </motion.div>
-            </HStack>
+              <Box order={[2, 2, 2, 1]} w="100%">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeInVariants}
+                >
+                  <Image
+                    maxH={"1000px"}
+                    src="https://i.imgur.com/amcyT9X.png"
+                    alt="app img"
+                    borderRadius={15}
+                    boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                    animation={`${glow} 4s infinite alternate ease-in-out`}
+                  />
+                </motion.div>
+              </Box>
+            </Stack>
           </Box>
           <Box maxW="container.lg" mx="auto" pt={150}>
-            <HStack alignItems={"center"} spacing={"50px"}>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeInVariants}
-              >
-                <Image
-                  maxH={"1000px"}
-                  src="https://i.imgur.com/amcyT9X.png"
-                  alt="app img"
-                  borderRadius={15}
-                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                  animation={`${glow} 4s infinite alternate ease-in-out`}
-                />
-              </motion.div>
-              <VStack alignItems={"left"}>
+            <Stack
+              direction={["column", "column", "column", "row"]}
+              alignItems={"center"}
+              spacing={"50px"}
+            >
+              <Box order={[2, 2, 2, 1]} w="100%">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeInVariants}
+                >
+                  <Image
+                    maxH={"1000px"}
+                    src="https://i.imgur.com/amcyT9X.png"
+                    alt="app img"
+                    borderRadius={15}
+                    boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                    animation={`${glow} 4s infinite alternate ease-in-out`}
+                  />
+                </motion.div>
+              </Box>
+              <VStack alignItems={"left"} order={[1, 1, 1, 2]}>
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -618,11 +632,15 @@ export function Landing() {
                   </Link>
                 </motion.div>
               </VStack>
-            </HStack>
+            </Stack>
           </Box>
           <Box maxW="container.lg" mx="auto" pt={150}>
-            <HStack alignItems={"center"} spacing={"50px"}>
-              <VStack alignItems={"left"}>
+            <Stack
+              direction={["column", "column", "column", "row"]}
+              alignItems={"center"}
+              spacing={"50px"}
+            >
+              <VStack alignItems={"left"} order={[1, 1, 1, 2]}>
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -688,41 +706,49 @@ export function Landing() {
                   </Link>
                 </motion.div>
               </VStack>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeInVariants}
-              >
-                <Image
-                  maxH={"1000px"}
-                  src="https://i.imgur.com/amcyT9X.png"
-                  alt="app img"
-                  borderRadius={15}
-                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                  animation={`${glow} 4s infinite alternate ease-in-out`}
-                />
-              </motion.div>
-            </HStack>
+              <Box order={[1, 1, 1, 2]} w="100%">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeInVariants}
+                >
+                  <Image
+                    maxH={"1000px"}
+                    src="https://i.imgur.com/amcyT9X.png"
+                    alt="app img"
+                    borderRadius={15}
+                    boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                    animation={`${glow} 4s infinite alternate ease-in-out`}
+                  />
+                </motion.div>
+              </Box>
+            </Stack>
           </Box>
           <Box maxW="container.lg" mx="auto" pt={150}>
-            <HStack alignItems={"center"} spacing={"50px"}>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeInVariants}
-              >
-                <Image
-                  maxH={"1000px"}
-                  src="https://i.imgur.com/amcyT9X.png"
-                  alt="app img"
-                  borderRadius={15}
-                  boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                  animation={`${glow} 4s infinite alternate ease-in-out`}
-                />
-              </motion.div>
-              <VStack alignItems={"left"}>
+            <Stack
+              direction={["column", "column", "column", "row"]}
+              alignItems={"center"}
+              spacing={"50px"}
+            >
+              <Box order={[2, 2, 2, 1]} w="100%">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeInVariants}
+                >
+                  <Image
+                    maxH={"1000px"}
+                    src="https://i.imgur.com/amcyT9X.png"
+                    alt="app img"
+                    borderRadius={15}
+                    boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                    animation={`${glow} 4s infinite alternate ease-in-out`}
+                  />
+                </motion.div>
+              </Box>
+              <VStack alignItems={"left"} order={[1, 1, 1, 2]}>
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -788,7 +814,7 @@ export function Landing() {
                   </Link>
                 </motion.div>
               </VStack>
-            </HStack>
+            </Stack>
           </Box>
         </Box>
         {/* Design */}
@@ -804,7 +830,12 @@ export function Landing() {
                 Built with
               </Heading>
             </motion.div>
-            <SimpleGrid columns={5} mb={20} spacing={"35px"}>
+            <SimpleGrid
+              minChildWidth={"150px"}
+              columns={5}
+              mb={20}
+              spacing={"20px"}
+            >
               {technologies.map((technology, index) => (
                 <motion.div
                   initial="hidden"
@@ -868,7 +899,11 @@ export function Landing() {
                 Contributors
               </Heading>
             </motion.div>
-            <SimpleGrid columns={3} spacing={"40px"}>
+            <SimpleGrid
+              minChildWidth="200px"
+              spacing={"40px"}
+              justifyItems={"center"}
+            >
               {contributors.map((contributor, index) => (
                 <motion.div
                   initial="hidden"
