@@ -206,7 +206,7 @@ export function Landing() {
               alignItems={"center"}
               display={{ base: "none", md: "flex" }}
             >
-              <Link href={"#"}>
+              <Link href={"/"}>
                 <Button
                   variant={"ghost"}
                   px={"45px"}
@@ -309,19 +309,21 @@ export function Landing() {
               Upload your files, edit, save and download.
             </Text>
             <HStack justifyContent={"center"} spacing={5}>
-              <Button
-                w={"150px"}
-                h={"50px"}
-                bgGradient={"linear(to-r, linear.100, linear.200)"}
-                _hover={{
-                  color: "white",
-                  bg: "brand.300",
-                  transition: "all 0.3s ease-in-out",
-                }}
-                color={"brand.100"}
-              >
-                Try the demo
-              </Button>
+              <Link href="/editor/albums">
+                <Button
+                  w={"150px"}
+                  h={"50px"}
+                  bgGradient={"linear(to-r, linear.100, linear.200)"}
+                  _hover={{
+                    color: "white",
+                    bg: "brand.300",
+                    transition: "all 0.3s ease-in-out",
+                  }}
+                  color={"brand.100"}
+                >
+                  Try the demo
+                </Button>
+              </Link>
               <Button
                 w={"150px"}
                 h={"50px"}
@@ -432,7 +434,7 @@ export function Landing() {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                   </Text>
-                  <Link href="/*">
+                  <Link href="/editor/albums">
                     <HStack>
                       <Button
                         variant={"ghost"}
@@ -506,7 +508,7 @@ export function Landing() {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                   </Text>
-                  <Link href="/*">
+                  <Link href="/editor/albums">
                     <HStack>
                       <Button
                         variant={"ghost"}
@@ -614,7 +616,7 @@ export function Landing() {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                   </Text>
-                  <Link href="/*">
+                  <Link href="/editor/albums">
                     <HStack>
                       <Button
                         variant={"ghost"}
@@ -688,7 +690,7 @@ export function Landing() {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                   </Text>
-                  <Link href="/*">
+                  <Link href="/editor/albums">
                     <HStack>
                       <Button
                         variant={"ghost"}
@@ -796,7 +798,7 @@ export function Landing() {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                   </Text>
-                  <Link href="/*">
+                  <Link href="/editor/albums">
                     <HStack>
                       <Button
                         variant={"ghost"}
