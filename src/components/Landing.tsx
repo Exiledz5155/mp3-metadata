@@ -286,7 +286,7 @@ export function Landing() {
           </Flex>
         </Box>
         {/* INTRO */}
-        <Box maxW="container.lg" mx="auto">
+        <Box maxW="container.xl" mx="auto">
           <Box pt={20}>
             <Heading
               size="4xl"
@@ -338,7 +338,14 @@ export function Landing() {
             </HStack>
           </Box>
         </Box>
-        <Box display={"flex"} justifyContent={"center"} py={"70px"} px={"20px"}>
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          py={"70px"}
+          px={"30px"}
+          mx={"auto"}
+          maxW={"container.xl"}
+        >
           <Image
             maxH={"700px"}
             src="https://i.imgur.com/amcyT9X.png"
@@ -351,7 +358,7 @@ export function Landing() {
         </Box>
         <Box p={20}>
           {/* About */}
-          <Box maxW="container.lg" mx="auto" pt={50}>
+          <Box maxW="container.xl" mx="auto" pt={50}>
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -452,13 +459,13 @@ export function Landing() {
               </VStack>
             </Stack>
           </Box>
-          <Box maxW="container.lg" mx="auto" pt={150}>
+          <Box maxW="container.xl" mx="auto" pt={150}>
             <Stack
               direction={["column", "column", "column", "row"]}
               alignItems={"center"}
               spacing={"50px"}
             >
-              <VStack alignItems={"left"} order={[1, 1, 1, 2]}>
+              <VStack alignItems={"left"}>
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -524,7 +531,7 @@ export function Landing() {
                   </Link>
                 </motion.div>
               </VStack>
-              <Box order={[2, 2, 2, 1]} w="100%">
+              <Box w="100%">
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -543,7 +550,7 @@ export function Landing() {
               </Box>
             </Stack>
           </Box>
-          <Box maxW="container.lg" mx="auto" pt={150}>
+          <Box maxW="container.xl" mx="auto" pt={150}>
             <Stack
               direction={["column", "column", "column", "row"]}
               alignItems={"center"}
@@ -634,7 +641,7 @@ export function Landing() {
               </VStack>
             </Stack>
           </Box>
-          <Box maxW="container.lg" mx="auto" pt={150}>
+          <Box maxW="container.xl" mx="auto" pt={150}>
             <Stack
               direction={["column", "column", "column", "row"]}
               alignItems={"center"}
@@ -725,7 +732,7 @@ export function Landing() {
               </Box>
             </Stack>
           </Box>
-          <Box maxW="container.lg" mx="auto" pt={150}>
+          <Box maxW="container.xl" mx="auto" pt={150}>
             <Stack
               direction={["column", "column", "column", "row"]}
               alignItems={"center"}
@@ -831,9 +838,9 @@ export function Landing() {
               </Heading>
             </motion.div>
             <SimpleGrid
-              minChildWidth={"150px"}
+              minChildWidth={"250px"}
               columns={5}
-              mb={20}
+              mb={10}
               spacing={"20px"}
             >
               {technologies.map((technology, index) => (
@@ -900,8 +907,9 @@ export function Landing() {
               </Heading>
             </motion.div>
             <SimpleGrid
-              minChildWidth="200px"
-              spacing={"40px"}
+              minChildWidth="300px"
+              spacing={"20px"}
+              column={3}
               justifyItems={"center"}
             >
               {contributors.map((contributor, index) => (

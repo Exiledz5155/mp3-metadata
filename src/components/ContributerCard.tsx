@@ -38,7 +38,13 @@ interface ContributorCardProps {
 
 export default function ContributorCard({ contributor }: ContributorCardProps) {
   return (
-    <Card key={contributor.login} maxW="xs" borderRadius={10} bg={"brand.200"}>
+    <Card
+      key={contributor.login}
+      maxW="sm"
+      minW={"xs"}
+      borderRadius={10}
+      bg={"brand.200"}
+    >
       <CardBody pb={0}>
         <VStack>
           <Avatar size="xl" src={contributor.avatar_url} />
@@ -75,7 +81,7 @@ export default function ContributorCard({ contributor }: ContributorCardProps) {
           </Link>
         </VStack>
       </CardBody>
-      <CardFooter justifyContent={"center"} gap={10}>
+      <CardFooter justifyContent={"center"} gap={8}>
         <Tooltip
           label="Insertions"
           bg={"brand.300"}
