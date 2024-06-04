@@ -3,6 +3,7 @@
 
 import {
   ArrowForwardIcon,
+  ChevronUpIcon,
   DownloadIcon,
   EditIcon,
   InfoOutlineIcon,
@@ -29,18 +30,11 @@ import ContributorCard from "./ContributerCard";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { IoCloudUploadOutline } from "react-icons/io5";
-
-// const glow = keyframes`
-//   0% {
-//     box-shadow: 0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4;
-//   }
-//   50% {
-//     box-shadow: 0 0 10px 2px #8795D5, 0 0 13px 3px #CF97F4;
-//   }
-//   100% {
-//     box-shadow: 0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4;
-//   }
-// `;
+import {
+  Link as ScrollLink,
+  Element,
+  animateScroll as scroll,
+} from "react-scroll";
 
 interface Contributor {
   login: string;
@@ -131,6 +125,7 @@ function Technology({ name }: { name: string }) {
 export function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [contributors, setContributors] = useState<Contributor[]>([]);
+  const [showUpButton, setShowUpButton] = useState(false);
   const exclude = process.env.NEXT_PUBLIC_EXCLUDE;
 
   useEffect(() => {
@@ -173,6 +168,19 @@ export function Landing() {
     fetchContributors();
   }, [exclude]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setShowUpButton(true);
+      } else {
+        setShowUpButton(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       <Box bg="brand.50" color="white" minH="100vh">
@@ -206,7 +214,7 @@ export function Landing() {
               alignItems={"center"}
               display={{ base: "none", md: "flex" }}
             >
-              <Link href={"/"}>
+              <ScrollLink to="home" smooth={true} duration={1000}>
                 <Button
                   variant={"ghost"}
                   px={"45px"}
@@ -224,8 +232,8 @@ export function Landing() {
                 >
                   Home
                 </Button>
-              </Link>
-              <Link href={"#"}>
+              </ScrollLink>
+              <ScrollLink to="features" smooth={true} duration={1000}>
                 <Button
                   variant={"ghost"}
                   px={"55px"}
@@ -243,8 +251,8 @@ export function Landing() {
                 >
                   Features
                 </Button>
-              </Link>
-              <Link href={"#"}>
+              </ScrollLink>
+              <ScrollLink to="design" smooth={true} duration={1000}>
                 <Button
                   variant={"ghost"}
                   px={"45px"}
@@ -262,8 +270,8 @@ export function Landing() {
                 >
                   Design
                 </Button>
-              </Link>
-              <Link href={"#"}>
+              </ScrollLink>
+              <ScrollLink to="team" smooth={true} duration={1000}>
                 <Button
                   variant={"ghost"}
                   rounded={"md"}
@@ -281,35 +289,50 @@ export function Landing() {
                 >
                   Team
                 </Button>
-              </Link>
+              </ScrollLink>
             </HStack>
           </Flex>
         </Box>
         {/* INTRO */}
-        <Box maxW="container.xl" mx="auto">
-          <Box pt={20}>
-            <Heading
-              size="4xl"
-              bgGradient={"linear(to-r, linear.100, linear.200)"}
-              bgClip="text"
-              p={5}
-              textAlign={"center"}
-              mb={5}
-            >
-              MP3 Tagging made easy
-            </Heading>
-            <Text
-              textAlign="center"
-              fontSize="2xl"
-              mb={10}
-              mx={"auto"}
-              maxW={"70%"}
-            >
-              MP3 Metadata is a powerful yet simple tool for tagging MP3 Files.
-              Upload your files, edit, save and download.
-            </Text>
-            <HStack justifyContent={"center"} spacing={5}>
-              <Link href="/editor/albums">
+        <Element name="home">
+          <Box maxW="container.xl" mx="auto">
+            <Box pt={20}>
+              <Heading
+                size="4xl"
+                bgGradient={"linear(to-r, linear.100, linear.200)"}
+                bgClip="text"
+                p={5}
+                textAlign={"center"}
+                mb={5}
+              >
+                MP3 Tagging made easy
+              </Heading>
+              <Text
+                textAlign="center"
+                fontSize="2xl"
+                mb={10}
+                mx={"auto"}
+                maxW={"70%"}
+              >
+                MP3 Metadata is a powerful yet simple tool for tagging MP3
+                Files. Upload your files, edit, save and download.
+              </Text>
+              <HStack justifyContent={"center"} spacing={5}>
+                <Link href="/editor/albums">
+                  <Button
+                    w={"150px"}
+                    h={"50px"}
+                    bgGradient={"linear(to-r, linear.100, linear.200)"}
+                    _hover={{
+                      color: "white",
+                      bg: "brand.300",
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                    color={"brand.100"}
+                  >
+                    Try the demo
+                  </Button>
+                </Link>
                 <Button
                   w={"150px"}
                   h={"50px"}
@@ -321,25 +344,12 @@ export function Landing() {
                   }}
                   color={"brand.100"}
                 >
-                  Try the demo
+                  Features
                 </Button>
-              </Link>
-              <Button
-                w={"150px"}
-                h={"50px"}
-                bgGradient={"linear(to-r, linear.100, linear.200)"}
-                _hover={{
-                  color: "white",
-                  bg: "brand.300",
-                  transition: "all 0.3s ease-in-out",
-                }}
-                color={"brand.100"}
-              >
-                Features
-              </Button>
-            </HStack>
+              </HStack>
+            </Box>
           </Box>
-        </Box>
+        </Element>
         <Box
           display={"flex"}
           justifyContent={"center"}
@@ -360,107 +370,109 @@ export function Landing() {
         </Box>
         <Box p={20}>
           {/* Features */}
-          <Box maxW="container.xl" mx="auto" pt={50}>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInVariants}
-            >
-              <Heading size={"2xl"} textAlign={"center"} mb={150}>
-                Features
-              </Heading>
-            </motion.div>
-            <Stack
-              direction={["column", "column", "column", "row"]}
-              alignItems={"center"}
-              spacing={"50px"}
-            >
-              <Box order={[2, 2, 2, 1]} w="100%">
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={fadeInVariants}
-                >
-                  <Image
-                    maxH={"1000px"}
-                    src="https://i.imgur.com/amcyT9X.png"
-                    alt="app img"
-                    borderRadius={15}
-                    boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                    animation={`${glow} 4s infinite alternate ease-in-out`}
-                  />
-                </motion.div>
-              </Box>
-              <VStack alignItems={"left"} order={[1, 1, 1, 2]}>
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={{
-                    ...fadeInVariants,
-                    visible: {
-                      ...fadeInVariants.visible,
-                      transition: {
-                        ...fadeInVariants.visible.transition,
-                        delay: 0.2,
+          <Element name="features">
+            <Box maxW="container.xl" mx="auto" pt={50}>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInVariants}
+              >
+                <Heading size={"2xl"} textAlign={"center"} mb={150}>
+                  Features
+                </Heading>
+              </motion.div>
+              <Stack
+                direction={["column", "column", "column", "row"]}
+                alignItems={"center"}
+                spacing={"50px"}
+              >
+                <Box order={[2, 2, 2, 1]} w="100%">
+                  <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={fadeInVariants}
+                  >
+                    <Image
+                      maxH={"1000px"}
+                      src="https://i.imgur.com/amcyT9X.png"
+                      alt="app img"
+                      borderRadius={15}
+                      boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                      animation={`${glow} 4s infinite alternate ease-in-out`}
+                    />
+                  </motion.div>
+                </Box>
+                <VStack alignItems={"left"} order={[1, 1, 1, 2]}>
+                  <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={{
+                      ...fadeInVariants,
+                      visible: {
+                        ...fadeInVariants.visible,
+                        transition: {
+                          ...fadeInVariants.visible.transition,
+                          delay: 0.2,
+                        },
                       },
-                    },
-                  }}
-                >
-                  <HStack alignItems="center" mb={5}>
-                    <Icon as={MdOutlineFilePresent} boxSize={7} />
-                    <Heading size="xl">Upload</Heading>
-                  </HStack>
-                </motion.div>
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={{
-                    ...fadeInVariants,
-                    visible: {
-                      ...fadeInVariants.visible,
-                      transition: {
-                        ...fadeInVariants.visible.transition,
-                        delay: 0.3,
-                      },
-                    },
-                  }}
-                >
-                  <Text fontSize={"lg"} mb={5}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </Text>
-                  <Link href="/editor/albums">
-                    <HStack>
-                      <Button
-                        variant={"ghost"}
-                        px={"45px"}
-                        rounded={"md"}
-                        textAlign={"center"}
-                        w={"150px"}
-                        _hover={{
-                          boxShadow:
-                            "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                          transition: "all 0.3s ease-in-out",
-                        }}
-                        bgClip={"text"}
-                        bgGradient={"linear(to-r, linear.100, linear.200)"}
-                        fontWeight={"bold"}
-                        fontSize="xl"
-                        rightIcon={<ArrowForwardIcon color={"white"} />}
-                      >
-                        Try it now
-                      </Button>
+                    }}
+                  >
+                    <HStack alignItems="center" mb={5}>
+                      <Icon as={MdOutlineFilePresent} boxSize={7} />
+                      <Heading size="xl">Upload</Heading>
                     </HStack>
-                  </Link>
-                </motion.div>
-              </VStack>
-            </Stack>
-          </Box>
+                  </motion.div>
+                  <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={{
+                      ...fadeInVariants,
+                      visible: {
+                        ...fadeInVariants.visible,
+                        transition: {
+                          ...fadeInVariants.visible.transition,
+                          delay: 0.3,
+                        },
+                      },
+                    }}
+                  >
+                    <Text fontSize={"lg"} mb={5}>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
+                    </Text>
+                    <Link href="/editor/albums">
+                      <HStack>
+                        <Button
+                          variant={"ghost"}
+                          px={"45px"}
+                          rounded={"md"}
+                          textAlign={"center"}
+                          w={"150px"}
+                          _hover={{
+                            boxShadow:
+                              "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                            transition: "all 0.3s ease-in-out",
+                          }}
+                          bgClip={"text"}
+                          bgGradient={"linear(to-r, linear.100, linear.200)"}
+                          fontWeight={"bold"}
+                          fontSize="xl"
+                          rightIcon={<ArrowForwardIcon color={"white"} />}
+                        >
+                          Try it now
+                        </Button>
+                      </HStack>
+                    </Link>
+                  </motion.div>
+                </VStack>
+              </Stack>
+            </Box>
+          </Element>
           <Box maxW="container.xl" mx="auto" pt={150}>
             <Stack
               direction={["column", "column", "column", "row"]}
@@ -827,118 +839,146 @@ export function Landing() {
           </Box>
         </Box>
         {/* Design */}
-        <Box p={20}>
-          <Box maxW="container.lg" mx="auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInVariants}
-            >
-              <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
-                Built with
-              </Heading>
-            </motion.div>
-            <SimpleGrid
-              minChildWidth={"250px"}
-              columns={5}
-              mb={10}
-              spacing={"20px"}
-            >
-              {technologies.map((technology, index) => (
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={{
-                    ...fadeInVariants,
-                    visible: {
-                      ...fadeInVariants.visible,
-                      transition: {
-                        ...fadeInVariants.visible.transition,
-                        delay: 0.2 + index * 0.05,
+        <Element name="design">
+          <Box p={20}>
+            <Box maxW="container.lg" mx="auto">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInVariants}
+              >
+                <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
+                  Built with
+                </Heading>
+              </motion.div>
+              <SimpleGrid
+                minChildWidth={"250px"}
+                columns={5}
+                mb={10}
+                spacing={"20px"}
+              >
+                {technologies.map((technology, index) => (
+                  <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={{
+                      ...fadeInVariants,
+                      visible: {
+                        ...fadeInVariants.visible,
+                        transition: {
+                          ...fadeInVariants.visible.transition,
+                          delay: 0.2 + index * 0.05,
+                        },
                       },
-                    },
-                  }}
-                >
-                  <Technology name={technology} />
-                </motion.div>
-              ))}
-            </SimpleGrid>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInVariants}
-            >
-              <Box display="flex" justifyContent="center">
-                <Link
-                  href={
-                    "https://docs.google.com/document/d/1bkD40GM4VroXaYY5UScWF6WjU58Q6NS_1-z4f8bT9y4/edit?usp=sharing"
-                  }
-                >
-                  <Button
-                    w={"200px"}
-                    h={"50px"}
-                    bgGradient={"linear(to-r, linear.100, linear.200)"}
-                    _hover={{
-                      color: "white",
-                      bg: "brand.300",
-                      transition: "all 0.3s ease-in-out",
                     }}
-                    color={"brand.100"}
                   >
-                    Design Doc
-                  </Button>
-                </Link>
-              </Box>
-            </motion.div>
+                    <Technology name={technology} />
+                  </motion.div>
+                ))}
+              </SimpleGrid>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInVariants}
+              >
+                <Box display="flex" justifyContent="center">
+                  <Link
+                    href={
+                      "https://docs.google.com/document/d/1bkD40GM4VroXaYY5UScWF6WjU58Q6NS_1-z4f8bT9y4/edit?usp=sharing"
+                    }
+                  >
+                    <Button
+                      w={"200px"}
+                      h={"50px"}
+                      bgGradient={"linear(to-r, linear.100, linear.200)"}
+                      _hover={{
+                        color: "white",
+                        bg: "brand.300",
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                      color={"brand.100"}
+                    >
+                      Design Doc
+                    </Button>
+                  </Link>
+                </Box>
+              </motion.div>
+            </Box>
           </Box>
-        </Box>
+        </Element>
         {/* Team */}
-        <Box p={20}>
-          <Box maxW="container.lg" mx="auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInVariants}
-            >
-              <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
-                Contributors
-              </Heading>
-            </motion.div>
-            <SimpleGrid
-              minChildWidth="300px"
-              spacing={"20px"}
-              column={3}
-              justifyItems={"center"}
-            >
-              {contributors.map((contributor, index) => (
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={{
-                    ...fadeInVariants,
-                    visible: {
-                      ...fadeInVariants.visible,
-                      transition: {
-                        ...fadeInVariants.visible.transition,
-                        delay: 0.2 + index * 0.05,
+        <Element name="team">
+          <Box p={20}>
+            <Box maxW="container.lg" mx="auto">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInVariants}
+              >
+                <Heading size={"xl"} textAlign={"center"} mb={"50px"}>
+                  Contributors
+                </Heading>
+              </motion.div>
+              <SimpleGrid
+                minChildWidth="300px"
+                spacing={"20px"}
+                column={3}
+                justifyItems={"center"}
+              >
+                {contributors.map((contributor, index) => (
+                  <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={{
+                      ...fadeInVariants,
+                      visible: {
+                        ...fadeInVariants.visible,
+                        transition: {
+                          ...fadeInVariants.visible.transition,
+                          delay: 0.2 + index * 0.05,
+                        },
                       },
-                    },
-                  }}
-                >
-                  <ContributorCard
-                    key={contributor.login}
-                    contributor={contributor}
-                  />
-                </motion.div>
-              ))}
-            </SimpleGrid>
+                    }}
+                  >
+                    <ContributorCard
+                      key={contributor.login}
+                      contributor={contributor}
+                    />
+                  </motion.div>
+                ))}
+              </SimpleGrid>
+            </Box>
           </Box>
-        </Box>
+        </Element>
+        {showUpButton && (
+          <Button
+            position="fixed"
+            bottom="50px"
+            right="50px"
+            zIndex="tooltip"
+            bgGradient={"linear(to-r, linear.100, linear.200)"}
+            color="brand.200"
+            onClick={() => scroll.scrollToTop()}
+            _hover={{
+              color: "white",
+              bg: "brand.300",
+              transition: "all 0.3s ease-in-out",
+            }}
+            _active={{
+              bgGradient: "linear(to-r, linear.300, linear.400)",
+            }}
+            size="lg"
+            borderRadius="full"
+            boxShadow="0 0 10px rgba(0, 0, 0, 0.1)"
+          >
+            <Icon as={ChevronUpIcon} boxSize={6} />
+          </Button>
+        )}
       </Box>
     </>
   );
