@@ -359,7 +359,7 @@ export function Landing() {
           ></Image>
         </Box>
         <Box p={20}>
-          {/* About */}
+          {/* Features */}
           <Box maxW="container.xl" mx="auto" pt={50}>
             <motion.div
               initial="hidden"
