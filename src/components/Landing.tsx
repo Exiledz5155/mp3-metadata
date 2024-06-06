@@ -404,7 +404,11 @@ export function Landing() {
                     />
                   </motion.div>
                 </Box>
-                <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW={"40%"}>
+                <VStack
+                  alignItems={"left"}
+                  order={[1, 1, 1, 2]}
+                  maxW={["40%", "100%", "100%", "100%"]} // not sure why this is reverse order? Should be 40 40 40 100
+                >
                   <motion.div
                     initial="hidden"
                     whileInView="visible"
@@ -481,7 +485,10 @@ export function Landing() {
             >
               {/* Missing order!!!!!!!!!! */}
               {/* sdasdasdsa */}
-              <VStack alignItems={"left"} maxW={"40%"}>
+              <VStack
+                alignItems={"left"}
+                maxW={["40%", "100%", "100%", "100%"]}
+              >
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -589,7 +596,11 @@ export function Landing() {
                   />
                 </motion.div>
               </Box>
-              <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW={"40%"}>
+              <VStack
+                alignItems={"left"}
+                order={[1, 1, 1, 2]}
+                maxW={["40%", "100%", "100%", "100%"]}
+              >
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -663,7 +674,11 @@ export function Landing() {
               alignItems={"center"}
               spacing={"50px"}
             >
-              <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW={"40%"}>
+              <VStack
+                alignItems={"left"}
+                order={[1, 1, 1, 2]}
+                maxW={["40%", "100%", "100%", "100%"]}
+              >
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -771,7 +786,11 @@ export function Landing() {
                   />
                 </motion.div>
               </Box>
-              <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW={"40%"}>
+              <VStack
+                alignItems={"left"}
+                order={[1, 1, 1, 2]}
+                maxW={["40%", "100%", "100%", "100%"]}
+              >
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -810,9 +829,7 @@ export function Landing() {
                   <Text fontSize={"lg"} mb={5}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna aliqua.
+                    aliqua.
                   </Text>
                   <Link href="/editor/albums">
                     <HStack>
