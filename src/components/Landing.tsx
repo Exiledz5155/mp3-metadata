@@ -366,7 +366,7 @@ export function Landing() {
             boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
             // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
             animation={`${glow} 4s infinite alternate ease-in-out`}
-          ></Image>
+          />
         </Box>
         <Box p={20}>
           {/* Features */}
@@ -398,9 +398,9 @@ export function Landing() {
                       maxH={"1000px"}
                       src="https://i.imgur.com/amcyT9X.png"
                       alt="app img"
-                      borderRadius={15}
-                      boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                      animation={`${glow} 4s infinite alternate ease-in-out`}
+                      borderRadius={10}
+                      // boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                      // animation={`${glow} 4s infinite alternate ease-in-out`}
                     />
                   </motion.div>
                 </Box>
@@ -556,9 +556,9 @@ export function Landing() {
                     maxH={"1000px"}
                     src="https://i.imgur.com/amcyT9X.png"
                     alt="app img"
-                    borderRadius={15}
-                    boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                    animation={`${glow} 4s infinite alternate ease-in-out`}
+                    borderRadius={10}
+                    // boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                    // animation={`${glow} 4s infinite alternate ease-in-out`}
                   />
                 </motion.div>
               </Box>
@@ -581,9 +581,9 @@ export function Landing() {
                     maxH={"1000px"}
                     src="https://i.imgur.com/amcyT9X.png"
                     alt="app img"
-                    borderRadius={15}
-                    boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                    animation={`${glow} 4s infinite alternate ease-in-out`}
+                    borderRadius={10}
+                    // boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                    // animation={`${glow} 4s infinite alternate ease-in-out`}
                   />
                 </motion.div>
               </Box>
@@ -738,9 +738,9 @@ export function Landing() {
                     maxH={"1000px"}
                     src="https://i.imgur.com/amcyT9X.png"
                     alt="app img"
-                    borderRadius={15}
-                    boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                    animation={`${glow} 4s infinite alternate ease-in-out`}
+                    borderRadius={10}
+                    // boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                    // animation={`${glow} 4s infinite alternate ease-in-out`}
                   />
                 </motion.div>
               </Box>
@@ -763,9 +763,9 @@ export function Landing() {
                     maxH={"1000px"}
                     src="https://i.imgur.com/amcyT9X.png"
                     alt="app img"
-                    borderRadius={15}
-                    boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                    animation={`${glow} 4s infinite alternate ease-in-out`}
+                    borderRadius={10}
+                    // boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+                    // animation={`${glow} 4s infinite alternate ease-in-out`}
                   />
                 </motion.div>
               </Box>
