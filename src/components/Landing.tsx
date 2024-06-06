@@ -358,15 +358,22 @@ export function Landing() {
           mx={"auto"}
           maxW={"container.xl"}
         >
-          <Image
-            maxH={"700px"}
-            src="https://i.imgur.com/amcyT9X.png"
-            alt="app img"
-            borderRadius={15}
-            boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-            // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
-            animation={`${glow} 4s infinite alternate ease-in-out`}
-          />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInVariants}
+          >
+            <Image
+              maxH={"700px"}
+              src="https://i.imgur.com/amcyT9X.png"
+              alt="app img"
+              borderRadius={15}
+              boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
+              // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
+              animation={`${glow} 4s infinite alternate ease-in-out`}
+            />
+          </motion.div>
         </Box>
         <Box p={20}>
           {/* Features */}
