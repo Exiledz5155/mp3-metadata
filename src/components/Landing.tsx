@@ -487,6 +487,7 @@ export function Landing() {
               {/* sdasdasdsa */}
               <VStack
                 alignItems={"left"}
+                order={[1, 1, 1, 2]}
                 maxW={["40%", "100%", "100%", "100%"]}
               >
                 <motion.div
@@ -554,7 +555,7 @@ export function Landing() {
                   </Link>
                 </motion.div>
               </VStack>
-              <Box w="100%">
+              <Box order={[1, 1, 1, 2]} w="100%">
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
