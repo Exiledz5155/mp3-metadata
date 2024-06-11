@@ -29,7 +29,6 @@ import { MdMusicNote, MdOutlineFilePresent } from "react-icons/md";
 import ContributorCard from "./ContributerCard";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { IoCloudUploadOutline } from "react-icons/io5";
 import {
   Link as ScrollLink,
   Element,
@@ -184,7 +183,7 @@ export function Landing() {
   return (
     <Box bg="brand.50" color="white" minH="100vh">
       {/* NAV BAR */}
-      <Box bg="brand.50" maxW="container.xl" mx="auto">
+      <Box bg="brand.50" maxW="container.xl" mx="auto" px={10}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <Flex alignItems={"center"}>
             <Box
