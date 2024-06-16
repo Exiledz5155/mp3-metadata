@@ -1,4 +1,3 @@
-// components/Landing.js
 "use client";
 
 import {
