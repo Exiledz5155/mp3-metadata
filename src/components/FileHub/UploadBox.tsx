@@ -1,33 +1,33 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
 import {
-  Flex,
+  Box,
   Button,
+  Flex,
+  Icon,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Icon,
-  Box,
   Text,
-  Input,
   useToast,
-  ModalFooter,
 } from "@chakra-ui/react";
+import React, { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { IoCloudUploadOutline } from "react-icons/io5";
 import {
-  MdOutlineFilePresent,
   MdFullscreen,
   MdFullscreenExit,
+  MdOutlineFilePresent,
 } from "react-icons/md";
-import { IoCloudUploadOutline } from "react-icons/io5";
-import { useDropzone } from "react-dropzone";
-import { useUUID } from "../../contexts/UUIDContext";
-import FileUploadCard from "./UploadCard";
-import { UploadMP3 } from "../../util/UploadFiles";
 import { useFetch } from "../../contexts/FetchContext";
+import { useUUID } from "../../contexts/UUIDContext";
+import { UploadMP3 } from "../../util/UploadFiles";
+import FileUploadCard from "./UploadCard";
 
 interface UploadBoxProps {
   isOpen: boolean; // Whether the modal is open or not

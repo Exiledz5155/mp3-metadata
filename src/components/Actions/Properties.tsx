@@ -78,68 +78,68 @@ export default function Properties({
   };
 
   return (
-    <>
-      <Modal
-        closeOnOverlayClick={false}
-        isOpen={isOpen}
-        onClose={onClose}
-        size="xl"
-      >
-        <ModalOverlay />
-        <ModalContent bg={"brand.200"} py={25} borderRadius={"xl"}>
-          <ModalHeader pt={0}>Properties</ModalHeader>
-          <ModalCloseButton mr={3} mt={3} />
-          <ModalBody>
-            <VStack spacing={4} align="stretch">
-              <PropertyRow label="Title" value={commonProperties.title || ""} />
-              <PropertyRow
-                label="Artist(s)"
-                value={commonProperties.artist || ""}
-              />
-              <PropertyRow
-                label="Album"
-                value={commonProperties.albumTitle || ""}
-              />
-              <PropertyRow
-                label="Album Artist(s)"
-                value={commonProperties.albumArtist || ""}
-              />
-              <PropertyRow
-                label="Year"
-                value={commonProperties.year?.toString() || ""}
-              />
-              <PropertyRow label="Genre" value={commonProperties.genre || ""} />
-              <PropertyRow
-                label="Track"
-                value={commonProperties.trackNumber?.toString() || ""}
-              />
-              <PropertyRow
-                label="Length"
-                value={calculateTotalDuration(songs) || ""}
-              />
-              <PropertyRow label="dev_id" value={commonProperties.id || ""} />
-            </VStack>
-          </ModalBody>
+    <Modal
+      closeOnOverlayClick={false}
+      isOpen={isOpen}
+      onClose={onClose}
+      size="xl"
+    >
+      <ModalOverlay />
+      <ModalContent bg={"brand.200"} py={25} borderRadius={"xl"}>
+        <ModalHeader pt={0} pb={4}>
+          Properties
+        </ModalHeader>
+        <ModalCloseButton mr={2} mt={3} />
+        <ModalBody>
+          <VStack spacing={4} align="stretch">
+            <PropertyRow label="Title" value={commonProperties.title || ""} />
+            <PropertyRow
+              label="Artist(s)"
+              value={commonProperties.artist || ""}
+            />
+            <PropertyRow
+              label="Album"
+              value={commonProperties.albumTitle || ""}
+            />
+            <PropertyRow
+              label="Album Artist(s)"
+              value={commonProperties.albumArtist || ""}
+            />
+            <PropertyRow
+              label="Year"
+              value={commonProperties.year?.toString() || ""}
+            />
+            <PropertyRow label="Genre" value={commonProperties.genre || ""} />
+            <PropertyRow
+              label="Track"
+              value={commonProperties.trackNumber?.toString() || ""}
+            />
+            <PropertyRow
+              label="Length"
+              value={calculateTotalDuration(songs) || ""}
+            />
+            <PropertyRow label="dev_id" value={commonProperties.id || ""} />
+          </VStack>
+        </ModalBody>
 
-          <ModalFooter pb={0}>
-            <Button
-              bgGradient={"linear(to-r, linear.100, linear.200)"}
-              _hover={{
-                color: "white",
-                bg: "brand.300",
-                transition: "all 0.3s ease-in-out",
-              }}
-              color={"brand.100"}
-              size="md"
-              w={"100%"}
-              variant="solid"
-              onClick={onClose}
-            >
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
+        <ModalFooter pb={0}>
+          <Button
+            bgGradient={"linear(to-r, linear.100, linear.200)"}
+            _hover={{
+              color: "white",
+              bg: "brand.300",
+              transition: "all 0.3s ease-in-out",
+            }}
+            color={"brand.100"}
+            size="md"
+            w={"100%"}
+            variant="solid"
+            onClick={onClose}
+          >
+            Close
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }
