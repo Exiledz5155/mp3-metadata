@@ -1,5 +1,6 @@
 import {
   Button,
+  HStack,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -7,14 +8,13 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  VStack,
-  HStack,
   Text,
+  Tooltip,
+  VStack,
 } from "@chakra-ui/react";
-import React, { useEffect, useRef, useState } from "react";
-import { Album, Song, CommonSongProperties } from "../../types/types";
+import { useEffect, useState } from "react";
+import { CommonSongProperties, Song } from "../../types/types";
 import { calculateCommonProperties } from "../../util/commonprops";
-import { convertTime } from "../../util/duration";
 import { calculateTotalDuration } from "../../util/duration";
 
 interface PropertiesComponentProps {
@@ -35,10 +35,28 @@ export default function Properties({
     setCommonProperties(calculateCommonProperties(songs));
   }, [songs]);
 
-  const PropertyRow = ({ label, value }) => (
+  const PropertyRow = ({ label, value, hasTooltip }) => (
     <HStack justifyContent="space-between">
       <Text fontWeight="semibold">{label}</Text>
-      <Text>{value}</Text>
+      {hasTooltip ? (
+        <Tooltip
+          label={value}
+          placement="right"
+          bg={"brand.300"}
+          color={"white"}
+          borderRadius={5}
+          p={2}
+          hasArrow
+        >
+          <Text noOfLines={1} maxW={"70%"}>
+            {value}
+          </Text>
+        </Tooltip>
+      ) : (
+        <Text noOfLines={1} maxW={"70%"}>
+          {value}
+        </Text>
+      )}
     </HStack>
   );
 
@@ -56,33 +74,51 @@ export default function Properties({
           <ModalCloseButton />
           <ModalBody>
             <VStack spacing={4} align="stretch">
-              <PropertyRow label="Title" value={commonProperties.title || ""} />
+              <PropertyRow
+                label="Title"
+                value={commonProperties.title || ""}
+                hasTooltip={true}
+              />
               <PropertyRow
                 label="Artist(s)"
                 value={commonProperties.artist || ""}
+                hasTooltip={true}
               />
               <PropertyRow
                 label="Album"
                 value={commonProperties.albumTitle || ""}
+                hasTooltip={true}
               />
               <PropertyRow
                 label="Album Artist(s)"
                 value={commonProperties.albumArtist || ""}
+                hasTooltip={true}
               />
               <PropertyRow
                 label="Year"
                 value={commonProperties.year?.toString() || ""}
+                hasTooltip={false}
               />
-              <PropertyRow label="Genre" value={commonProperties.genre || ""} />
+              <PropertyRow
+                label="Genre"
+                value={commonProperties.genre || ""}
+                hasTooltip={false}
+              />
               <PropertyRow
                 label="Track"
                 value={commonProperties.trackNumber?.toString() || ""}
+                hasTooltip={false}
               />
               <PropertyRow
                 label="Length"
                 value={calculateTotalDuration(songs) || ""}
+                hasTooltip={false}
               />
-              <PropertyRow label="dev_id" value={commonProperties.id || ""} />
+              <PropertyRow
+                label="dev_id"
+                value={commonProperties.id || ""}
+                hasTooltip={false}
+              />
             </VStack>
           </ModalBody>
 

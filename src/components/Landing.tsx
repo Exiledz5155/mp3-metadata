@@ -12,28 +12,28 @@ import {
 import {
   Box,
   Button,
-  Heading,
-  Text,
-  Image,
   Flex,
   HStack,
+  Heading,
   Icon,
-  useDisclosure,
-  keyframes,
+  Image,
   SimpleGrid,
-  VStack,
   Stack,
+  Text,
+  VStack,
+  keyframes,
+  useDisclosure,
 } from "@chakra-ui/react";
-import Link from "next/link";
-import { MdMusicNote, MdOutlineFilePresent } from "react-icons/md";
-import ContributorCard from "./ContributerCard";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { MdMusicNote, MdOutlineFilePresent } from "react-icons/md";
 import {
-  Link as ScrollLink,
   Element,
+  Link as ScrollLink,
   animateScroll as scroll,
 } from "react-scroll";
+import ContributorCard from "./ContributerCard";
 
 interface Contributor {
   login: string;
