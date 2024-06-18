@@ -1,23 +1,18 @@
 // imageDisplay.js
-import React, { useState } from "react";
 import {
+  Box,
   Center,
   Grid,
   GridItem,
-  Image,
   Icon,
-  Box,
+  Image,
   Input,
   Square,
 } from "@chakra-ui/react";
-import { MdOutlineQueueMusic } from "react-icons/md";
+import { useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import {
-  Album,
-  Song,
-  CommonSongProperties,
-  HoverableImageProps,
-} from "../types/types";
+import { MdOutlineQueueMusic } from "react-icons/md";
+import { HoverableImageProps } from "../types/types";
 
 export function renderImageFromAlbumLarge(album, commonProperties) {
   // Map over the songs in the album, add all the unique URLs to a set

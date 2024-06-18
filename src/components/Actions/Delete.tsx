@@ -2,22 +2,22 @@
 
 import {
   AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
   AlertDialogBody,
+  AlertDialogContent,
   AlertDialogFooter,
-  Button,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
-  UnorderedList,
+  Button,
   ListItem,
-  useToast,
   Spinner,
+  UnorderedList,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { Song } from "../../types/types";
-import { useUUID } from "../../contexts/UUIDContext";
 import { useFetch } from "../../contexts/FetchContext";
+import { useUUID } from "../../contexts/UUIDContext";
+import { Song } from "../../types/types";
 
 interface DeleteComponentProps {
   isOpen: boolean;

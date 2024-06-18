@@ -1,7 +1,5 @@
-import { Card, Stack, Button, Text, Icon } from "@chakra-ui/react";
+import { Button, Card, Icon, Stack, Text } from "@chakra-ui/react";
 
-import { useRef, useEffect } from "react";
-import { Album, Song } from "../../types/types";
 import {
   DownloadIcon,
   EditIcon,
@@ -9,8 +7,9 @@ import {
   MinusIcon,
   ViewIcon,
 } from "@chakra-ui/icons";
-import { MdRemoveCircleOutline } from "react-icons/md";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
+import { Album, Song } from "../../types/types";
 
 /**
  * @param position x and y coordinates of the bottom left corner of the menu

@@ -1,8 +1,5 @@
 "use client";
 
-import UUIDFileUpload from "../../../components/Testing/UUIDFileUpload";
-import FileUpload from "../../../components/Testing/FileUpload";
-import { Button, Link, chakra } from "@chakra-ui/react";
 import UploadTest from "../../../components/Testing/UploadTest";
 
 export default function uuid() {

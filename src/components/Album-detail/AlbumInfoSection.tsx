@@ -1,12 +1,12 @@
 "use client";
 
-import { HStack, VStack, Text, Icon, Square } from "@chakra-ui/react";
-import { Album, CommonSongProperties, Song } from "../../types/types";
-import { calculateTotalDuration } from "../../util/duration";
-import { calculateCommonProperties } from "../../util/commonprops";
-import { useState, useEffect } from "react";
-import { renderImageFromAlbumLarge } from "../../util/generateimage";
+import { HStack, Text, VStack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
+import { Album, CommonSongProperties } from "../../types/types";
+import { calculateCommonProperties } from "../../util/commonprops";
+import { calculateTotalDuration } from "../../util/duration";
+import { renderImageFromAlbumLarge } from "../../util/generateimage";
 
 export function AlbumInfoSection({ album }: { album: Album }) {
   const totalDuration = calculateTotalDuration(album.songs);

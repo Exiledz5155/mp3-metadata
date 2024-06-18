@@ -1,13 +1,13 @@
 "use client";
 
 // AlbumPage.tsx
-import { useEffect, useState } from "react";
-import { Album } from "../../../types/types";
-import { useUUID } from "../../../contexts/UUIDContext";
-import { SongDisplayLoading } from "../../../components/Album-detail/SongDisplayLoading";
-import { SongDisplay } from "../../../components/Album-detail/SongDisplay";
-import { useFetch } from "../../../contexts/FetchContext";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { SongDisplay } from "../../../components/Album-detail/SongDisplay";
+import { SongDisplayLoading } from "../../../components/Album-detail/SongDisplayLoading";
+import { useFetch } from "../../../contexts/FetchContext";
+import { useUUID } from "../../../contexts/UUIDContext";
+import { Album } from "../../../types/types";
 
 export default function AlbumPage() {
   const { uuid } = useUUID();

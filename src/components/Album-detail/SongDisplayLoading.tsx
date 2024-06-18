@@ -2,28 +2,17 @@
 "use client";
 
 import {
+  Box,
   Card,
   CardBody,
   Divider,
-  useColorModeValue,
-  Box,
   Flex,
   HStack,
-  VStack,
-  Text,
   Image,
   Skeleton,
-  SkeletonText,
-  Icon,
-  Square,
+  VStack,
 } from "@chakra-ui/react";
-import { SongGridCard } from "./SongGridCard";
-import { SongGridLabel } from "./SongGridLabel";
-import { AlbumInfoSection } from "./AlbumInfoSection";
-import { Album, Song } from "../../types/types";
-import ActionMenu from "../Actions/ActionMenu";
 import React from "react";
-import { TimeIcon } from "@chakra-ui/icons";
 
 export function SongDisplayLoading() {
   return (

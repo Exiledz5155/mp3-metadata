@@ -1,6 +1,6 @@
 "use client";
 
-import { Heading, extendTheme, type ThemeConfig } from "@chakra-ui/react";
+import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
 import "@fontsource/roboto-mono";
 
 const config: ThemeConfig = {

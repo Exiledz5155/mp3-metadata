@@ -8,44 +8,43 @@ import {
   Search2Icon,
 } from "@chakra-ui/icons";
 import {
+  Accordion,
+  Box,
   Button,
   Card,
   CardBody,
-  useColorModeValue,
+  Center,
+  HStack,
+  Image,
   Input,
-  Box,
   InputGroup,
   InputLeftElement,
-  Accordion,
   Menu,
   MenuButton,
-  MenuList,
   MenuItem,
-  useDisclosure,
-  HStack,
+  MenuList,
   Skeleton,
-  Image,
-  Center,
-  useToast,
   Spinner,
   Tooltip,
+  useColorModeValue,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import { FileHubAlbum } from "./FileHubAlbum";
-import React, { useEffect, useState } from "react";
-import FileUploadBox from "./UploadBox";
-import { IoCloudUploadOutline } from "react-icons/io5";
-import ActionMenu from "../Actions/ActionMenu";
-import { useUUID } from "../../contexts/UUIDContext";
-import { Album, Song } from "../../types/types";
-import { useFetch } from "../../contexts/FetchContext";
-import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
-import Edit from "../Actions/Edit";
-import Properties from "../Actions/Properties";
-import { useMemo } from "react";
 import Fuse from "fuse.js";
 import Link from "next/link";
+import React, { useEffect, useMemo, useState } from "react";
+import { IoCloudUploadOutline } from "react-icons/io5";
 import { MdHomeFilled } from "react-icons/md";
+import { useFetch } from "../../contexts/FetchContext";
+import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
+import { useUUID } from "../../contexts/UUIDContext";
+import { Album, Song } from "../../types/types";
+import ActionMenu from "../Actions/ActionMenu";
 import Remove from "../Actions/Delete";
+import Edit from "../Actions/Edit";
+import Properties from "../Actions/Properties";
+import { FileHubAlbum } from "./FileHubAlbum";
+import FileUploadBox from "./UploadBox";
 
 export function FileHub() {
   const { uuid, generateUUID } = useUUID();

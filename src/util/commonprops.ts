@@ -1,4 +1,4 @@
-import { Album, Song, CommonSongProperties } from "../types/types";
+import { CommonSongProperties, Song } from "../types/types";
 
 export function calculateCommonProperties(songs: Song[]): CommonSongProperties {
   return songs.reduce<CommonSongProperties>(
