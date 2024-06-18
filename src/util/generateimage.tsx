@@ -1,5 +1,6 @@
 // imageDisplay.js
 import {
+  AspectRatio,
   Box,
   Center,
   Grid,
@@ -364,15 +365,17 @@ export function renderImageAlbumItem(album, commonProperties) {
 
   if (images.length === 0 || (images.length === 1 && images[0] === "")) {
     return (
-      <Center w="100%" h="100%" bg={"transparent"}>
-        <Icon
-          as={MdOutlineQueueMusic}
-          boxSize={10}
-          color="brand.500"
-          bg={"transparent"}
-          borderRadius={"5px"}
-        />
-      </Center>
+      <AspectRatio ratio={1} w="100%">
+        <Center w="100%" h="100%" bg={"transparent"} borderRadius={"15px"}>
+          <Icon
+            as={MdOutlineQueueMusic}
+            boxSize={10}
+            color="brand.500"
+            bg={"transparent"}
+            borderRadius={"5px"}
+          />
+        </Center>
+      </AspectRatio>
     );
   }
 
