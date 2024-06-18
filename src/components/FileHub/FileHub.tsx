@@ -1,12 +1,7 @@
 // app/providers.tsx
 "use client";
 
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  Icon,
-  Search2Icon,
-} from "@chakra-ui/icons";
+import { ChevronDownIcon, ChevronUpIcon, Search2Icon } from "@chakra-ui/icons";
 import {
   Accordion,
   Box,
@@ -15,6 +10,7 @@ import {
   CardBody,
   Center,
   HStack,
+  Icon,
   Image,
   Input,
   InputGroup,
@@ -374,31 +370,6 @@ export function FileHub() {
               </Button>
             </Link>
           </HStack>
-
-          <FileUploadBox isOpen={isOpen} onClose={onClose} />
-        </Box>
-        <Box
-          overflowY={"auto"}
-          css={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            "&::-webkit-scrollbar": {
-              width: "5px",
-            },
-            "&::-webkit-scrollbar-track": {
-              background: "transparent",
-              borderRadius: "10px",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              background: "#888",
-              borderRadius: "10px",
-            },
-            "&::-webkit-scrollbar-thumb:hover": {
-              background: "#555",
-            },
-          }}
-        >
           <HStack
             w={"100%"}
             justifyContent={"space-between"}
@@ -464,6 +435,30 @@ export function FileHub() {
               </MenuList>
             </Menu>
           </HStack>
+          <FileUploadBox isOpen={isOpen} onClose={onClose} />
+        </Box>
+        <Box
+          overflowY={"auto"}
+          css={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            "&::-webkit-scrollbar": {
+              width: "5px",
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "transparent",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "#888",
+              borderRadius: "10px",
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              background: "#555",
+            },
+          }}
+        >
           <Accordion
             index={expandedIndices}
             onChange={(indices) => setExpandedIndices(indices as number[])}
