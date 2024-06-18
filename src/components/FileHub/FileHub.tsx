@@ -304,6 +304,7 @@ export function FileHub() {
       maxHeight="calc(100vh - 90px)"
       p={"20px"}
       rounded={"xl"}
+      minW={"325px"}
     >
       <CardBody
         overflow={"hidden"}
