@@ -19,7 +19,9 @@ export function renderImageFromAlbumLarge(album, commonProperties) {
   const imagesSet = new Set(
     album.songs
       .map((song) => song.image)
-      .filter((image): image is string => typeof image === "string")
+      .filter(
+        (image): image is string => typeof image === "string" && image !== ""
+      )
   );
   const images = Array.from(imagesSet) as string[];
 
@@ -82,7 +84,9 @@ export function renderImageFromAlbumSmall(album, commonProperties) {
   const imagesSet = new Set(
     album.songs
       .map((song) => song.image)
-      .filter((image): image is string => typeof image === "string")
+      .filter(
+        (image): image is string => typeof image === "string" && image !== ""
+      )
   );
   const images = Array.from(imagesSet) as string[]; // Convert set to array
 
@@ -143,7 +147,9 @@ export function renderImageFromSongEdit(songs, commonProperties, isHover) {
   const imagesSet = new Set(
     songs
       .map((song) => song.image)
-      .filter((image): image is string => typeof image === "string")
+      .filter(
+        (image): image is string => typeof image === "string" && image !== ""
+      )
   );
   const images = Array.from(imagesSet) as string[];
 
@@ -231,7 +237,7 @@ export function HoverableImage({
 
   const renderImageDisplay = () => {
     const imagesSet = new Set(
-      songs.map((song) => song.image).filter((image) => image)
+      songs.map((song) => song.image).filter((image) => image && image !== "")
     );
 
     const images = Array.from(imagesSet);
@@ -350,7 +356,9 @@ export function renderImageAlbumItem(album, commonProperties) {
   const imagesSet = new Set(
     album.songs
       .map((song) => song.image)
-      .filter((image): image is string => typeof image === "string")
+      .filter(
+        (image): image is string => typeof image === "string" && image !== ""
+      )
   );
   const images = Array.from(imagesSet) as string[];
 
