@@ -1,20 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
 import {
-  HStack,
-  Flex,
-  Image,
-  Text,
   Box,
   Center,
+  Flex,
+  HStack,
   Icon,
+  Image,
   Square,
+  Text,
 } from "@chakra-ui/react";
-import ActionMenu from "../Actions/ActionMenu";
-import { Album, Song } from "../../types/types";
-import { convertTime } from "../../util/duration";
+import React from "react";
 import { MdOutlineQueueMusic } from "react-icons/md";
+import { Song } from "../../types/types";
+import { convertTime } from "../../util/duration";
 
 interface SongGridCardProps {
   song: Song;

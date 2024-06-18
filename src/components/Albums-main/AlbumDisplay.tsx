@@ -1,27 +1,23 @@
 // app/providers.tsx
 "use client";
 
-import { Link } from "@chakra-ui/next-js";
 import {
-  Card,
-  CardHeader,
-  Heading,
-  CardBody,
-  Divider,
-  useColorModeValue,
-  SimpleGrid,
   AspectRatio,
   Box,
-  WrapItem,
+  Card,
+  CardBody,
+  CardHeader,
+  Divider,
+  Heading,
+  SimpleGrid,
   Skeleton,
+  WrapItem,
 } from "@chakra-ui/react";
-import { AlbumDisplayItem } from "./AlbumDisplayItem";
-import { useUUID } from "../../contexts/UUIDContext";
-import { Album, Song } from "../../types/types";
-import { useState, useEffect } from "react";
-import React from "react";
-import { FileHubAlbum } from "../FileHub/FileHubAlbum";
+import React, { useEffect, useState } from "react";
 import { useFetch } from "../../contexts/FetchContext";
+import { useUUID } from "../../contexts/UUIDContext";
+import { Album } from "../../types/types";
+import { AlbumDisplayItem } from "./AlbumDisplayItem";
 
 export function AlbumDisplay() {
   const { fetchAlbums } = useFetch();

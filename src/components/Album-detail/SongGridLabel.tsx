@@ -1,7 +1,7 @@
 "use client";
 
 import { TimeIcon } from "@chakra-ui/icons";
-import { HStack, Flex, Divider, Text, Icon, Tooltip } from "@chakra-ui/react";
+import { Flex, HStack, Icon, Text, Tooltip } from "@chakra-ui/react";
 
 export function SongGridLabel() {
   return (

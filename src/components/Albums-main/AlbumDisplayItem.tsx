@@ -5,18 +5,14 @@ import {
   Box,
   Grid,
   GridItem,
+  Text,
   WrapItem,
   useColorModeValue,
-  Text,
-  Image,
-  Center,
-  Icon,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { Album, CommonSongProperties, Song } from "../../types/types";
-import { MdOutlineLibraryMusic, MdOutlineQueueMusic } from "react-icons/md";
+import { useEffect, useState } from "react";
+import { Album, CommonSongProperties } from "../../types/types";
 import { calculateCommonProperties } from "../../util/commonprops";
-import { useState, useEffect } from "react";
 import { renderImageAlbumItem } from "../../util/generateimage";
 
 // Remove this and add to func header instead

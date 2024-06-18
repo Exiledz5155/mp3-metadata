@@ -1,9 +1,9 @@
 "use client";
+import { Flex, Highlight, Text, VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { Flex, Text, VStack, Highlight } from "@chakra-ui/react";
-import { Album, Song } from "../../types/types";
-import { convertTime } from "../../util/duration";
 import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
+import { Song } from "../../types/types";
+import { convertTime } from "../../util/duration";
 
 export function FileHubAlbumCard({
   song,

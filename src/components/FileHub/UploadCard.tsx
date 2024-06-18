@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
-import { Box, Flex, Icon, Text, Progress } from "@chakra-ui/react";
-import { FiFileText, FiRotateCcw } from "react-icons/fi";
+import { Box, Flex, Icon, Progress, Text } from "@chakra-ui/react";
 import { BsFillTrashFill } from "react-icons/bs";
+import { FiFileText, FiRotateCcw } from "react-icons/fi";
 
 // Function to format the fileSize string given byte size
 function formatFileSize(bytes: number): string {
@@ -88,7 +87,7 @@ export default function UploadCard({
               mb={correctedInProgress ? "-2" : "0"}
               userSelect="none"
             >
-              {`${formatFileSize(fileSizeInBytes)} | ${progress}%`}
+              {`${formatFileSize(fileSizeInBytes)} | ${progress.toFixed(2)}%`}
             </Text>
           )}
         </Flex>

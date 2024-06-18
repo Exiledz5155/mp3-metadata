@@ -2,39 +2,34 @@
 "use client";
 
 import {
-  Card,
-  CardBody,
-  Divider,
-  Box,
-  Toast,
-  background,
-  Spinner,
-  useToast,
-  Flex,
-  HStack,
-  Tooltip,
-  Text,
-  Button,
-} from "@chakra-ui/react";
-import { SongGridCard } from "./SongGridCard";
-import { SongGridLabel } from "./SongGridLabel";
-import { AlbumInfoSection } from "./AlbumInfoSection";
-import { Album, Song } from "../../types/types";
-import { useState } from "react";
-import ActionMenu from "../Actions/ActionMenu";
-import Edit from "../Actions/Edit";
-import Properties from "../Actions/Properties";
-import { useUUID } from "../../contexts/UUIDContext";
-import {
-  CheckCircleIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   Icon,
   TimeIcon,
-  WarningIcon,
 } from "@chakra-ui/icons";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Divider,
+  Flex,
+  HStack,
+  Spinner,
+  Text,
+  Tooltip,
+  useToast,
+} from "@chakra-ui/react";
+import { useState } from "react";
 import { useSelectedSongs } from "../../contexts/SelectedSongsContext";
+import { useUUID } from "../../contexts/UUIDContext";
+import { Album, Song } from "../../types/types";
+import ActionMenu from "../Actions/ActionMenu";
 import Remove from "../Actions/Delete";
+import Edit from "../Actions/Edit";
+import Properties from "../Actions/Properties";
+import { AlbumInfoSection } from "./AlbumInfoSection";
+import { SongGridCard } from "./SongGridCard";
 
 export function SongDisplay({ album }: { album: Album }) {
   const { uuid } = useUUID();

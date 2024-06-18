@@ -1,4 +1,4 @@
-import { Album, Song } from "../types/types";
+import { Song } from "../types/types";
 
 export function calculateTotalDuration(songs: Song[]): string {
   try {

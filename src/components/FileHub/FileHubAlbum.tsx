@@ -1,20 +1,20 @@
 // app/providers.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
 import {
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
   Box,
   HStack,
-  Text,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
   Highlight,
+  Text,
 } from "@chakra-ui/react";
-import { FileHubAlbumCard } from "./FileHubAlbumCard";
-import { Album, CommonSongProperties, Song } from "../../types/types";
+import React, { useEffect, useState } from "react";
+import { Album, CommonSongProperties } from "../../types/types";
 import { calculateCommonProperties } from "../../util/commonprops";
 import { renderImageFromAlbumSmall } from "../../util/generateimage";
+import { FileHubAlbumCard } from "./FileHubAlbumCard";
 
 export function FileHubAlbum({
   key,

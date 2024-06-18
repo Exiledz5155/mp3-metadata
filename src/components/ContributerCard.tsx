@@ -1,19 +1,18 @@
 // ContributorCard.tsx
 import { GithubOutlined, LinkedinOutlined } from "@ant-design/icons";
 import {
+  Avatar,
+  Button,
   Card,
   CardBody,
-  VStack,
-  Avatar,
-  Heading,
-  HStack,
-  IconButton,
   CardFooter,
-  Tooltip,
   Divider,
-  Box,
+  HStack,
+  Heading,
+  IconButton,
   Text,
-  Button,
+  Tooltip,
+  VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 

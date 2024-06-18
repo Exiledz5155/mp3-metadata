@@ -1,31 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Box,
-  Image,
-  Icon,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Button,
-  useToast,
-  Flex,
-  Input,
-  Center,
-  Grid,
-  GridItem,
-} from "@chakra-ui/react";
-import { IoCloudUploadOutline } from "react-icons/io5";
-import { MdOutlineQueueMusic } from "react-icons/md";
-import { UploadIMG } from "../../util/UploadFiles";
-import { useUUID } from "../../contexts/UUIDContext";
 import { CheckIcon } from "@chakra-ui/icons";
-import { Album, CommonSongProperties, Song } from "../../types/types";
-import { calculateCommonProperties } from "../../util/commonprops";
+import {
+  Button,
+  Flex,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useToast,
+} from "@chakra-ui/react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFetch } from "../../contexts/FetchContext";
+import { useUUID } from "../../contexts/UUIDContext";
+import { CommonSongProperties, Song } from "../../types/types";
+import { UploadIMG } from "../../util/UploadFiles";
+import { calculateCommonProperties } from "../../util/commonprops";
 import { HoverableImage } from "../../util/generateimage";
 
 interface IUBComponentProps {

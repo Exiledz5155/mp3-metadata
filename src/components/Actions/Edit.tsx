@@ -1,11 +1,12 @@
 import { CheckIcon, Icon } from "@chakra-ui/icons";
 import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
-  Input,
-  Button,
   Grid,
   GridItem,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,24 +14,17 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Image,
-  Box,
-  Center,
   useToast,
-  useDisclosure,
 } from "@chakra-ui/react";
-import React, { useEffect, useRef } from "react";
-import { useState } from "react";
-import { IoCloudUploadOutline } from "react-icons/io5";
-import { useUUID } from "../../contexts/UUIDContext";
-import ImageUploadBox from "./ImageUploadBox";
-import { Album, Song } from "../../types/types";
-import { MdOutlineQueueMusic } from "react-icons/md";
 import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { IoCloudUploadOutline } from "react-icons/io5";
 import { useFetch } from "../../contexts/FetchContext";
+import { useUUID } from "../../contexts/UUIDContext";
+import { CommonSongProperties, Song } from "../../types/types";
 import { calculateCommonProperties } from "../../util/commonprops";
-import { CommonSongProperties } from "../../types/types";
 import { renderImageFromSongEdit } from "../../util/generateimage";
+import ImageUploadBox from "./ImageUploadBox";
 
 interface EditComponentProps {
   isOpen: boolean;
@@ -171,9 +165,11 @@ export default function Edit({ songs, isOpen, onClose }: EditComponentProps) {
         closeOnEsc={isLoading ? false : true}
       >
         <ModalOverlay />
-        <ModalContent bg={"brand.200"} pb={25} borderRadius={"xl"}>
-          <ModalHeader>Edit Song{multipleSongsSelected ? "s" : ""}</ModalHeader>
-          <ModalCloseButton disabled={isLoading} />
+        <ModalContent bg={"brand.200"} py={25} borderRadius={"xl"}>
+          <ModalHeader pt={0} pb={4}>
+            Edit Song{multipleSongsSelected ? "s" : ""}
+          </ModalHeader>
+          <ModalCloseButton mr={2} mt={3} disabled={isLoading} />
           <ModalBody>
             <Grid
               h="sm"

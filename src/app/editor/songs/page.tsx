@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Album, Song } from "../../../types/types";
-import { useUUID } from "../../../contexts/UUIDContext";
-import { SongDisplayLoading } from "../../../components/Album-detail/SongDisplayLoading";
 import { SongDisplay } from "../../../components/Album-detail/SongDisplay";
+import { SongDisplayLoading } from "../../../components/Album-detail/SongDisplayLoading";
 import { useFetch } from "../../../contexts/FetchContext";
+import { useUUID } from "../../../contexts/UUIDContext";
+import { Album, Song } from "../../../types/types";
 
 export default function SongsPage() {
   const { uuid } = useUUID();
