@@ -198,7 +198,7 @@ export function Landing() {
             </Box>
             <Link href={"/"}>
               <Text
-                fontSize="xl"
+                fontSize={{ base: "md", md: "xl", lg: "xl", xl: "xl" }}
                 fontWeight="extrabold"
                 ml={3}
                 bgClip={"text"}
@@ -297,7 +297,7 @@ export function Landing() {
         <Box maxW="container.xl" mx="auto">
           <Box pt={20}>
             <Heading
-              size="4xl"
+              size={{ base: "xl", md: "2xl", lg: "3xl", xl: "4xl" }}
               bgGradient={"linear(to-r, linear.100, linear.200)"}
               bgClip="text"
               p={5}
@@ -308,7 +308,7 @@ export function Landing() {
             </Heading>
             <Text
               textAlign="center"
-              fontSize="2xl"
+              fontSize={{ base: "lg", md: "xl", lg: "xl", xl: "2xl" }}
               mb={10}
               mx={"auto"}
               maxW={"70%"}
@@ -377,7 +377,7 @@ export function Landing() {
           />
         </motion.div>
       </Box>
-      <Box p={20}>
+      <Box p={5}>
         {/* Features */}
         <Element name="features">
           <Box maxW="container.xl" mx="auto" pt={50}>
@@ -416,7 +416,7 @@ export function Landing() {
               <VStack
                 alignItems={"left"}
                 order={[1, 1, 1, 2]}
-                maxW={["40%", "100%", "100%", "100%"]} // not sure why this is reverse order? Should be 40 40 40 100
+                maxW="100%" // not sure why this is reverse order? Should be 40 40 40 100
               >
                 <motion.div
                   initial="hidden"
