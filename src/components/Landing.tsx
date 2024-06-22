@@ -338,7 +338,7 @@ export function Landing() {
       {/* INTRO */}
       <Element name="home">
         <Box maxW="container.xl" mx="auto">
-          <Box pt={20}>
+          <Box pt={10}>
             <Heading
               size={{ base: "xl", md: "2xl", lg: "3xl", xl: "4xl" }}
               bgGradient={"linear(to-r, linear.100, linear.200)"}
@@ -346,6 +346,7 @@ export function Landing() {
               p={5}
               textAlign={"center"}
               mb={5}
+              mt={{ base: "none", md: "70" }}
             >
               MP3 Tagging made easy
             </Heading>
