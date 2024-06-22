@@ -97,11 +97,13 @@ const fadeInVariants = {
 };
 
 const technologies = [
+  "TypeScript",
   "Next.js",
   "React",
   "Chakra UI",
   "Azure Blob",
-  "Azure MySQL",
+  "Azure Functions",
+  "MySQL",
   "Prisma",
   "Figma",
 ];
