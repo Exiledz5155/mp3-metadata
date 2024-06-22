@@ -5,6 +5,7 @@ import {
   ChevronUpIcon,
   DownloadIcon,
   EditIcon,
+  HamburgerIcon,
   InfoOutlineIcon,
   Search2Icon,
 } from "@chakra-ui/icons";
@@ -15,7 +16,12 @@ import {
   HStack,
   Heading,
   Icon,
+  IconButton,
   Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   SimpleGrid,
   Stack,
   Text,
@@ -184,7 +190,7 @@ export function Landing() {
   return (
     <Box bg="brand.50" color="white" minH="100vh">
       {/* NAV BAR */}
-      <Box bg="brand.50" maxW="container.xl" mx="auto" px={10}>
+      <Box bg="brand.50" maxW="container.xl" mx="auto" px={5}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <Flex alignItems={"center"}>
             <Box
@@ -208,6 +214,43 @@ export function Landing() {
               </Text>
             </Link>
           </Flex>
+          <HStack display={{ base: "flex", md: "none" }}>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Options"
+                icon={<HamburgerIcon />}
+                variant="ghost"
+                _hover={{
+                  boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                  transition: "all 0.3s ease-in-out",
+                }}
+                _expanded={{ bg: "brand.200" }}
+              />
+              <MenuList bg="brand.200">
+                <ScrollLink to="home" smooth={true} duration={1000}>
+                  <MenuItem bg={"brand.200"} _hover={{ bg: "brand.400" }}>
+                    Home
+                  </MenuItem>
+                </ScrollLink>
+                <ScrollLink to="features" smooth={true} duration={1000}>
+                  <MenuItem bg={"brand.200"} _hover={{ bg: "brand.400" }}>
+                    Features
+                  </MenuItem>
+                </ScrollLink>
+                <ScrollLink to="design" smooth={true} duration={1000}>
+                  <MenuItem bg={"brand.200"} _hover={{ bg: "brand.400" }}>
+                    Design
+                  </MenuItem>
+                </ScrollLink>
+                <ScrollLink to="team" smooth={true} duration={1000}>
+                  <MenuItem bg={"brand.200"} _hover={{ bg: "brand.400" }}>
+                    Team
+                  </MenuItem>
+                </ScrollLink>
+              </MenuList>
+            </Menu>
+          </HStack>
           <HStack
             spacing={4}
             alignItems={"center"}
@@ -413,11 +456,7 @@ export function Landing() {
                   />
                 </motion.div>
               </Box>
-              <VStack
-                alignItems={"left"}
-                order={[1, 1, 1, 2]}
-                maxW="100%" // not sure why this is reverse order? Should be 40 40 40 100
-              >
+              <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -494,11 +533,7 @@ export function Landing() {
           >
             {/* Missing order!!!!!!!!!! */}
             {/* sdasdasdsa */}
-            <VStack
-              alignItems={"left"}
-              order={[1, 1, 1, 2]}
-              maxW={["40%", "100%", "100%", "100%"]}
-            >
+            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -604,11 +639,7 @@ export function Landing() {
                 />
               </motion.div>
             </Box>
-            <VStack
-              alignItems={"left"}
-              order={[1, 1, 1, 2]}
-              maxW={["40%", "100%", "100%", "100%"]}
-            >
+            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -680,11 +711,7 @@ export function Landing() {
             alignItems={"center"}
             spacing={"50px"}
           >
-            <VStack
-              alignItems={"left"}
-              order={[1, 1, 1, 2]}
-              maxW={["40%", "100%", "100%", "100%"]}
-            >
+            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -790,11 +817,7 @@ export function Landing() {
                 />
               </motion.div>
             </Box>
-            <VStack
-              alignItems={"left"}
-              order={[1, 1, 1, 2]}
-              maxW={["40%", "100%", "100%", "100%"]}
-            >
+            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -947,7 +970,7 @@ export function Landing() {
               </Heading>
             </motion.div>
             <SimpleGrid
-              minChildWidth="300px"
+              minChildWidth="200px"
               spacing={"20px"}
               column={3}
               justifyItems={"center"}
@@ -982,7 +1005,7 @@ export function Landing() {
         <Button
           position="fixed"
           bottom="50px"
-          right="50px"
+          right="25px"
           zIndex="tooltip"
           bgGradient={"linear(to-r, linear.100, linear.200)"}
           color="brand.200"
@@ -998,6 +1021,8 @@ export function Landing() {
           size="lg"
           borderRadius="full"
           boxShadow="0 0 10px rgba(0, 0, 0, 0.1)"
+          h="50px"
+          w="50px"
         >
           <Icon as={ChevronUpIcon} boxSize={6} />
         </Button>
