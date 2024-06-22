@@ -80,7 +80,6 @@ For any inquiries, feel free to contact the project maintainers:
 - Danny Bui: bui00109@umn.edu
 - Nicholas Hinds: hinds084@umn.edu
 - Nelson Trinh: trinh127@umn.edu
-- Bernie Nnadi: nnadi014@umn.edu
 - Aidan Ruiz: ruiz0150@umn.edu
 - Mark Gustafson: gust0971@umn.edu
 - Aitan Singh: sing0922@umn.edu
