@@ -102,29 +102,37 @@ const fadeInVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
-const technologies = [
-  "TypeScript",
-  "Next.js",
-  "React",
-  "Chakra UI",
-  "Azure Blob",
-  "Azure Functions",
-  "MySQL",
-  "Prisma",
-  "Figma",
-];
+const technologyLinks: Record<string, string> = {
+  TypeScript: "https://www.typescriptlang.org/",
+  "Next.js": "https://nextjs.org/",
+  React: "https://reactjs.org/",
+  "Chakra UI": "https://chakra-ui.com/",
+  "Azure Blob": "https://azure.microsoft.com/en-us/services/storage/blobs/",
+  "Azure Functions": "https://azure.microsoft.com/en-us/services/functions/",
+  MySQL: "https://www.mysql.com/",
+  Prisma: "https://www.prisma.io/",
+  Figma: "https://www.figma.com/",
+};
 
-function Technology({ name }: { name: string }) {
+function Technology({ name, link }: { name: string; link: string }) {
   return (
-    <Button
-      h={"60px"}
-      fontWeight={"bold"}
-      fontSize={"2xl"}
-      bg={"brand.200"}
-      w={"100%"}
-    >
-      {name}
-    </Button>
+    <Link href={link} target="_blank">
+      <Button
+        h={"60px"}
+        fontWeight={"bold"}
+        fontSize={"2xl"}
+        bg={"brand.200"}
+        w={"100%"}
+        _hover={{
+          bg: "brand.300",
+          transform: "translateY(-2px)",
+          boxShadow: "lg",
+        }}
+        transition="all 0.2s"
+      >
+        {name}
+      </Button>
+    </Link>
   );
 }
 
@@ -905,25 +913,28 @@ export function Landing() {
               mb={10}
               spacing={"20px"}
             >
-              {technologies.map((technology, index) => (
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={{
-                    ...fadeInVariants,
-                    visible: {
-                      ...fadeInVariants.visible,
-                      transition: {
-                        ...fadeInVariants.visible.transition,
-                        delay: 0.2 + index * 0.05,
+              {Object.entries(technologyLinks).map(
+                ([technology, link], index) => (
+                  <motion.div
+                    key={technology}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={{
+                      ...fadeInVariants,
+                      visible: {
+                        ...fadeInVariants.visible,
+                        transition: {
+                          ...fadeInVariants.visible.transition,
+                          delay: 0.2 + index * 0.05,
+                        },
                       },
-                    },
-                  }}
-                >
-                  <Technology name={technology} />
-                </motion.div>
-              ))}
+                    }}
+                  >
+                    <Technology name={technology} link={link} />
+                  </motion.div>
+                )
+              )}
             </SimpleGrid>
             <motion.div
               initial="hidden"
