@@ -27,7 +27,6 @@ import {
   Text,
   VStack,
   keyframes,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -137,7 +136,6 @@ function Technology({ name, link }: { name: string; link: string }) {
 }
 
 export function Landing() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [contributors, setContributors] = useState<Contributor[]>([]);
   const [showUpButton, setShowUpButton] = useState(false);
   const exclude = process.env.NEXT_PUBLIC_EXCLUDE;
