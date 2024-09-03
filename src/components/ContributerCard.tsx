@@ -39,16 +39,19 @@ export default function ContributorCard({ contributor }: ContributorCardProps) {
   return (
     <Card
       key={contributor.login}
-      maxW="sm"
-      minW={"xs"}
+      width="250px"
+      height="350px"
       borderRadius={10}
       bg={"brand.200"}
+      overflow="hidden"
     >
       <CardBody pb={0}>
         <VStack>
           <Avatar size="xl" src={contributor.avatar_url} />
-          <Heading size="md">{contributor.name}</Heading>
-          <Text>{contributor.role}</Text>
+          <Heading size="md" noOfLines={1}>
+            {contributor.name}
+          </Heading>
+          <Text noOfLines={1}>{contributor.role}</Text>
           <HStack>
             <Link href={contributor.html_url}>
               <IconButton
@@ -68,19 +71,20 @@ export default function ContributorCard({ contributor }: ContributorCardProps) {
           >
             <Button
               bg={"brand.300"}
-              px={10}
+              px={4}
               py={2}
               borderRadius={7}
               fontWeight={"bold"}
               mt={3}
               _hover={{ bg: "brand.400" }}
+              width="100%"
             >
               {contributor.stats.totalCommits} Contributions
             </Button>
           </Link>
         </VStack>
       </CardBody>
-      <CardFooter justifyContent={"center"} gap={8}>
+      <CardFooter justifyContent={"center"} gap={4}>
         <Tooltip
           label="Insertions"
           bg={"brand.300"}
@@ -89,7 +93,9 @@ export default function ContributorCard({ contributor }: ContributorCardProps) {
           hasArrow
           placement="left"
         >
-          <Text color={"green.400"}>{contributor.stats.totalInsertions}++</Text>
+          <Text color={"green.400"} fontSize="sm">
+            {contributor.stats.totalInsertions}++
+          </Text>
         </Tooltip>
         <Divider orientation="vertical" color={"white"} />
         <Tooltip
@@ -100,7 +106,9 @@ export default function ContributorCard({ contributor }: ContributorCardProps) {
           hasArrow
           placement="right"
         >
-          <Text color={"red.400"}>{contributor.stats.totalDeletions}--</Text>
+          <Text color={"red.400"} fontSize="sm">
+            {contributor.stats.totalDeletions}--
+          </Text>
         </Tooltip>
       </CardFooter>
     </Card>

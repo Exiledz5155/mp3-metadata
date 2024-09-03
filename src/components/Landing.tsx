@@ -971,10 +971,12 @@ export function Landing() {
               </Heading>
             </motion.div>
             <SimpleGrid
-              minChildWidth="200px"
-              spacing={"20px"}
-              column={3}
-              justifyItems={"center"}
+              columns={{ base: 1, md: 2, lg: 3, xl: 4 }}
+              spacing={{ base: "50px", md: "80px" }}
+              justifyItems="center"
+              maxW="container.xl"
+              mx="auto"
+              px={{ base: 4, md: 6 }}
             >
               {contributors.map((contributor, index) => (
                 <motion.div
