@@ -47,33 +47,6 @@ bun dev
 - **Vercel**: Platform for deploying and hosting the web application.
 - **mySQL**: Efficient Blob Querying System.
 
-## Configuration
-
-- Set up Azure Blob Storage credentials in `config.json`.
-- Adjust any other configuration settings in `config.json` as needed.
-
-## Database Schema (SUBJECT TO CHANGE)
-
-mySQL for efficient blob querying, a brief overview of the database schema. This can include tables for user sessions, uploaded files, and any other relevant information.
-
-## API
-
-We might want to add details about how to interact with our system. We wil need to flesh this out later.
-
-## Examples (SUBJECT TO CHANGE)
-
-```typescript
-// Sample TypeScript code snippet demonstrating how to use the editor API
-import { editMetadata } from "mp3-metadata-editor";
-
-const editedFile = editMetadata(file, metadata);
-```
-
-## Security Considerations
-
-- Uploaded files are stored securely using Azure Blob Storage.
-- Session IDs and uploaded files are quickly discarded after use.
-
 For any inquiries, feel free to contact the project maintainers:
 
 - Calvin Duddingston: duddi021@umn.edu
