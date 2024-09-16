@@ -22,11 +22,17 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
   SimpleGrid,
   Stack,
   Text,
   VStack,
   keyframes,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -138,6 +144,8 @@ function Technology({ name, link }: { name: string; link: string }) {
 export function Landing() {
   const [contributors, setContributors] = useState<Contributor[]>([]);
   const [showUpButton, setShowUpButton] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const exclude = process.env.NEXT_PUBLIC_EXCLUDE;
 
   useEffect(() => {
@@ -192,6 +200,53 @@ export function Landing() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleImageClick = (imageSrc: string) => {
+    setSelectedImage(imageSrc);
+    onOpen();
+  };
+
+  const EnlargeableImage = ({ src, alt }) => (
+    <Box
+      position="relative"
+      overflow="hidden"
+      borderRadius={10}
+      cursor="pointer"
+      onClick={() => handleImageClick(src)}
+    >
+      <Image
+        maxH={"1000px"}
+        src={src}
+        alt={alt}
+        borderRadius={10}
+        cursor="pointer"
+        transition="transform 0.3s ease-in-out"
+        _hover={{
+          transform: "scale(1.05)",
+        }}
+      />
+      <Flex
+        position="absolute"
+        top="0"
+        left="0"
+        right="0"
+        bottom="0"
+        bg="rgba(0,0,0,0.5)"
+        alignItems="center"
+        justifyContent="center"
+        opacity="0"
+        transition="opacity 0.3s ease-in-out"
+        cursor="pointer"
+        _hover={{
+          opacity: 1,
+        }}
+      >
+        <Text color="white" fontSize="xl" fontWeight="bold" cursor="pointer">
+          Click to enlarge
+        </Text>
+      </Flex>
+    </Box>
+  );
 
   return (
     <Box bg="brand.50" color="white" minH="100vh">
@@ -417,7 +472,8 @@ export function Landing() {
         >
           <Image
             maxH={"700px"}
-            src="https://i.imgur.com/amcyT9X.png"
+            src="/full.gif"
+            // src="https://i.imgur.com/amcyT9X.png"
             // src="https://i.imgur.com/DBlzU0T.png"
             alt="app img"
             borderRadius={15}
@@ -453,14 +509,17 @@ export function Landing() {
                   viewport={{ once: true }}
                   variants={fadeInVariants}
                 >
-                  <Image
+                  <EnlargeableImage src="/upload.gif" alt="upload" />
+                  {/* <Image
                     maxH={"1000px"}
-                    src="https://i.imgur.com/amcyT9X.png"
+                    src="/upload.gif"
                     alt="app img"
                     borderRadius={10}
+                    onClick={() => handleImageClick("/upload.gif")}
+                    cursor="pointer"
                     // boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
                     // animation={`${glow} 4s infinite alternate ease-in-out`}
-                  />
+                  /> */}
                 </motion.div>
               </Box>
               <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
@@ -611,13 +670,9 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <Image
-                  maxH={"1000px"}
-                  src="https://i.imgur.com/amcyT9X.png"
-                  alt="app img"
-                  borderRadius={10}
-                  // boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                  // animation={`${glow} 4s infinite alternate ease-in-out`}
+                <EnlargeableImage
+                  src="/search-sort-select.gif"
+                  alt="search-sort-select"
                 />
               </motion.div>
             </Box>
@@ -636,14 +691,7 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <Image
-                  maxH={"1000px"}
-                  src="https://i.imgur.com/amcyT9X.png"
-                  alt="app img"
-                  borderRadius={10}
-                  // boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                  // animation={`${glow} 4s infinite alternate ease-in-out`}
-                />
+                <EnlargeableImage src="/properties.gif" alt="properties" />
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
@@ -789,14 +837,7 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <Image
-                  maxH={"1000px"}
-                  src="https://i.imgur.com/amcyT9X.png"
-                  alt="app img"
-                  borderRadius={10}
-                  // boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                  // animation={`${glow} 4s infinite alternate ease-in-out`}
-                />
+                <EnlargeableImage src="/edit.gif" alt="edit" />
               </motion.div>
             </Box>
           </Stack>
@@ -814,14 +855,7 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <Image
-                  maxH={"1000px"}
-                  src="https://i.imgur.com/amcyT9X.png"
-                  alt="app img"
-                  borderRadius={10}
-                  // boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                  // animation={`${glow} 4s infinite alternate ease-in-out`}
-                />
+                <EnlargeableImage src="/download.gif" alt="download" />
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
@@ -1039,6 +1073,34 @@ export function Landing() {
           <Icon as={ChevronUpIcon} boxSize={6} />
         </Button>
       )}
+      <Modal isOpen={isOpen} onClose={onClose} size="full">
+        <ModalOverlay />
+        <ModalContent bg="rgba(0, 0, 0, 0.8)">
+          <ModalBody
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            position="relative"
+          >
+            <Box position="relative" maxH="90vh" maxW="90vw">
+              <Image
+                src={selectedImage}
+                maxH="90vh"
+                maxW="90vw"
+                objectFit="contain"
+              />
+              <ModalCloseButton
+                aria-label="Close modal"
+                position="absolute"
+                right="0"
+                top="-50"
+                onClick={onClose}
+                color="white"
+              />
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
