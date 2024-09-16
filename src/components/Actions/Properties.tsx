@@ -118,7 +118,7 @@ export default function Properties({
               label="Length"
               value={calculateTotalDuration(songs) || ""}
             />
-            <PropertyRow label="dev_id" value={commonProperties.id || ""} />
+            {/* <PropertyRow label="dev_id" value={commonProperties.id || ""} /> */}
           </VStack>
         </ModalBody>
 
