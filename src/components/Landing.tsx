@@ -472,7 +472,7 @@ export function Landing() {
         >
           <Image
             maxH={"700px"}
-            src="/full.gif"
+            src="https://i.imgur.com/cnEe5e2.gif"
             // src="https://i.imgur.com/amcyT9X.png"
             // src="https://i.imgur.com/DBlzU0T.png"
             alt="app img"
@@ -509,7 +509,10 @@ export function Landing() {
                   viewport={{ once: true }}
                   variants={fadeInVariants}
                 >
-                  <EnlargeableImage src="/upload.gif" alt="upload" />
+                  <EnlargeableImage
+                    src="https://i.imgur.com/sje8y1N.gif"
+                    alt="upload"
+                  />
                   {/* <Image
                     maxH={"1000px"}
                     src="/upload.gif"
@@ -671,7 +674,7 @@ export function Landing() {
                 variants={fadeInVariants}
               >
                 <EnlargeableImage
-                  src="/search-sort-select.gif"
+                  src="https://i.imgur.com/yWDJDau.gif"
                   alt="search-sort-select"
                 />
               </motion.div>
@@ -691,7 +694,10 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <EnlargeableImage src="/properties.gif" alt="properties" />
+                <EnlargeableImage
+                  src="https://i.imgur.com/nlGHfTG.gif"
+                  alt="properties"
+                />
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
@@ -837,7 +843,10 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <EnlargeableImage src="/edit.gif" alt="edit" />
+                <EnlargeableImage
+                  src="https://i.imgur.com/HusdPRM.gif"
+                  alt="edit"
+                />
               </motion.div>
             </Box>
           </Stack>
@@ -855,7 +864,10 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <EnlargeableImage src="/download.gif" alt="download" />
+                <EnlargeableImage
+                  src="https://i.imgur.com/jr3CVMF.gif"
+                  alt="download"
+                />
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
