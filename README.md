@@ -6,38 +6,13 @@ A web-based MP3 metadata editor built with Next.js, TypeScript, ChakraUI, MySQL 
 
 [Google Doc](https://docs.google.com/document/d/1bkD40GM4VroXaYY5UScWF6WjU58Q6NS_1-z4f8bT9y4/edit?usp=sharing)
 
-## Installation
-
-To install the project, follow these steps:
-
-1. Clone the repository: `git clone https://github.com/Exiledz5155/mp3-metadata.git`
-2. Install dependencies: `npm install`
-
-## Usage
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-1. Start the Next.js server: `npm run dev`
-2. Access the application in your browser: [http://localhost:3000](http://localhost:3000)
-
 ## Features
 
 - Edit MP3 metadata, including title, artist, album, etc.
 - Unique sessions for each user to manage their uploaded files.
-- No user accounts required.
-- Hassle free.
+- View all songs
+- Search, Sort and Select songs/albums
+- Download modified files
 
 ## Technologies Used
 
