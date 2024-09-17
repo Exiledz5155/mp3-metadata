@@ -461,16 +461,6 @@ export function Landing() {
                   variants={fadeInVariants}
                 >
                   <EnlargeableVideo src="/upload.mp4" alt="upload" />
-                  {/* <Image
-                    maxH={"1000px"}
-                    src="/upload.gif"
-                    alt="app img"
-                    borderRadius={10}
-                    onClick={() => handleImageClick("/upload.gif")}
-                    cursor="pointer"
-                    // boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-                    // animation={`${glow} 4s infinite alternate ease-in-out`}
-                  /> */}
                 </motion.div>
               </Box>
               <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
@@ -621,10 +611,7 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                {/* <EnlargeableImage
-                  src="https://i.imgur.com/yWDJDau.gif"
-                  alt="search-sort-select"
-                /> */}
+                <EnlargeableVideo src="/search.mp4" alt="search" />
               </motion.div>
             </Box>
           </Stack>
@@ -642,10 +629,7 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                {/* <EnlargeableImage
-                  src="https://i.imgur.com/nlGHfTG.gif"
-                  alt="properties"
-                /> */}
+                <EnlargeableVideo src="/properties.mp4" alt="properties" />
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
