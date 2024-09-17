@@ -12,10 +12,9 @@ import {
 
 interface EnlargeableVideoProps {
   src: string;
-  alt: string;
 }
 
-export default function EnlargeableVideo({ src, alt }: EnlargeableVideoProps) {
+export default function EnlargeableVideo({ src }: EnlargeableVideoProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -56,7 +55,7 @@ export default function EnlargeableVideo({ src, alt }: EnlargeableVideoProps) {
           }}
         >
           <Text color="white" fontSize="xl" fontWeight="bold">
-            Click to enlarge
+            Enlarge
           </Text>
         </Flex>
       </Box>

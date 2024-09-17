@@ -17,7 +17,6 @@ import {
   Heading,
   Icon,
   IconButton,
-  Image,
   Menu,
   MenuButton,
   MenuItem,
@@ -26,7 +25,6 @@ import {
   Stack,
   Text,
   VStack,
-  keyframes,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -39,6 +37,7 @@ import {
 } from "react-scroll";
 import ContributorCard from "./ContributerCard";
 import EnlargeableVideo from "./EnlargeableVideo";
+import { StyledVideo } from "./StyledVideo";
 
 interface Contributor {
   login: string;
@@ -54,29 +53,6 @@ interface Contributor {
   role: string;
   social: string;
 }
-
-interface EnlargeableVideoProps {
-  src: string;
-  alt: string;
-}
-
-const glow = keyframes`
-  0% {
-    box-shadow: 0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4;
-  }
-  25% {
-    box-shadow: 0 0 9px 2.5px #8795D5, 0 0 13px 3.5px #CF97F4;
-  }
-  50% {
-    box-shadow: 0 0 10px 3px #8795D5, 0 0 14px 4px #CF97F4;
-  }
-  75% {
-    box-shadow: 0 0 9px 2.5px #8795D5, 0 0 13px 3.5px #CF97F4;
-  }
-  100% {
-    box-shadow: 0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4;
-  }
-`;
 
 const contributorRoles: Record<string, string> = {
   Exiledz5155: "Fullstack/Team Lead",
@@ -421,7 +397,8 @@ export function Landing() {
           viewport={{ once: true }}
           variants={fadeInVariants}
         >
-          <Image
+          <StyledVideo />
+          {/* <Image
             maxH={"700px"}
             src="https://i.imgur.com/cnEe5e2.gif"
             // src="https://i.imgur.com/amcyT9X.png"
@@ -431,7 +408,7 @@ export function Landing() {
             boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
             // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
             animation={`${glow} 4s infinite alternate ease-in-out`}
-          />
+          /> */}
         </motion.div>
       </Box>
       <Box p={5}>
@@ -460,7 +437,7 @@ export function Landing() {
                   viewport={{ once: true }}
                   variants={fadeInVariants}
                 >
-                  <EnlargeableVideo src="/upload.mp4" alt="upload" />
+                  <EnlargeableVideo src="/upload.mp4" />
                 </motion.div>
               </Box>
               <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
@@ -611,7 +588,7 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <EnlargeableVideo src="/search.mp4" alt="search" />
+                <EnlargeableVideo src="/search.mp4" />
               </motion.div>
             </Box>
           </Stack>
@@ -629,7 +606,7 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <EnlargeableVideo src="/properties.mp4" alt="properties" />
+                <EnlargeableVideo src="/properties.mp4" />
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
@@ -775,7 +752,7 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <EnlargeableVideo src="/edit.mp4" alt="edit" />
+                <EnlargeableVideo src="/edit.mp4" />
               </motion.div>
             </Box>
           </Stack>
@@ -793,7 +770,7 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <EnlargeableVideo src="/download.mp4" alt="download" />
+                <EnlargeableVideo src="/download.mp4" />
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
