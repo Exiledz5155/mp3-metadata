@@ -22,17 +22,11 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalOverlay,
   SimpleGrid,
   Stack,
   Text,
   VStack,
   keyframes,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -44,6 +38,7 @@ import {
   animateScroll as scroll,
 } from "react-scroll";
 import ContributorCard from "./ContributerCard";
+import EnlargeableVideo from "./EnlargeableVideo";
 
 interface Contributor {
   login: string;
@@ -58,6 +53,11 @@ interface Contributor {
   };
   role: string;
   social: string;
+}
+
+interface EnlargeableVideoProps {
+  src: string;
+  alt: string;
 }
 
 const glow = keyframes`
@@ -144,8 +144,6 @@ function Technology({ name, link }: { name: string; link: string }) {
 export function Landing() {
   const [contributors, setContributors] = useState<Contributor[]>([]);
   const [showUpButton, setShowUpButton] = useState(false);
-  const [selectedImage, setSelectedImage] = useState("");
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const exclude = process.env.NEXT_PUBLIC_EXCLUDE;
 
   useEffect(() => {
@@ -200,53 +198,6 @@ export function Landing() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleImageClick = (imageSrc: string) => {
-    setSelectedImage(imageSrc);
-    onOpen();
-  };
-
-  const EnlargeableImage = ({ src, alt }) => (
-    <Box
-      position="relative"
-      overflow="hidden"
-      borderRadius={10}
-      cursor="pointer"
-      onClick={() => handleImageClick(src)}
-    >
-      <Image
-        maxH={"1000px"}
-        src={src}
-        alt={alt}
-        borderRadius={10}
-        cursor="pointer"
-        transition="transform 0.3s ease-in-out"
-        _hover={{
-          transform: "scale(1.05)",
-        }}
-      />
-      <Flex
-        position="absolute"
-        top="0"
-        left="0"
-        right="0"
-        bottom="0"
-        bg="rgba(0,0,0,0.5)"
-        alignItems="center"
-        justifyContent="center"
-        opacity="0"
-        transition="opacity 0.3s ease-in-out"
-        cursor="pointer"
-        _hover={{
-          opacity: 1,
-        }}
-      >
-        <Text color="white" fontSize="xl" fontWeight="bold" cursor="pointer">
-          Click to enlarge
-        </Text>
-      </Flex>
-    </Box>
-  );
 
   return (
     <Box bg="brand.50" color="white" minH="100vh">
@@ -509,10 +460,7 @@ export function Landing() {
                   viewport={{ once: true }}
                   variants={fadeInVariants}
                 >
-                  <EnlargeableImage
-                    src="https://i.imgur.com/sje8y1N.gif"
-                    alt="upload"
-                  />
+                  <EnlargeableVideo src="/upload.mp4" alt="upload" />
                   {/* <Image
                     maxH={"1000px"}
                     src="/upload.gif"
@@ -673,10 +621,10 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <EnlargeableImage
+                {/* <EnlargeableImage
                   src="https://i.imgur.com/yWDJDau.gif"
                   alt="search-sort-select"
-                />
+                /> */}
               </motion.div>
             </Box>
           </Stack>
@@ -694,10 +642,10 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <EnlargeableImage
+                {/* <EnlargeableImage
                   src="https://i.imgur.com/nlGHfTG.gif"
                   alt="properties"
-                />
+                /> */}
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
@@ -843,10 +791,10 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <EnlargeableImage
+                {/* <EnlargeableImage
                   src="https://i.imgur.com/HusdPRM.gif"
                   alt="edit"
-                />
+                /> */}
               </motion.div>
             </Box>
           </Stack>
@@ -864,10 +812,10 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                <EnlargeableImage
+                {/* <EnlargeableImage
                   src="https://i.imgur.com/jr3CVMF.gif"
                   alt="download"
-                />
+                /> */}
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
@@ -1085,34 +1033,6 @@ export function Landing() {
           <Icon as={ChevronUpIcon} boxSize={6} />
         </Button>
       )}
-      <Modal isOpen={isOpen} onClose={onClose} size="full">
-        <ModalOverlay />
-        <ModalContent bg="rgba(0, 0, 0, 0.8)">
-          <ModalBody
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            position="relative"
-          >
-            <Box position="relative" maxH="90vh" maxW="90vw">
-              <Image
-                src={selectedImage}
-                maxH="90vh"
-                maxW="90vw"
-                objectFit="contain"
-              />
-              <ModalCloseButton
-                aria-label="Close modal"
-                position="absolute"
-                right="0"
-                top="-50"
-                onClick={onClose}
-                color="white"
-              />
-            </Box>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </Box>
   );
 }
