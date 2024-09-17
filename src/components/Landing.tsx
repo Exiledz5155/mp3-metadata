@@ -17,6 +17,7 @@ import {
   Heading,
   Icon,
   IconButton,
+  Kbd,
   Menu,
   MenuButton,
   MenuItem,
@@ -398,17 +399,6 @@ export function Landing() {
           variants={fadeInVariants}
         >
           <StyledVideo />
-          {/* <Image
-            maxH={"700px"}
-            src="https://i.imgur.com/cnEe5e2.gif"
-            // src="https://i.imgur.com/amcyT9X.png"
-            // src="https://i.imgur.com/DBlzU0T.png"
-            alt="app img"
-            borderRadius={15}
-            boxShadow="0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4"
-            // animation={`${glow} 4s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55)`}
-            animation={`${glow} 4s infinite alternate ease-in-out`}
-          /> */}
         </motion.div>
       </Box>
       <Box p={5}>
@@ -440,7 +430,7 @@ export function Landing() {
                   <EnlargeableVideo src="/upload.mp4" />
                 </motion.div>
               </Box>
-              <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
+              <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="500px">
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -477,9 +467,10 @@ export function Landing() {
                   }}
                 >
                   <Text fontSize={"lg"} mb={5}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
+                    Easily browse and select files using your operating system's
+                    file explorer, or simply drag and drop files directly into
+                    the upload box. With batch upload support, you can quickly
+                    upload multiple files at once.
                   </Text>
                   <Link href="/editor/albums">
                     <HStack>
@@ -517,7 +508,7 @@ export function Landing() {
           >
             {/* Missing order!!!!!!!!!! */}
             {/* sdasdasdsa */}
-            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
+            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="500px">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -554,8 +545,14 @@ export function Landing() {
                 }}
               >
                 <Text fontSize={"lg"} mb={5}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Quickly find what you need with an intuitive search that
+                  highlights matching terms. You can sort by title, album,
+                  artist, or duration. Select individual songs, entire albums,
+                  or use multi-select with{" "}
+                  <span>
+                    <Kbd>ctrl</Kbd> or <Kbd>shift</Kbd> click for more precise
+                    control.
+                  </span>
                 </Text>
                 <Link href="/editor/albums">
                   <HStack>
@@ -609,7 +606,7 @@ export function Landing() {
                 <EnlargeableVideo src="/properties.mp4" />
               </motion.div>
             </Box>
-            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
+            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="500px">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -646,8 +643,10 @@ export function Landing() {
                 }}
               >
                 <Text fontSize={"lg"} mb={5}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  View detailed song properties such as title, artist, album,
+                  genre, year, track number, and duration. This allows you to
+                  access all relevant metadata at a glance, making it easy to
+                  find exactly what to edit.
                 </Text>
                 <Link href="/editor/albums">
                   <HStack>
@@ -681,7 +680,7 @@ export function Landing() {
             alignItems={"center"}
             spacing={"50px"}
           >
-            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
+            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="500px">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -718,8 +717,10 @@ export function Landing() {
                 }}
               >
                 <Text fontSize={"lg"} mb={5}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Easily edit song metadata including title, artist, album,
+                  genre, and even the album cover. With support for bulk
+                  editing, you can update individual tracks or apply changes to
+                  multiple songs at once.
                 </Text>
                 <Link href="/editor/albums">
                   <HStack>
@@ -773,7 +774,7 @@ export function Landing() {
                 <EnlargeableVideo src="/download.mp4" />
               </motion.div>
             </Box>
-            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
+            <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="500px">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -810,8 +811,9 @@ export function Landing() {
                 }}
               >
                 <Text fontSize={"lg"} mb={5}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Once you're done editing, select as many songs or albums as
+                  you'd like and download them all as a zipped file. Enjoy your
+                  customized music collection!
                 </Text>
                 <Link href="/editor/albums">
                   <HStack>
