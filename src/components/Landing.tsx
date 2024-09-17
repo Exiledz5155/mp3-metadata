@@ -775,10 +775,7 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                {/* <EnlargeableImage
-                  src="https://i.imgur.com/HusdPRM.gif"
-                  alt="edit"
-                /> */}
+                <EnlargeableVideo src="/edit.mp4" alt="edit" />
               </motion.div>
             </Box>
           </Stack>
@@ -796,10 +793,7 @@ export function Landing() {
                 viewport={{ once: true }}
                 variants={fadeInVariants}
               >
-                {/* <EnlargeableImage
-                  src="https://i.imgur.com/jr3CVMF.gif"
-                  alt="download"
-                /> */}
+                <EnlargeableVideo src="/download.mp4" alt="download" />
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="100%">
