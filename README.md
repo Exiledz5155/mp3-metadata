@@ -1,6 +1,6 @@
 # MP3 Metadata Editor
 
-A web-based MP3 metadata editor built with Next.js, TypeScript, ChakraUI, MySQL and Azure Blob Storage.
+A web-based MP3 metadata editor built with Next.js, React, TypeScript, ChakraUI, MySQL, Prisma and Azure Blob Storage.
 
 ## Design Doc
 
@@ -14,15 +14,16 @@ A web-based MP3 metadata editor built with Next.js, TypeScript, ChakraUI, MySQL 
 - Search, Sort and Select songs/albums
 - Download modified files
 
-## Technologies Used
+![image](https://github.com/user-attachments/assets/40fb36e5-08b7-4779-a2d8-1b2fe56d8fd4)
+![image](https://github.com/user-attachments/assets/e5555bad-e3f6-4e63-86e3-5e2c68980f3f)
+![image](https://github.com/user-attachments/assets/6009b881-bb6a-422e-b4e4-09b7c2af9edb)
 
-- **Next.js**: Framework for building web applications with React.
-- **TypeScript**: Superset of JavaScript adding static types.
-- **Azure Blob Storage**: Storage solution for user file uploads and downloads.
-- **Vercel**: Platform for deploying and hosting the web application.
-- **mySQL**: Efficient Blob Querying System.
 
-For any inquiries, feel free to contact the project maintainers:
+For any inquiries, feel free to contact:
+
+Danny Bui: dannybui5155@gmail.com
+
+Contributors:
 
 - Calvin Duddingston: duddi021@umn.edu
 - Danny Bui: bui00109@umn.edu
