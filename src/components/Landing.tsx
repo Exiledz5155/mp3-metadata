@@ -29,7 +29,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { MdMusicNote, MdOutlineFilePresent } from "react-icons/md";
 import {
   Element,
@@ -176,6 +176,31 @@ export function Landing() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const MotionDiv = ({
+    delay,
+    children,
+  }: {
+    delay: number;
+    children: ReactNode;
+  }) => (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={{
+        ...fadeInVariants,
+        visible: {
+          ...fadeInVariants.visible,
+          transition: {
+            ...fadeInVariants.visible.transition,
+            delay,
+          },
+        },
+      }}
+    >
+      {children}
+    </motion.div>
+  );
   return (
     <Box bg="brand.50" color="white" minH="100vh">
       {/* NAV BAR */}
@@ -431,41 +456,13 @@ export function Landing() {
                 </motion.div>
               </Box>
               <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="500px">
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={{
-                    ...fadeInVariants,
-                    visible: {
-                      ...fadeInVariants.visible,
-                      transition: {
-                        ...fadeInVariants.visible.transition,
-                        delay: 0.2,
-                      },
-                    },
-                  }}
-                >
+                <MotionDiv delay={0.2}>
                   <HStack alignItems="center" mb={5}>
                     <Icon as={MdOutlineFilePresent} boxSize={7} />
                     <Heading size="xl">Upload</Heading>
                   </HStack>
-                </motion.div>
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={{
-                    ...fadeInVariants,
-                    visible: {
-                      ...fadeInVariants.visible,
-                      transition: {
-                        ...fadeInVariants.visible.transition,
-                        delay: 0.3,
-                      },
-                    },
-                  }}
-                >
+                </MotionDiv>
+                <MotionDiv delay={0.3}>
                   <Text fontSize={"lg"} mb={5}>
                     Easily browse and select files using your operating system's
                     file explorer, or simply drag and drop files directly into
@@ -495,7 +492,7 @@ export function Landing() {
                       </Button>
                     </HStack>
                   </Link>
-                </motion.div>
+                </MotionDiv>
               </VStack>
             </Stack>
           </Box>
@@ -509,41 +506,13 @@ export function Landing() {
             {/* Missing order!!!!!!!!!! */}
             {/* sdasdasdsa */}
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="500px">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{
-                  ...fadeInVariants,
-                  visible: {
-                    ...fadeInVariants.visible,
-                    transition: {
-                      ...fadeInVariants.visible.transition,
-                      delay: 0.2,
-                    },
-                  },
-                }}
-              >
+              <MotionDiv delay={0.2}>
                 <HStack alignItems="center" mb={5}>
                   <Icon as={Search2Icon} boxSize={6} />
                   <Heading size="xl">Search, Sort, Select</Heading>
                 </HStack>
-              </motion.div>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{
-                  ...fadeInVariants,
-                  visible: {
-                    ...fadeInVariants.visible,
-                    transition: {
-                      ...fadeInVariants.visible.transition,
-                      delay: 0.3,
-                    },
-                  },
-                }}
-              >
+              </MotionDiv>
+              <MotionDiv delay={0.3}>
                 <Text fontSize={"lg"} mb={5}>
                   Quickly find what you need with an intuitive search that
                   highlights matching terms. You can sort by title, album,
@@ -576,7 +545,7 @@ export function Landing() {
                     </Button>
                   </HStack>
                 </Link>
-              </motion.div>
+              </MotionDiv>
             </VStack>
             <Box order={[1, 1, 1, 2]} w="100%">
               <motion.div
@@ -607,41 +576,13 @@ export function Landing() {
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="500px">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{
-                  ...fadeInVariants,
-                  visible: {
-                    ...fadeInVariants.visible,
-                    transition: {
-                      ...fadeInVariants.visible.transition,
-                      delay: 0.2,
-                    },
-                  },
-                }}
-              >
+              <MotionDiv delay={0.2}>
                 <HStack alignItems="center" mb={5}>
                   <Icon as={InfoOutlineIcon} boxSize={6}></Icon>
                   <Heading size="xl">View Properties</Heading>
                 </HStack>
-              </motion.div>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{
-                  ...fadeInVariants,
-                  visible: {
-                    ...fadeInVariants.visible,
-                    transition: {
-                      ...fadeInVariants.visible.transition,
-                      delay: 0.3,
-                    },
-                  },
-                }}
-              >
+              </MotionDiv>
+              <MotionDiv delay={0.3}>
                 <Text fontSize={"lg"} mb={5}>
                   View detailed song properties such as title, artist, album,
                   genre, year, track number, and duration. This allows you to
@@ -670,7 +611,7 @@ export function Landing() {
                     </Button>
                   </HStack>
                 </Link>
-              </motion.div>
+              </MotionDiv>
             </VStack>
           </Stack>
         </Box>
@@ -681,41 +622,13 @@ export function Landing() {
             spacing={"50px"}
           >
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="500px">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{
-                  ...fadeInVariants,
-                  visible: {
-                    ...fadeInVariants.visible,
-                    transition: {
-                      ...fadeInVariants.visible.transition,
-                      delay: 0.2,
-                    },
-                  },
-                }}
-              >
+              <MotionDiv delay={0.2}>
                 <HStack alignItems="center" mb={5}>
                   <Icon as={EditIcon} boxSize={6}></Icon>
                   <Heading size="xl">Edit</Heading>
                 </HStack>
-              </motion.div>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{
-                  ...fadeInVariants,
-                  visible: {
-                    ...fadeInVariants.visible,
-                    transition: {
-                      ...fadeInVariants.visible.transition,
-                      delay: 0.3,
-                    },
-                  },
-                }}
-              >
+              </MotionDiv>
+              <MotionDiv delay={0.3}>
                 <Text fontSize={"lg"} mb={5}>
                   Easily edit song metadata including title, artist, album,
                   genre, and even the album cover. With support for bulk
@@ -744,7 +657,7 @@ export function Landing() {
                     </Button>
                   </HStack>
                 </Link>
-              </motion.div>
+              </MotionDiv>
             </VStack>
             <Box order={[1, 1, 1, 2]} w="100%">
               <motion.div
@@ -775,41 +688,13 @@ export function Landing() {
               </motion.div>
             </Box>
             <VStack alignItems={"left"} order={[1, 1, 1, 2]} maxW="500px">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{
-                  ...fadeInVariants,
-                  visible: {
-                    ...fadeInVariants.visible,
-                    transition: {
-                      ...fadeInVariants.visible.transition,
-                      delay: 0.2,
-                    },
-                  },
-                }}
-              >
+              <MotionDiv delay={0.2}>
                 <HStack alignItems="center" mb={5}>
                   <Icon as={DownloadIcon} boxSize={6}></Icon>
                   <Heading size="xl">Download</Heading>
                 </HStack>
-              </motion.div>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{
-                  ...fadeInVariants,
-                  visible: {
-                    ...fadeInVariants.visible,
-                    transition: {
-                      ...fadeInVariants.visible.transition,
-                      delay: 0.3,
-                    },
-                  },
-                }}
-              >
+              </MotionDiv>
+              <MotionDiv delay={0.3}>
                 <Text fontSize={"lg"} mb={5}>
                   Once you're done editing, select as many songs or albums as
                   you'd like and download them all as a zipped file. Enjoy your
@@ -837,7 +722,7 @@ export function Landing() {
                     </Button>
                   </HStack>
                 </Link>
-              </motion.div>
+              </MotionDiv>
             </VStack>
           </Stack>
         </Box>
