@@ -1,6 +1,6 @@
 # MP3 Metadata Editor
 
-A web-based MP3 metadata editor built with Next.js, TypeScript, ChakraUI, MySQL and Azure Blob Storage.
+A web-based MP3 metadata editor built with Next.js, React, TypeScript, ChakraUI, MySQL, Prisma and Azure Blob Storage.
 
 ## Design Doc
 
