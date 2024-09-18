@@ -14,6 +14,11 @@ A web-based MP3 metadata editor built with Next.js, React, TypeScript, ChakraUI,
 - Search, Sort and Select songs/albums
 - Download modified files
 
+![image](https://github.com/user-attachments/assets/40fb36e5-08b7-4779-a2d8-1b2fe56d8fd4)
+![image](https://github.com/user-attachments/assets/e5555bad-e3f6-4e63-86e3-5e2c68980f3f)
+![image](https://github.com/user-attachments/assets/6009b881-bb6a-422e-b4e4-09b7c2af9edb)
+
+
 For any inquiries, feel free to contact:
 
 Danny Bui: dannybui5155@gmail.com
