@@ -14,15 +14,11 @@ A web-based MP3 metadata editor built with Next.js, TypeScript, ChakraUI, MySQL 
 - Search, Sort and Select songs/albums
 - Download modified files
 
-## Technologies Used
+For any inquiries, feel free to contact:
 
-- **Next.js**: Framework for building web applications with React.
-- **TypeScript**: Superset of JavaScript adding static types.
-- **Azure Blob Storage**: Storage solution for user file uploads and downloads.
-- **Vercel**: Platform for deploying and hosting the web application.
-- **mySQL**: Efficient Blob Querying System.
+Danny Bui: dannybui5155@gmail.com
 
-For any inquiries, feel free to contact the project maintainers:
+Contributors:
 
 - Calvin Duddingston: duddi021@umn.edu
 - Danny Bui: bui00109@umn.edu
