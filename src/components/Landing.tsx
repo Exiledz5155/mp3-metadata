@@ -26,6 +26,7 @@ import {
   Stack,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -122,6 +123,7 @@ export function Landing() {
   const [contributors, setContributors] = useState<Contributor[]>([]);
   const [showUpButton, setShowUpButton] = useState(false);
   const exclude = process.env.NEXT_PUBLIC_EXCLUDE;
+  const toast = useToast();
 
   useEffect(() => {
     const fetchContributors = async () => {
@@ -375,21 +377,31 @@ export function Landing() {
               Upload your files, edit, save and download.
             </Text>
             <HStack justifyContent={"center"} spacing={5}>
-              <Link href="/editor/albums">
-                <Button
-                  w={"150px"}
-                  h={"50px"}
-                  bgGradient={"linear(to-r, linear.100, linear.200)"}
-                  _hover={{
-                    color: "white",
-                    bg: "brand.300",
-                    transition: "all 0.3s ease-in-out",
-                  }}
-                  color={"brand.100"}
-                >
-                  Try the demo
-                </Button>
-              </Link>
+              {/* <Link href="/editor/albums"> */}
+              <Button
+                w={"150px"}
+                h={"50px"}
+                bgGradient={"linear(to-r, linear.100, linear.200)"}
+                _hover={{
+                  color: "white",
+                  bg: "brand.300",
+                  transition: "all 0.3s ease-in-out",
+                }}
+                color={"brand.100"}
+                onClick={() =>
+                  toast({
+                    title: "Demo not availiable",
+                    description:
+                      "Our demo is currently under cloud maintenance.",
+                    status: "info",
+                    duration: 5000,
+                    isClosable: true,
+                  })
+                }
+              >
+                Try the demo
+              </Button>
+              {/* </Link> */}
               <ScrollLink to="features" smooth={true} duration={1000}>
                 <Button
                   w={"150px"}
@@ -469,29 +481,38 @@ export function Landing() {
                     the upload box. With batch upload support, you can quickly
                     upload multiple files at once.
                   </Text>
-                  <Link href="/editor/albums">
-                    <HStack>
-                      <Button
-                        variant={"ghost"}
-                        px={"45px"}
-                        rounded={"md"}
-                        textAlign={"center"}
-                        w={"150px"}
-                        _hover={{
-                          boxShadow:
-                            "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                          transition: "all 0.3s ease-in-out",
-                        }}
-                        bgClip={"text"}
-                        bgGradient={"linear(to-r, linear.100, linear.200)"}
-                        fontWeight={"bold"}
-                        fontSize="xl"
-                        rightIcon={<ArrowForwardIcon color={"white"} />}
-                      >
-                        Try it now
-                      </Button>
-                    </HStack>
-                  </Link>
+                  {/* <Link href="/editor/albums"> */}
+                  <HStack>
+                    <Button
+                      variant={"ghost"}
+                      px={"45px"}
+                      rounded={"md"}
+                      textAlign={"center"}
+                      w={"150px"}
+                      _hover={{
+                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                      bgClip={"text"}
+                      bgGradient={"linear(to-r, linear.100, linear.200)"}
+                      fontWeight={"bold"}
+                      fontSize="xl"
+                      rightIcon={<ArrowForwardIcon color={"white"} />}
+                      onClick={() =>
+                        toast({
+                          title: "Demo not availiable",
+                          description:
+                            "Our demo is currently under cloud maintenance.",
+                          status: "info",
+                          duration: 5000,
+                          isClosable: true,
+                        })
+                      }
+                    >
+                      Try it now
+                    </Button>
+                  </HStack>
+                  {/* </Link> */}
                 </MotionDiv>
               </VStack>
             </Stack>
@@ -523,28 +544,38 @@ export function Landing() {
                     control.
                   </span>
                 </Text>
-                <Link href="/editor/albums">
-                  <HStack>
-                    <Button
-                      variant={"ghost"}
-                      px={"45px"}
-                      rounded={"md"}
-                      textAlign={"center"}
-                      w={"150px"}
-                      _hover={{
-                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                      bgClip={"text"}
-                      bgGradient={"linear(to-r, linear.100, linear.200)"}
-                      fontWeight={"bold"}
-                      fontSize="xl"
-                      rightIcon={<ArrowForwardIcon color={"white"} />}
-                    >
-                      Try it now
-                    </Button>
-                  </HStack>
-                </Link>
+                {/* <Link href="/editor/albums"> */}
+                <HStack>
+                  <Button
+                    variant={"ghost"}
+                    px={"45px"}
+                    rounded={"md"}
+                    textAlign={"center"}
+                    w={"150px"}
+                    _hover={{
+                      boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                    bgClip={"text"}
+                    bgGradient={"linear(to-r, linear.100, linear.200)"}
+                    fontWeight={"bold"}
+                    fontSize="xl"
+                    rightIcon={<ArrowForwardIcon color={"white"} />}
+                    onClick={() =>
+                      toast({
+                        title: "Demo not availiable",
+                        description:
+                          "Our demo is currently under cloud maintenance.",
+                        status: "info",
+                        duration: 5000,
+                        isClosable: true,
+                      })
+                    }
+                  >
+                    Try it now
+                  </Button>
+                </HStack>
+                {/* </Link> */}
               </MotionDiv>
             </VStack>
             <Box order={[1, 1, 1, 2]} w="100%">
@@ -589,28 +620,38 @@ export function Landing() {
                   access all relevant metadata at a glance, making it easy to
                   find exactly what to edit.
                 </Text>
-                <Link href="/editor/albums">
-                  <HStack>
-                    <Button
-                      variant={"ghost"}
-                      px={"45px"}
-                      rounded={"md"}
-                      textAlign={"center"}
-                      w={"150px"}
-                      _hover={{
-                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                      bgClip={"text"}
-                      bgGradient={"linear(to-r, linear.100, linear.200)"}
-                      fontWeight={"bold"}
-                      fontSize="xl"
-                      rightIcon={<ArrowForwardIcon color={"white"} />}
-                    >
-                      Try it now
-                    </Button>
-                  </HStack>
-                </Link>
+                {/* <Link href="/editor/albums"> */}
+                <HStack>
+                  <Button
+                    variant={"ghost"}
+                    px={"45px"}
+                    rounded={"md"}
+                    textAlign={"center"}
+                    w={"150px"}
+                    _hover={{
+                      boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                    bgClip={"text"}
+                    bgGradient={"linear(to-r, linear.100, linear.200)"}
+                    fontWeight={"bold"}
+                    fontSize="xl"
+                    rightIcon={<ArrowForwardIcon color={"white"} />}
+                    onClick={() =>
+                      toast({
+                        title: "Demo not availiable",
+                        description:
+                          "Our demo is currently under cloud maintenance.",
+                        status: "info",
+                        duration: 5000,
+                        isClosable: true,
+                      })
+                    }
+                  >
+                    Try it now
+                  </Button>
+                </HStack>
+                {/* </Link> */}
               </MotionDiv>
             </VStack>
           </Stack>
@@ -635,28 +676,38 @@ export function Landing() {
                   editing, you can update individual tracks or apply changes to
                   multiple songs at once.
                 </Text>
-                <Link href="/editor/albums">
-                  <HStack>
-                    <Button
-                      variant={"ghost"}
-                      px={"45px"}
-                      rounded={"md"}
-                      textAlign={"center"}
-                      w={"150px"}
-                      _hover={{
-                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                      bgClip={"text"}
-                      bgGradient={"linear(to-r, linear.100, linear.200)"}
-                      fontWeight={"bold"}
-                      fontSize="xl"
-                      rightIcon={<ArrowForwardIcon color={"white"} />}
-                    >
-                      Try it now
-                    </Button>
-                  </HStack>
-                </Link>
+                {/* <Link href="/editor/albums"> */}
+                <HStack>
+                  <Button
+                    variant={"ghost"}
+                    px={"45px"}
+                    rounded={"md"}
+                    textAlign={"center"}
+                    w={"150px"}
+                    _hover={{
+                      boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                    bgClip={"text"}
+                    bgGradient={"linear(to-r, linear.100, linear.200)"}
+                    fontWeight={"bold"}
+                    fontSize="xl"
+                    rightIcon={<ArrowForwardIcon color={"white"} />}
+                    onClick={() =>
+                      toast({
+                        title: "Demo not availiable",
+                        description:
+                          "Our demo is currently under cloud maintenance.",
+                        status: "info",
+                        duration: 5000,
+                        isClosable: true,
+                      })
+                    }
+                  >
+                    Try it now
+                  </Button>
+                </HStack>
+                {/* </Link> */}
               </MotionDiv>
             </VStack>
             <Box order={[1, 1, 1, 2]} w="100%">
@@ -700,28 +751,38 @@ export function Landing() {
                   you'd like and download them all as a zipped file. Enjoy your
                   customized music collection!
                 </Text>
-                <Link href="/editor/albums">
-                  <HStack>
-                    <Button
-                      variant={"ghost"}
-                      px={"45px"}
-                      rounded={"md"}
-                      textAlign={"center"}
-                      w={"150px"}
-                      _hover={{
-                        boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                      bgClip={"text"}
-                      bgGradient={"linear(to-r, linear.100, linear.200)"}
-                      fontWeight={"bold"}
-                      fontSize="xl"
-                      rightIcon={<ArrowForwardIcon color={"white"} />}
-                    >
-                      Try it now
-                    </Button>
-                  </HStack>
-                </Link>
+                {/* <Link href="/editor/albums"> */}
+                <HStack>
+                  <Button
+                    variant={"ghost"}
+                    px={"45px"}
+                    rounded={"md"}
+                    textAlign={"center"}
+                    w={"150px"}
+                    _hover={{
+                      boxShadow: "0 0 8px 2px #8795D5, 0 0 12px 3px #CF97F4",
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                    bgClip={"text"}
+                    bgGradient={"linear(to-r, linear.100, linear.200)"}
+                    fontWeight={"bold"}
+                    fontSize="xl"
+                    rightIcon={<ArrowForwardIcon color={"white"} />}
+                    onClick={() =>
+                      toast({
+                        title: "Demo not availiable",
+                        description:
+                          "Our demo is currently under cloud maintenance.",
+                        status: "info",
+                        duration: 5000,
+                        isClosable: true,
+                      })
+                    }
+                  >
+                    Try it now
+                  </Button>
+                </HStack>
+                {/* </Link> */}
               </MotionDiv>
             </VStack>
           </Stack>
