@@ -781,6 +781,7 @@ export function Landing() {
                   href={
                     "https://docs.google.com/document/d/1bkD40GM4VroXaYY5UScWF6WjU58Q6NS_1-z4f8bT9y4/edit?usp=sharing"
                   }
+                  target="_blank"
                 >
                   <Button
                     w={"200px"}
